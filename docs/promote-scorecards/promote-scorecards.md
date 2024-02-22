@@ -11,7 +11,7 @@ import CombinatorIntro from "../search-and-query/_combinator_intro.md"
 import Tabs from "@theme/Tabs"
 import TabItem from "@theme/TabItem"
 
-# 📊 推广记分卡
+# 📊 晋级记分卡
 
 ## 什么是记分卡？
 

@@ -101,7 +101,7 @@ print("hello world!")
 * **Github URL** - 微服务 GitHub 资源库的链接；
 * **On Call** - 当前待命开发人员；
 * **上次事件** - 微服务上次发生事件的时间；
-* **语言** - 微服务被用于的主要编程语言；
+* **语言** - 微服务使用的主要编程语言；
 * **产品** - 微服务的业务单位类别；
 * **最新版本** - 微服务的最新版本；
 * **JIRA 问题数** - 当前打开的 JIRA 问题数；
@@ -123,7 +123,7 @@ print("hello world!")
 
 ![Developer Portal New Blueprint Text](../static/img/quickstart/newBlueprintDefaultText.png)
 
-为了创建服务蓝图，请被用于以下 JSON 主体: 
+为了创建服务蓝图，请使用以下 JSON 主体: 
 
 <details>
 <summary>Service Blueprint JSON</summary>
@@ -486,7 +486,7 @@ print(json.dumps(response.json(), indent=2))
 
 此外，"环境类型 "字段将被标记为 "必需"，这样我们就能确保我们的环境被正确标记。
 
-要创建环境蓝图，请被用于以下 JSON 主体: 
+要创建环境蓝图，请使用以下 JSON 主体: 
 
 <details>
 <summary>Environment Blueprint JSON</summary>
@@ -840,7 +840,7 @@ print(json.dumps(env_response.json(), indent=2))
 * 与服务的关系 - 表示运行服务所属的微服务；
 * 与环境的关系--表示运行服务所部署的环境。
 
-要创建运行中的服务蓝图，请被用于以下 JSON 主体: 
+要创建运行中的服务蓝图，请使用以下 JSON 主体: 
 
 <details>
 <summary>Running service Blueprint JSON</summary>
@@ -1101,7 +1101,7 @@ print(json.dumps(response.json(), indent=2))
 
 现在，您要创建一个正在运行的服务实体，并使用您创建的关系将环境和服务映射到该实体。
 
-为了创建运行中的服务实体，请被用于以下 JSON 主体: 
+为了创建运行中的服务实体，请使用以下 JSON 主体: 
 
 <details>
 <summary>Notification service prod Running Service Entity JSON</summary>

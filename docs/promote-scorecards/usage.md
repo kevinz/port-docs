@@ -7,7 +7,7 @@ sidebar_label: Usage
 import Tabs from "@theme/Tabs"
 import TabItem from "@theme/TabItem"
 
-# 如何被用于记分卡
+# 如何使用记分卡
 
 ## 创建记分卡
 
