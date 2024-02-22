@@ -1,5 +1,4 @@
 ---
-
 sidebar_position: 13
 description: 实体实体是一种输入，用于在触发操作时引用软件目录中的现有实体
 

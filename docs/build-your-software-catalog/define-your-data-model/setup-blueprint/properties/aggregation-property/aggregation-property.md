@@ -1,5 +1,4 @@
 ---
-
 sidebar_position: 17
 description: 聚合属性聚合属性允许你根据目录中的关系计算指标
 

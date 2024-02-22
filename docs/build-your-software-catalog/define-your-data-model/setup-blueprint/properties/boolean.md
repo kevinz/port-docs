@@ -1,5 +1,4 @@
 ---
-
 sidebar_position: 3
 description: 布尔值布尔是一种原语数据类型，它有两种可能的值--true 和 false 其中之一
 

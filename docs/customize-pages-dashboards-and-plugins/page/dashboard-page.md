@@ -1,7 +1,5 @@
 ---
-
 sidebar_position: 3
-
 ---
 
 # 仪表板页面

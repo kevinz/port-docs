@@ -1,7 +1,5 @@
 ---
-
 sidebar_position: 4
-
 ---
 
 # 使用 AWS Lambda 设置基本的更改日志监听器

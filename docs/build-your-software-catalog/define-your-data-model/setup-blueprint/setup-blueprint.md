@@ -1,7 +1,7 @@
 ---
-
 sidebar_position: 1
 title: 设置蓝图
+
 sidebar_label: 设置蓝图
 
 ---

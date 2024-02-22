@@ -1,5 +1,4 @@
 ---
-
 sidebar_position: 11
 description: 数字Number 是一种原语数据类型，用于保存数值数据
 

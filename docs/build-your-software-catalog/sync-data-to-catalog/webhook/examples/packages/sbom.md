@@ -1,5 +1,4 @@
 ---
-
 sidebar_position: 7
 description: 将软件物料清单(SBOM)纳入产品目录
 

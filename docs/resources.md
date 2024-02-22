@@ -1,7 +1,7 @@
 ---
-
 sidebar_position: 15
 title: 资源
+
 sidebar_label: 📚 资源
 
 ---

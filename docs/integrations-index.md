@@ -1,7 +1,8 @@
 ---
-
 title: 集成索引
+
 sidebar_label: ⚙️ 集成索引
+
 sidebar_position: 11
 slug: /integrations-index/
 

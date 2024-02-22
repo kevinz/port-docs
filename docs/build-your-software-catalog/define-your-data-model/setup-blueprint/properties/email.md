@@ -1,5 +1,4 @@
 ---
-
 sidebar_position: 6
 description: 电子邮件电子邮件是一种数据类型，被引用来保存电子邮件地址
 

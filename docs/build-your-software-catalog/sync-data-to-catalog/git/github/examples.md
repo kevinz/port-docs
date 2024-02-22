@@ -1,7 +1,5 @@
 ---
-
 sidebar_position: 2
-
 ---
 
 import RepositoryBlueprint from './_github_exporter_example_repository_blueprint.mdx'

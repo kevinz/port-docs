@@ -1,7 +1,5 @@
 ---
-
 sidebar_position: 2
-
 ---
 
 import ResourceGroupBlueprint from './examples/resource_group/_blueprint.mdx'

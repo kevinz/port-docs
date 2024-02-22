@@ -1,5 +1,4 @@
 ---
-
 sidebar_position: 6
 description: Kyverno 快速启动
 

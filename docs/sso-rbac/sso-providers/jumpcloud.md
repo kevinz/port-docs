@@ -1,6 +1,6 @@
 ---
+title: JumpCloud
 
-title: "JumpCloud
 sidebar_position: 4
 description: 将 JumpCloud 与 Port 整合
 

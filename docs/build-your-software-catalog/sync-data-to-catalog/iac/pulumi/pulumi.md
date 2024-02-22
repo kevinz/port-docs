@@ -1,7 +1,5 @@
 ---
-
 sidebar_position: 1
-
 ---
 
 import InstallPulumi from "./_pulumi_provider_base.mdx"

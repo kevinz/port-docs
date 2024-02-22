@@ -1,5 +1,4 @@
 ---
-
 sidebar_position: 6
 description: 将 Terraform 资源摄入目录
 

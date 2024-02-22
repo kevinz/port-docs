@@ -1,7 +1,7 @@
 ---
-
 sidebar_position: 2
 title: 特定资产的资源元数据
+
 description: 使用 terraform 为资产引用特定资源元数据
 
 ---

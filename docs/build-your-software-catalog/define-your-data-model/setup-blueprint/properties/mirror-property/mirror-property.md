@@ -1,5 +1,4 @@
 ---
-
 sidebar_position: 15
 description: 镜像属性镜像属性允许您将相关实体的数据映射到您的实体中
 

@@ -1,7 +1,5 @@
 ---
-
 sidebar_position: 2
-
 ---
 
 # 使用 Cookiecutter 创建脚手架资源库

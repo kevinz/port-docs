@@ -1,7 +1,5 @@
 ---
-
 sidebar_position: 7
-
 ---
 
 # Port Entity CRD

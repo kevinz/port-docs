@@ -1,5 +1,4 @@
 ---
-
 sidebar_position: 1
 description: 扩展 Kubernetes 安装
 

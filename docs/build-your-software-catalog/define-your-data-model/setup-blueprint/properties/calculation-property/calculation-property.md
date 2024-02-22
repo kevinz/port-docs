@@ -1,5 +1,4 @@
 ---
-
 sidebar_position: 13
 description: 计算属性允许您从实体的现有属性中构建新数据
 

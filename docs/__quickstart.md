@@ -1,7 +1,7 @@
 ---
-
 sidebar_position: 2
 title: 快速入门
+
 sidebar_label: ⏱️ 快速入门
 
 ---

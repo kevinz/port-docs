@@ -1,7 +1,5 @@
 ---
-
 sidebar_position: 2
-
 ---
 
 # 使用 AWS Lambda 设置基本的执行运行程序

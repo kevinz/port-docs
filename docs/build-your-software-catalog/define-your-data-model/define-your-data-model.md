@@ -1,7 +1,7 @@
 ---
-
 sidebar_position: 1
 title: 定义您的数据模型
+
 sidebar_label: 定义您的数据模型
 
 ---

@@ -1,5 +1,4 @@
 ---
-
 sidebar_position: 4
 description: 对象是 JSON 数据的基本输入
 

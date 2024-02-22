@@ -1,5 +1,4 @@
 ---
-
 sidebar_position: 7
 title: 为记分卡发送 Slack 提醒
 

@@ -1,7 +1,5 @@
 ---
-
 sidebar_position: 3
-
 ---
 
 import StorageAccountBlueprint from './examples/storage/_storage_account_blueprint.mdx'

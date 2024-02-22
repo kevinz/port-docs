@@ -1,5 +1,4 @@
 ---
-
 sidebar_position: 14
 description: Secret 是一种输入法，其值在发送到后端时会用客户secret加密，在其传输过程中绝不会保存或记录。
 

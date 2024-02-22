@@ -1,5 +1,4 @@
 ---
-
 sidebar_position: 2
 description: 数字Number 是数字数据的基本输入法
 

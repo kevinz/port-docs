@@ -1,6 +1,6 @@
 ---
-
 title: 设置目录 RBAC
+
 sidebar_label: 设置目录 RBAC
 
 ---

@@ -1,5 +1,4 @@
 ---
-
 sidebar_position: 2
 sidebar_label: 发送 Slack 消息
 

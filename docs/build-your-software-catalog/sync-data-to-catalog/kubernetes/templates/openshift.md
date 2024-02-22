@@ -1,6 +1,6 @@
 ---
+title: Red Hat Openshift
 
-title: "Red Hat Openshift
 sidebar_position: 4
 description: Openshift 快速入门
 

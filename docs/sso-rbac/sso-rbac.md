@@ -1,7 +1,7 @@
 ---
-
 sidebar_position: 1
 title: SSO 和 RBAC
+
 sidebar_label: 🔒 SSO &amp; RBAC
 
 ---

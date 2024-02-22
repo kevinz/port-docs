@@ -1,7 +1,7 @@
 ---
-
 sidebar_position: 1
 title: Pulumi
+
 description: 包含属性、关系和镜像属性的综合蓝图
 
 ---

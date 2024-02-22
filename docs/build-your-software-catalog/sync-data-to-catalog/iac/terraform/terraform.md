@@ -1,7 +1,5 @@
 ---
-
 sidebar_position: 1
-
 ---
 
 import InstallTerraform from "./_terraform_provider_base.mdx"

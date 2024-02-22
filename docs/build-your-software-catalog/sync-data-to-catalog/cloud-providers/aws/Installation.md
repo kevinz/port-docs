@@ -1,7 +1,5 @@
 ---
-
 sidebar_position: 2
-
 ---
 
 import FindCredentials from "/docs/build-your-software-catalog/sync-data-to-catalog/api/_template_docs/_find_credentials_collapsed.mdx";

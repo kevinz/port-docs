@@ -1,7 +1,5 @@
 ---
-
 sidebar_position: 2
-
 ---
 
 import MicroserviceBlueprint from './_bitbucket_exporter_example_repository_blueprint.mdx'

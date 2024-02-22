@@ -1,7 +1,5 @@
 ---
-
 sidebar_position: 2
-
 ---
 
 # 使用 Cookiecutter 为 GitHub 仓库搭建脚手架

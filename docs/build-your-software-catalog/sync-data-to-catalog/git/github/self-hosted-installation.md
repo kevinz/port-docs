@@ -1,7 +1,5 @@
 ---
-
 sidebar_position: 5
-
 ---
 
 import FindCredentials from "../../api/_template_docs/_find_credentials.mdx"

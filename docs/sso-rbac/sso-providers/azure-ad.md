@@ -1,6 +1,6 @@
 ---
+title: Azure 活动目录
 
-title: "Azure 活动目录
 sidebar_position: 2
 description: 将 AzureAD 与 Port 集成
 

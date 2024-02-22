@@ -1,5 +1,4 @@
 ---
-
 sidebar_position: 1
 sidebar_label: 打开/关闭 JIRA 问题
 

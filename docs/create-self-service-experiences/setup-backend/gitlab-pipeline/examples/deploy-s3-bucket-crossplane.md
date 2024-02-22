@@ -1,7 +1,5 @@
 ---
-
 sidebar_position: 2
-
 ---
 
 # 使用 crossplane 部署 S3 存储桶
