@@ -1,5 +1,5 @@
 ---
-title: 设置操作 RBAC
+title: 设置自助操作 RBAC
 
 sidebar_label: 设置 RBAC 操作
 
