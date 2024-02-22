@@ -1,7 +1,7 @@
 ---
-title: 设置目录 RBAC
+title: 设置Catalog的RBAC
 
-sidebar_label: 设置目录 RBAC
+sidebar_label: 设置Catalog的RBAC
 
 ---
 
@@ -10,7 +10,7 @@ import Tabs from "@theme/Tabs";
 import TabItem from "@theme/TabItem";
 import styles from "./styles.module.css";
 
-# 设置 RBAC 目录
+# 设置Catalog RBAC 
 
 <center>
 
@@ -20,7 +20,7 @@ import styles from "./styles.module.css";
 
 Provider 提供细粒度控制，确保每个用户只能看到目录中与他们相关的部分。
 
-Port 目录 RBAC 功能由 Port 的[permissions controls](../../sso-rbac/rbac/rbac.md) 启用。
+Port Catalog RBAC 功能由 Port 的[permissions controls](../../sso-rbac/rbac/rbac.md) 启用。
 
 :::tip 
 
@@ -28,9 +28,9 @@ Port 目录 RBAC 功能由 Port 的[permissions controls](../../sso-rbac/rbac/rb
 
 :::
 
-## 💡 常用目录 RBAC Usage
+## 💡 常用软件目录 RBAC Usage
 
-例如，目录 RBAC 允许管理员精细控制哪些用户可以访问目录中的哪些信息: 
+例如，Catalog RBAC 允许管理员精细控制哪些用户可以访问目录中的哪些信息: 
 
 * 只向开发人员显示他们拥有的服务；
 * 允许用户只编辑实体的特定属性；

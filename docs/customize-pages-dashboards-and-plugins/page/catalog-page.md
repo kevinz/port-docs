@@ -2,7 +2,7 @@
 sidebar_position: 1
 ---
 
-# 目录页面
+# 软件目录页面
 
 目录页面显示从[blueprint](/build-your-software-catalog/define-your-data-model/setup-blueprint/#what-is-a-blueprint) 创建的所有现有[entities](/build-your-software-catalog/sync-data-to-catalog/#creating-entities) 的表格。在本例中，我们可以看到从 `K8s Cluster` 蓝图创建的所有集群实体: 
 
