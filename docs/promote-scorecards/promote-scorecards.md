@@ -1,8 +1,8 @@
 ---
 sidebar_position: 1
-title: 推广记分卡
+title: 晋级记分卡
 
-sidebar_label: 📊 推广记分卡
+sidebar_label: 📊 晋级记分卡
 
 ---
 

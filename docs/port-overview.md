@@ -18,7 +18,7 @@ sidebar_label: 👋 Port概览
 
 ## 开始使用 Port
 
-免费试用 Port 非常简单，只需登录[create an account](https://app.getport.io) 并按照快速入职流程操作即可。[Getting started](/quickstart) 页面将向您介绍门户网站的不同组件及其提供的价值。
+免费试用 Port 非常简单，只需登录[create an account](https://app.getport.io) 并按照快速Onboarding流程操作即可。[Getting started](/quickstart) 页面将向您介绍门户网站的不同组件及其提供的价值。
 
 ## Port 是什么？
 

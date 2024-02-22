@@ -14,7 +14,7 @@ import PortTooltip from "/src/components/tooltip/tooltip.jsx"
 
 :::tip  先决条件
 
-* 本指南假定您已拥有 Port 账户，并已完成[onboarding process](/quickstart) 。我们将使用入职过程中创建的 "服务 "蓝图。
+* 本指南假定您已拥有 Port 账户，并已完成[onboarding process](/quickstart) 。我们将使用Onboarding过程中创建的 "服务 "蓝图。
 * 您需要一个 Git 仓库(Github、GitLab 或 Bitbucket)，您可以在其中放置我们将在本指南中使用的工作流/Pipelines。如果没有，建议创建一个名为 "Port-actions "的新仓库。
 
 :::
@@ -35,15 +35,15 @@ import PortTooltip from "/src/components/tooltip/tooltip.jsx"
 
 #### 设置动作的前端
 
-:::tip  入职
+:::tip  Onboarding
 
-作为入职流程的一部分，您的[self-service tab](https://app.getport.io/self-serve) 中应该已经有一个名为 "脚手架新服务 "的操作。在这种情况下，您可以将鼠标悬停在该操作上，单击右上角的"... "按钮，然后选择 "编辑": 
+作为Onboarding流程的一部分，您的[self-service tab](https://app.getport.io/self-serve) 中应该已经有一个名为 "脚手架新服务 "的操作。在这种情况下，您可以将鼠标悬停在该操作上，单击右上角的"... "按钮，然后选择 "编辑": 
 
 <img src='/img/guides/editActionBackend.png' width='45%' />
 
 然后，跳到[Define backend type](#define-backend-type) 步骤。
 
-如果您跳过了***入职培训，或者您想从头开始创建操作，请完成下面的 "创建操作的前端 "步骤。
+如果您跳过了***Onboarding培训，或者您想从头开始创建操作，请完成下面的 "创建操作的前端 "步骤。
 
 :::
 

@@ -15,7 +15,7 @@ import PortTooltip from "/src/components/tooltip/tooltip.jsx"
 
 :::tip  先决条件
 
-* 本指南假定您已拥有 Port 账户，并已完成[onboarding process](/quickstart) 。我们将使用入职过程中创建的 "服务 "蓝图。
+* 本指南假定您已拥有 Port 账户，并已完成[onboarding process](/quickstart) 。我们将使用Onboarding过程中创建的 "服务 "蓝图。
 * 您需要一个 Git 仓库(Github、GitLab 或 Bitbucket)，您可以在其中放置我们将在本指南中使用的工作流/Pipelines。如果没有，建议创建一个名为 "Port-actions "的新仓库。
 
 :::

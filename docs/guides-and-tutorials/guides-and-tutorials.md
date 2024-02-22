@@ -5,7 +5,7 @@ import TabItem from "@theme/TabItem"
 
 为了帮助您快速启动和运行 Port，我们为您可能需要使用 Port 解决的常见用例创建了分步指南。
 
-这些指南是入职流程的延续，请参阅[getting started page](/quickstart) 以确保您的门户中包含所有初始组件。
+这些指南是Onboarding流程的延续，请参阅[getting started page](/quickstart) 以确保您的门户中包含所有初始组件。
 
 ## 可用指南
 

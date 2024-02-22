@@ -14,7 +14,7 @@ import PortTooltip from "/src/components/tooltip/tooltip.jsx"
 
 :::tip  先决条件
 
-* 本指南假定您已拥有 Port 账户，并已完成[onboarding process](/quickstart) 。我们将使用入职过程中创建的 "服务 "蓝图。
+* 本指南假定您已拥有 Port 账户，并已完成[onboarding process](/quickstart) 。我们将使用Onboarding过程中创建的 "服务 "蓝图。
 * 您需要一个可访问的 k8s 集群。如果没有，下面是如何快速建立一个[minikube cluster](https://minikube.sigs.k8s.io/docs/start/) 。
 * [Helm](https://helm.sh/docs/intro/install/) - 安装 Port 的 Kubernetes 输出程序。
 

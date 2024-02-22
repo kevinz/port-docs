@@ -17,7 +17,7 @@ import PortTooltip from "/src/components/tooltip/tooltip.jsx"
 
 :::tip  先决条件
 
-* 本指南假定您已拥有 Port 账户，并已完成[onboarding process](/quickstart) 。我们将使用入职过程中创建的 "服务 "蓝图。
+* 本指南假定您已拥有 Port 账户，并已完成[onboarding process](/quickstart) 。我们将使用Onboarding过程中创建的 "服务 "蓝图。
 * 您需要一个 Git 仓库，在其中放置本指南将使用的工作流/Pipelines。如果没有，建议创建一个名为 `Port-actions` 的新仓库。
 
 :::
@@ -46,9 +46,9 @@ import PortTooltip from "/src/components/tooltip/tooltip.jsx"
 
 <TabItem value="github" label="Github">
 
-:::tip  入职
+:::tip  Onboarding
 
-作为入职流程的一部分，您的[self-service tab](https://app.getport.io/self-serve) 中应该已经有一个名为 "发送记分卡提醒 "的操作。在这种情况下，您可以跳到[Define action type](#define-backend-type) 步骤。
+作为Onboarding流程的一部分，您的[self-service tab](https://app.getport.io/self-serve) 中应该已经有一个名为 "发送记分卡提醒 "的操作。在这种情况下，您可以跳到[Define action type](#define-backend-type) 步骤。
 
 如果您跳过了***登录，或者您想从头开始创建操作，请完成以下 1-4 步骤。
 
@@ -89,9 +89,9 @@ import PortTooltip from "/src/components/tooltip/tooltip.jsx"
 
 <TabItem value="gitlab" label="GitLab">
 
-:::tip  入职
+:::tip  Onboarding
 
-作为入职流程的一部分，您的[self-service tab](https://app.getport.io/self-serve) 中应该已经有一个名为 "发送记分卡提醒 "的操作。在这种情况下，您可以跳到[Define action type](#define-backend-type) 步骤。
+作为Onboarding流程的一部分，您的[self-service tab](https://app.getport.io/self-serve) 中应该已经有一个名为 "发送记分卡提醒 "的操作。在这种情况下，您可以跳到[Define action type](#define-backend-type) 步骤。
 
 如果您跳过了***登录，或者您想从头开始创建操作，请完成以下 1-4 步骤。
 

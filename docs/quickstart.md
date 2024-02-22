@@ -12,13 +12,13 @@ import PortTooltip from "/src/components/tooltip/tooltip.jsx"
 
 # ⏱️ 入门
 
-[signing up](https://app.getport.io) 登入 Port 后，系统会提示您按照入职流程进行操作，包括将 Git 仓库导入开发者门户。
+[signing up](https://app.getport.io) 登入 Port 后，系统会提示您按照Onboarding流程进行操作，包括将 Git 仓库导入开发者门户。
 
 完成入驻流程后，Port 将为您创建一些组件(使用您的真实数据😎)，以便向您展示门户网站的潜力。
 
-我们强烈建议您完成入职流程，以便对 Port 有一个基本的了解，并知道一个好的开发人员门户网站能如何帮助您和您的开发人员。
+我们强烈建议您完成Onboarding流程，以便对 Port 有一个基本的了解，并知道一个好的开发人员门户网站能如何帮助您和您的开发人员。
 
-:::info  跳过入职 如果您选择**跳过**入职流程，您仍然可以通过将 Port 连接到所需的 Git Provider 来为您创建这些组件: 
+:::info  跳过Onboarding 如果您选择**跳过**Onboarding流程，您仍然可以通过将 Port 连接到所需的 Git Provider 来为您创建这些组件: 
 
 * 进入门户网站[data-sources page](https://app.getport.io/dev-portal/data-sources) 。
 * 点击右上角的 "+ 数据源"，选择所需的 Git Provider。
