@@ -1,14 +1,14 @@
 ---
-title: 设置自助操作 RBAC
+title: 设置自助action的RBAC
 
-sidebar_label: 设置 RBAC 操作
+sidebar_label: 设置自助操作的RBAC
 
 ---
 
 import Tabs from "@theme/Tabs"
 import TabItem from "@theme/TabItem"
 
-# 设置 RBAC 操作
+# 设置action的RBAC
 
 Provider 提供细粒度控制，确保每个用户只能执行和调用与其相关的操作。
 
