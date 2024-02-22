@@ -1,18 +1,20 @@
 ---
+
 sidebar_position: 18
-description: Ingest Falco alerts into your catalog
+description: 将 Falco 警报纳入您的目录
+
 ---
 
-import AlertBlueprint from './resources/falco/\_example_alert_blueprint.mdx'
-import AlertWebhookConfig from './resources/falco/\_example_webhook_configuration.mdx'
+import AlertBlueprint from './resources/falco/_example_alert_blueprint.mdx'
+import AlertWebhookConfig from './resources/falco/_example_webhook_configuration.mdx'
 
 # Falco Sidekick
 
-In this example you are going to create a webhook integration between [Falco Sidekick](https://github.com/falcosecurity/falcosidekick) and Port, which will ingest alert entities.
+在本示例中，您将在[Falco Sidekick](https://github.com/falcosecurity/falcosidekick) 和 Port 之间创建一个 webhook 集成，用于接收警报实体。
 
-## Port configuration
+## Port 配置
 
-Create the following blueprint definition:
+创建以下蓝图定义: 
 
 <details>
 <summary>Alert blueprint</summary>
@@ -21,54 +23,58 @@ Create the following blueprint definition:
 
 </details>
 
-Create the following webhook configuration [using Port's UI](/build-your-software-catalog/sync-data-to-catalog/webhook/?operation=ui#configuring-webhook-endpoints)
+创建以下 webhook 配置[using Port's UI](/build-your-software-catalog/sync-data-to-catalog/webhook/?operation=ui#configuring-webhook-endpoints)
 
 <details>
 
 <summary>Alert webhook configuration</summary>
 
-1. **Basic details** tab - fill the following details:
-   1. Title : `Falco Alert Mapper`;
-   2. Identifier : `falco_alert_mapper`;
-   3. Description : `A webhook configuration to map Falco sidekicks alerts to Port`;
-   4. Icon : `Alert`;
-2. **Integration configuration** tab - fill the following JQ mapping:
-
+1. **基本信息** 选项卡 - 填写以下详细信息: 
+    1.title: `Falco Alert Mapper`；
+    2.标识符 : `falcoo_alert_mapper`；
+    3.Description : `将 Falco sidekicks 警报映射到 Port` 的 webhook 配置；
+    4.图标 : `Alert`；
+2. **集成配置**选项卡 - 填写以下 JQ 映射: 
    <AlertWebhookConfig/>
-
-3. Click **Save** at the bottom of the page.
+3.单击页面底部的**保存**。
 
 </details>
 
-## Configure Falco Sidekick to send webhook
+## 配置 Falco Sidekick 以发送 webhook
 
-1. If you're using Falcosidekick with [Docker](https://github.com/falcosecurity/falcosidekick#with-docker), use the following command for installation. Replace `YOUR_WEBHOOK_URL` with the value of the `url` key you received after creating the webhook configuration;
+1. 如果您使用的是带有[Docker](https://github.com/falcosecurity/falcosidekick#with-docker) 的 Falcosidekick，请使用以下命令进行安装。将 `YOUR_WEBHOOK_URL` 替换为创建 webhook 配置后收到的 `url` 密钥的值；
+
 
    ```bash showLineNumbers
    docker run -d -p 2801:2801 -e WEBHOOK_ADDRESS=YOUR_WEBHOOK_URL falcosecurity/falcosidekick
    ```
 
-2. If you prefer installing Falcosidekick with [Helm](https://github.com/falcosecurity/falcosidekick#with-helm), follow these steps:
 
-   1. Add the webhook configuration to your config.yaml file, replacing `YOUR_WEBHOOK_URL` with the actual URL from the webhook setup.
-
+2.如果您希望使用[Helm](https://github.com/falcosecurity/falcosidekick#with-helm) 安装 Falcosidekick，请按照以下步骤操作: 
+    1.将 webhook 配置添加到 config.yaml 文件中，将 `YOUR_WEBHOOK_URL` 替换为 webhook 设置中的实际 URL。
    <details>
    <summary>Example configuration file</summary>
+
 
    ```yaml showLineNumbers
    webhook:
      address: YOUR_WEBHOOK_URL
    ```
 
+
    </details>
 
-   2. Install or upgrade the Helm chart with the following commands:
+2.使用以下命令安装或升级 Helm chart: 
+
 
    ```bash showLineNumbers
    helm repo add falcosecurity https://falcosecurity.github.io/charts
    helm repo update
 
-   helm install falco --config-file=config.yaml falcosecurity/falco
-   ```
+helm install falco --config-file=config.yaml falcosecurity/falco
+
+```
+
 
 Done! Any change that happens to your alerts in your server will trigger a webhook event to the webhook URL provided by Port. Port will parse the events according to the mapping and update the catalog entities accordingly.
+```

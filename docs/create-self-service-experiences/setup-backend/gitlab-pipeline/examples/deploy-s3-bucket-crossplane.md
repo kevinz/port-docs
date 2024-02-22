@@ -1,61 +1,63 @@
 ---
+
 sidebar_position: 2
+
 ---
 
-# Deploy S3 Bucket using Crossplane
+# 使用 crossplane 部署 S3 存储桶
 
-This example demonstrates how to deploy [Crossplane](https://github.com/crossplane/crossplane) resources in your Kubernetes Cluster via Port Actions.
+本示例演示了如何通过 Port Actions 在 Kubernetes 集群中部署[Crossplane](https://github.com/crossplane/crossplane) 资源。
 
-We will use a Gitlab Pipeline to create a Merge Request which commits a file to the project.
+我们将使用 Gitlab Pipeline 创建一个合并请求，将文件提交到项目中。
 
-A pre-deployed GitOps mechanism will be responsible to create the resource in our cluster.
+预部署的 GitOps 机制将负责在我们的集群中创建资源。
 
-## Prerequisites
+## 先决条件
 
-- Kubernetes cluster.
-- Crossplane installed in your cluster:
-  - Crossplane [Installation Guide](https://docs.crossplane.io/v1.14/software/install/).
-  - Crossplane [AWS Quickstart Guide](https://docs.crossplane.io/v1.14/getting-started/provider-aws/):
-    - Deploy a Crossplane [Provider](https://docs.crossplane.io/v1.14/getting-started/provider-aws/#install-the-aws-provider).
-    - Deploy a Crossplane [ProviderConfig](https://docs.crossplane.io/v1.14/getting-started/provider-aws/#create-a-providerconfig).
-- GitOps mechanism of your choosing which synchronizes files from your Gitlab Project to your Kubernetes cluster.
+* Kubernetes 集群。
+* 集群中安装了 Crossplane: 
+    - Crossplane[Installation Guide](https://docs.crossplane.io/v1.14/software/install/) 。
+    - Crossplane[AWS Quickstart Guide](https://docs.crossplane.io/v1.14/getting-started/provider-aws/) : 
+        + 部署一个 Crossplane[Provider](https://docs.crossplane.io/v1.14/getting-started/provider-aws/#install-the-aws-provider) 。
+        + 部署一个 Crossplane[ProviderConfig](https://docs.crossplane.io/v1.14/getting-started/provider-aws/#create-a-providerconfig) 。
+* 您选择的 GitOps 机制，可将文件从 Gitlab 项目同步到 Kubernetes 集群。
 
-## Example - Deploy S3 Bucket in AWS
+## 示例 - 在 AWS 中部署 S3 存储桶
 
-In this example we will show you how to utilize Port Actions to open a Merge Request in your Gitlab Project, which commits a Crossplane manifest that describes an S3 Bucket in AWS.
+在本示例中，我们将向您展示如何利用 Port Actions 在 Gitlab 项目中打开一个合并请求，该合并请求会提交一个描述 AWS 中 S3 Bucket 的 crossplane 配置清单。
 
-:::note Disclaimer
-This example doesn't implement a GitOps tool to ensure the manifest will be created on your Kubernetes cluster, so be advised that if you only do the steps in the following guide, you will only be creating Merge Requests in your Gitlab Project.
+:::note  免责声明 本示例没有实现 GitOps 工具来确保配置清单将在你的 Kubernetes 集群上创建，因此请注意，如果你只执行以下指南中的步骤，你将只能在 Gitlab 项目中创建合并请求。
+
 :::
 
-Follow these steps to get started:
+请按照以下步骤开始操作: 
 
-1. Create the following variables as [Gitlab Variables](https://docs.gitlab.com/ee/ci/variables/index.html):
+1. 创建以下变量作为[Gitlab Variables](https://docs.gitlab.com/ee/ci/variables/index.html) : 
+    1. `ACCESS_TOKEN` -[Personal Access Token](https://docs.gitlab.com/ee/user/profile/personal_access_tokens.html) ，其作用域如下:   
+    api`、`read_api`、`read_user`、`read_repository`、`write_repository`。
+    2. `PORT_CLIENT_ID` - Port客户端 ID[learn more](/build-your-software-catalog/sync-data-to-catalog/api/#get-api-token) 。
+    3. `PORT_CLIENT_SECRET` - Port客户端secret[learn more](/build-your-software-catalog/sync-data-to-catalog/api/#get-api-token).
+       <br/>
+2.在 Gitlab 组中创建名为 `crossplane_deployer` 的 Gitlab 项目，并配置[Pipeline Trigger Token](https://docs.gitlab.com/ee/ci/triggers/index.html) 。
 
-   1. `ACCESS_TOKEN` - a [Personal Access Token](https://docs.gitlab.com/ee/user/profile/personal_access_tokens.html) with the following scopes:  
-      `api`, `read_api`, `read_user`, `read_repository`, `write_repository`.
-   2. `PORT_CLIENT_ID` - Port Client ID [learn more](/build-your-software-catalog/sync-data-to-catalog/api/#get-api-token).
-   3. `PORT_CLIENT_SECRET` - Port Client Secret [learn more](/build-your-software-catalog/sync-data-to-catalog/api/#get-api-token).
-      <br/>
+:::note 您可以被引用任何您喜欢的名称，只要确保在 Port Action 中正确配置即可。
 
-2. Create a Gitlab Project called `crossplane_deployer` in your Gitlab Group and configure a [Pipeline Trigger Token](https://docs.gitlab.com/ee/ci/triggers/index.html).
-
-:::note
-You can use any name that you like, just make sure to configure properly in your Port Action.
 :::
+
 <br/>
 
-3. Install Port's Gitlab agent by following our guide [here](/create-self-service-experiences/setup-backend/gitlab-pipeline/Installation).
+3.按照我们的指南[here](/create-self-service-experiences/setup-backend/gitlab-pipeline/Installation) 安装 Port 的 Gitlab 代理。
 
-:::note
-Make sure to use your Pipeline Trigger Token while installing Port's Gitlab agent.
+:::note 确保在安装 Port 的 Gitlab 代理时被引用 Pipeline 触发令牌。
+
 :::
+
 <br/>
 
-4. Create a Port blueprint with the following JSON definition:
+4.使用以下 JSON 定义创建 Port 蓝图: 
 
-:::note
-Keep in mind this can be any blueprint you would like and this is just an example.
+:::note 请记住，这可以是你想要的任何蓝图，这只是一个例子。
+
 :::
 
 <details>
@@ -85,10 +87,10 @@ Keep in mind this can be any blueprint you would like and this is just an exampl
 </details>
 <br/>
 
-5. Create Port action using the following JSON definition:
+5.使用以下 JSON 定义创建 Port 操作: 
 
-:::note
-Make sure to replace the placeholders for PROJECT_NAME and GROUP_NAME of your `crossplane_deployer`.
+:::note 确保替换 `crossplane_deployer` 中 PROJECT_NAME 和 GROUP_NAME 的占位符。
+
 :::
 
 <details>
@@ -140,7 +142,7 @@ Make sure to replace the placeholders for PROJECT_NAME and GROUP_NAME of your `c
 </details>
 <br/>
 
-6. In your `crossplane_deployer` Gitlab Project, create a template file named `s3bucket-crossplane.yaml` in the `crossplane-templates` directory in the `main` branch with the following content:
+6.在你的 `crossplane_deployer` Gitlab 项目中，在 `main` 分支的 `crossplane-templates` 目录中创建一个名为 `s3bucket-crossplane.yaml` 的模板文件，内容如下: 
 
 <details>
 <summary>s3bucket-crossplane.yaml</summary>
@@ -162,7 +164,7 @@ spec:
 </details>
 <br/>
 
-7. In your `crossplane_deployer` Gitlab Project, create a Gitlab CI file under `.gitlab-ci.yml` in the `main` branch with the following content:
+7.在你的 `crossplane_deployer` Gitlab 项目中，在 `main` 分支的 `.gitlab-ci.yml` 下创建一个 Gitlab CI 文件，内容如下: 
 
 <details>
 <summary>Gitlab CI Script</summary>
@@ -262,14 +264,12 @@ update-run-status:
 </details>
 <br/>
 
-8. Trigger the action from the [Self-service](https://app.getport.io/self-serve) tab of your Port application.<br/>
-   You will notice a new Merge Request was created, commiting the S3 Bucket manifest.
+8.从 Port 应用程序的[Self-service](https://app.getport.io/self-serve) 标签触发该操作。<br/> 您会发现创建了一个新的合并请求，提交了 S3 Bucket 配置清单。
 
-## Next steps
+## 下一步
 
-In this example we did not create the Port entity for the S3 bucket.
+在本例中，我们没有为 S3 存储桶创建 Port 实体。
 
-- You can [Connect Port's AWS exporter](/build-your-software-catalog/sync-data-to-catalog/cloud-providers/aws/aws.md)
-  to make sure all of the properties and entities are automatically ingested from AWS.
-  - You can learn how to setup Port's AWS exporter [here](/build-your-software-catalog/sync-data-to-catalog/cloud-providers/aws/Installation.md).
-  - You can see example configurations and use cases [here](/build-your-software-catalog/sync-data-to-catalog/cloud-providers/aws/examples.md).
+* 您可以通过[Connect Port's AWS exporter](/build-your-software-catalog/sync-data-to-catalog/cloud-providers/aws/aws.md) 确保从 AWS 自动摄取所有属性和实体。
+    - 您可以了解如何设置 Port 的 AWS 输出程序[here](/build-your-software-catalog/sync-data-to-catalog/cloud-providers/aws/Installation.md) 。
+    - 您可以查看示例配置和用例[here](/build-your-software-catalog/sync-data-to-catalog/cloud-providers/aws/examples.md) 。

@@ -1,34 +1,36 @@
 ---
+
 sidebar_position: 4
+
 ---
 
-# Debugging Webhooks locally
+# 在本地调试 Webhook
 
-In this guide, we will show you how to debug Webhook Self-Service Actions that are sent from Port locally.
+在本指南中，我们将向您介绍如何调试从 Port 本地发送的 Webhook 自助服务操作。
 
-This example contains the initial steps to set up a standard Self-Service Action use case, following it shows how to locally debug the payload sent by Port through the webhook [invocation method](../../self-service-actions-deep-dive/self-service-actions-deep-dive.md#invocation-method).
+本例包含设置标准自助服务操作用例的初始步骤，下面将展示如何本地调试 Port 通过 webhook 发送的有效负载[invocation method](../../self-service-actions-deep-dive/self-service-actions-deep-dive.md#invocation-method) 。
 
-## Prerequisites
+## 先决条件
 
-- A Port API `CLIENT_ID` and `CLIENT_SECRET`;
-- Python & PIP installed
-- Nodejs
+* Port API `CLIENT_ID`和`CLIENT_SECRET`；
+* 已安装 Python 和 PIP
+* 节点
 
-In this example, interaction with Port will be primarily conducted using the API, but can also be done using the web UI.
+在本例中，与 Port 的交互主要通过应用程序接口进行，但也可以通过网络用户界面完成。
 
-## Scenario
+## 场景
 
-You want to provision new VMs using Port's `CREATE` Self-Service Actions.
+您想使用 Port 的 "CREATE "自助操作配置新虚拟机。
 
-In this example you will:
+在这个例子中，您将
 
-- Create a new `VM` Blueprint
-- Add a `CREATE` action to the Blueprint
-- Use a local web-server to debug the webhook requests that Port sends every time a developer asks for a new VM.
+* 创建新的 "VM "蓝图
+* 在蓝图中添加一个 `CREATE` 操作
+* 使用本地 Web 服务器调试每次开发人员请求新虚拟机时 Port 发送的 webhook 请求。
 
-## Creating the VM blueprint
+## 创建虚拟机蓝图
 
-Let’s configure a `VM` Blueprint, its base structure is:
+让我们配置一个 `VM` 蓝图，它的基本结构是
 
 ```json showLineNumbers
 {
@@ -74,7 +76,7 @@ Let’s configure a `VM` Blueprint, its base structure is:
 }
 ```
 
-Below you can see the `python` code to create this Blueprint (remember to insert your `CLIENT_ID` and `CLIENT_SECRET` in order to get an access token)
+下面是创建该蓝图的 "python "代码(切记插入 "CLIENT_ID "和 "CLIENT_SECRET "以获取访问令牌)
 
 <details>
 <summary>Click here to see the code</summary>
@@ -147,19 +149,19 @@ print(response.json())
 
 </details>
 
-## Creating the VM CREATE action
+## 创建虚拟机 CREATE 操作
 
-In order to debug your action payload locally, you need to forward it to your local machine, meaning the webhook target needs to be your `localhost`. In order to forward the requests directed at your webhook to the localhost, we will use [smee.io](https://smee.io/).
+为了在本地调试操作有效载荷，您需要将其转发到本地计算机，这意味着 webhook 目标需要是您的 "localhost"。为了将指向 webhook 的请求转发到 localhost，我们将使用[smee.io](https://smee.io/) 。
 
-All you have to do is click on `Start new channel` and copy the provided `Webhook Proxy URL`, it should look similar to this: `https://smee.io/b1iO4C4ZGNYmiVL5`
+您只需点击 "启动新频道"，然后复制所提供的 "Webhook 代理 URL"，它应该类似于下面的内容:  `https://smee.io/b1iO4C4ZGNYmiVL5` 。
 
-Now let’s configure a Self-Service Action. You will add a `CREATE` action that will be triggered every time a developer creates a new VM entity, the Self-Service Action will trigger a small web-server running on your local machine.
+现在，让我们配置一个自助服务操作(Self-Service Action)。 您将添加一个 "CREATE "操作，开发人员每次创建新的虚拟机实体时都会触发该操作，自助服务操作将触发在本地计算机上运行的小型网络服务器。
 
-:::tip
-You will configure the web-server a bit later [in this guide](#creating-small-example-server-in-nodejs).
+:::tip 稍后您将配置网络服务器[in this guide](#creating-small-example-server-in-nodejs) 。
+
 :::
 
-Here is the action JSON:
+以下是操作 JSON: 
 
 ```json showLineNumbers
 {
@@ -198,17 +200,17 @@ Here is the action JSON:
 }
 ```
 
-Below you can see the `python` code to create this action.
+下面是创建此操作的 "python "代码。
 
-:::info Replacing placeholders
+:::info  替换占位符
 
-- Remember to insert your `CLIENT_ID` and `CLIENT_SECRET` in order to get an access token.
-- Remember to insert the proxy URL you got from `smee` in order to redirect the webhook messages to your localhost.
+* 请记住插入您的 `CLIENT_ID` 和 `CLIENT_SECRET`，以获取访问令牌。
+* 记得插入从 `smee` 获取的代理 URL，以便将 webhook 消息重定向到本地主机。
 
 :::
 
-:::note Specifying the target blueprint
-Note how the `vm` Blueprint identifier is used to add the action to the new Blueprint
+:::note  指定目标蓝图 注意 `vm` 蓝图标识符是如何被引用以将操作添加到新蓝图的
+
 :::
 
 <details>
@@ -278,42 +280,42 @@ print(response.json())
 
 </details>
 
-## Forwarding events to localhost
+## 将事件转发到本地主机
 
-Now install the Smee client to forward the events to your `localhost`, you will use `pysmee` to achieve that:
+现在安装 Smee 客户端，将事件转发到您的 `localhost`，您将被引用 `pysmee` 来实现这一点: 
 
 ```bash
 pip install pysmee
 ```
 
-Now use it to forward the event, for example:
+现在用它来转发事件，举个例子: 
 
 ```bash
 pysmee forward https://smee.io/b1iO4C4ZGNYmiVL5 http://localhost:3000/webhooks
 ```
 
-You should see a log line output like this:
+你应该会看到类似这样的日志行输出: 
 
 ```bash
 [2022-09-15 13:59:39,462 MainThread] INFO: Forwarding https://smee.io/b1iO4C4ZGNYmiVL5 to http://localhost:3000/webhooks
 ```
 
-## Creating a small example server in Nodejs
+## 在 Nodejs 中创建一个小型示例服务器
 
-Now because you are forwarding events to your localhost, all you need to do is create a small server that will listen to `POST` requests that are being sent to the /webhooks route.
+现在，由于您要将事件转发到本地主机，您只需创建一个小型服务器，用于监听发送到 /webhooks 路由的 `POST` 请求。
 
-:::tip
-This example shows how to setup a small listener server using [Nodejs](https://nodejs.org/en/) and [Express](https://expressjs.com/) but you can use any language and framework you prefer.
+:::tip 本示例展示了如何使用[Nodejs](https://nodejs.org/en/) 和[Express](https://expressjs.com/) 设置一个小型监听服务器，但您也可以使用您喜欢的任何语言和框架。
+
 :::
 
-Create a folder and run the following in it
+创建文件夹并在其中运行以下程序
 
 ```bash
 npm init -y
 npm install express
 ```
 
-Inside this folder create an `index.js` file and paste the following:
+在该文件夹中创建一个 `index.js` 文件并粘贴以下内容: 
 
 ```js
 const { createHmac } = require("crypto");
@@ -344,26 +346,26 @@ app.listen(port, () => {
 });
 ```
 
-Now run the server:
+现在运行服务器: 
 
 ```bash
 node index.js
 ```
 
-## Triggering the action
+## 触发行动
 
-Login to port and go to the VM page and trigger the action via the **Create VM** action button:
+登录 Port 并转到虚拟机页面，通过**创建虚拟机**操作按钮触发操作: 
 
 ![Create VM button](../../../../static/img/self-service-actions/CreateVMDropdown.png)
 
-Fill the wanted details and click on `Create`
+填写所需详细信息并点击 "创建
 
 ![Create VM action form](../../../../static/img/self-service-actions/CreateVMExecution.png)
 
-And that's it, the `Success!` output shows that your local server really did receive your webhook payload:
+就这样，"成功！"的 Output 显示本地服务器确实收到了 webhook 有效负载: 
 
 ![Webhook server response](../../../../static/img/self-service-actions/HelloWorldLog.png)
 
-:::tip
-Now that webhook requests are forwarded to your local machine, you can use your IDE to place breakpoints, examine the structure of the webhook request and iterate on your custom handler logic.
+:::tip 现在，webhook 请求已被转发到本地机器，你可以使用集成开发环境来放置断点、检查 webhook 请求的结构并迭代你的自定义处理程序逻辑。
+
 :::

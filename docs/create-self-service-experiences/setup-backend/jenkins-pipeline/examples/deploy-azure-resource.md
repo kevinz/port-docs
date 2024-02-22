@@ -1,41 +1,42 @@
 ---
+
 sidebar_position: 4
+
 ---
 
 import PortTooltip from "/src/components/tooltip/tooltip.jsx"
 
-# Deploy resource in Azure Cloud with Terraform
+# 使用 Terraform 在 Azure 云中部署资源
 
-This example demonstrates how to deploy a [storage account](https://learn.microsoft.com/en-us/azure/storage/common/storage-account-overview) in Azure using Terraform templates via Port Actions.
+本示例演示了如何使用 Terraform 模板通过 Port Actions 在 Azure 中部署[storage account](https://learn.microsoft.com/en-us/azure/storage/common/storage-account-overview) 。
 
-The workflow is executed through a Jenkins pipeline.
+工作流程通过 Jenkins 管道执行。
 
-## Prerequisites
+## 先决条件
 
-1. Install the following plugins in Jenkins:
-   1. [Azure Credentials](https://plugins.jenkins.io/azure-credentials/) - This plugin provides the `Azure Service Principal` kind in Jenkins Credentials.
-   2. [Terraform](https://plugins.jenkins.io/terraform/) - This plugin provides a build wrapper that simplifies the execution of Terraform commands, such as apply, plan, and destroy.
-   3. [Generic Webhook Trigger](https://plugins.jenkins.io/generic-webhook-trigger/) - This plugin enables Jenkins to receive and trigger jobs based on incoming HTTP requests, extracting data from JSON or XML payloads and making it available as variables.
+1. 在 Jenkins 中安装以下插件: 
+    1. [Azure Credentials](https://plugins.jenkins.io/azure-credentials/) - 该插件提供 Jenkins Credentials 中的 "Azure Service Principal "类型。
+    2. [Terraform](https://plugins.jenkins.io/terraform/) - 此插件提供了一个构建包装器，可简化应用、计划和销毁等 Terraform 命令的执行。
+    3. [Generic Webhook Trigger](https://plugins.jenkins.io/generic-webhook-trigger/) - 该插件使 Jenkins 能够根据传入的 HTTP 请求接收和触发作业，从 JSON 或 XML 有效载荷中提取数据并将其作为变量提供。
 
-## Example - creating a storage account
+## 示例 - 创建存储账户
 
-Follow these steps to get started:
+请按照以下步骤开始操作: 
 
-1. Create the following as Jenkins Credentials:
-    1. Create the Port Credentials using the `Username with password` kind and the id `port-credentials`.
-        1. `PORT_CLIENT_ID` - Port Client ID [learn more](/build-your-software-catalog/sync-data-to-catalog/api/#get-api-token).
-        2. `PORT_CLIENT_SECRET` - Port Client Secret [learn more](/build-your-software-catalog/sync-data-to-catalog/api/#get-api-token).
-    2. Create the Azure Credentials using the `Azure Service Principal` kind and the id `azure`.
-        :::tip
-        Follow this [guide](https://learn.microsoft.com/en-us/azure/developer/terraform/get-started-cloud-shell-bash?tabs=bash#create-a-service-principal) to create a service principal in order to get the Azure credentials.
-        :::
-        1. `ARM_CLIENT_ID` - Azure Client ID (APP ID) of the application.
-        2. `ARM_CLIENT_SECRET` - Azure Client Secret (Password) of the application.
-        3. `ARM_SUBSCRIPTION_ID` - Azure Subscription ID.
-        4. `ARM_TENANT_ID` - The Azure [Tenant ID](https://learn.microsoft.com/en-us/azure/azure-portal/get-subscription-tenant-id).
-    3. `WEBHOOK_TOKEN` - The webhook token so that the job can only be triggered if that token is supplied.
-
-2. Create a Port <PortTooltip id="blueprint">blueprint</PortTooltip> with the following properties:
+1. 创建以下 Jenkins 证书: 
+    1.使用 `Username with password` 类型和 id `port-credentials` 创建Port凭据。
+        1. `PORT_CLIENT_ID` - Port客户端 ID[learn more](/build-your-software-catalog/sync-data-to-catalog/api/#get-api-token) 。
+        2. `PORT_CLIENT_SECRET` - Port客户端secret[learn more](/build-your-software-catalog/sync-data-to-catalog/api/#get-api-token) 。
+    2.使用 `Azure 服务 Principal` 类型和 id `azure` 创建 Azure 凭据。
+     提示
+     请按照此[guide](https://learn.microsoft.com/en-us/azure/developer/terraform/get-started-cloud-shell-bash?tabs=bash#create-a-service-principal) 创建服务委托以获取 Azure 凭据。
+     :::
+        1. `ARM_CLIENT_ID` - 应用程序的 Azure 客户 ID(APP ID)。
+        2. `ARM_CLIENT_SECRET` - 应用程序的 Azure 客户端secret(密码)。
+        3. `ARM_SUBSCRIPTION_ID` - 应用程序的 Azure 订阅 ID。
+        4. `ARM_TENANT_ID` - Azure[Tenant ID](https://learn.microsoft.com/en-us/azure/azure-portal/get-subscription-tenant-id) 。
+    3. `WEBHOOK_TOKEN` - Webhook 令牌，只有提供该令牌才能触发作业。
+2.创建具有以下属性的 Port<PortTooltip id="blueprint">蓝图</PortTooltip>: 
 
 <details>
    <summary>Port Azure Storage Account Blueprint</summary>
@@ -82,7 +83,7 @@ Follow these steps to get started:
 
   </details>
 
-3. Create a Port action in the [self-service hub](https://app.getport.io/self-serve) using the following JSON definition:
+3.使用以下 JSON 定义在[self-service hub](https://app.getport.io/self-serve) 中创建 Port 操作: 
 
 <details>
 
@@ -132,14 +133,15 @@ Follow these steps to get started:
 
 </details>
 
-4. Create the following Terraform templates in a `terraform` folder at the root of your GitHub repository:
-    1. `main.tf` - This file will contain the resource blocks which define the Storage Account to be created in the Azure cloud and the entity to be created in Port.
-    2. `variables.tf` – This file will contain the variable declarations that will be used in the resource blocks e.g. the Port credentials and Port run id.
-    3. `output.tf` – This file will contain the URL of the Storage Account that needs to be generated on successful completion of an “apply” operation. This URL will be used in the `endpoint` property when creating the Port entity.
+4.在 GitHub 仓库根目录下的 `terraform` 文件夹中创建以下 Terraform 模板: 
+    1. `main.tf` - 该文件将包含资源块，用于定义要在 Azure 云中创建的存储帐户和要在 Port 中创建的实体。
+    2. `variables.tf` - 此文件将包含在资源块中被引用的变量声明式，例如 Port 凭据和 Port 运行 ID。
+    3. `output.tf` - 该文件将包含 "应用 "操作成功完成后生成的存储帐户的 URL。该 URL 将在创建 Port 实体时被引用到 `endpoint` 属性中。
 
 <details>
   <summary>Terraform `main.tf` template</summary>
-  
+
+
   ```yaml showLineNumbers
     # Configure the Azure provider
     terraform {
@@ -154,115 +156,123 @@ Follow these steps to get started:
             }
         }
 
-        required_version = ">= 1.1.0"
-    }
 
-    provider "azurerm" {
+required_version = ">= 1.1.0"
+}
 
-        features {}
-    }
+provider "azurerm" {
 
-    provider "port" {
-        client_id = var.port_client_id
-        secret    = var.port_client_secret
-    }
+    features {}
+}
 
-    resource "azurerm_storage_account" "storage_account" {
-        name                = var.storage_account_name
-        resource_group_name = var.resource_group_name
+provider "port" {
+    client_id = var.port_client_id
+    secret    = var.port_client_secret
+}
 
-        location                 = var.location
-        account_tier             = "Standard"
-        account_replication_type = "LRS"
-        account_kind             = "StorageV2"
-    }
+resource "azurerm_storage_account" "storage_account" {
+    name                = var.storage_account_name
+    resource_group_name = var.resource_group_name
 
-    resource "port_entity" "azure_storage_account" {
-        count      = length(azurerm_storage_account.storage_account) > 0 ? 1 : 0
-        identifier = var.storage_account_name
-        title      = var.storage_account_name
-        blueprint  = "azureStorage"
-        run_id     = var.port_run_id
-        properties = {
-            string_props = {
-            "storage_name"     = var.storage_account_name,
-            "storage_location" = var.location,
-            "endpoint"         = azurerm_storage_account.storage_account.primary_web_endpoint
-            }
+    location                 = var.location
+    account_tier             = "Standard"
+    account_replication_type = "LRS"
+    account_kind             = "StorageV2"
+}
+
+resource "port_entity" "azure_storage_account" {
+    count      = length(azurerm_storage_account.storage_account) > 0 ? 1 : 0
+    identifier = var.storage_account_name
+    title      = var.storage_account_name
+    blueprint  = "azureStorage"
+    run_id     = var.port_run_id
+    properties = {
+        string_props = {
+        "storage_name"     = var.storage_account_name,
+        "storage_location" = var.location,
+        "endpoint"         = azurerm_storage_account.storage_account.primary_web_endpoint
         }
-
-        depends_on = [azurerm_storage_account.storage_account]
     }
-  ```
+
+    depends_on = [azurerm_storage_account.storage_account]
+}
+
+```
+
 
 </details>
 
 <details>
-  
-  <summary>Terraform `variables.tf` template</summary>
-  :::note
-  Replace the default `resource_group_name` with a resource group from your Azure account. Check this [guide](https://learn.microsoft.com/en-us/azure/azure-resource-manager/management/manage-resource-groups-portal) to find your resource groups. You may also wish to set the default values of other variables.
-  :::
 
-  ```yaml showLineNumbers
-    variable "resource_group_name" {
-        type        = string
-        default     = "myTFResourceGroup"
-        description = "RG name in Azure"
-    }
+<summary>Terraform `variables.tf` template</summary>
+:::note
+Replace the default `resource_group_name` with a resource group from your Azure account. Check this [guide](https://learn.microsoft.com/en-us/azure/azure-resource-manager/management/manage-resource-groups-portal) to find your resource groups. You may also wish to set the default values of other variables.
+:::
 
-    variable "location" {
-        type        = string
-        default     = "westus2"
-        description = "RG location in Azure"
-    }
 
-    variable "storage_account_name" {
-        type        = string
-        description = "Storage Account name in Azure"
-        default     = "demo"
-    }
+```yaml showLineNumbers
+  variable "resource_group_name" {
+      type        = string
+      default     = "myTFResourceGroup"
+      description = "RG name in Azure"
+  }
 
-    variable "port_run_id" {
-        type        = string
-        description = "The runID of the action run that created the entity"
-    }
+  variable "location" {
+      type        = string
+      default     = "westus2"
+      description = "RG location in Azure"
+  }
 
-    variable "port_client_id" {
-        type        = string
-        description = "The Port client ID"
-    }
+  variable "storage_account_name" {
+      type        = string
+      description = "Storage Account name in Azure"
+      default     = "demo"
+  }
 
-    variable "port_client_secret" {
-        type        = string
-        description = "The Port client secret"
-    }
-  ```
+  variable "port_run_id" {
+      type        = string
+      description = "The runID of the action run that created the entity"
+  }
+
+  variable "port_client_id" {
+      type        = string
+      description = "The Port client ID"
+  }
+
+  variable "port_client_secret" {
+      type        = string
+      description = "The Port client secret"
+  }
+```
+
+
 
 </details>
 
 <details>
 <summary>Terraform `output.tf` template</summary>
-  
+
+
   ```yaml showLineNumbers
     output "endpoint_url" {
         value = azurerm_storage_account.storage_account.primary_web_endpoint
     }
   ```
 
+
 </details>
 
-5. Create a Jenkins pipeline:
-
-    1. [Enable webhook trigger for a pipeline](../jenkins-pipeline.md#enabling-webhook-trigger-for-a-pipeline)
-    2. [Define variables for a pipeline](../jenkins-pipeline.md#defining-variables): Define the STORAGE_NAME, STORAGE_LOCATION, PORT_RUN_ID and BLUEPRINT_ID variables.
-    3. [Token Setup](../jenkins-pipeline.md#token-setup): Define the token to match `JOB_TOKEN` as configured in your Port Action.
+5.创建 Jenkins Pipelines: 
+    1.[Enable webhook trigger for a pipeline](../jenkins-pipeline.md#enabling-webhook-trigger-for-a-pipeline)
+    2.[Define variables for a pipeline](../jenkins-pipeline.md#defining-variables) 定义 STORAGE_NAME、STORAGE_LOCATION、PORT_RUN_ID 和 BLUEPRINT_ID 变量。
+    3.[Token Setup](../jenkins-pipeline.md#token-setup) 定义令牌，使其与 Port Action 中配置的 `JOB_TOKEN` 匹配。
 
 <details>
 
 <summary>Jenkins Pipeline Script</summary>
-:::note
+:::note 
 Please make sure to modify the `YOUR_USERNAME` and `YOUR_REPO` placeholders in the URL of the git repository in the `Checkout` stage. Alternatively you can use our [example repository](https://github.com/port-labs/pipelines-terraform-azure).
+
 :::
 
 ```groovy showLineNumbers
@@ -277,12 +287,12 @@ pipeline {
         TF_HOME = tool('terraform')
         TF_IN_AUTOMATION = "true"
         PATH = "$TF_HOME:$PATH"
-        
+
         PORT_ACCESS_TOKEN = ""
         endpoint_url = ""
 
     }
-    
+
     triggers {
         GenericTrigger(
             genericVariables: [
@@ -294,7 +304,7 @@ pipeline {
             causeString: 'Triggered by Port',
             allowSeveralTriggersPerBuild: true,
             tokenCredentialId: "WEBHOOK_TOKEN",
-            
+
             regexpFilterExpression: '',
             regexpFilterText: '',
             printContributedVariables: true,
@@ -335,7 +345,7 @@ pipeline {
                 }
             }
         }
-        
+
         stage('Terraform Azure') {
             steps {
                 withCredentials([azureServicePrincipal(
@@ -349,15 +359,15 @@ pipeline {
                         script {
                             echo 'Initializing Terraform'
                             sh 'terraform init'
-                            
+
                             echo 'Validating Terraform configuration'
                             sh 'terraform validate'
-                            
+
                             echo 'Creating Terraform Plan for Azure changes'
                             sh """
                             terraform plan -out=tfazure -var storage_account_name=$STORAGE_NAME -var location=$STORAGE_LOCATION -var port_run_id=$PORT_RUN_ID -target=azurerm_storage_account.storage_account
                             """
-                            
+
                             echo 'Applying Terraform changes to Azure'
                             sh 'terraform apply -auto-approve -input=false tfazure'
 
@@ -365,7 +375,7 @@ pipeline {
                             sh """
                             terraform plan -out=tfport -var storage_account_name=$STORAGE_NAME -var location=$STORAGE_LOCATION -var port_run_id=$PORT_RUN_ID
                             """
-                            
+
                             echo 'Applying Terraform changes to Port'
                             sh 'terraform apply -auto-approve -input=false tfport'
                         }
@@ -405,7 +415,7 @@ pipeline {
             }
         }
     }
-    
+
     post {
 
         failure {
@@ -438,4 +448,4 @@ pipeline {
 
 </details>
 
-6. Trigger the action from the [self-service](https://app.getport.io/self-serve) tab of your Port application.
+6.从 Port 应用程序的[self-service](https://app.getport.io/self-serve) 标签触发操作。

@@ -1,144 +1,148 @@
 ---
+
 sidebar_position: 14
-title: Troubleshooting
-sidebar_label: ❓ Troubleshooting
+title: 故障排除
+sidebar_label: ❓ 疑难解答
+
 ---
 
-# Troubleshooting
+# 疑难解答
 
-This page contains answers to common questions and issues that users encounter when using Port, organized by topic.
+本页包含用户在使用 Port 时遇到的常见问题的答案，按主题分类。
 
 ## General
 
-#### Do I need an expert to set up an Internal Developer Portal with Port?
+#### 使用 Port 建立内部开发人员门户网站需要专家吗？
 
 <details>
 <summary><b>Answer (click to expand)</b></summary>
 
-Port was designed to let you set up a developer portal in minutes, quickly defining your data model and then ingesting data about software and resources into it.
+Port 的设计目的是让您在几分钟内建立一个开发人员门户，快速定义数据模型，然后将有关软件和资源的数据输入其中。
 
-We believe in “bring your own data model” since each organization differs in how it wants to set up Port and model its software. Our documentation and [other resources](/resources) can help you get started. 
+我们相信 "自带数据模型"，因为每个组织希望如何建立 Port 和软件模型都不尽相同。我们的文档和[other resources](/resources) 可以帮助您开始使用。
 
-If you're trying to find out if Port is right for you, you can reach out to us by scheduling an [in-person demo](https://www.getport.io/demo-request), and we’ll be happy to escort you through the process of building a portal that's right for you.
+如果您想了解 Port 是否适合您，可以通过[in-person demo](https://www.getport.io/demo-request) 与我们联系，我们将很乐意为您建立一个适合您的门户网站。
 
 </details>
 
 ---
 
-#### Why not backstage?
+#### 为什么不是后台？
 
 <details>
 <summary><b>Answer (click to expand)</b></summary>
 
-Spotify’s backstage is spot-on in recognizing the need for a streamlined end-to-end development environment. It is also flexible, which lets you build your software catalog according to your data model. However, it requires coding, personnel to implement it, and domain expertise. You also need to invest in deployment, configuration and updates. You can read a detailed comparison of Port and Backstage [here](https://www.getport.io/compare/backstage-vs-port).
+Spotify 的 Backstage 非常准确地认识到了端到端开发环境的简化需求。 它还很灵活，可以让您根据自己的数据模型构建软件目录。 不过，它需要编码、实施人员和领域专业知识。 您还需要在部署、配置和更新方面进行投资。您可以阅读 Port 和 Backstage 的详细比较[here](https://www.getport.io/compare/backstage-vs-port) 。
 
 </details>
 
 ---
 
-#### Is Port really free?
+#### Port 真的免费吗？
 
 <details>
 <summary><b>Answer (click to expand)</b></summary>
 
-Port is free up to 15 users, you can check our [pricing page](https://www.getport.io/pricing) for more information. Using the free version of Port you can set up an advanced, fully functioning, internal developer portal.
+Port 最多可免费使用 15 个用户，您可以查看我们的[pricing page](https://www.getport.io/pricing) 了解更多信息。使用免费版 Port，您可以建立一个先进的、功能齐全的内部开发人员门户。
 
-The free version includes all of the features in Port, except for SSO and a certain limitation on the number of software catalog entities (up to 10,000), for reasons of fair use.  
+免费版包含 Port 中的所有功能，但出于合理使用的考虑，除了 SSO 和对软件目录实体数量的一定限制(最多 10,000 个)。
 
-In case you're evaluating Port, it provides you with everything you need, and if you need SSO for a given period, contact us.
+如果您正在评估 Port，它可以为您提供所需的一切，如果您在一定时期内需要 SSO，请联系我们。
 
 </details>
 
 ---
 
-## Organization
+## 组织
 
-#### How can I set up SSO for my organization?
+#### 如何为我的组织设置 SSO？
 
 <details>
 <summary><b>Answer (click to expand)</b></summary>
 
-1. Set up the Application in your SSO dashboard. You can find the documentation for each supported provider [here](https://docs.getport.io/sso-rbac/sso-providers/).
-2. Reach out to us with the required credentials in order to complete the set up.
-3. After completing the set up, Port will provide you with the `CONNECTION_NAME`. Head back to the documentation and replace it where needed.
+1. 在 SSO 面板中设置应用程序。您可以在[here](https://docs.getport.io/sso-rbac/sso-providers/) 找到每个受支持 Provider 的文档。
+2. 请与我们联系并提供所需凭证，以便完成设置。
+3. 完成设置后，Port 将为您提供 `CONNECTION_NAME`。请返回文档并在需要时进行替换。
 
 </details>
 
 ---
 
-#### How can I troubleshoot my SSO connection?
+#### 如何排除 SSO 连接的故障？
+
 <details>
 <summary><b>Answer (click to expand)</b></summary>
 
-1. Make sure the user has permissions to use the application.
-2. Look at the URL of the error, sometimes they are embedded with the error. For example, look at the following URL:
+1. 确保用户拥有使用应用程序的权限。
+2. 查看错误的 URL，有时它们会嵌入错误中。例如，请查看以下 URL: 
+
 ```
 https://app.getport.io/?error=access_denied&error_description=access_denied%20(User%20is%20not%20assigned%20to%20the%20client%20application.)&state=*********
 ```
-After the `error_description`, you can see `User%20is%20not%20assigned%20to%20the%20client%20application`. In this case, the user is not assigned to the SSO application, and therefore cannot access Port through it.
 
-3. Make sure you are using the correct `CONNECTION_NAME`     provided to you by Port, and that the application is set up correctly according to our setup docs.
+在 "error_description "后面，您可以看到 "User%20is%20not%20assigned%20to%20the%20client%20application"。 在这种情况下，用户没有分配给 SSO 应用程序，因此无法通过它访问 Port。
 
-</details>
-
----
-
-#### Why can't I invite another member to my portal?
-
-<details>
-<summary><b>Answer (click to expand)</b></summary>
-
-When using the free tier, Port allows you to be connected to a single organization. If your colleague is in another organization, you will not be able to invite him/her.  
-Reach out to us via [Slack](https://www.getport.io/community) or Intercom, and we will help you resolve the issue.
+3.确保您使用的是 Provider 提供的正确的 `CONNECTION_NAME`，并根据我们的设置文档正确设置应用程序。
 
 </details>
 
 ---
 
-## Actions
-
-#### After triggering an Action in Port, why is it stuck "in progress" and nothing happens in the Git provider?
+#### 为什么我不能邀请其他会员访问我的门户网站？
 
 <details>
 <summary><b>Answer (click to expand)</b></summary>
 
-Please make sure that:
-
-1. The action backend is set up correctly. This includes the Organization/Group name, repository and workflow file name.
-2. For Gitlab, make sure the [Port execution agent](https://docs.getport.io/create-self-service-experiences/setup-backend/gitlab-pipeline/Installation#installing-the-agent) is installed properly. When triggering the action, you can view the logs of the agent to see what URL was triggered. 
+使用免费层级时，Port 只允许您连接到一个组织。 如果您的同事在其他组织，您将无法邀请他/她。 请通过[Slack](https://www.getport.io/community) 或 Intercom 联系我们，我们将帮助您解决问题。
 
 </details>
 
 ---
 
-## Catalog
+## 行动
 
-#### One of my catalog pages is not displaying all entities, or some data is missing, why is that?
+#### 在 Port 中触发一个操作后，为什么会停留在 "进行中"，而 Git Providers 中什么也没发生？
 
 <details>
 <summary><b>Answer (click to expand)</b></summary>
 
-1. Check for table filters in the top right. Make sure no filter is applied, or no property is hidden.
-2. Sometimes users apply [initial filters](https://docs.getport.io/customize-pages-dashboards-and-plugins/page/catalog-page/#initial-filters) to increase the loading speed of the catalog page. Make sure your missing entity is not being filtered out.
+请确保
+
+1. 操作后端设置正确。这包括组织/组名称、存储库和工作流程文件名称。
+2. 对于 Gitlab，请确保[Port execution agent](https://docs.getport.io/create-self-service-experiences/setup-backend/gitlab-pipeline/Installation#installing-the-agent) 已正确安装。触发动作时，可以查看代理的日志，了解触发了哪些 URL。
 
 </details>
 
 ---
 
-## Security
+## 目录
 
-#### What security does Port have in place?
+#### 我的一个目录页面没有显示所有实体，或者缺少某些数据，这是为什么？
 
 <details>
 <summary><b>Answer (click to expand)</b></summary>
 
-We put a lot of thought into Port’s design to make it secure. Consequently, it doesn’t store secrets or credentials, and doesn't require whitelisting of IPs. 
+1. 检查右上角的表格筛选器。确保没有应用筛选器，或没有隐藏属性。
+2. 有时用户会应用[initial filters](https://docs.getport.io/customize-pages-dashboards-and-plugins/page/catalog-page/#initial-filters) 来提高目录页面的加载速度。确保您丢失的实体没有被过滤掉。
 
-You can take a look at our secure, push-only architecture [here](https://docs.getport.io/build-your-software-catalog/sync-data-to-catalog).
+</details>
 
-Security and privacy are a top priority at Port. We use industry-standard encryption protocols, data is encrypted both at rest and in transit, with complete isolation between clients and data access logging and auditing. Port is SOC2 and ISO/IEC 27001:2022 compliant, and undergoes regular pentests, product security and compliance reviews.
+---
 
-You can find the complete coverage of Port's **security policy** in our security [page](https://www.getport.io/security).
+## 安全
+
+#### Port 有哪些安全措施？
+
+<details>
+<summary><b>Answer (click to expand)</b></summary>
+
+我们在 Port 的设计上花了很多心思，以确保其安全性。 因此，它不存储secret或凭证，也不需要 IP 白名单。
+
+您可以查看我们安全的只推送架构[here](https://docs.getport.io/build-your-software-catalog/sync-data-to-catalog) 。
+
+安全和隐私是 Port 的重中之重。 我们采用行业标准的加密协议，数据在静态和传输过程中都经过加密，客户端之间完全隔离，并对数据访问进行日志记录和审计。 Port 符合 SOC2 和 ISO/IEC 27001:2022 标准，并定期进行五重测试、产品安全性和合规性审查。
+
+您可以在我们的安全[page](https://www.getport.io/security) 中找到有关 Port 的**安全政策**的完整报道。
 
 </details>
 

@@ -1,9 +1,9 @@
-# SSO providers
+# SSO Providers
 
 import DocCardList from '@theme/DocCardList';
 
-Port offers several SSO integrations, allowing you to easily assign permissions and roles using your users and teams,when providing access and permissions to your developers.
+Port 提供多种 SSO 集成，允许您在向开发人员提供访问权限时，使用用户和团队轻松分配权限和角色。
 
-In order to get started with our SSO integrations, select the one you are currently using from the list below:
+要开始使用我们的 SSO 集成，请从下面的列表中选择您当前正在引用的集成: 
 
 <DocCardList/>

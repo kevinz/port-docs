@@ -1,9 +1,11 @@
 ---
-title: Ingest data into the software catalog
-sidebar_label: Ingest data into the software catalog
+
+title: 将数据输入软件目录
+sidebar_label: 将数据纳入软件目录
+
 ---
 
-# Ingest data into the software catalog
+# 将数据输入软件目录
 
 <center>
 
@@ -11,23 +13,23 @@ sidebar_label: Ingest data into the software catalog
 
 </center>
 
-Port offers several integrations, allowing you to easily ingest and manage data with the tools you are already use in your infrastructure.
+Port 提供多种集成功能，让您可以利用基础设施中已在使用的工具轻松引用和管理数据。
 
 ![Catalog Architecture](../../../static/img/sync-data-to-catalog/catalog-arch.jpg)
 
-## Introduction
+## 简介
 
-Port's integration methods allow you to ingest both [blueprints](../define-your-data-model/setup-blueprint/setup-blueprint.md#blueprint-structure) and [entities](#entity-json-structure).
+Port 的集成方法允许您同时采集[blueprints](../define-your-data-model/setup-blueprint/setup-blueprint.md#blueprint-structure) 和[entities](#entity-json-structure) 。
 
-By using Port's integrations you ensure that the software catalog is always up to date, and that live data is ingested directly from your systems, which is the most reliable source-of-truth for your environment.
+通过使用 Port 的集成，您可以确保软件目录始终是最新的，实时数据直接从您的系统中引用，这对您的环境来说是最可靠的真实来源。
 
-## Creating entities
+## 创建实体
 
-An entity is an object that matches the type defined by a blueprint, and it represents the data of the software components which is defined by the blueprint properties.
+实体是与蓝图定义的类型相匹配的对象，它代表软件组件的数据，这些数据由蓝图属性定义。
 
-## Entity JSON structure
+## 实体 JSON 结构
 
-This is the basic structure of an entity:
+这是实体的基本结构: 
 
 ```json showLineNumbers
 {
@@ -43,7 +45,8 @@ This is the basic structure of an entity:
 }
 ```
 
-### Structure table
+#### 结构表
+
 
 | Field        | Type     | Description                                                                                                                                                                                                                                                            |
 | ------------ | -------- | ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
@@ -54,23 +57,24 @@ This is the basic structure of an entity:
 | `properties` | `Object` | An object containing key-value pairs, where each key is a property **as defined in the blueprint definition**, and each value applies the `type` of the property.                                                                                                      |
 | `relations`  | `object` | An object containing key-value pairs.<br /> Each key is the identifier of the [relation](../define-your-data-model/relate-blueprints/relate-blueprints.md) that is defined on the blueprint.<br /><br />See more in the [related entities](#related-entities) section. |
 
-#### Teams and ownership
 
-:::info teams and ownership
-The `team` key defines ownership over an entity and controls who can modify or delete an existing entity.
+#### 团队和所有权
 
-To Explore more about ownership in Port see our [permissions](../../sso-rbac/rbac/rbac.md) section.
+:::info  团队和所有权 `团队`键定义实体的所有权，并控制谁可以修改或删除现有实体。
+
+如需进一步了解 Port 的所有权，请参阅我们的[permissions](../../sso-rbac/rbac/rbac.md) 部分。
+
 :::
 
-### Related entities
+#### 相关实体
 
-When two blueprints are connected, creating an entity of the `source` blueprint will show an additional option - a `relation`.
+当两个蓝图连接时，创建 "源 "蓝图的实体将显示一个附加选项--"相关性"。
 
-This option is shown under the `relations` section as follows:
+该选项在 "关系 "部分显示如下: 
 
-#### Single relation example
+#### 单一关系示例
 
-When a relation between blueprints is configured with `many = false`, you can add a relation to an entity by adding the `relationIdentifier` as key, and the `relatedEntityIdentifier` as value:
+当使用 `many = false` 配置蓝图之间的关系时，可以通过添加 `relationIdentifier` 作为键，并添加 `relatedEntityIdentifier` 作为值，为实体添加关系: 
 
 ```json showLineNumbers
 "relations": {
@@ -78,9 +82,9 @@ When a relation between blueprints is configured with `many = false`, you can ad
 }
 ```
 
-#### Many relation example
+#### 许多关系示例
 
-When a relation between blueprints is configured with `many = true`, you can add a relation to an entity by adding the `relationIdentifier` as key, and an array of `relatedEntityIdentifier`(s) as value:
+当使用 `many = true` 配置蓝图之间的关系时，您可以通过添加 `relationIdentifier` 作为键，以及 `relatedEntityIdentifier`(s) 作为值的数组，为实体添加关系: 
 
 ```json showLineNumbers
 "relations": {
@@ -88,22 +92,22 @@ When a relation between blueprints is configured with `many = true`, you can add
 }
 ```
 
-:::tip
-Click for more details about [**relations**](../define-your-data-model/relate-blueprints/relate-blueprints.md).
+:::tip 点击[**relations**](../define-your-data-model/relate-blueprints/relate-blueprints.md) 了解更多详情。
+
 :::
 
-## Ingestion integration methods
+## 输入集成方法
 
-Port offers a variety of data ingestion integrations and methods, these make it easy to ingest data to the catalog and keep it up to date.
+Port 提供各种数据摄取集成和方法，这些方法可以轻松地将数据摄取到目录中并保持更新。
 
-Use the links below to learn about the different data ingestion methods Port offers:
+请使用以下链接了解 Port 提供的不同数据引用方法: 
 
-- [REST](../../api-reference/api-reference.mdx);
-- [CI/CD](./ci-cd/ci-cd.md);
-- [Kubernetes & ArgoCD & K8s CRDs](./kubernetes/kubernetes.md);
-- [IaC](./iac/iac.md);
-- [Git providers](./git/git.md);
-- [AWS](/build-your-software-catalog/sync-data-to-catalog/cloud-providers/aws/aws.md), [Azure](/build-your-software-catalog/sync-data-to-catalog/cloud-providers/azure/azure.md), [GCP](/build-your-software-catalog/sync-data-to-catalog/cloud-providers/gcp/gcp.md);
-- [Cloud Cost](./cloud-cost/opencost.md);
-- [Event Processing](./event-processing/kafka.md);
-- Incident Management - [PagerDuty](./incident-management/pagerduty.md), [Opsgenie](./incident-management/opsgenie.md), [FireHydrant](./incident-management/firehydrant.md);
+* * [REST](../../api-reference/api-reference.mdx);
+* [CI/CD](./ci-cd/ci-cd.md);
+* [Kubernetes & ArgoCD & K8s CRDs](./kubernetes/kubernetes.md);
+* [IaC](./iac/iac.md);
+* [Git providers](./git/git.md);
+* [AWS](/build-your-software-catalog/sync-data-to-catalog/cloud-providers/aws/aws.md),[Azure](/build-your-software-catalog/sync-data-to-catalog/cloud-providers/azure/azure.md),[GCP](/build-your-software-catalog/sync-data-to-catalog/cloud-providers/gcp/gcp.md) ；
+* [Cloud Cost](./cloud-cost/opencost.md);
+* [Event Processing](./event-processing/kafka.md);
+* 事件管理 -[PagerDuty](./incident-management/pagerduty.md),[Opsgenie](./incident-management/opsgenie.md),[FireHydrant](./incident-management/firehydrant.md) ；

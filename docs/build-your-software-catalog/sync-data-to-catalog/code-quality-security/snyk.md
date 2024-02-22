@@ -1,36 +1,35 @@
 import Tabs from "@theme/Tabs"
 import TabItem from "@theme/TabItem"
-import Prerequisites from "../templates/\_ocean_helm_prerequisites_block.mdx"
-import AdvancedConfig from '../../../generalTemplates/\_ocean_advanced_configuration_note.md'
-import SnykBlueprint from "../webhook/examples/resources/snyk/\_example_snyk_vulnerability_blueprint.mdx";
-import SnykConfiguration from "../webhook/examples/resources/snyk/\_example_snyk_vulnerability_webhook_configuration.mdx";
+import Prerequisites from "../templates/_ocean_helm_prerequisites_block.mdx"
+import AdvancedConfig from '../../../generalTemplates/_ocean_advanced_configuration_note.md'
+import SnykBlueprint from "../webhook/examples/resources/snyk/_example_snyk_vulnerability_blueprint.mdx";
+import SnykConfiguration from "../webhook/examples/resources/snyk/_example_snyk_vulnerability_webhook_configuration.mdx";
 
 # Snyk
 
-Our Snyk integration allows you to import `organizations`, `targets`, `projects` and `issues` from your Snyk account into Port, according to your mapping and definitions.
+通过我们的 Snyk 集成，您可以根据您的映射和定义，将 Snyk 账户中的 "组织"、"目标"、"项目 "和 "问题 "导入 Port。
 
-## Common use cases
+## 常见被引用情况
 
-- Map `organizations`, `targets`, `projects` and `issues` in your Snyk environment.
-- Watch for object changes (create/update/delete) in real-time, and automatically apply the changes to your entities in Port.
-- Create/delete Snyk objects using self-service actions.
+* 在您的 Snyk 环境中映射 "组织"、"目标"、"项目 "和 "问题"。
+* 实时观察对象更改(创建/更新/删除)，并自动将更改应用到 Port 中的实体。
+* 使用自助操作创建/删除 Snyk 对象。
 
-## Prerequisites
+## 先决条件
 
 <Prerequisites />
 
-## Installation
+## 安装
 
-Choose one of the following installation methods:
+从以下安装方法中选择一种: 
 
 <Tabs groupId="installation-methods" queryString="installation-methods">
 
 <TabItem value="real-time-always-on" label="Real Time & Always On" default>
 
-Using this installation option means that the integration will be able to update Port in real time using webhooks.
+使用该安装选项意味着集成将能使用 webhook 实时更新 Port。
 
-This table summarizes the available parameters for the installation.
-Set them as you wish in the script below, then copy it and run it in your terminal:
+本表总结了安装时可用的参数，请在下面的脚本中按自己的需要进行设置，然后复制并在终端运行: 
 
 
 | Parameter                           | Description                                                                                                        | Required |
@@ -50,47 +49,49 @@ Set them as you wish in the script below, then copy it and run it in your termin
 | `scheduledResyncInterval`           | The number of minutes between each resync                                                                          | ❌       |
 | `initializePortResources`           | Default true, When set to true the integration will create default blueprints and the port App config Mapping      | ❌       |
 
+
 <br/>
 
 <Tabs groupId="deploy" queryString="deploy">
 
 <TabItem value="helm" label="Helm">
 
-By default, the integration fetches all organizations associated with the provided Snyk token. If you wish to customize access, the following parameters are available:
+默认情况下，集成会获取与所提供的 Snyk 令牌相关联的所有组织。 如果希望自定义访问权限，可使用以下参数: 
 
-`integration.config.organizationId`: Use this parameter to restrict access to a specific organization. If specified, the integration will fetch data only for the provided organization.
+integration.config.organizationId`: 使用此参数可限制对特定组织的访问。 如果指定，集成将只获取 Provider 所提供组织的数据。
 
-`integration.config.groups`: When you want to limit access to all organizations within specific Snyk groups, use this parameter. Provide a comma-separated list of Snyk group IDs, and the integration will filter data accordingly.
+integration.config.groups": 当您想限制对特定 Snyk 组内所有组织的访问时，请使用此参数。 提供以逗号分隔的 Snyk 组 ID 列表，集成将据此过滤数据。
 
-:::note Default behaviour
-If neither parameter is provided, the integration will operate with the default behavior of fetching all organizations associated with the supplied Snyk token.
+:::note  默认行为 如果两个参数都未提供，集成将按照默认行为运行，即获取与提供的 Snyk 令牌相关联的所有组织。
+
 :::
 
-To install the integration using Helm, run the following command:
+要使用 Helm 安装集成，请运行以下命令: 
 
 ```bash showLineNumbers
 helm repo add --force-update port-labs https://port-labs.github.io/helm-charts
 helm upgrade --install my-snyk-integration port-labs/port-ocean \
-	--set port.clientId="PORT_CLIENT_ID"  \
-	--set port.clientSecret="PORT_CLIENT_SECRET"  \
-	--set port.baseUrl="https://api.getport.io"  \
-	--set initializePortResources=true  \
-	--set scheduledResyncInterval=120 \
-	--set integration.identifier="my-snyk-integration"  \
-	--set integration.type="snyk"  \
-	--set integration.eventListener.type="POLLING"  \
-	--set integration.secrets.token="SNYK_TOKEN"
+    --set port.clientId="PORT_CLIENT_ID"  \
+    --set port.clientSecret="PORT_CLIENT_SECRET"  \
+    --set port.baseUrl="https://api.getport.io"  \
+    --set initializePortResources=true  \
+    --set scheduledResyncInterval=120 \
+    --set integration.identifier="my-snyk-integration"  \
+    --set integration.type="snyk"  \
+    --set integration.eventListener.type="POLLING"  \
+    --set integration.secrets.token="SNYK_TOKEN"
 ```
+
 </TabItem>
 <TabItem value="argocd" label="ArgoCD" default>
 To install the integration using ArgoCD, follow these steps:
 
-1. Create a `values.yaml` file in `argocd/my-ocean-snyk-integration` in your git repository with the content:
+1. 在 git 仓库的`argocd/my-ocean-snyk-integration`中创建内容为`values.yaml`的文件: 
 
-:::note Default behaviour
-By default, the integration fetches all organizations associated with the provided Snyk token.
+:::note  默认行为 默认情况下，集成会获取与 Provider Snyk 令牌相关联的所有组织。
 
-Remember to replace the placeholder for `SNYK_TOKEN`.
+记住要替换 `SNYK_TOKEN` 的占位符。
+
 :::
 
 ```yaml showLineNumbers
@@ -105,14 +106,15 @@ integration:
   // highlight-next-line
     token: SNYK_TOKEN
 ```
+
 <br/>
 
- If you wish to customize access, the following configurations are available:
+如果您希望自定义访问权限，可以使用以下配置: 
 
- - The `organizationId` key is used to restrict access to a specific organization. If specified in the `values.yaml` file, the integration will fetch data only for the provided organization.
+* `organizationId` 键被引用来限制对特定组织的访问。如果在 `values.yaml` 文件中指定，集成将只获取 Providers 组织的数据。
 
-:::note Configuration variable replacement
-Remember to replace the placeholders for `SNYK_TOKEN` and `SNYK_ORGANIZATION_ID`.
+:::note  配置变量替换 请记住替换 `SNYK_TOKEN` 和 `SNYK_ORGANIZATION_ID` 的占位符。
+
 :::
 
 ```yaml showLineNumbers
@@ -129,12 +131,13 @@ integration:
   secrets:
     token: SNYK_TOKEN
 ```
+
 <br/>
 
- - The `groups` key is used to restrict access to all organizations within specific Snyk groups. In the `values.yaml` file, provide a comma-separated list of Snyk group IDs to the `groups` key, and the integration will filter data for all organizations in the group(s).
+* groups "键被引用来限制对特定 Snyk 组内所有组织的访问。在 `values.yaml` 文件中，为 `groups` 键提供一个以逗号分隔的 Snyk 组 ID 列表，集成将过滤组内所有组织的数据。
 
-:::note Configuration variable replacement
-Remember to replace the placeholders for `SNYK_TOKEN` and `SNYK_GROUPS`.
+:::note  配置变量替换 请记住替换 `SNYK_TOKEN` 和 `SNYK_GROUPS` 的占位符。
+
 :::
 
 ```yaml showLineNumbers
@@ -151,13 +154,15 @@ integration:
   secrets:
     token: SNYK_TOKEN
 ```
+
 <br/>
 
-2. Install the `my-ocean-snyk-integration` ArgoCD Application by creating the following `my-ocean-snyk-integration.yaml` manifest:
-:::note Configuration variable replacement
-Remember to replace the placeholders for `YOUR_PORT_CLIENT_ID` `YOUR_PORT_CLIENT_SECRET` and `YOUR_GIT_REPO_URL`.
+2.创建下面的 "my-ocean-snyk-integration.yaml "配置清单，安装 "my-ocean-snyk-integration "ArgoCD应用程序: 
 
-Multiple sources ArgoCD documentation can be found [here](https://argo-cd.readthedocs.io/en/stable/user-guide/multiple_sources/#helm-value-files-from-external-git-repository).
+:::note  配置变量替换 请记住替换 `YOUR_PORT_CLIENT_ID` `YOUR_PORT_CLIENT_SECRET` 和 `YOUR_GIT_REPO_URL` 的占位符。
+
+多种来源的 ArgoCD 文档可在[here](https://argo-cd.readthedocs.io/en/stable/user-guide/multiple_sources/#helm-value-files-from-external-git-repository) 上找到。
+
 :::
 
 <details>
@@ -202,10 +207,12 @@ spec:
 </details>
 <br/>
 
-3. Apply your application manifest with `kubectl`:
+3.使用 `kubectl` 配置应用程序清单: 
+
 ```bash
 kubectl apply -f my-ocean-snyk-integration.yaml
 ```
+
 </TabItem>
 </Tabs>
 
@@ -213,25 +220,25 @@ kubectl apply -f my-ocean-snyk-integration.yaml
 
 <TabItem value="one-time" label="Scheduled">
 
-  By default, the integration fetches all organizations associated with the provided Snyk token. If you wish to customize access, the following parameters are available:
+默认情况下，集成会获取与所提供的 Snyk 令牌相关联的所有组织。 如果希望自定义访问权限，可使用以下参数: 
 
-  `OCEAN__INTEGRATION__CONFIG__ORGANIZATION_ID`: Use this parameter to restrict access to a specific organization. If specified, the integration will fetch data only for the provided organization.
+OCEAN__INTEGRATION__CONFIG__ORGANIZATION_ID`: 使用此参数可限制对特定组织的访问。 如果被引用，集成将只获取所提供组织的数据。
 
-  `OCEAN__INTEGRATION__CONFIG__GROUPS`: When you want to limit access to all organizations within specific Snyk groups, use this parameter. Provide a comma-separated list of Snyk group IDs, and the integration will filter data accordingly.
+OCEAN__INTEGRATION__CONFIG__GROUPS": 当您想限制对特定 Snyk 组内所有组织的访问时，请使用此参数。 被引用的 Snyk 组 ID 是一个逗号分隔的列表，集成将据此过滤数据。
 
-  :::note Default behaviour
-  If neither parameter is provided, the integration will operate with the default behavior of fetching all organizations associated with the supplied Snyk token.
+  :::note 默认行为 
+  如果两个参数都未提供，集成将以默认行为运行，即获取与所提供的 Snyk 令牌相关的所有操作符: 
   :::
-
   <Tabs groupId="cicd-method" queryString="cicd-method">
   <TabItem value="github" label="GitHub">
 This workflow will run the Snyk integration once and then exit, this is useful for **scheduled** ingestion of data.
 
-:::warning
-If you want the integration to update Port in real time using webhooks you should use the [Real Time & Always On](?installation-methods=real-time-always-on#installation) installation option
+:::warning 如果希望集成使用 webhooks 实时更新 Port，则应使用[Real Time & Always On](?installation-methods=real-time-always-on#installation) 安装选项
+
 :::
 
-Make sure to configure the following [Github Secrets](https://docs.github.com/en/actions/security-guides/using-secrets-in-github-actions):
+确保配置以下[Github Secrets](https://docs.github.com/en/actions/security-guides/using-secrets-in-github-actions) : 
+
 
 | Parameter                                     | Description                                                                                                        | Required |
 | --------------------------------------------- | ------------------------------------------------------------------------------------------------------------------ | -------- |
@@ -245,9 +252,10 @@ Make sure to configure the following [Github Secrets](https://docs.github.com/en
 | `OCEAN__PORT__CLIENT_SECRET`                  | Your port client secret                                                                                            | ✅       |
 | `OCEAN__PORT__BASE_URL`                       | Your port base url, relevant only if not using the default port app                                                | ❌       |
 
+
 <br/>
 
-Here is an example for `snyk-integration.yml` workflow file:
+下面是 `snyk-integration.yml` 工作流程文件的示例: 
 
 ```yaml showLineNumbers
 name: Snyk Exporter Workflow
@@ -285,16 +293,15 @@ jobs:
   <TabItem value="jenkins" label="Jenkins">
 This pipeline will run the Snyk integration once and then exit, this is useful for **scheduled** ingestion of data.
 
-:::tip
-Your Jenkins agent should be able to run docker commands.
+:::tip 你的 Jenkins 代理应该能够运行 docker 命令。
+
 :::
-:::warning
-If you want the integration to update Port in real time using webhooks you should use
-the [Real Time & Always On](?installation-methods=real-time-always-on#installation) installation option.
+:::warning 如果希望集成使用 webhooks 实时更新 Port，则应使用 安装选项。[Real Time & Always On](?installation-methods=real-time-always-on#installation) 
+
 :::
 
-Make sure to configure the following [Jenkins Credentials](https://www.jenkins.io/doc/book/using/using-credentials/)
-of `Secret Text` type:
+请确保配置以下[Jenkins Credentials](https://www.jenkins.io/doc/book/using/using-credentials/)的 "Secret Text "类型: 
+
 
 | Parameter                                     | Description                                                                                                                                                      | Required |
 | --------------------------------------------- | ---------------------------------------------------------------------------------------------------------------------------------------------------------------- | -------- |
@@ -308,9 +315,10 @@ of `Secret Text` type:
 | `OCEAN__PORT__CLIENT_SECRET`                  | Your port client ([How to get the credentials](https://docs.getport.io/build-your-software-catalog/sync-data-to-catalog/api/#find-your-port-credentials)) secret | ✅       |
 | `OCEAN__PORT__BASE_URL`                       | Your port base url, relevant only if not using the default port app                                                                                              | ❌       |
 
+
 <br/>
 
-Here is an example for `Jenkinsfile` groovy pipeline file:
+下面是 `Jenkinsfile` groovy Pipelines 文件的示例: 
 
 ```text showLineNumbers
 pipeline {
@@ -353,15 +361,15 @@ pipeline {
   <TabItem value="azure" label="Azure Devops">
 This pipeline will run the Snyk integration once and then exit, this is useful for **scheduled** ingestion of data.
 
-:::tip
-Your Azure Devops agent should be able to run docker commands.
+:::tip 你的 Azure Devops 代理应该能够运行 docker 命令。
+
 :::
-:::warning
-If you want the integration to update Port in real time using webhooks you should use
-the [Real Time & Always On](?installation-methods=real-time-always-on#installation) installation option.
+:::warning 如果希望集成使用 webhooks 实时更新 Port，则应使用 安装选项。[Real Time & Always On](?installation-methods=real-time-always-on#installation) 
+
 :::
 
-Make sure to configure the following variables using [Azure Devops variable groups](https://learn.microsoft.com/en-us/azure/devops/pipelines/library/variable-groups?view=azure-devops&tabs=yaml). Add them into in a variable group named `port-ocean-credentials`:
+确保使用[Azure Devops variable groups](https://learn.microsoft.com/en-us/azure/devops/pipelines/library/variable-groups?view=azure-devops&amp;tabs=yaml) 配置以下变量。将它们添加到名为 `port-ocean-credentials` 的变量组中: 
+
 
 | Parameter                                     | Description                                                                                                                                                      | Required |
 | --------------------------------------------- | ---------------------------------------------------------------------------------------------------------------------------------------------------------------- | -------- |
@@ -375,9 +383,10 @@ Make sure to configure the following variables using [Azure Devops variable grou
 | `OCEAN__PORT__CLIENT_SECRET`                  | Your port client ([How to get the credentials](https://docs.getport.io/build-your-software-catalog/sync-data-to-catalog/api/#find-your-port-credentials)) secret | ✅       |
 | `OCEAN__PORT__BASE_URL`                       | Your port base url, relevant only if not using the default port app                                                                                              | ❌       |
 
+
 <br/>
 
-Here is an example for `snyk-integration.yml` pipeline file:
+下面是 `snyk-integration.yml` Pipelines 文件的示例: 
 
 ```yaml showLineNumbers
 trigger:
@@ -388,7 +397,6 @@ pool:
 
 variables:
   - group: port-ocean-credentials # OCEAN__PORT__CLIENT_ID, OCEAN__PORT__CLIENT_SECRET, OCEAN__INTEGRATION__CONFIG__TOKEN
-
 
 steps:
 - script: |
@@ -409,7 +417,6 @@ steps:
 
     exit $?
   displayName: 'Ingest Synk Data into Port'
-
 ```
 
   </TabItem>
@@ -420,11 +427,11 @@ steps:
 
 <AdvancedConfig/>
 
-## Ingesting Snyk objects
+## 接收 Snyk 对象
 
-The Snyk integration uses a YAML configuration to describe the process of loading data into the developer portal.
+Snyk 集成使用 YAML 配置来描述将数据加载到开发者门户的过程。
 
-Here is an example snippet from the config which demonstrates the process for getting `project` data from Snyk:
+下面是配置中的一个示例片段，演示了从 Snyk 获取 "项目 "数据的过程: 
 
 ```yaml showLineNumbers
 createMissingRelatedEntities: true
@@ -453,23 +460,23 @@ resources:
             tags: .attributes.tags
 ```
 
-The integration makes use of the [JQ JSON processor](https://stedolan.github.io/jq/manual/) to select, modify, concatenate, transform and perform other operations on existing fields and values from Snyk's API events.
+该集成利用[JQ JSON processor](https://stedolan.github.io/jq/manual/) 对来自 Snyk API 事件的现有字段和 Values 进行选择、修改、连接、转换和其他操作。
 
-### Configuration structure
+### 配置结构
 
-The integration configuration determines which resources will be queried from Snyk, and which entities and properties will be created in Port.
+集成配置决定了将从 Snyk 查询哪些资源，以及将在 Port 中创建哪些实体和属性。
 
-:::tip Supported resources
-The following resources can be used to map data from Snyk, it is possible to reference any field that appears in the API responses linked below for the mapping configuration.
+:::tip  支持的资源 以下资源可被引用来映射来自 Snyk 的数据，可以引用出现在下面链接的 API 响应中的任何字段来进行映射配置。
 
-- [`Organization`](https://snyk.docs.apiary.io/#reference/organizations/the-snyk-organization-for-a-request/list-all-the-organizations-a-user-belongs-to)
-- [`Target`](https://apidocs.snyk.io/?version=2023-08-21%7Ebeta#get-/orgs/-org_id-/targets)
-- [`Project`](https://apidocs.snyk.io/?version=2023-08-21#get-/orgs/-org_id-/projects)
-- [`Issue`](https://snyk.docs.apiary.io/#reference/projects/aggregated-project-issues/list-all-aggregated-issues)
+* * [`Organization`](https://snyk.docs.apiary.io/#reference/organizations/the-snyk-organization-for-a-request/list-all-the-organizations-a-user-belongs-to)
+* [`Target`](https://apidocs.snyk.io/?version=2023-08-21%7Ebeta#get-/orgs/-org_id-/targets)
+* [`Project`](https://apidocs.snyk.io/?version=2023-08-21#get-/orgs/-org_id-/projects)
+* [`Issue`](https://snyk.docs.apiary.io/#reference/projects/aggregated-project-issues/list-all-aggregated-issues)
 
 :::
 
-- The root key of the integration configuration is the `resources` key:
+* 集成配置的根密钥是 "资源 "密钥: 
+
 
   ```yaml showLineNumbers
   # highlight-next-line
@@ -479,7 +486,9 @@ The following resources can be used to map data from Snyk, it is possible to ref
       ...
   ```
 
-- The `kind` key is a specifier for a Snyk object:
+
+* 类型 "键是 Snyk 对象的指定符: 
+
 
   ```yaml showLineNumbers
     resources:
@@ -489,7 +498,9 @@ The following resources can be used to map data from Snyk, it is possible to ref
         ...
   ```
 
-- The `selector` and the `query` keys allow you to filter which objects of the specified `kind` will be ingested into your software catalog:
+
+* 通过 "选择器 "和 "查询 "键，您可以过滤哪些指定 "类型 "的对象将被录入软件目录: 
+
 
   ```yaml showLineNumbers
   resources:
@@ -501,7 +512,9 @@ The following resources can be used to map data from Snyk, it is possible to ref
       port:
   ```
 
-- The `port`, `entity` and the `mappings` keys are used to map the Snyk object fields to Port entities. To create multiple mappings of the same kind, you can add another item in the `resources` array;
+
+* Port"、"实体 "和 "映射 "键被用来将 Snyk 对象字段映射到Port实体。要创建多个同类映射，可在 `resources` 数组中添加另一项；
+
 
   ```yaml showLineNumbers
   resources:
@@ -536,26 +549,26 @@ The following resources can be used to map data from Snyk, it is possible to ref
           mappings: ...
   ```
 
-  :::tip Blueprint key
-  Note the value of the `blueprint` key - if you want to use a hardcoded string, you need to encapsulate it in 2 sets of quotes, for example use a pair of single-quotes (`'`) and then another pair of double-quotes (`"`)
-  :::
 
-### Ingest data into Port
+:::tip 蓝图键 注意 `blueprint` 键的值 - 如果要使用硬编码字符串，需要用 2 组引号封装，例如使用一对单引号 (`'`)，然后再用一对双引号 (`"`): 
+::: 
 
-To ingest Snyk objects using the [integration configuration](#configuration-structure), you can follow the steps below:
+#### 将数据输入Port
 
-1. Go to the DevPortal Builder page.
-2. Select a blueprint you want to ingest using Snyk.
-3. Choose the **Ingest Data** option from the menu.
-4. Select Snyk under the Code quality & security providers category.
-5. Modify the [configuration](#configuration-structure) according to your needs.
-6. Click `Resync`.
+要使用[integration configuration](#configuration-structure) 引用 Snyk 对象，可以按照以下步骤操作: 
 
-## Examples
+1. 转到 DevPortal Builder 页面。
+2. 选择要被 Snyk 引用的蓝图。
+3. 从菜单中选择**采集数据**选项。
+4. 在 "代码质量和安全 Provider "类别下选择 Snyk。
+5. 根据您的需要修改[configuration](#configuration-structure) 。
+6. 单击 `Resync`。
 
-Examples of blueprints and the relevant integration configurations:
+## 示例
 
-### Organization
+蓝图和相关集成配置示例: 
+
+#### 组织
 
 <details>
 <summary>Organization blueprint</summary>
@@ -606,10 +619,10 @@ Examples of blueprints and the relevant integration configurations:
           slug: .slug
           url: ("https://app.snyk.io/org/" + .slug | tostring)
 ```
+
 </details>
 
-
-### Target
+### 目标
 
 <details>
 <summary>Target blueprint</summary>
@@ -708,7 +721,7 @@ Examples of blueprints and the relevant integration configurations:
 
 </details>
 
-### Project
+### 项目
 
 <details>
 <summary>Project blueprint</summary>
@@ -860,7 +873,7 @@ Examples of blueprints and the relevant integration configurations:
 
 </details>
 
-### Vulnerability
+### 漏洞
 
 <details>
 <summary>Vulnerability blueprint</summary>
@@ -974,18 +987,19 @@ Examples of blueprints and the relevant integration configurations:
 
 </details>
 
-## Alternative installation via webhook
-While the Ocean integration described above is the recommended installation method, you may prefer to use a webhook to ingest data from Snyk. If so, use the following instructions:
+## 通过 webhook 进行替代安装
+
+虽然上述 Ocean 集成是推荐的安装方法，但您可能更喜欢使用 webhook 从 Snyk 引用数据。 如果是这样，请使用以下说明: 
 
 <details>
 
 <summary><b>Webhook installation (click to expand)</b></summary>
 
-In this example you are going to create a webhook integration between [Snyk](https://snyk.io/) and Port, which will ingest Snyk code and infrastructure vulnerability entities into Port.
+在本示例中，您将在[Snyk](https://snyk.io/) 和 Port 之间创建 Webhook 集成，将 Snyk 代码和基础架构漏洞实体导入 Port。
 
 <h3>Port configuration</h3>
 
-Create the following blueprint definition:
+创建以下蓝图定义: 
 
 <details>
 <summary>Snyk vulnerability blueprint</summary>
@@ -994,51 +1008,51 @@ Create the following blueprint definition:
 
 </details>
 
-Create the following webhook configuration [using Port UI](/build-your-software-catalog/sync-data-to-catalog/webhook/?operation=ui#configuring-webhook-endpoints)
+创建以下 webhook 配置[using Port UI](/build-your-software-catalog/sync-data-to-catalog/webhook/?operation=ui#configuring-webhook-endpoints)
 
 <details>
 <summary>Snyk vulnerability webhook configuration</summary>
 
-1. **Basic details** tab - fill the following details:
-   1. Title : `Snyk Mapper`;
-   2. Identifier : `snyk_mapper`;
-   3. Description : `A webhook configuration to map Snyk vulnerability to Port`;
-   4. Icon : `Snyk`;
-2. **Integration configuration** tab - fill the following JQ mapping:
-
+1. **基本信息** 选项卡 - 填写以下详细信息: 
+    1.title: `Snyk Mapper`；
+    2.标识符 : `snyk_mapper`；
+    3.Description : `将 Snyk 漏洞映射到 Port` 的 webhook 配置；
+    4.图标 : `Snyk`；
+2. **集成配置**选项卡 - 填写以下 JQ 映射: 
    <SnykConfiguration/>
+3.向下滚动到 **高级设置**，输入以下详细信息: 
+    1. secret: `WEBHOOK_SECRET`；
+    2.签名头名称:  `x-hub-signature`；
+    3.签名算法: 从下拉选项中选择 `sha256`；
+    4.签名前缀 : `sha256=`.
+    5.点击页面底部的**保存**。
 
-3. Scroll down to **Advanced settings** and input the following details:
-   1. secret: `WEBHOOK_SECRET`;
-   2. Signature Header Name : `x-hub-signature`;
-   3. Signature Algorithm : Select `sha256` from dropdown option;
-   4. Signature Prefix : `sha256=`
-   5. Click **Save** at the bottom of the page.
-
-Remember to replace the `WEBHOOK_SECRET` with the real secret you specify when creating the webhook in Snyk.
+切记将 `WEBHOOK_SECRET` 替换为在 Snyk 中创建 webhook 时指定的真实secret。
 
 </details>
 
 <h3>Create a webhook in Snyk</h3>
 
-1. Go to [Snyk](https://snyk.io/) and select an account you want to configure the webhook for;
-2. Click on **Settings** at the left of the page and copy your organization ID under the **Organization ID** section;
-3. Navigate to your [Snyk accounts page](https://snyk.io/account/) and copy your API token. You will use this value to authorize the REST API;
-4. Open any REST API client such as POSTMAN and make the following API call to create your webhook:
-   1. `API URL` - use https://api.snyk.io/v1/org/`YOUR_ORG_ID`/webhooks;
-   2. `Method` - select POST
-   3. `Authorization` - The API token should be supplied in an Authorization header as `Authorization: token YOUR_API_KEY`;
-   4. `Request Body` - The body of your request should be in a JSON format. Past the following information in the body text
+1. 进入[Snyk](https://snyk.io/) ，选择要配置 webhook 的账户；
+2. 点击页面左侧的**设置**，在**组织 ID** 部分下复制您的组织 ID；
+3. 导航至[Snyk accounts page](https://snyk.io/account/) 并复制您的 API 令牌。您将使用此值授权 REST API；
+4. 打开任何 REST API 客户端(如 POSTMAN)，进行以下 API 调用以创建 webhook: 
+    1. `API URL` - 被引用 https://api.snyk.io/v1/org/`YOUR_ORG_ID`/webhooks；
+    2. `Method` - 选择 POST
+    3. `Authorization` - API 标记应在授权标头中以 `Authorization: token YOUR_API_KEY` 的形式提供；
+    4. `Request Body` - 请求正文应为 JSON 格式。在正文中填写以下信息
+
+
    ```json
    {
      "url": "https://ingest.getport.io/<YOUR_PORT_WEBHOOK_KEY>",
      "secret": "WEBHOOK_SECRET"
    }
    ```
+
 5. Click **Send** to create your Snyk webhook;
 
-:::note
-You can also create the Snyk webhook using the `curl` command below:
+:::note 您也可以使用下面的 `curl` 命令创建 Snyk webhook: 
 
 ```curl showLineNumbers
 curl -X POST \
@@ -1050,5 +1064,6 @@ curl -X POST \
 
 :::
 
-Done! Any vulnerability detected on your source code will trigger a webhook event to the webhook URL provided by Port. Port will parse the events according to the mapping and update the catalog entities accordingly.
+完成！在源代码中检测到的任何漏洞都会触发一个 webhook 事件，并将其发送到 Port 提供的 webhook URL。 Port 将根据映射解析这些事件，并相应地更新目录实体。
+
 </details>

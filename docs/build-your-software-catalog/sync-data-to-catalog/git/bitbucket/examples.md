@@ -1,18 +1,20 @@
 ---
+
 sidebar_position: 2
+
 ---
 
-import MicroserviceBlueprint from './\_bitbucket_exporter_example_repository_blueprint.mdx'
-import PRBlueprint from './\_bitbucket_exporter_example_pull_request_blueprint.mdx'
-import PortAppConfig from './\_bitbucket_exporter_example_port_app_config.mdx'
-import BitbucketResources from './\_bitbucket_exporter_supported_resources.mdx'
-import PortMonoRepoAppConfig from './\_bitbucket_exporter_example_monorepo_port_app_config.mdx'
+import MicroserviceBlueprint from './_bitbucket_exporter_example_repository_blueprint.mdx'
+import PRBlueprint from './_bitbucket_exporter_example_pull_request_blueprint.mdx'
+import PortAppConfig from './_bitbucket_exporter_example_port_app_config.mdx'
+import BitbucketResources from './_bitbucket_exporter_supported_resources.mdx'
+import PortMonoRepoAppConfig from './_bitbucket_exporter_example_monorepo_port_app_config.mdx'
 
-# Examples
+# 示例
 
-## Mapping repositories, file contents and pull requests
+## 映射软件源、文件内容和拉取请求
 
-In the following example you will ingest your Bitbucket repositories, their README.md file contents and pull requests to Port, you may use the following Port blueprint definitions and `port-app-config.yml`:
+在下面的示例中，您将把 Bitbucket 仓库、其 README.md 文件内容和拉取请求引用到 Port，您可以使用以下 Port 蓝图定义和 `port-app-config.yml`: 
 
 <MicroserviceBlueprint/>
 
@@ -20,38 +22,38 @@ In the following example you will ingest your Bitbucket repositories, their READ
 
 <PortAppConfig/>
 
-:::tip
+:::tip 
 
-- Refer to the [setup](bitbucket.md#setup) section to learn more about the `port-app-config.yml` setup process;
-- We leverage [JQ JSON processor](https://stedolan.github.io/jq/manual/) to map and transform Bitbucket objects to Port Entities;
-- Click [Here](https://developer.atlassian.com/cloud/bitbucket/rest/api-group-repositories/#api-repositories-workspace-repo-slug-get) for the Bitbucket repository object structure.
-- Click [Here](https://developer.atlassian.com/cloud/bitbucket/rest/api-group-pullrequests/#api-repositories-workspace-repo-slug-pullrequests-pull-request-id-get) for the Bitbucket pull request object structure.
+* 请参阅[setup](bitbucket.md#setup) 部分，了解有关 `port-app-config.yml` 设置过程的更多信息；
+* 我们利用[JQ JSON processor](https://stedolan.github.io/jq/manual/) 将 Bitbucket 对象映射和转换为 Port 实体；
+* 点击[Here](https://developer.atlassian.com/cloud/bitbucket/rest/api-group-repositories/#api-repositories-workspace-repo-slug-get) 查看 Bitbucket 版本库对象结构。
+* 点击[Here](https://developer.atlassian.com/cloud/bitbucket/rest/api-group-pullrequests/#api-repositories-workspace-repo-slug-pullrequests-pull-request-id-get) 查看 Bitbucket 拉取请求对象结构。
 
 :::
 
-After creating the blueprints and committing the `port-app-config.yml` file to your `.bitbucket-private` or to a specific repository, you will see new entities in Port matching your repositories alongside their README.md file contents and pull requests. (Remember that the `port-app-config.yml` file has to be in the **default branch** of the repository to take effect).
+创建蓝图并提交`port-app-config.yml`文件到`.bitbucket-private`或特定版本库后，您将在版本库中看到与您的版本库相匹配的新实体，以及它们的 README.md 文件内容和拉取请求(请记住，`port-app-config.yml`文件必须位于版本库的**默认分支**中才能生效)。
 
-## Mapping repositories and monorepos
+## 映射软件源和单核处理器
 
-In the following example you will ingest your Bitbucket repositories and their folders to Port. By following this example you can map your different services, packages and libraries from your monorepo into separate entities in Port. you may use the following Port blueprint definitions and `port-app-config.yml`:
+在下面的示例中，您将把 Bitbucket 资源库及其文件夹引用到 Port。 按照这个示例，您可以将不同的服务、包和库从 monorepo 映射到 Port 中的不同实体。您可以使用下面的 Port 蓝图定义和 `port-app-config.yml`: 
 
 <MicroserviceBlueprint/>
 
 <PortMonoRepoAppConfig/>
 
-:::tip
+:::tip 
 
-- Refer to the [setup](bitbucket.md#setup) section to learn more about the `port-app-config.yml` setup process;
-- We leverage [JQ JSON processor](https://stedolan.github.io/jq/manual/) to map and transform GitHub objects to Port Entities;
-- Click [Here](https://developer.atlassian.com/cloud/bitbucket/rest/api-group-repositories/#api-repositories-workspace-repo-slug-get) for the Bitbucket repository object structure.
-- Click [Here](https://developer.atlassian.com/cloud/bitbucket/rest/api-group-source/#api-repositories-workspace-repo-slug-src-commit-path-get) for the Bitbucket folder object structure.
+* 请参阅[setup](bitbucket.md#setup) 部分，了解有关 `port-app-config.yml` 设置过程的更多信息；
+* 我们利用[JQ JSON processor](https://stedolan.github.io/jq/manual/) 将 GitHub 对象映射和转换为 Port 实体；
+* 点击[Here](https://developer.atlassian.com/cloud/bitbucket/rest/api-group-repositories/#api-repositories-workspace-repo-slug-get) 查看 Bitbucket 仓库对象结构。
+* 点击[Here](https://developer.atlassian.com/cloud/bitbucket/rest/api-group-source/#api-repositories-workspace-repo-slug-src-commit-path-get) 查看 Bitbucket 文件夹对象结构。
 
 :::
 
-## Mapping supported resources
+## 映射支持的资源
 
-The above example shows a specific use case, but Port's Bitbucket app supports the ingestion of many other Bitbucket objects, to adapt the example above, use the Bitbucket API reference to learn about the available fields for the different supported objects:
+上面的示例展示了一个特定的用例，但 Port 的 Bitbucket 应用程序支持摄取许多其他 Bitbucket 对象，要调整上面的示例，请使用 Bitbucket API 参考资料了解不同支持对象的可用字段: 
 
 <BitbucketResources/>
 
-When adding the ingestion of other resources, remember to add a entry to the `resources` array and change the value provided to the `kind` key accordingly.
+在添加其他资源的摄取时，请记得在 `resources` 数组中添加一个条目，并相应更改提供给 `kind` 键的值。

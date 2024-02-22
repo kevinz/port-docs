@@ -1,98 +1,101 @@
 ---
+
 sidebar_position: 2
+
 ---
 
-# Entity page
+# 实体页面
 
-Each [entity](../../build-your-software-catalog/sync-data-to-catalog/sync-data-to-catalog.md#entity-json-structure) has a dedicated page that contains 3 tabs (by default):
+每个[entity](../../build-your-software-catalog/sync-data-to-catalog/sync-data-to-catalog.md#entity-json-structure) 都有一个专门的页面，其中包含 3 个选项卡(默认情况下) : 
 
-- [`Overview`](#overview)
-- [`Runs`](#runs)
-- [`Audit log`](#audit-log)
+* * [`Overview`](#overview)
+* [`Runs`](#runs)
+* [`Audit log`](#audit-log)
 
-## Overview
+## 概览
 
-The Overview tab is comprised of two widgets:
+概览 "选项卡由两个部件组成: 
 
-### Details
+### 详情
 
-Here you will find the entity's properties and their values, its scorecards and their values, and other metadata.
+在这里，您可以找到实体的属性及其 Values、记分卡及其 Values 以及其他元数据。
 
-### Related entities
+#### 相关实体
 
-By default, all directly-related entities in the same direction will automatically appear in this widget. This is true for both forward-related and backward-related entities. Indirectly-related entities will not appear.
+默认情况下，同一方向上所有直接相关的实体都会自动出现在此 widget 中。 向前相关和向后相关的实体都是如此。 间接相关的实体不会出现。
 
-For example:
+例如
 
-`Workflow Run` has a forward-relation to `Workflow`, which has a forward-relation to `Microservice`. `Microservice` has a **backward**-relation to `Pull Request`. Since we changed direction midway, this relation is **indirect**:
+工作流运行 "与 "工作流 "有正向关系，"工作流 "与 "Microservice "有正向关系，"Microservice "与 "拉取请求 "有**后向**关系。 由于我们中途改变了方向，所以这种关系是**间接**的: 
 
 ![builderRelationsExample](../../../static/img/software-catalog/pages/builderRelationsExample.png)
 
-As you can see, when looking at the entity page of a certain `Workflow Run`, `Workflow` and `Microservice` automatically appear, but `Pull Request` does not, since its relation is in the other direction:
+正如您所看到的，在查看某个 "工作流运行 "的实体页面时，"工作流 "和 "微服务 "会自动出现，但 "拉取请求 "不会，因为它的关系在另一个方向上: 
 
 ![entityRelationsExample](../../../static/img/software-catalog/pages/entityRelationsExample.png)
 
-#### New related entity tab
+#### 新相关实体选项卡
 
-You can add additional entities to the `Related entities` table by clicking on the `+ New Tab` button. In the dialog, the `Related blueprint` dropdown will display all entities that are related in any way to the current entity. In our `Workflow run` example above, we can use this button to add a `Pull request` tab to our widget.
+点击 "+ 新标签 "按钮，可以向 "相关实体 "表中添加其他实体。 在对话框中，"相关蓝图 "下拉菜单将显示以任何方式与当前实体相关的所有实体。 在我们上面的 "工作流运行 "示例中，我们可以使用该按钮向我们的 widget 添加 "拉取请求 "标签。
 
 ![afterNewTab](../../../static/img/software-catalog/pages/afterNewTab.png)
 
-In some cases, the related blueprint may be reachable by more than one relation, like this:
+在某些情况下，相关的蓝图可能可以通过不止一个关系到达，就像这样: 
 
 ![multipleRelations](../../../static/img/software-catalog/pages/multipleRelations.png)
 
-Say we want to add a `Cluster` tab to `ServiceInEnv`'s related entities. In such a case, the `related property` dropdown will display the possible relations for us to choose from:
+假设我们想在 `ServiceInEnv` 的相关实体中添加一个 `集群 ` 标签。 在这种情况下， `相关属性 ` 下拉菜单将显示可能的关系供我们选择: 
 
 ![multiplePaths](../../../static/img/software-catalog/pages/multiplePaths.png)
 
-#### Hide tabs
+#### 隐藏标签
 
-The `Hide tabs` button on the right allows you to control which tabs are visible in this widget.
+右侧的 "隐藏选项卡 "按钮可让您控制该 widget 中哪些选项卡可见。
 
 ## Runs
 
-If the entity's blueprint has any [actions](/create-self-service-experiences/) configured, the `Runs` tab will display their history log, results, log streams, and more.
+如果实体的蓝图配置了任何[actions](/create-self-service-experiences/) ，"运行 "选项卡将显示其历史日志、结果、日志流等。
 
-## Audit log
+## 审计日志
 
-This tab displays all actions (including CRUD) that caused any change to the entity's configuration. For each change, useful metadata will be shown such as the initiator, diff before and after the change, relevant blueprint, and more.
+此选项卡会显示导致实体配置发生任何更改的所有操作(包括 CRUD)。 对于每项更改，都会显示有用的元数据，如发起者、更改前后的 Diff、相关蓝图等。
 
-## Dashboard widgets
+## 仪表板小部件
 
-[Visualization widgets](/customize-pages-dashboards-and-plugins/dashboards/) can be added to an entity page to display data using graphic elements.
+[Visualization widgets](/customize-pages-dashboards-and-plugins/dashboards/) 可添加到实体页面，使用图形元素显示数据。
 
-You can add widgets to an entity page by using the `Add visualization` menu:
+您可以通过 "添加可视化 "菜单向实体页面添加部件: 
 
 ![addVisualizations](../../../static/img/software-catalog/pages/addVisualizations.png)
 
-Let's create a simple number chart that displays the number of `System` entities related to this `Domain`:
+让我们创建一个简单的数字图表，显示与此 "域 "相关的 "系统 "实体的数量: 
 
 <img src='/img/software-catalog/pages/demoNumberChart.png' width='350rem' />
 
-After the first widget is created, a new tab called `dashboard` will be created in the entity page displaying the new widget:
+创建第一个部件后，实体页面中将创建一个名为 "仪表盘 "的新标签，显示新部件: 
 
 ![entityAfterVisualization](../../../static/img/software-catalog/pages/entityAfterVisualization.png)
 
-Each additional visualization will be added as a widget to the `dashboard` tab.
+每个附加的可视化都将作为部件添加到 "仪表盘 "选项卡中。
 
-## Additional tabs
+## 其他选项卡
 
-Some of the [available property types](/build-your-software-catalog/define-your-data-model/setup-blueprint/properties/#supported-properties) are visual by nature. When defining one of these properties in a blueprint, an additional tab will be automatically created in each entity page related to this blueprint, displaying the property's content in the relevant visual format.
+[available property types](/build-your-software-catalog/define-your-data-model/setup-blueprint/properties/#supported-properties) 中的某些属性是可视化的。在蓝图中定义这些属性时，与该蓝图相关的每个实体页面都会自动创建一个额外的选项卡，以相关的可视化格式显示该属性的内容。
 
-The following property types are supported:
+支持以下属性类型
 
-- [Markdown](/build-your-software-catalog/define-your-data-model/setup-blueprint/properties/markdown)
-- [Embedded URL](/build-your-software-catalog/define-your-data-model/setup-blueprint/properties/embedded-url)
-- [Swagger UI](/build-your-software-catalog/define-your-data-model/setup-blueprint/properties/swagger)
+* * [Markdown](/build-your-software-catalog/define-your-data-model/setup-blueprint/properties/markdown)
+* [Embedded URL](/build-your-software-catalog/define-your-data-model/setup-blueprint/properties/embedded-url)
+* [Swagger UI](/build-your-software-catalog/define-your-data-model/setup-blueprint/properties/swagger)
 
-## Entity page operations
+## 实体页面操作
 
-Each page type has a set of operations that can be performed from the UI.  
-The table below summarizes the available operations for an entity page:
+每种页面类型都有一套可在用户界面上执行的操作。 下表总结了实体页面的可用操作: 
+
 
 | Page type   | Save a view | Save view as<br /> a new page | Edit page | Delete page | Lock page |
 | ----------- | :---------: | :---------------------------: | :-------: | :---------: | :-------: |
 | Entity page |     ✅      |              ❌               |    ❌     |     ❌      |    ✅     |
 
-For more information about each operation, see [page operations](/customize-pages-dashboards-and-plugins/page/catalog-page#page-operations).
+
+有关各项操作的更多信息，请参见[page operations](/customize-pages-dashboards-and-plugins/page/catalog-page#page-operations) 。

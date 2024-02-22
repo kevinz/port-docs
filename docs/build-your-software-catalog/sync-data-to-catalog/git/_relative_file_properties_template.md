@@ -1,10 +1,10 @@
-It is also possible to use paths relative to the location of the `port.yml` spec file.
+也可以被引用为相对于 `port.yml` 规格文件位置的路径。
 
-For example: `file://./` is used to reference a file in the same directory as the `port.yml` file. `file://../` is used to reference a file that is one directory above and so on.
+例如: `file://./` 用于引用与 `port.yml` 文件在同一目录下的文件。`file://./` 用于引用高一个目录的文件，依此类推。
 
-The following example reads `README.md` and `module1/requirements.txt` using paths relative to `port.yml`
+以下示例使用相对于 `port.yml` 的路径读取 `README.md` 和 `module1/requirements.txt
 
-Repository folder structure used for the example:
+被引用到示例中的资源库文件夹结构: 
 
 ```
 root
@@ -23,7 +23,7 @@ root
 ...
 ```
 
-`port.yml` file:
+Port.yml` 文件: 
 
 ```yaml showLineNumbers
 blueprint: code_module

@@ -1,7 +1,9 @@
 ---
-title: "Google Workspace"
+
+title: "Google Workspace"(谷歌工作空间
 sidebar_position: 5
-description: Integrate Google Workspace with Port
+description: 将 Google Workspace 与 Port 整合在一起
+
 ---
 
 import Image from "@theme/IdealImage";
@@ -17,24 +19,23 @@ import turnAccessOn from "../../../static/img/sso/google-workspace/turnAccessOn.
 import loginUsingApp from "../../../static/img/sso/google-workspace/loginUsingApp.png"
 import acsURLandEntityID from "../../../static/img/sso/google-workspace/acsURLandEntityID.png"
 
-# How to configure Google Workspace
+# 如何配置 Google Workspace
 
-Follow this step-by-step guide to configure the integration between Port and Google Workspace.
+请按照本分步指南配置 Port 和 Google Workspace 之间的集成。
 
-:::info
-In order to complete the process you will need to contact us to receive the information you require, as well as the information Port requires from you. All is elaborated below.
+:::info 为了完成该流程，您需要联系我们，以获得您需要的信息，以及 Port 需要您提供的信息。 所有内容详述如下。
 
 :::
 
-## Port-Google Workspace integration benefits
+## Port-Google Workspace 集成优势
 
-- Connect to the Port application via your Google Workspace Application.
-- Your Google Workspace teams will be automatically synced with Port upon a user sign-in.
-- Set granular permissions on Port according to your Google Workspace groups.
+* 通过 Google Workspace 应用程序连接到 Port 应用程序。
+* 用户登录后，Google Workspace 团队将自动与 Port 同步。
+* 根据 Google Workspace 小组在 Port 上设置细粒度权限。
 
-## Create your Google Workspace application
+## 创建 Google Workspace 应用程序
 
-1. In the [Google Admin Console](https://admin.google.com/), in the sidebar menu, navigate to **Apps** -> **Web and mobile apps**:
+1. 在[Google Admin Console](https://admin.google.com/) 侧边栏菜单中，导航至**应用程序** -> **网络和移动应用程序**: 
 
 <center>
 
@@ -44,7 +45,7 @@ In order to complete the process you will need to contact us to receive the info
 
 <br/>
 
-2. Click on `Add app` followed by `Add custom SAML app`:
+2.点击 "添加应用程序"，然后点击 "添加自定义 SAML 应用程序": 
 
 <center>
 
@@ -54,19 +55,13 @@ In order to complete the process you will need to contact us to receive the info
 
 <br/>
 
-3. Define the initial Port application settings:
-
-   1. `App name`: Insert a name of your choice for the Port app, like `Port`.
-   2. Add an `App icon` (optional):
-
-   <details>
-   <summary>Port Logo</summary>
-
-   ![Port's logo](../../../static/img/sso/general-assets/PortIcon.png)
-
-   </details>
-
-   3. Press `Continue`
+3.定义 Port 应用程序的初始设置: 
+    1. 应用程序名称为 Port 应用程序输入您选择的名称，如 `Port`。
+    2. 添加 "应用程序图标"(可选): 
+    <details>
+    <summary>Port Logo</summary>![Port's logo](../../../static/img/sso/general-assets/PortIcon.png)
+    </details>
+    3. 按`继续`
 
 <center>
 
@@ -76,9 +71,9 @@ In order to complete the process you will need to contact us to receive the info
 
 <br/>
 
-4. Take note of the following:
-   1. Your `SSO URL`;
-   2. Your `Certificate`.
+4.注意以下几点: 
+    1.您的 `SSO URL`；
+    2.您的 "证书
 
 <center>
 
@@ -88,20 +83,20 @@ In order to complete the process you will need to contact us to receive the info
 
 <br/>
 
-Pass these to Port. <br/>
+把这些传给 Port。<br/>
 
-Press `Continue`.
+按 "继续"。
 
-5. Configure your new application as shown bellow:
+5.配置新应用程序，如下图所示: 
 
-- `ACS URL` - `https://auth.getport.io/login/callback?connection={CONNECTION_NAME}`
-- `Entity ID` - `urn:auth0:port-prod:{CONNECTION_NAME}`
+* `ACS url` - `https://auth.getport.io/login/callback?connection={connection_name}`
+* 实体 ID - `urn:auth0:port-prod:{CONNECTION_NAME}`
 
-:::note
-We will provide your `{CONNECTION_NAME}` (Contact us on Slack/Intercom).
+:::note 我们将提供您的 `{CONNECTION_NAME}` (请在 Slack/Intercom 上联系我们)。
+
 :::
 
-Press `Continue`
+按 "继续
 
 <center>
 
@@ -111,18 +106,18 @@ Press `Continue`
 
 <br/>
 
-6. Create the following mappings:
+6.创建以下映射: 
 
-_Google Directory attributes_:
+谷歌目录属性_: 
 
-- **`Primary email`** -> `email`
-- **`First name`** -> `name`
+* **`主要电子邮件`** -> `电子邮件
+* **`First name`** -> `name`
 
-_Google membership_ (optional): This mapping is only relevant if you wish to pass groups to Port.
+_Google成员资格_(可选):  此映射仅在希望将群组传递给 Port 时才相关。
 
-- **`Google Groups`**(list) -> `groups`
+* **`Google群组`**(列表) -> `groups`.
 
-Press `Finish`
+按 "完成 "键
 
 <center>
 
@@ -132,11 +127,11 @@ Press `Finish`
 
 <br/>
 
-7. Specify permissions to the application:
+7.指定应用程序的权限: 
 
-After creating the app, you need to set up permissions for who has access to this application.
+创建应用程序后，您需要设置谁可以访问此应用程序的权限。
 
-Navigate to your your new application's page, and click **User access**:
+导航至新应用程序页面，点击 **用户访问**: 
 
 <center>
 
@@ -146,9 +141,9 @@ Navigate to your your new application's page, and click **User access**:
 
 <br/>
 
-Then choose from the left side menu, either to enable the app for `Everyone`, for `Groups` or for `Organizational units`.
+然后从左侧菜单中选择为 "所有人"、"组 "或 "组织单位 "启用应用程序。
 
-Make sure that for any of the options you would like to enable the app for, you check the `ON` checkbox:
+确保您要启用应用程序的任何选项都选中了 "ON "复选框: 
 
 <center>
 
@@ -158,7 +153,7 @@ Make sure that for any of the options you would like to enable the app for, you 
 
 <br/>
 
-7. Log in with using your new Google app:
+7.使用新的 Google 应用程序登录: 
 
 <center>
 

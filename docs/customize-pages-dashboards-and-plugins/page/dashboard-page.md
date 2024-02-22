@@ -1,40 +1,41 @@
 ---
+
 sidebar_position: 3
+
 ---
 
-# Dashboard page
+# 仪表板页面
 
-Dashboards are collections of widgets that allow you to display entity data using graphic elements:
+仪表盘是部件的集合，可让您使用图形元素显示实体数据: 
 
 ![dashboardExample](../../../static/img/software-catalog/pages/dashboardExample.png)
 
-Similar to [catalog pages](/customize-pages-dashboards-and-plugins/page/catalog-page), dashboards reside in the panel on the left-hand side of the software catalog.  
-Dashboards are a great way to display aggregated data and track the information that is relevant and/or interesting to you and your developers.
+与[catalog pages](/customize-pages-dashboards-and-plugins/page/catalog-page) 相似，仪表盘位于软件目录左侧的面板中。仪表盘是显示汇总数据并跟踪与您和您的开发人员相关和/或他们感兴趣的信息的好方法。
 
-## Creating a dashboard page
+## 创建仪表板页面
 
-You can create as many dashboards as you'd like. To create a dashboard, click on `New` and select `New dashboard`:
+要创建仪表盘，请单击 "新建 "并选择 "新建仪表盘": 
 
 ![newDashboard](../../../static/img/software-catalog/pages/newDashboard.png)
 
-## Adding new widgets
+## 添加新部件
 
-A dashboard can include any of the [supported widgets](/customize-pages-dashboards-and-plugins/dashboards/#visualization-types).
+仪表盘可包括[supported widgets](/customize-pages-dashboards-and-plugins/dashboards/#visualization-types).
 
-To add a new widget, click `Add` and choose your desired visualization type:
+要添加新部件，请单击 "添加"，然后选择所需的可视化类型: 
 
 ![dashboardPageAddVisualization](../../../static/img/software-catalog/pages/dashboardPageAddVisualization.png)
 
-## Reordering and resizing widgets
+## 重新排序和调整部件大小
 
-Widgets can be expanded and/or moved within a dashboard page.
+小工具可在仪表板页面内展开和/或移动。
 
-To move a widget, drag it from the top-left corner to your desired position:
+要移动 Widget，可将其从左上角拖到所需位置: 
 
 <img src='/img/software-catalog/pages/widgetReorderExample.png' width='70%' />
 
 <br/><br/>
 
-To resize a widget, hover over one of its sides until the blue bar appears, then drag it to expand/shrink:
+要调整 Widget 的大小，请将鼠标悬停在 Widget 的一侧，直到出现蓝色条，然后拖动即可展开/收缩: 
 
 <img src='/img/software-catalog/pages/widgetResizeExample.png' width='70%' />

@@ -3,25 +3,25 @@ import TabItem from "@theme/TabItem"
 
 # Dynatrace
 
-Our Dyantrace integration allows you to import `problem`, `slo`, and `entity` resources from your Dynatrace instance into Port, according to your mapping and definition.
+我们的 Dyantrace 集成允许您根据映射和定义，将 Dynatrace 实例中的 "问题"、"slo "和 "实体 "资源导入 Port。
 
-## Common use cases
+## 常见被引用情况
 
-- Map your monitored entities, problems and SLOs in Dynatrace.
-- Watch for object changes (create/update) in real-time, and automatically apply the changes to your entities in Port.
+* 在 Dynatrace 中映射受监控的实体、问题和 SLO。
+* 实时关注对象变更(创建/更新)，并自动将变更应用到 Port 中的实体。
 
-## Installation
+## 安装
 
-Choose one of the following installation methods:
+从以下安装方法中选择一种: 
 
 <Tabs groupId="installation-methods" queryString="installation-methods">
 
 <TabItem value="real-time-always-on" label="Real Time & Always On" default>
 
-Using this installation option means that the integration will be able to update Port in real time using webhooks.
+使用该安装选项意味着集成将能使用 webhook 实时更新 Port。
 
-This table summarizes the available parameters for the installation.
-Set them as you wish in the script below, then copy it and run it in your terminal:
+本表总结了安装时可用的参数，请在下面的脚本中按自己的需要进行设置，然后复制并在终端运行: 
+
 
 | Parameter                             | Description                                                                                                   | Required |
 | ------------------------------------- | ------------------------------------------------------------------------------------------------------------- | -------- |
@@ -35,6 +35,7 @@ Set them as you wish in the script below, then copy it and run it in your termin
 | `integration.config.dynatraceHostUrl` | The URL to the Dynatrace instance                                                                          | ✅       |
 | `scheduledResyncInterval`             | The number of minutes between each resync                                                                     | ❌       |
 | `initializePortResources`             | Default true, When set to true the integration will create default blueprints and the port App config Mapping | ❌       |
+
 
 <br/>
 
@@ -59,11 +60,12 @@ helm upgrade --install my-dynatrace-integration port-labs/port-ocean \
   <TabItem value="github" label="GitHub">
 This workflow will run the Dynatrace integration once and then exit, this is useful for **scheduled** ingestion of data.
 
-:::warning
-If you want the integration to update Port in real time using webhooks you should use the [Real Time & Always On](?installation-methods=real-time-always-on#installation) installation option
+:::warning 如果希望集成使用 webhooks 实时更新 Port，则应使用[Real Time & Always On](?installation-methods=real-time-always-on#installation) 安装选项
+
 :::
 
-Make sure to configure the following [Github Secrets](https://docs.github.com/en/actions/security-guides/using-secrets-in-github-actions):
+确保配置以下[Github Secrets](https://docs.github.com/en/actions/security-guides/using-secrets-in-github-actions) : 
+
 
 | Parameter                                        | Description                                                                                                        | Required |
 | ------------------------------------------------ | ------------------------------------------------------------------------------------------------------------------ | -------- |
@@ -75,9 +77,10 @@ Make sure to configure the following [Github Secrets](https://docs.github.com/en
 | `OCEAN__PORT__CLIENT_SECRET`                     | Your port client secret                                                                                            | ✅       |
 | `OCEAN__PORT__BASE_URL`                          | Your port base url, relevant only if not using the default port app                                                | ❌       |
 
+
 <br/>
 
-Here is an example for `dynatrace-integration.yml` workflow file:
+以下是 `dynatrace-integration.yml` 工作流程文件的示例: 
 
 ```yaml showLineNumbers
 name: Dynatrace Exporter Workflow
@@ -116,16 +119,15 @@ jobs:
   <TabItem value="jenkins" label="Jenkins">
 This pipeline will run the Dynatrace integration once and then exit, this is useful for **scheduled** ingestion of data.
 
-:::tip
-Your Jenkins agent should be able to run docker commands.
+:::tip 你的 Jenkins 代理应该能够运行 docker 命令。
+
 :::
-:::warning
-If you want the integration to update Port in real time using webhooks you should use
-the [Real Time & Always On](?installation-methods=real-time-always-on#installation) installation option.
+:::warning 如果希望集成使用 webhooks 实时更新 Port，则应使用 安装选项。[Real Time & Always On](?installation-methods=real-time-always-on#installation) 
+
 :::
 
-Make sure to configure the following [Jenkins Credentials](https://www.jenkins.io/doc/book/using/using-credentials/)
-of `Secret Text` type:
+请确保配置以下[Jenkins Credentials](https://www.jenkins.io/doc/book/using/using-credentials/)的 "Secret Text "类型: 
+
 
 | Parameter                                        | Description                                                                                                        | Required |
 | ------------------------------------------------ | ------------------------------------------------------------------------------------------------------------------ | -------- |
@@ -137,9 +139,10 @@ of `Secret Text` type:
 | `OCEAN__PORT__CLIENT_SECRET`                     | Your port client secret                                                                                            | ✅       |
 | `OCEAN__PORT__BASE_URL`                          | Your port base url, relevant only if not using the default port app                                                | ❌       |
 
+
 <br/>
 
-Here is an example for `Jenkinsfile` groovy pipeline file:
+下面是 `Jenkinsfile` groovy Pipelines 文件的示例: 
 
 ```text showLineNumbers
 pipeline {
@@ -185,16 +188,16 @@ pipeline {
 
 </Tabs>
 
-### Generating Dynatrace API key
+### 生成 Dynatrace API 密钥
 
-1. Navigate to `<instanceURL>/ui/apps/dynatrace.classic.tokens/ui/access-tokens`. For example, if you access your Dynatrace instance at `https://npm82883.apps.dynatrace.com`, you should navigate to `https://npm82883.apps.dynatrace.com/ui/apps/dynatrace.classic.tokens/ui/access-tokens`.
-2. Click **Generate new token** to create a new token. Ensure the permissions: `Read entities`, `Read problems` and `Read SLO` are assigned to the token.
+1. 导航至 `<instanceURL>/ui/apps/dynatrace.classic.token/ui/access-tokens`。例如，如果您在 `https://npm82883.apps.dynatrace.com` 访问 Dynatrace 实例，则应导航至 `https://npm82883.apps.dynatrace.com/ui/apps/dynatrace.classic.tokens/ui/access-tokens`。
+2. 单击 **Generate new token** 创建新令牌。确保权限: 读取实体"、"读取问题 "和 "读取 SLO "已分配给令牌。
 
-## Ingesting Dynatrace objects
+## 接收 Dynatrace 对象
 
-The Dynatrace integration uses a YAML configuration to describe the process of loading data into the developer portal.
+Dynatrace 集成使用 YAML 配置来描述将数据加载到开发者门户的过程。
 
-Here is an example snippet from the config which demonstrates the process for getting `entity` data from Dynatrace:
+下面是配置中的一个示例片段，演示了从 Dynatrace 获取 "实体 "数据的过程: 
 
 ```yaml showLineNumbers
 createMissingRelatedEntities: true
@@ -220,22 +223,22 @@ resources:
             toRelationships: .toRelationships
 ```
 
-The integration makes use of the [JQ JSON processor](https://stedolan.github.io/jq/manual/) to select, modify, concatenate, transform and perform other operations on existing fields and values from Dynatrace's API events.
+该集成利用[JQ JSON processor](https://stedolan.github.io/jq/manual/) 对来自 Dynatrace API 事件的现有字段和值进行选择、修改、连接、转换和其他操作。
 
-### Configuration structure
+### 配置结构
 
-The integration configuration determines which resources will be queried from Dynatrace, and which entities and properties will be created in Port.
+集成配置决定了从 Dynatrace 查询哪些资源，以及在 Port 中创建哪些实体和属性。
 
-:::tip Supported resources
-The following resources can be used to map data from Dynatrace, it is possible to reference any field that appears in the API responses linked below for the mapping configuration.
+:::tip  支持的资源 以下资源可用于映射来自 Dynatrace 的数据，可以引用出现在下面链接的 API 响应中的任何字段进行映射配置。
 
-- [`problem`](https://docs.dynatrace.com/docs/dynatrace-api/environment-api/problems-v2/problems/get-problems-list#definition--Problem)
-- [`entity`](https://docs.dynatrace.com/docs/dynatrace-api/environment-api/entity-v2/get-entities-list#definition--Entity)
-- [`slo`](https://docs.dynatrace.com/docs/dynatrace-api/environment-api/service-level-objectives/get-all#definition--SLO)
+* * [`problem`](https://docs.dynatrace.com/docs/dynatrace-api/environment-api/problems-v2/problems/get-problems-list#definition--Problem)
+* [`entity`](https://docs.dynatrace.com/docs/dynatrace-api/environment-api/entity-v2/get-entities-list#definition--Entity)
+* [`slo`](https://docs.dynatrace.com/docs/dynatrace-api/environment-api/service-level-objectives/get-all#definition--SLO)
 
 :::
 
-- The root key of the integration configuration is the `resources` key:
+* 集成配置的根密钥是 "资源 "密钥: 
+
 
   ```yaml showLineNumbers
   # highlight-next-line
@@ -245,7 +248,9 @@ The following resources can be used to map data from Dynatrace, it is possible t
       ...
   ```
 
-- The `kind` key is a specifier for an Dynatrace object:
+
+* 类型 "键是 Dynatrace 对象的指定符: 
+
 
   ```yaml showLineNumbers
     resources:
@@ -255,7 +260,9 @@ The following resources can be used to map data from Dynatrace, it is possible t
         ...
   ```
 
-- The `selector` and the `query` keys allow you to filter which objects of the specified `kind` will be ingested into your software catalog:
+
+* 通过 "选择器 "和 "查询 "键，您可以过滤哪些指定 "类型 "的对象将被录入软件目录: 
+
 
   ```yaml showLineNumbers
   resources:
@@ -267,7 +274,9 @@ The following resources can be used to map data from Dynatrace, it is possible t
       port:
   ```
 
-- The `port`, `entity` and the `mappings` keys are used to map the Dynatrace object fields to Port entities. To create multiple mappings of the same kind, you can add another item in the `resources` array;
+
+* Port"、"实体 "和 "映射 "键被用来将 Dynatrace 对象字段映射到Port实体。要创建多个同类映射，可在 `resources` 数组中添加另一项；
+
 
   ```yaml showLineNumbers
   resources:
@@ -299,58 +308,62 @@ The following resources can be used to map data from Dynatrace, it is possible t
           mappings: ...
   ```
 
-  :::tip Blueprint key
-  Note the value of the `blueprint` key - if you want to use a hardcoded string, you need to encapsulate it in 2 sets of quotes, for example use a pair of single-quotes (`'`) and then another pair of double-quotes (`"`)
-  :::
 
-## Configuring real-time updates
+:::tip 蓝图键 注意 `blueprint` 键的值 - 如果要使用硬编码字符串，需要用 2 组引号封装，例如使用一对单引号 (`'`)，然后再用一对双引号 (`"`): ::: 
 
-Currently, the Dynatrace API lacks support for programmatic webhook creation. To set up a webhook configuration in Dynatrace for sending alert notifications to the Ocean integration, follow these steps:
+## 配置实时更新
 
-### Prerequisite
+目前，Dynatrace API 不支持编程式 webhook 创建。 要在 Dynatrace 中设置 webhook 配置，以便向 Ocean 集成发送警报通知，请按照以下步骤操作: 
 
-Prepare a webhook `URL` using this format: `{app_host}/integration/webhook`. The `app_host` parameter should match the ingress or external load balancer where the integration will be deployed. For example, if your ingress or load balancer exposes the Dynatrace Ocean integration at `https://myservice.domain.com`, your webhook `URL` should be `https://myservice.domain.com/integration/webhook`.
+### 前提条件
 
-### Create a webhook in Dynatrace
+使用以下格式准备 webhook `URL`: `{app_host}/integration/webhook`。 `app_host` 参数应与部署集成的 ingress 或外部负载平衡器匹配。例如，如果您的 ingress 或负载平衡器在 `https://myservice.domain.com` 公开 Dynatrace Ocean 集成，则您的 webhook `URL` 应为 `https://myservice.domain.com/integration/webhook`。
 
-1. Go to Dynatrace;
-2. Go to **Settings** > **Integration** > **Problem notifications**.;
-3. Select **Add notification**;
-4. Select **Custom integration** from the available notification types;
-5. Configure the notification using the following details;
-   1. `Enabled` - ensure the notification is enabled;
-   2. `Display name` - use a meaningful name such as Port Ocean Webhook;
-   3. `Webhook URL` - enter the value of the `URL` you created above.;
-   4. Enable **Call webhook is new events merge into existing problems**;
-   5. `Custom payload` - paste the following configuration:
+#### 在 Dynatrace 中创建 webhook
+
+1. 转到 Dynatrace；
+2. 转到 **设置** > **集成** > **问题通知**；
+3. 选择 **添加通知**；
+4. 从可用的通知类型中选择 **自定义集成**；
+5. 使用以下详细信息配置通知；
+    1. 已启用"- 确保通知已启用；
+    2. 显示名称"- 使用有意义的名称，如 Port Ocean Webhook；
+    3. Webhook URL` - 输入您在上面创建的 `URL` 的值；
+    4.启用 **调用 webhook 是新事件合并到现有问题**；
+    5.自定义有效载荷"- 粘贴以下配置: 
+
+
     ```
+
     {
         "State":"{State}",
         "ProblemID":"{ProblemID}",
         "ProblemTitle":"{ProblemTitle}"
     }
+
     ```
+
     You can customize to your taste, the only important thing is the `ProblemID` key. The webhook integration will not work without it.
    6. `Alerting profile` - select the corresponding alerting profile
    7. Leave the rest of the fields as is;
 6. Click **Save changes**
 
-### Ingest data into Port
+#### 将数据输入Port
 
-To ingest Dynatrace objects using the [integration configuration](#configuration-structure), you can follow the steps below:
+要使用[integration configuration](#configuration-structure) 引用 Dynatrace 对象，可以按照以下步骤操作: 
 
-1. Go to the DevPortal Builder page.
-2. Select a blueprint you want to ingest using Dynatrace.
-3. Choose the **Ingest Data** option from the menu.
-4. Select Dynatrace under the Incident Management category.
-5. Modify the [configuration](#configuration-structure) according to your needs.
-6. Click `Resync`.
+1. 转到 DevPortal Builder 页面。
+2. 选择要使用 Dynatrace 进行引用的蓝图。
+3. 从菜单中选择**采集数据**选项。
+4. 选择事件管理类别下的 Dynatrace。
+5. 根据需要修改[configuration](#configuration-structure) 。
+6. 单击 `Resync`。
 
-## Examples
+## 示例
 
-Examples of blueprints and the relevant integration configurations:
+蓝图和相关集成配置示例: 
 
-### Entity
+### 实体
 
 <details>
 <summary>Entity blueprint</summary>
@@ -444,7 +457,7 @@ resources:
 
 </details>
 
-### Problem
+#### 问题
 
 <details>
 <summary> Problem blueprint</summary>

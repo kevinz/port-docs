@@ -1,36 +1,36 @@
 ---
+
 sidebar_position: 3
+
 ---
 
-import StorageAccountBlueprint from './examples/storage/\_storage_account_blueprint.mdx'
-import StorageAppConfig from './examples/storage/\_port_app_config.mdx'
+import StorageAccountBlueprint from './examples/storage/_storage_account_blueprint.mdx'
+import StorageAppConfig from './examples/storage/_port_app_config.mdx'
 
-# Mapping Extra Resources
+# 制图额外资源
 
-As you've probably looked at the [Examples](./examples.md) page, you've noticed that the Azure Exporter supports many Azure resources, but not all of them are documented in the Examples page.
+您可能已经浏览过[Examples](./examples.md) 页面，注意到 Azure 输出程序支持许多 Azure 资源，但并非所有资源都在示例页面中进行了记录。
 
-This page will help you understand what kind of Azure resources are supported by the Azure integration and how to map them into Port.
+本页面将帮助您了解 Azure 集成支持哪些 Azure 资源，以及如何将这些资源映射到 Port。
 
-## Is the resource supported by the Azure Exporter?
+## Azure 导出器是否支持该资源？
 
-The Azure Exporter relies on the Base Azure Resource to have a `List` API by `subscription` to get all the resources of a specific type.
-If it is a resource that is not documented in the Examples page, you can map it to Port by following these steps:
+Azure 导出器依赖于基础 Azure 资源通过 `subscription` 拥有的 `List` API 来获取特定类型的所有资源。 如果是示例页面中没有记录的资源，可以通过以下步骤将其映射到 Port: 
 
-1. Find the resource in the [Azure REST API reference](https://learn.microsoft.com/en-us/rest/api/azure/).
-2. If it's a base resource (in the format of `Microsoft.<Provider>/<resourceName>`) can be found in the type example response and in the API URL
-   ![Storage Account Type](/img/integrations/azure-exporter/StorageAccountTypeInAPIURL.png)
-   - If it has a List API by subscription it will be supported by the Azure Exporter.
-     ![Storage Account List API](/img/integrations/azure-exporter/StorageAccountListAPIIsValid.png)
-3. If it's an extension resource (in the format of `Microsoft.<Provider>/<resourceName>/<extensionName>`) such as `Microsoft.Storage/storageAccounts/blobServices/containers`.
-   - Then, if the base resource is supported by the Azure Exporter, the extension resource will be supported as well.
+1. 在[Azure REST API reference](https://learn.microsoft.com/en-us/rest/api/azure/) 中查找资源。
+2. 如果是基础资源(格式为 `Microsoft.<Provider>/<resourceName>`)，可以在类型示例响应和 API URL 中找到！[Storage Account Type](/img/integrations/azure-exporter/StorageAccountTypeInAPIURL.png)
+    - 如果它有订阅的列表 API，Azure 输出程序将支持它。
+    ![Storage Account List API](/img/integrations/azure-exporter/StorageAccountListAPIIsValid.png)
+3.如果是扩展资源(格式为 `Microsoft.<Provider>/<resourceName>/<extensionName>`)，如 `Microsoft.Storage/storageAccounts/blobServices/containers`。
+    - 然后，如果 Azure 导出器支持基础资源，则也将支持扩展资源。
 
-## Mapping the resource to Port
+## 将资源映射到Port
 
-After you've found the resource in the Azure REST API reference and you've confirmed that it is supported by the Azure Exporter, you can map it to Port by following these steps:
+在 Azure REST API 参考中找到资源并确认 Azure 输出程序支持该资源后，就可以按照以下步骤将其映射到 Port: 
 
-### Blueprint
+#### 蓝图
 
-Create a Port blueprint definition for the resource. The blueprint definition is based on the resource API response in the Azure REST API reference.
+为资源创建 Port 蓝图定义。 该蓝图定义基于 Azure REST API 参考中的资源 API 响应。
 
 <details>
 <summary>Azure Storage Account Rest API Response Example</summary>
@@ -111,93 +111,107 @@ Create a Port blueprint definition for the resource. The blueprint definition is
 
 </details>
 
-Based on the API response, you can create a Port blueprint definition for the resource.
+根据 API 响应，可以为资源创建 Port 蓝图定义。
 
 <StorageAccountBlueprint/>
 
-### Integration configuration
+### 整合配置
 
-Create an integration configuration for the resource. The integration configuration is a YAML file that describes the ETL process to load data into the developer portal.
+为资源创建集成配置。 集成配置是一个 YAML 文件，描述了将数据加载到开发者门户的 ETL 流程。
 
 <StorageAppConfig/>
 
-#### The integration configuration structure
+#### 集成配置结构
 
-- The `kind` field describes the Azure resource type to be ingested into Port.
-  The `kind` field should be set to the Azure resource type as it appears in the [resource guide](https://learn.microsoft.com/en-us/azure/templates/). e.g. The resource type for the `Storage Account` could be found [here](https://learn.microsoft.com/en-us/azure/templates/microsoft.storage/storageaccounts?pivots=deployment-language-arm-template) as well with the resource object structure.
+* 类型 "字段描述了要摄入 Port 的 Azure 资源类型。类型 "字段应设置为[resource guide](https://learn.microsoft.com/en-us/azure/templates/) 中显示的 Azure 资源类型。例如，"存储帐户 "的资源类型可通过[here](https://learn.microsoft.com/en-us/azure/templates/microsoft.storage/storageaccounts?pivots=deployment-language-arm-template) 以及资源对象结构找到。
+
 
   ```yaml showLineNumbers
   resources:
-  	# highlight-start
-  	- kind: Microsoft.Storage/storageAccounts
-  		# highlight-end
-  		selector:
-  		...
+    # highlight-start
+    - kind: Microsoft.Storage/storageAccounts
+    	# highlight-end
+    	selector:
+    	...
   ```
 
-- The `selector` field describes the Azure resource selection criteria.
+
+* 选择器 "字段描述了 Azure 资源选择标准。
+
 
   ```yaml showLineNumbers
-  	resources:
-  		- kind: Microsoft.Storage/storageAccounts
-  			# highlight-start
-  			selector:
-  				query: "true" # JQ boolean expression. If evaluated to false - this object will be skipped.
-  				apiVersion: "2023-01-01" # Azure API version to use to fetch the resource
-  			# highlight-end
-  			port:
+    resources:
+    	- kind: Microsoft.Storage/storageAccounts
+    		# highlight-start
+    		selector:
+    			query: "true" # JQ boolean expression. If evaluated to false - this object will be skipped.
+    			apiVersion: "2023-01-01" # Azure API version to use to fetch the resource
+    		# highlight-end
+    		port:
   ```
 
-  - The `query` field is a [JQ boolean query](https://stedolan.github.io/jq/manual/#Basicfilters), if evaluated to `false` - the resource will be skipped. Example use case - skip syncing resources that are not in a specific region.
+
+* 查询 "字段是[JQ boolean query](https://stedolan.github.io/jq/manual/#Basicfilters) ，如果评估结果为 "false"，则将跳过该资源。被引用示例 - 跳过同步不在特定区域的资源。
+
+
     ```yaml showLineNumbers
     query: .location == "eastus2"
     ```
+
   - The `apiVersion` field is the Azure API version to use to fetch the resource. This field is required for all resources. For example, the API versions for the `storageAccount` resource was found in the [Storage Account Rest API](https://docs.microsoft.com/en-us/rest/api/storagerp/storageaccounts/list)
+
     ```yaml showLineNumbers
     apiVersion: "2023-01-01"
     ```
+
     ![Storage Account API Version](/img/integrations/azure-exporter/StorageAccountAPIVersion.png)
 
-- The `port` field describes the Port entity to be created from the Azure resource.
+* Port` 字段描述了要从 Azure 资源中创建的Port实体。
+
 
   ```yaml showLineNumbers
   resources:
-  	- kind: Microsoft.Storage/storageAccounts
-  		selector:
-  			query: "true" # JQ boolean query. If evaluated to false - skip syncing the object.
-  			apiVersion: "2023-01-01" # Azure API version to use to fetch the resource
-  		# highlight-start
-  		port:
-  			entity:
-  				mappings: # Mappings between one Azure object to a Port entity. Each value is a JQ query.
-  					identifier: .id
-  					title: .name
-  					blueprint: '"azureStorageAccount"'
-  					properties:
-  						location: .location
-  						provisioningState: .properties.provisioningState
-  		# highlight-end
+    - kind: Microsoft.Storage/storageAccounts
+    	selector:
+    		query: "true" # JQ boolean query. If evaluated to false - skip syncing the object.
+    		apiVersion: "2023-01-01" # Azure API version to use to fetch the resource
+    	# highlight-start
+    	port:
+    		entity:
+    			mappings: # Mappings between one Azure object to a Port entity. Each value is a JQ query.
+    				identifier: .id
+    				title: .name
+    				blueprint: '"azureStorageAccount"'
+    				properties:
+    					location: .location
+    					provisioningState: .properties.provisioningState
+    	# highlight-end
   ```
 
-  - The `entity` field describes the Port entity to be created from the Azure resource.
 
-    - The `mappings` field describes the mapping between the Azure resource and the Port entity.
+* 实体 "字段描述从 Azure 资源创建的 Port 实体。
+    - 映射 "字段描述了 Azure 资源与Port实体之间的映射。
+        + `identifier` 字段描述 Azure 资源标识符。所有资源都需要此字段。
 
-      - The `identifier` field describes the Azure resource identifier. This field is required for all resources.
+
         ```yaml showLineNumbers
         mappings:
         	# highlight-start
         	identifier: .id
         	# highlight-end
         ```
+
       - The `title` field describes the Azure resource title. This field is required for all resources.
+
         ```yaml showLineNumbers
         mappings:
         	# highlight-start
         	title: .name
         	# highlight-end
         ```
+
       - The `blueprint` field describes the Port blueprint to be used to create the Port entity. This field is required for all resources.
+
 
         ```yaml showLineNumbers
         mappings:
@@ -206,7 +220,12 @@ Create an integration configuration for the resource. The integration configurat
         	# highlight-end
         ```
 
-      - The `properties` field describes the Azure resource properties to be mapped to the Port
+
+```
+- The `properties` field describes the Azure resource properties to be mapped to the Port
+```
+
+
         ```yaml showLineNumbers
         	mappings:
         		identifier: .id

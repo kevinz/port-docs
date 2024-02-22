@@ -1,35 +1,37 @@
 ---
+
 sidebar_position: 19
-description: User is a data type used to reference users that exist in Port
+description: 用户User 是一种数据类型，用于引用存在于 Port
+
 ---
 
-import ApiRef from "../../../../api-reference/\_learn_more_reference.mdx"
+import ApiRef from "../../../../api-reference/_learn_more_reference.mdx"
 
 import Tabs from "@theme/Tabs"
 import TabItem from "@theme/TabItem"
 
-# User
+# 用户
 
-User is a data type used to reference users that exist in Port.
+User 是一种数据类型，用于引用存在于 Port 中的用户。
 
-## 💡 Common user usage
+## 💡 用户常用 Usage
 
-The user property type can be used to reference any user that exists in Port, for example:
+例如，用户属性类型可被用来引用 Port 中存在的任何用户: 
 
-- The code owners;
-- The current on-call;
-- The lead maintainer;
-- etc.
+* Owners；
+* 当前值班人员
+* 主要维护者；
+* 等等。
 
-In this [live demo](https://demo.getport.io/service_catalog) example, we can see the `On Call` user property. 🎬
+在[live demo](https://demo.getport.io/service_catalog) 示例中，我们可以看到 "On Call "用户属性。
 
-:::note
-Even though the input is the same in both `email` and `user` formats, their presentation is different:
+:::note 尽管 "电子邮件 "和 "用户 "格式的输入相同，但它们的表现形式却不同: 
 
-- `email` format displays the raw email string;
-- `user` format displays the user's name and avatar from Port's list of known users.
+* `email` 格式显示原始电子邮件字符串；
+* `user` 格式从 Port 的已知用户列表中显示用户名和头像。
 
-In addition, `user` format distinguishes between users by their status:
+此外，"用户 "格式还可根据用户的状态对其进行区分: 
+
 
 | User Status  | Example                                                                                 |
 | ------------ | --------------------------------------------------------------------------------------- |
@@ -37,9 +39,10 @@ In addition, `user` format distinguishes between users by their status:
 | Invited      | ![Invited user](../../../../../static/img/software-catalog/blueprint/invitedUser.png)   |
 | Unregistered | ![External user](../../../../../static/img/software-catalog/blueprint/externalUser.png) |
 
+
 :::
 
-## API definition
+## API 定义
 
 <Tabs groupId="api-definition" queryString defaultValue="basic" values={[
 {label: "Basic", value: "basic"},
@@ -88,7 +91,7 @@ In addition, `user` format distinguishes between users by their status:
 
 <ApiRef />
 
-## Terraform definition
+## Terraform 定义
 
 <Tabs groupId="tf-definition" queryString defaultValue="basic" values={[
 {label: "Basic", value: "basic"},
@@ -140,7 +143,7 @@ resource "port_blueprint" "myBlueprint" {
 
 </Tabs>
 
-## Pulumi definition
+## Pulumi 的定义
 
 <Tabs groupId="pulumi-definition" queryString defaultValue="basic" values={[
 {label: "Basic", value: "basic"},
@@ -244,33 +247,33 @@ exports.title = entity.title;
 package main
 
 import (
-	"github.com/port-labs/pulumi-port/sdk/go/port"
-	"github.com/pulumi/pulumi/sdk/v3/go/pulumi"
+    "github.com/port-labs/pulumi-port/sdk/go/port"
+    "github.com/pulumi/pulumi/sdk/v3/go/pulumi"
 )
 
 func main() {
-	pulumi.Run(func(ctx *pulumi.Context) error {
-		blueprint, err := port.NewBlueprint(ctx, "myBlueprint", &port.BlueprintArgs{
-			Identifier: pulumi.String("myBlueprint"),
-			Title:      pulumi.String("My Blueprint"),
+    pulumi.Run(func(ctx *pulumi.Context) error {
+    	blueprint, err := port.NewBlueprint(ctx, "myBlueprint", &port.BlueprintArgs{
+    		Identifier: pulumi.String("myBlueprint"),
+    		Title:      pulumi.String("My Blueprint"),
       // highlight-start
-			Properties: port.BlueprintPropertiesArgs{
-				StringProps: port.BlueprintPropertiesStringPropsArgs{
+    		Properties: port.BlueprintPropertiesArgs{
+    			StringProps: port.BlueprintPropertiesStringPropsArgs{
                     "myUserProp": port.BlueprintPropertiesStringPropsArgs{
                         Title:    pulumi.String("My user"),
                         Required: pulumi.Bool(false),
                         Format:   pulumi.String("user"),
                     },
                 },
-			},
+    		},
       // highlight-end
-		})
-		ctx.Export("blueprint", blueprint.Title)
-		if err != nil {
-			return err
-		}
-		return nil
-	})
+    	})
+    	ctx.Export("blueprint", blueprint.Title)
+    	if err != nil {
+    		return err
+    	}
+    	return nil
+    })
 }
 ```
 

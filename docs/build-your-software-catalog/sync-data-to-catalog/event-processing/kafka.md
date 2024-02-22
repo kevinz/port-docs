@@ -1,38 +1,37 @@
 import Tabs from "@theme/Tabs"
 import TabItem from "@theme/TabItem"
-import Prerequisites from "../templates/\_ocean_helm_prerequisites_block.mdx"
+import Prerequisites from "../templates/_ocean_helm_prerequisites_block.mdx"
 import AdvancedConfig from '../../../generalTemplates/_ocean_advanced_configuration_note.md'
-import AzurePremise from "../templates/\_ocean_azure_premise.mdx"
-import DockerParameters from "./\_kafka_one_time_docker_params.mdx"
-import HelmParameters from "../templates/\_ocean-advanced-parameters-helm.mdx"
+import AzurePremise from "../templates/_ocean_azure_premise.mdx"
+import DockerParameters from "./_kafka_one_time_docker_params.mdx"
+import HelmParameters from "../templates/_ocean-advanced-parameters-helm.mdx"
 
+# 卡夫卡
 
-# Kafka
+通过我们的 Kafka 集成，您可以根据您的映射和定义，将 Kafka "集群 "中的 "经纪人 "和 "专题 "导入 Port。
 
-Our Kafka integration allows you to import `brokers` and `topics` from your Kafka `clusters` into Port, according to your mapping and definition.
+## 常见被引用情况
 
-## Common use cases
+* 映射 Kafka 集群中的代理和主题。
+* 按计划关注对象变更(创建/更新/删除)，并自动将变更应用到 Port 中的实体。
+* 使用自助操作创建/删除 Kafka 对象。
 
-- Map brokers and topics in your Kafka clusters.
-- Watch for object changes (create/update/delete) on schedule, and automatically apply the changes to your entities in Port.
-- Create/delete Kafka objects using self-service actions.
-
-## Prerequisites
+## 先决条件
 
 <Prerequisites />
 
-## Installation
+## 安装
 
-Choose one of the following installation methods:
+从以下安装方法中选择一种: 
 
 <Tabs groupId="installation-methods" queryString="installation-methods">
 
 <TabItem value="real-time-always-on" label="Real Time & Always On" default>
 
-Using this installation option means that the integration will be able to update Port in real time using webhooks.
+使用该安装选项意味着集成将能使用 webhook 实时更新 Port。
 
-This table summarizes the available parameters for the installation.
-Set them as you wish in the script below, then copy it and run it in your terminal:
+本表总结了安装时可用的参数，请在下面的脚本中按自己的需要进行设置，然后复制并在终端运行: 
+
 
 | Parameter                                | Description                                                                                                                                | Example                          | Required |
 | ---------------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------ | -------------------------------- | -------- |
@@ -52,25 +51,27 @@ To install the integration using Helm, run the following command:
 ```bash showLineNumbers
 helm repo add --force-update port-labs https://port-labs.github.io/helm-charts
 helm upgrade --install kafka port-labs/port-ocean \
-	--set port.clientId="PORT_CLIENT_ID"  \
-	--set port.clientSecret="PORT_CLIENT_SECRET"  \
-	--set port.baseUrl="https://api.getport.io"  \
-	--set initializePortResources=true  \
-	--set scheduledResyncInterval=60  \
-	--set integration.identifier="my-kafka-integration"  \
-	--set integration.type="kafka"  \
-	--set integration.eventListener.type="POLLING"  \
-	--set-json integration.secrets.clusterConfMapping='{"local": {"bootstrap.servers": "localhost:9092"}}'
+    --set port.clientId="PORT_CLIENT_ID"  \
+    --set port.clientSecret="PORT_CLIENT_SECRET"  \
+    --set port.baseUrl="https://api.getport.io"  \
+    --set initializePortResources=true  \
+    --set scheduledResyncInterval=60  \
+    --set integration.identifier="my-kafka-integration"  \
+    --set integration.type="kafka"  \
+    --set integration.eventListener.type="POLLING"  \
+    --set-json integration.secrets.clusterConfMapping='{"local": {"bootstrap.servers": "localhost:9092"}}'
 ```
+
 </TabItem>
 <TabItem value="argocd" label="ArgoCD" default>
 To install the integration using ArgoCD, follow these steps:
 
-1. Create a `values.yaml` file in `argocd/my-ocean-kafka-integration` in your git repository with the content:
+1. 在你的 git 仓库的 `argocd/my-ocean-kafka-integration` 中创建一个内容为 `values.yaml` 的文件: 
 
-:::note
-Remember to replace the placeholders for `KAFKA_CLUSTER_CONFIG_MAPPING`.
+:::note 请记住替换 `KAFKA_CLUSTER_CONFIG_MAPPING` 的占位符。
+
 :::
+
 ```yaml showLineNumbers
 initializePortResources: true
 scheduledResyncInterval: 120
@@ -83,13 +84,15 @@ integration:
   // highlight-next-line
     clusterConfMapping: KAFKA_CLUSTER_CONFIG_MAPPING
 ```
+
 <br/>
 
-2. Install the `my-ocean-kafka-integration` ArgoCD Application by creating the following `my-ocean-kafka-integration.yaml` manifest:
-:::note
-Remember to replace the placeholders for `YOUR_PORT_CLIENT_ID` `YOUR_PORT_CLIENT_SECRET` and `YOUR_GIT_REPO_URL`.
+2.创建下面的 "my-ocean-kafka-integration.yaml "配置清单，安装 "my-ocean-kafka-integration "ArgoCD应用程序: 
 
-Multiple sources ArgoCD documentation can be found [here](https://argo-cd.readthedocs.io/en/stable/user-guide/multiple_sources/#helm-value-files-from-external-git-repository).
+:::note 记住要替换 `YOUR_PORT_CLIENT_ID``YOUR_PORT_CLIENT_SECRET` 和 `YOUR_GIT_REPO_URL` 的占位符。
+
+多种来源的 ArgoCD 文档可在[here](https://argo-cd.readthedocs.io/en/stable/user-guide/multiple_sources/#helm-value-files-from-external-git-repository) 上找到。
+
 :::
 
 <details>
@@ -134,10 +137,12 @@ spec:
 </details>
 <br/>
 
-3. Apply your application manifest with `kubectl`:
+3.使用 `kubectl` 配置应用程序清单: 
+
 ```bash
 kubectl apply -f my-ocean-kafka-integration.yaml
 ```
+
 </TabItem>
 </Tabs>
 
@@ -149,17 +154,17 @@ kubectl apply -f my-ocean-kafka-integration.yaml
   <TabItem value="github" label="GitHub">
 This workflow will run the Kafka integration once and then exit, this is useful for **scheduled** ingestion of data.
 
-:::warning
-If you want the integration to update Port in real time using webhooks you should use the [Real Time & Always On](?installation-methods=real-time-always-on#installation) installation option.
+:::warning 如果希望集成使用 webhooks 实时更新 Port，则应使用[Real Time & Always On](?installation-methods=real-time-always-on#installation) 安装选项。
+
 :::
 
-Make sure to configure the following [Github Secrets](https://docs.github.com/en/actions/security-guides/using-secrets-in-github-actions):
+确保配置以下[Github Secrets](https://docs.github.com/en/actions/security-guides/using-secrets-in-github-actions) : 
 
 <DockerParameters/>
 
 <br/>
 
-Here is an example for `kafka-integration.yml` workflow file:
+下面是 `kafka-integration.yml` 工作流程文件的示例: 
 
 ```yaml showLineNumbers
 name: Kafka Exporter Workflow
@@ -196,20 +201,20 @@ jobs:
   <TabItem value="jenkins" label="Jenkins">
 This pipeline will run the Kafka integration once and then exit, this is useful for **scheduled** ingestion of data.
 
-:::tip
-Your Jenkins agent should be able to run docker commands.
+:::tip 你的 Jenkins 代理应该能够运行 docker 命令。
+
 :::
-:::warning
-If you want the integration to update Port in real time using webhooks you should use the [Real Time & Always On](?installation-methods=real-time-always-on#installation) installation option.
+:::warning 如果希望集成使用 webhooks 实时更新 Port，则应使用 安装选项。[Real Time & Always On](?installation-methods=real-time-always-on#installation) 
+
 :::
 
-Make sure to configure the following [Jenkins Credentials](https://www.jenkins.io/doc/book/using/using-credentials/) of `Secret Text` type:
+请确保配置以下[Jenkins Credentials](https://www.jenkins.io/doc/book/using/using-credentials/) 的 "Secret Text "类型: 
 
 <DockerParameters/>
 
 <br/>
 
-Here is an example for `Jenkinsfile` groovy pipeline file:
+下面是 `Jenkinsfile` groovy Pipelines 文件的示例: 
 
 ```yml showLineNumbers
 pipeline {
@@ -249,7 +254,6 @@ pipeline {
 
   </TabItem>
 
-   
 <TabItem value="azure" label="Azure Devops">
 <AzurePremise name="Kafka" />
 
@@ -257,7 +261,7 @@ pipeline {
 
 <br/>
 
-Here is an example for `kafka-integration.yml` pipeline file:
+下面是 `kafka-integration.yml` Pipelines 文件的示例: 
 
 ```yaml showLineNumbers
 trigger:
@@ -268,7 +272,6 @@ pool:
 
 variables:
   - group: port-ocean-credentials
-
 
 steps:
 - script: |
@@ -288,7 +291,6 @@ steps:
 
     exit $?
   displayName: 'Ingest Data into Port'
-
 ```
 
   </TabItem>
@@ -301,11 +303,11 @@ steps:
 
 <AdvancedConfig/>
 
-## Ingesting Kafka objects
+## 接收 Kafka 对象
 
-The Kafka integration uses a YAML configuration to describe the process of loading data into the developer portal.
+Kafka 集成使用 YAML 配置来描述将数据加载到开发者门户的过程。
 
-Here is an example snippet from the config which demonstrates the process for getting `cluster` data from Kafka:
+下面是配置中的一个示例片段，演示了从 Kafka 获取 `集群`数据的过程: 
 
 ```yaml showLineNumbers
 createMissingRelatedEntities: false
@@ -324,14 +326,13 @@ resources:
             controllerId: .controller_id
 ```
 
-The integration makes use of the [JQ JSON processor](https://stedolan.github.io/jq/manual/) to select, modify, concatenate, transform and perform other operations on existing fields and values from Kafka metadata objects.
+该集成利用[JQ JSON processor](https://stedolan.github.io/jq/manual/) 对 Kafka 元数据对象中的现有字段和值进行选择、修改、连接、转换和其他操作。
 
-### Configuration structure
+### 配置结构
 
-The integration configuration determines which resources will be queried from Kafka, and which entities and properties will be created in Port.
+集成配置决定了将从 Kafka 查询哪些资源，以及将在 Port 中创建哪些实体和属性。
 
-:::tip Supported resources
-The following resources can be used to map data from Kafka, it is possible to reference any field that appears in the examples below for the mapping configuration.
+:::tip  支持的资源 以下资源可被用来映射来自 Kafka 的数据，可以引用下面示例中出现的任何字段进行映射配置。
 
 <details>
 <summary>Cluster example</summary>
@@ -382,7 +383,8 @@ The following resources can be used to map data from Kafka, it is possible to re
 
 :::
 
-- The root key of the integration configuration is the `resources` key:
+* 集成配置的根密钥是 "资源 "密钥: 
+
 
   ```yaml showLineNumbers
   # highlight-next-line
@@ -392,7 +394,9 @@ The following resources can be used to map data from Kafka, it is possible to re
       ...
   ```
 
-- The `kind` key is a specifier for a Kafka object:
+
+* 类型 "键是 Kafka 对象的说明符: 
+
 
   ```yaml showLineNumbers
     resources:
@@ -402,7 +406,9 @@ The following resources can be used to map data from Kafka, it is possible to re
         ...
   ```
 
-- The `selector` and the `query` keys allow you to filter which objects of the specified `kind` will be ingested into your software catalog:
+
+* 通过 "选择器 "和 "查询 "键，您可以过滤哪些指定 "类型 "的对象将被录入软件目录: 
+
 
   ```yaml showLineNumbers
   resources:
@@ -414,7 +420,9 @@ The following resources can be used to map data from Kafka, it is possible to re
       port:
   ```
 
-- The `port`, `entity` and the `mappings` keys are used to map the Kafka object fields to Port entities. To create multiple mappings of the same kind, you can add another item in the `resources` array;
+
+* Port"、"实体 "和 "映射 "键被用来将 Kafka 对象字段映射到Port实体。要创建多个同类映射，可以在 `resources` 数组中添加另一项；
+
 
   ```yaml showLineNumbers
   resources:
@@ -439,26 +447,25 @@ The following resources can be used to map data from Kafka, it is possible to re
           mappings: ...
   ```
 
-  :::tip Blueprint key
-  Note the value of the `blueprint` key - if you want to use a hardcoded string, you need to encapsulate it in 2 sets of quotes, for example use a pair of single-quotes (`'`) and then another pair of double-quotes (`"`)
-  :::
 
-### Ingest data into Port
+:::tip 蓝图键 注意 `blueprint` 键的值 - 如果要使用硬编码字符串，需要用 2 组引号封装，例如使用一对单引号 (`'`)，然后再用一对双引号 (`"`): ::: 
 
-To ingest Kafka objects using the [integration configuration](#configuration-structure), you can follow the steps below:
+#### 将数据输入Port
 
-1. Go to the DevPortal Builder page.
-2. Select a blueprint you want to ingest using Kafka.
-3. Choose the **Ingest Data** option from the menu.
-4. Select Kafka under the Event Processing providers category.
-5. Modify the [configuration](#configuration-structure) according to your needs.
-6. Click `Resync`.
+要使用[integration configuration](#configuration-structure) 被引用 Kafka 对象，可以按照以下步骤操作: 
 
-## Examples
+1. 转到 DevPortal Builder 页面。
+2. 选择要使用 Kafka 进行引用的蓝图。
+3. 从菜单中选择**摄取数据**选项。
+4. 在事件处理 Provider 类别下选择 Kafka。
+5. 根据需要修改[configuration](#configuration-structure) 。
+6. 单击 `Resync`。
 
-Examples of blueprints and the relevant integration configurations:
+## 示例
 
-### Cluster
+蓝图和相关集成配置示例: 
+
+#### 集群
 
 <details>
 <summary>Cluster blueprint</summary>
@@ -503,7 +510,7 @@ resources:
 
 </details>
 
-### Broker
+### 经纪人
 
 <details>
 <summary>Broker blueprint</summary>
@@ -572,7 +579,7 @@ resources:
 
 </details>
 
-### Topic
+#### 主题
 
 <details>
 <summary>Topic blueprint</summary>

@@ -1,9 +1,9 @@
-# Examples
+# 示例
 
 import DocCardList from '@theme/DocCardList';
 import DocCard from '@theme/DocCard';
 
-Check out the following examples for using Port's webhook integration to ingest resources into your software catalog:
+请查看以下示例，了解如何使用 Port 的 webhook 集成将资源引用到软件目录中: 
 
 <DocCardList items={[
   {

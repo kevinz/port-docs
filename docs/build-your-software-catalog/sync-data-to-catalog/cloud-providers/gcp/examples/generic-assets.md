@@ -1,14 +1,16 @@
 ---
+
 sidebar_position: 1
-title: GCP Assets Inventory
-description: Bring generic information of assets using terraform
+title: GCP 资产清单
+description: 使用 Terraform 被引用的通用资产信息
+
 ---
 
-# GCP Assets Inventory
+# 全球联络点资产清单
 
-In this example you are going to export some generic information about a GCP organization and all of its assets, to Port.
+在本示例中，您要将有关 GCP 组织及其所有资产的一些通用信息导出到 Port。
 
-Here is the complete `main.tf` file:
+下面是完整的 `main.tf` 文件: 
 
 <details>
 <summary>Complete Terraform definition file</summary>
@@ -89,7 +91,6 @@ resource "port_blueprint" "gcp_org_blueprint" {
   }
 }
 
-
 resource "port_entity" "gcp_org_entity" {
   identifier = data.google_organization.my_org.org_id
   title      = data.google_organization.my_org.domain
@@ -101,7 +102,6 @@ resource "port_entity" "gcp_org_entity" {
     }
   }
 }
-
 
 resource "port_blueprint" "gcp_folder_blueprint" {
   title      = "Folder"
@@ -130,7 +130,6 @@ resource "port_blueprint" "gcp_folder_blueprint" {
   }
 }
 
-
 resource "port_entity" "gcp_folder_entity" {
   for_each   = { for idx, folder in data.google_folder.my_folders : idx => folder }
   identifier = each.value.folder_id
@@ -148,8 +147,6 @@ resource "port_entity" "gcp_folder_entity" {
     }
   }
 }
-
-
 
 resource "port_blueprint" "gcp_project_blueprint" {
   title      = "Project"
@@ -214,7 +211,6 @@ resource "port_entity" "gcp_project_entity" {
   depends_on = [port_entity.gcp_org_entity, port_entity.gcp_folder_entity]
 }
 
-
 resource "port_blueprint" "gcp_asset_blueprint" {
   title      = "GCP Asset"
   icon       = "GCP"
@@ -261,7 +257,6 @@ resource "port_blueprint" "gcp_asset_blueprint" {
   }
 }
 
-
 resource "port_entity" "gcp_asset_entity" {
   for_each  = { for idx, result in flatten(values({ for idx, project_assets in data.google_cloud_asset_resources_search_all.my_assets : idx => [for result in project_assets.results : merge(result, { project_id : project_assets.id })] })) : idx => result }
   title     = each.value.display_name == "" ? reverse(split("/", each.value.name))[0] : each.value.display_name
@@ -295,7 +290,7 @@ resource "port_entity" "gcp_asset_entity" {
 
 </details>
 
-To use this example yourself, simply replace the placeholders for `domain`, `client_id`, `secret` and `credentials` and then run the following commands to setup your new backend, create the new infrastructure and update the software catalog:
+要自己使用这个示例，只需替换 `domain`、`client_id`、`secret` 和 `credentials` 的占位符，然后运行以下命令设置新的后端、创建新的基础架构并更新软件目录: 
 
 ```shell showLineNumbers
 # install modules and create an initial state
@@ -306,8 +301,7 @@ terraform plan
 terraform apply
 ```
 
-:::note GCP permissions
-To be able to read the organization, folders, projects and assets in this example, you need to use an organization's GCP IAM role with at least the following permissions:
+:::note  GCP 权限 要能读取本例中的组织、文件夹、项目和资产，需要使用至少具有以下权限的组织 GCP IAM 角色: 
 
 ```text showLineNumbers
 cloudasset.assets.searchAllResources
@@ -319,11 +313,11 @@ resourcemanager.projects.get
 
 :::
 
-Let's break down the definition file and understand the different parts:
+让我们来分解定义文件，了解其中的各个部分: 
 
-## Module imports
+## 模块导入
 
-This part includes importing and setting up the required Terraform providers and modules:
+这部分包括导入和设置所需的 Terraform Provider 和模块: 
 
 ```hcl showLineNumbers
 terraform {
@@ -353,9 +347,9 @@ provider "google-beta" {
 }
 ```
 
-## Extracting the organization, folders, projects and assets
+## 提取组织、文件夹、项目和资产
 
-This part includes defining the datasource for the organization, folders, projects and assets:
+这部分包括定义组织、文件夹、项目和资产的数据源: 
 
 ```hcl showLineNumbers
 data "google_organization" "my_org" {
@@ -388,9 +382,9 @@ data "google_cloud_asset_resources_search_all" "my_assets" {
 }
 ```
 
-## Creating the Organization blueprint and the entity matching the organization
+## 创建组织蓝图和与组织匹配的实体
 
-This part includes configuring the `organization` blueprint and creating an entity for the organization:
+这部分包括配置 "组织 "蓝图和为组织创建实体: 
 
 ```hcl showLineNumbers
 resource "port_blueprint" "gcp_org_blueprint" {
@@ -413,7 +407,6 @@ resource "port_blueprint" "gcp_org_blueprint" {
   }
 }
 
-
 resource "port_entity" "gcp_org_entity" {
   identifier = data.google_organization.my_org.org_id
   title      = data.google_organization.my_org.domain
@@ -425,12 +418,11 @@ resource "port_entity" "gcp_org_entity" {
     }
   }
 }
-
 ```
 
-## Creating the Folder blueprint and the entities matching the folders
+## 创建文件夹蓝图和与文件夹匹配的实体
 
-This part includes configuring the `folder` blueprint and creating an entities for the folders:
+这部分包括配置 "文件夹 "蓝图和为文件夹创建实体: 
 
 ```hcl showLineNumbers
 resource "port_blueprint" "gcp_folder_blueprint" {
@@ -459,7 +451,6 @@ resource "port_blueprint" "gcp_folder_blueprint" {
   }
 }
 
-
 resource "port_entity" "gcp_folder_entity" {
   for_each   = { for idx, folder in data.google_folder.my_folders : idx => folder }
   identifier = each.value.folder_id
@@ -477,12 +468,11 @@ resource "port_entity" "gcp_folder_entity" {
     }
   }
 }
-
 ```
 
-## Creating the Project blueprint and the entities matching the projects
+## 创建项目蓝图和与项目匹配的实体
 
-This part includes configuring the `project` blueprint and creating an entities for the projects:
+这部分包括配置 "项目 "蓝图和为项目创建实体: 
 
 ```hcl showLineNumbers
 resource "port_blueprint" "gcp_project_blueprint" {
@@ -525,8 +515,6 @@ resource "port_blueprint" "gcp_project_blueprint" {
   }
 }
 
-
-
 resource "port_entity" "gcp_project_entity" {
   for_each   = { for idx, project in data.google_projects.my_projects.projects : idx => project }
   identifier = each.value.project_id
@@ -550,12 +538,11 @@ resource "port_entity" "gcp_project_entity" {
   }
   depends_on = [port_entity.gcp_org_entity, port_entity.gcp_folder_entity]
 }
-
 ```
 
-## Creating the GCP Assets blueprint and the entities matching the assets
+## 创建 GCP 资产蓝图和与资产匹配的实体
 
-This part includes configuring the `gcpAssets` blueprint and creating the entities for the assets:
+这部分包括配置 `gcpAssets` 蓝图和创建资产实体: 
 
 ```hcl showLineNumbers
 resource "port_blueprint" "gcp_asset_blueprint" {
@@ -603,7 +590,6 @@ resource "port_blueprint" "gcp_asset_blueprint" {
   }
 }
 
-
 resource "port_entity" "gcp_asset_entity" {
   for_each  = { for idx, result in flatten(values({ for idx, project_assets in data.google_cloud_asset_resources_search_all.my_assets : idx => [for result in project_assets.results : merge(result, { project_id : project_assets.id })] })) : idx => result }
   title     = each.value.display_name == "" ? reverse(split("/", each.value.name))[0] : each.value.display_name
@@ -634,6 +620,6 @@ resource "port_entity" "gcp_asset_entity" {
 }
 ```
 
-## Result
+## 结果
 
-After running `terraform apply` you will see the organization, folders, projects, and `gcpAssets` entities in Port.
+运行 `terraform apply` 后，您将在 Port 中看到组织、文件夹、项目和 `gcpAssets` 实体。

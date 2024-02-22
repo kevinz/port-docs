@@ -1,38 +1,38 @@
 ---
+
 sidebar_position: 1
+
 ---
 
-# AWS Exporter Module
+# AWS 输出模块
 
-The AWS exporter module is used to deploy the Port AWS Exporter in your AWS account.
+AWS 输出程序模块被引用用于在 AWS 账户中部署 Port AWS 输出程序。
 
-:::note NOTE
-For full installation, including the resources blueprints and updating AWS blueprints based on AWS events,
+:::note  注意 有关完整安装，包括资源蓝图和根据 AWS 事件更新 AWS 蓝图、
 
-Please use the full **[AWS exporter Terraform installation](/build-your-software-catalog/sync-data-to-catalog/cloud-providers/aws/Installation.md#terraform-installation-recommended)**
+请使用完整的 ** [AWS exporter Terraform installation](/build-your-software-catalog/sync-data-to-catalog/cloud-providers/aws/Installation.md#terraform-installation-recommended)**
+
 :::
 
-## Prerequisites
+## 先决条件
 
-Before using this module, make sure you have completed the following prerequisites:
+在使用本模块之前，请确保您已完成以下前提条件: 
 
-1. Install and configure the AWS Command Line Interface (CLI) on your local machine.
+1. 在本地计算机上安装和配置 AWS 命令行界面 (CLI)。
+    有关说明，请参阅[AWS CLI Documentation](https://docs.aws.amazon.com/cli/latest/userguide/cli-chap-getting-started.html) 。
+2.导出您的[Port credentials](https://docs.getport.io/build-your-software-catalog/sync-data-to-catalog/api/#find-your-port-credentials) : 
 
-   Refer to the [AWS CLI Documentation](https://docs.aws.amazon.com/cli/latest/userguide/cli-chap-getting-started.html) for instructions.
-
-2. Export your [Port credentials](https://docs.getport.io/build-your-software-catalog/sync-data-to-catalog/api/#find-your-port-credentials):
 
    ```bash
    export PORT_CLIENT_ID="YOUR_PORT_CLIENT_ID"
    export PORT_CLIENT_SECRET="YOUR_PORT_CLIENT_SECRET"
    ```
 
-## Deploying the exporter
 
-1. Create the AWS exporter [config.json](/build-your-software-catalog/sync-data-to-catalog/cloud-providers/aws/aws.md#exporter-configjson-file) file.
+## 部署输出程序
 
-2. Add the module to your HCL configuration. You can use this simple HCL.
-
+1. 创建 AWS 输出程序[config.json](/build-your-software-catalog/sync-data-to-catalog/cloud-providers/aws/aws.md#exporter-configjson-file) 文件。
+2. 将模块添加到 HCL 配置中。您可以使用这个简单的 HCL。
       <details>
       <summary>HCL example</summary>
 
@@ -49,7 +49,7 @@ Before using this module, make sure you have completed the following prerequisit
    }
    ```
 
-      </details>
+   </details>
 
 ### Running the module
 
@@ -61,72 +61,72 @@ terraform plan       # Preview the changes to be applied
 terraform apply      # Apply the changes and provision the resources in your AWS account, providing the path to your variables file using the --var-file option.
 ```
 
-### Variables
+### 变量
 
-You can configure and customize the AWS exporter using built-in module variables:
+您可以使用内置模块变量配置和自定义 AWS 输出程序: 
 
 <details>
 <summary>View all variables</summary>
 
-`stack_name` - the name of the CloudFormation stack.
+`stack_name` - CloudFormation 堆栈的名称。
 
-`secret_name` - secret name for Port credentials.
+`secret_name` - Port凭据的secret名称。
 
-You can also provide an existing secret instead using the `custom_port_credentials_secret_arn` variable.
+您也可以使用 `custom_port_credentials_secret_arn` 变量来提供现有的secret。
 
-`create_bucket` - whether to create a new bucket for the exporter configuration or use an existing one.
+`create_bucket` - 是为出口程序配置创建一个新的数据桶，还是使用现有的数据桶。
 
-`bucket_name` - bucket name for the exporter configuration. Lambda also use it to write intermediate temporary files.
+`bucket_name` - 用于导出配置的 bucket 名称。 Lambda 也会用它来写入中间临时文件。
 
-`config_json` - (required) file path / JSON formatted string of the exporter config.
+`config_json` -(必填)导出器配置的文件路径/JSON 格式字符串。
 
-`config_s3_key` - (required) s3 key name of the exporter configuration.
+`config_s3_key` - (必填)导出器配置的 s3 密钥名称。
 
-`function_name` - the name of the AWS Lambda function.
+`function_name` - AWS Lambda 函数的名称。
 
-`iam_policy_name` - policy name for Port exporter's role.
+iam_policy_name` - Port 输出者角色的策略名称。
 
-`custom_port_credentials_secret_arn` - (optional) Secret ARN for Port credentials (client id and client secret).
+custom_port_credentials_secret_arn` - (可选)Port凭据(客户 ID 和客户secret)的secret ARN。
 
-The secret value should be in the format: `{"id":"<PORT_CLIENT_ID>","clientSecret":"<PORT_CLIENT_SECRET>"}`
+secret值的格式应为: `{"id":"<PORT_CLIENT_ID>"，"clientSecret":"<PORT_CLIENT_SECRET>"}`
 
-`lambda_policy` - (optional) path or JSON formatted string of the AWS policy json to grant to the Lambda function. If not passed, using the default exporter policies.
+`lambda_policy` -(可选)要授予 Lambda 函数的 AWS 策略 json 的路径或 JSON 格式字符串。 如果未被引用，则使用默认的导出器策略。
 
-`events_queue_name` - the name of the events queue to the Port exporter.
+`events_queue_name` - 发送到 Port 输出程序的事件队列名称。
 
-`schedule_state` - `ENABLED` or `DISABLED`. It is recommended to enable it only after one successful run. Also make sure to update the schedule expression interval to be longer than the exporter execution time.
+`schedule_state` - `ENABLED` 或 `DISABLED`。 建议仅在成功运行一次后启用。 同时确保更新计划表达式的时间间隔，使其长于出口程序的执行时间。
 
-`schedule_expression` - (required) schedule expression to define an event schedule for the exporter, according to the following [spec](https://docs.aws.amazon.com/lambda/latest/dg/services-cloudwatchevents-expressions.html).
+`schedule_expression` -(必填) 时间表表达式，用于定义输出程序的事件时间表，如下所示[spec](https://docs.aws.amazon.com/lambda/latest/dg/services-cloudwatchevents-expressions.html) 。
 
 </details>
 
-:::tip LAMBDA FUNCTION IAM POLICY
-By default, the exporter will use the [default exporter policy](https://github.com/port-labs/terraform-aws-port-exporter/blob/main/defaults/policy.json).
+:::tip  LAMBDA FUNCTION IAM POLICY 默认情况下，导出程序将引用[default exporter policy](https://github.com/port-labs/terraform-aws-port-exporter/blob/main/defaults/policy.json).
 
-In order to use your custom [AWS policy](https://docs.aws.amazon.com/IAM/latest/UserGuide/access_policies.html), create a new `policy.json` file, and pass its path to the `lambda_policy_file` variable.
+为了使用自定义[AWS policy](https://docs.aws.amazon.com/IAM/latest/UserGuide/access_policies.html) ，请创建一个新的 `policy.json` 文件，并将其路径传递给 `lambda_policy_file` 变量。
+
 :::
 
-### Exporter CloudFormation stack
+### 导出器 CloudFormation 堆栈
 
-After finishing the installation, you will see the Port exporter deployment in your CloudFormation Stacks with the name
+完成安装后，您将在 CloudFormation Stacks 中看到 Port 输出程序部署，其名称为
 
-`serverlessrepo-<exporter_stack_name>` - based on the `stack_name` variable.
+`serverlessrepo-<exporter_stack_name>` - 基于 `stack_name` 变量。
 
-:::note
-The stack will be deployed to the AWS region configured in the user's AWS CLI
+:::note 堆栈将部署到用户 AWS CLI 中配置的 AWS 区域
+
 :::
 
-### Deleting the exporter
+### 删除出口商
 
-To delete the AWS exporter module. you can simply run:
+要删除 AWS 输出程序模块，只需运行
 
 ```bash
 terraform destroy
 ```
 
-## Further Information
+## 更多信息
 
-- See the [AWS exporter docs](https://docs.getport.io/build-your-software-catalog/sync-data-to-catalog/cloud-providers/aws/) for further information about the exporter.
-- Visit the Terraform module [Github repository](https://github.com/port-labs/terraform-aws-port-exporter):
-  - The [module example](https://github.com/port-labs/terraform-aws-port-exporter/tree/main/examples/run_module_example) folder for a more complete example of the Terraform module.
-  - The Event Bridge rule [Terraform example](https://github.com/port-labs/terraform-aws-port-exporter/tree/main/examples/terraform_deploy_eventbridge_rule) for example of deploying an [Eventbridge rule](https://docs.aws.amazon.com/eventbridge/latest/userguide/eb-rules.html) for the AWS exporter.
+* 有关出口程序的更多信息，请参阅[AWS exporter docs](https://docs.getport.io/build-your-software-catalog/sync-data-to-catalog/cloud-providers/aws/) 。
+* 访问 Terraform 模块[Github repository](https://github.com/port-labs/terraform-aws-port-exporter) : 
+    - [module example](https://github.com/port-labs/terraform-aws-port-exporter/tree/main/examples/run_module_example) 文件夹，查看 Terraform 模块的更完整示例。
+    - Event Bridge 规则[Terraform example](https://github.com/port-labs/terraform-aws-port-exporter/tree/main/examples/terraform_deploy_eventbridge_rule) ，以了解为 AWS 输出程序部署[Eventbridge rule](https://docs.aws.amazon.com/eventbridge/latest/userguide/eb-rules.html) 的示例。

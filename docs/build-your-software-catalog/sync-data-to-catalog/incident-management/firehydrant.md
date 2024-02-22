@@ -1,39 +1,41 @@
 ---
+
 sidebar_position: 3
+
 ---
 
 import Tabs from "@theme/Tabs"
 import TabItem from "@theme/TabItem"
-import Prerequisites from "../templates/\_ocean_helm_prerequisites_block.mdx"
-import AzurePremise from "../templates/\_ocean_azure_premise.mdx"
-import DockerParameters from "./\_firehydrant_docker_params.mdx"
+import Prerequisites from "../templates/_ocean_helm_prerequisites_block.mdx"
+import AzurePremise from "../templates/_ocean_azure_premise.mdx"
+import DockerParameters from "./_firehydrant_docker_params.mdx"
 import AdvancedConfig from '../../../generalTemplates/_ocean_advanced_configuration_note.md'
 
-# FireHydrant
+# 消防栓
 
-Our FireHydrant integration allows you to import `environment`, `service`, `incident` and `retrospective` from your FireHydrant account into Port, according to your mapping and definitions.
+我们的 FireHydrant 集成可让您根据映射和定义，从 FireHydrant 账户将 "环境"、"服务"、"事件 "和 "回顾 "导入 Port。
 
-## Common use cases
+## 常见被引用情况
 
-- Map `environment`, `service`, `incident` and `retrospective` in your FireHydrant account.
-- Watch for object changes (create/update/delete) in real-time, and automatically apply the changes to your entities in Port.
+* 在您的 FireHydrant 账户中映射 "环境"、"服务"、"事件 "和 "回顾"。
+* 实时观察对象更改(创建/更新/删除)，并自动将更改应用到 Port 中的实体。
 
-## Prerequisites
+## 先决条件
 
 <Prerequisites />
 
-## Installation
+## 安装
 
-Choose one of the following installation methods:
+从以下安装方法中选择一种: 
 
 <Tabs groupId="installation-methods" queryString="installation-methods">
 
 <TabItem value="real-time-always-on" label="Real Time & Always On" default>
 
-Using this installation option means that the integration will be able to update Port in real time using webhooks.
+使用该安装选项意味着集成将能使用 webhook 实时更新 Port。
 
-This table summarizes the available parameters for the installation.
-Set them as you wish in the script below, then copy it and run it in your terminal:
+本表总结了安装时可用的参数，请在下面的脚本中按自己的需要进行设置，然后复制并在终端运行: 
+
 
 | Parameter                        | Description                                                                                                               | Required |
 | -------------------------------- | ------------------------------------------------------------------------------------------------------------------------- | -------- |
@@ -49,6 +51,7 @@ Set them as you wish in the script below, then copy it and run it in your termin
 | `scheduledResyncInterval`        | The number of minutes between each resync                                                                                 | ❌       |
 | `initializePortResources`        | Default true, When set to true the integration will create default blueprints and the port App config Mapping             | ❌       |
 
+
 <br/>
 
 <Tabs groupId="deploy" queryString="deploy">
@@ -59,25 +62,27 @@ To install the integration using Helm, run the following command:
 ```bash showLineNumbers
 helm repo add --force-update port-labs https://port-labs.github.io/helm-charts
 helm upgrade --install my-firehydrant-integration port-labs/port-ocean \
-	--set port.clientId="CLIENT_ID"  \
-	--set port.clientSecret="CLIENT_SECRET"  \
-	--set initializePortResources=true  \
-	--set integration.identifier="my-firehydrant-integration"  \
-	--set integration.type="firehydrant"  \
-	--set integration.eventListener.type="POLLING"  \
-	--set integration.config.apiUrl="https://api.firehydrant.io"  \
-	--set integration.secrets.token="<FIREHYDRANT_API_TOKEN>"
+    --set port.clientId="CLIENT_ID"  \
+    --set port.clientSecret="CLIENT_SECRET"  \
+    --set initializePortResources=true  \
+    --set integration.identifier="my-firehydrant-integration"  \
+    --set integration.type="firehydrant"  \
+    --set integration.eventListener.type="POLLING"  \
+    --set integration.config.apiUrl="https://api.firehydrant.io"  \
+    --set integration.secrets.token="<FIREHYDRANT_API_TOKEN>"
 ```
+
 </TabItem>
 
 <TabItem value="argocd" label="ArgoCD" default>
 To install the integration using ArgoCD, follow these steps:
 
-1. Create a `values.yaml` file in `argocd/my-ocean-firehydrant-integration` in your git repository with the content:
+1. 在 git 仓库的`argocd/my-ocean-firehydrant-integration`中创建内容为`values.yaml`的文件: 
 
-:::note
-Remember to replace the placeholders for `FIREHYDRANT_API_URL` and `FIREHYDRANT_API_TOKEN`.
+:::note 请记住替换 `FIREHYDRANT_API_URL` 和 `FIREHYDRANT_API_TOKEN` 的占位符。
+
 :::
+
 ```yaml showLineNumbers
 initializePortResources: true
 scheduledResyncInterval: 120
@@ -93,13 +98,15 @@ integration:
   // highlight-next-line
     token: FIREHYDRANT_API_TOKEN
 ```
+
 <br/>
 
-2. Install the `my-ocean-firehydrant-integration` ArgoCD Application by creating the following `my-ocean-firehydrant-integration.yaml` manifest:
-:::note
-Remember to replace the placeholders for `YOUR_PORT_CLIENT_ID` `YOUR_PORT_CLIENT_SECRET` and `YOUR_GIT_REPO_URL`.
+2.创建以下 `my-ocean-firehydrant-integration.yaml` 配置清单，安装 `my-ocean-firehydrant-integration` ArgoCD 应用程序: 
 
-Multiple sources ArgoCD documentation can be found [here](https://argo-cd.readthedocs.io/en/stable/user-guide/multiple_sources/#helm-value-files-from-external-git-repository).
+:::note 记住要替换 `YOUR_PORT_CLIENT_ID``YOUR_PORT_CLIENT_SECRET` 和 `YOUR_GIT_REPO_URL` 的占位符。
+
+多种来源的 ArgoCD 文档可在[here](https://argo-cd.readthedocs.io/en/stable/user-guide/multiple_sources/#helm-value-files-from-external-git-repository) 上找到。
+
 :::
 
 <details>
@@ -144,10 +151,12 @@ spec:
 </details>
 <br/>
 
-3. Apply your application manifest with `kubectl`:
+3.使用 `kubectl` 配置应用程序清单: 
+
 ```bash
 kubectl apply -f my-ocean-firehydrant-integration.yaml
 ```
+
 </TabItem>
 </Tabs>
 
@@ -157,19 +166,19 @@ kubectl apply -f my-ocean-firehydrant-integration.yaml
   <Tabs groupId="cicd-method" queryString="cicd-method">
   <TabItem value="github" label="GitHub">
 
-This workflow will run the FireHydrant integration once and then exit, this is useful for **scheduled** ingestion of data.
+此工作流将运行一次 FireHydrant 集成，然后退出，这对 ** 计划**数据引用非常有用。
 
-:::warning
-If you want the integration to update Port in real time using webhooks you should use the [Real Time & Always On](?installation-methods=real-time-always-on#installation) installation option
+:::warning 如果希望集成使用 webhooks 实时更新 Port，则应使用[Real Time & Always On](?installation-methods=real-time-always-on#installation) 安装选项
+
 :::
 
-Make sure to configure the following [Github Secrets](https://docs.github.com/en/actions/security-guides/using-secrets-in-github-actions):
+确保配置以下[Github Secrets](https://docs.github.com/en/actions/security-guides/using-secrets-in-github-actions) : 
 
 <DockerParameters/>
 
 <br/>
 
-Here is an example for `firehydrant-integration.yml` workflow file:
+以下是 `firehydrant-integration.yml` 工作流程文件的示例: 
 
 ```yaml showLineNumbers
 name: FireHydrant Exporter Workflow
@@ -207,22 +216,20 @@ jobs:
   <TabItem value="jenkins" label="Jenkins">
 This pipeline will run the FireHydrant integration once and then exit, this is useful for **scheduled** ingestion of data.
 
-:::tip
-Your Jenkins agent should be able to run docker commands.
+:::tip 你的 Jenkins 代理应该能够运行 docker 命令。
+
 :::
-:::warning
-If you want the integration to update Port in real time using webhooks you should use
-the [Real Time & Always On](?installation-methods=real-time-always-on#installation) installation option.
+:::warning 如果希望集成使用 webhooks 实时更新 Port，则应使用 安装选项。[Real Time & Always On](?installation-methods=real-time-always-on#installation) 
+
 :::
 
-Make sure to configure the following [Jenkins Credentials](https://www.jenkins.io/doc/book/using/using-credentials/)
-of `Secret Text` type:
+请确保配置以下[Jenkins Credentials](https://www.jenkins.io/doc/book/using/using-credentials/)的 "Secret Text "类型: 
 
 <DockerParameters/>
 
 <br/>
 
-Here is an example for `Jenkinsfile` groovy pipeline file:
+下面是 `Jenkinsfile` groovy Pipelines 文件的示例: 
 
 ```text showLineNumbers
 pipeline {
@@ -262,7 +269,6 @@ pipeline {
 
   </TabItem>
 
-    
 <TabItem value="azure" label="Azure Devops">
 <AzurePremise name="FireHydrant" />
 
@@ -270,7 +276,7 @@ pipeline {
 
 <br/>
 
-Here is an example for `firehydrant-integration.yml` pipeline file:
+下面是 "firehydrant-integration.yml "管道文件的示例: 
 
 ```yaml showLineNumbers
 trigger:
@@ -281,7 +287,6 @@ pool:
 
 variables:
   - group: port-ocean-credentials
-
 
 steps:
 - script: |
@@ -301,7 +306,6 @@ steps:
 
     exit $?
   displayName: 'Ingest Data into Port'
-
 ```
 
   </TabItem>
@@ -314,27 +318,27 @@ steps:
 
 <AdvancedConfig/>
 
-## Ingesting FireHydrant objects
+## 吸收 FireHydrant 对象
 
-The FireHydrant integration uses a YAML configuration to describe the process of loading data into the developer portal. See [examples](#examples) below.
+FireHydrant 集成使用 YAML 配置来描述将数据加载到开发者门户的过程。 请参阅下文[examples](#examples) 。
 
-The integration makes use of the [JQ JSON processor](https://stedolan.github.io/jq/manual/) to select, modify, concatenate, transform and perform other operations on existing fields and values from FireHydrant's API events.
+该集成利用[JQ JSON processor](https://stedolan.github.io/jq/manual/) 对来自 FireHydrant API 事件的现有字段和值进行选择、修改、连接、转换和其他操作。
 
-### Configuration structure
+### 配置结构
 
-The integration configuration determines which resources will be queried from FireHydrant, and which entities and properties will be created in Port.
+集成配置决定了从 FireHydrant 中查询哪些资源，以及在 Port 中创建哪些实体和属性。
 
-:::tip Supported resources
-The following resources can be used to map data from FireHydrant, it is possible to reference any field that appears in the API responses linked below for the mapping configuration.
+:::tip  支持的资源 以下资源可被引用来映射 FireHydrant 的数据，可以引用下面链接的 API 响应中出现的任何字段来进行映射配置。
 
-- [`Environment`](https://developers.firehydrant.com/#/operations/getV1Environments)
-- [`Service`](https://developers.firehydrant.com/#/operations/getV1Services)
-- [`Incident`](https://developers.firehydrant.com/#/operations/getV1Incidents)
-- [`Retrospective`](https://developers.firehydrant.com/#/operations/getV1PostMortemsReports)
+* * [`Environment`](https://developers.firehydrant.com/#/operations/getV1Environments)
+* [`Service`](https://developers.firehydrant.com/#/operations/getV1Services)
+* [`Incident`](https://developers.firehydrant.com/#/operations/getV1Incidents)
+* [`Retrospective`](https://developers.firehydrant.com/#/operations/getV1PostMortemsReports)
 
 :::
 
-- The root key of the integration configuration is the `resources` key:
+* 集成配置的根密钥是 "资源 "密钥: 
+
 
   ```yaml showLineNumbers
   # highlight-next-line
@@ -344,7 +348,9 @@ The following resources can be used to map data from FireHydrant, it is possible
       ...
   ```
 
-- The `kind` key is a specifier for a FireHydrant object:
+
+* 类型 "键是 FireHydrant 对象的说明符: 
+
 
   ```yaml showLineNumbers
     resources:
@@ -354,7 +360,9 @@ The following resources can be used to map data from FireHydrant, it is possible
         ...
   ```
 
-- The `selector` and the `query` keys allow you to filter which objects of the specified `kind` will be ingested into your software catalog:
+
+* 通过 "选择器 "和 "查询 "键，您可以过滤哪些指定 "类型 "的对象将被录入软件目录: 
+
 
   ```yaml showLineNumbers
   resources:
@@ -366,7 +374,9 @@ The following resources can be used to map data from FireHydrant, it is possible
       port:
   ```
 
-- The `port`, `entity` and the `mappings` keys are used to map the FireHydrant object fields to Port entities. To create multiple mappings of the same kind, you can add another item in the `resources` array;
+
+* Port"、"实体 "和 "映射 "键被用来将 FireHydrant 对象字段映射到Port实体。要创建多个同类映射，可在 `resources` 数组中添加另一项；
+
 
   ```yaml showLineNumbers
   resources:
@@ -391,26 +401,25 @@ The following resources can be used to map data from FireHydrant, it is possible
           mappings: ...
   ```
 
-  :::tip Blueprint key
-  Note the value of the `blueprint` key - if you want to use a hardcoded string, you need to encapsulate it in 2 sets of quotes, for example use a pair of single-quotes (`'`) and then another pair of double-quotes (`"`)
-  :::
 
-### Ingest data into Port
+:::tip 蓝图键 注意 `blueprint` 键的值 - 如果要使用硬编码字符串，需要用 2 组引号封装，例如使用一对单引号 (`'`)，然后再用一对双引号 (`"`): ::: 
 
-To ingest FireHydrant objects using the [integration configuration](#configuration-structure), you can follow the steps below:
+#### 将数据输入Port
 
-1. Go to the DevPortal Builder page.
-2. Select a blueprint you want to ingest using FireHydrant.
-3. Choose the **Ingest Data** option from the menu.
-4. Select FireHydrant under the Incident management category.
-5. Modify the [configuration](#configuration-structure) according to your needs.
-6. Click `Resync`.
+要使用[integration configuration](#configuration-structure) 被引用 FireHydrant 对象，可以按照以下步骤操作: 
 
-## Examples
+1. 转到 DevPortal Builder 页面。
+2. 选择要被 FireHydrant 引用的蓝图。
+3. 从菜单中选择**采集数据**选项。
+4. 在事件管理类别下选择 FireHydrant。
+5. 根据需要修改[configuration](#configuration-structure) 。
+6. 单击 `Resync`。
 
-Examples of blueprints and the relevant integration configurations:
+## 示例
 
-### Environment
+蓝图和相关集成配置示例: 
+
+#### 环境
 
 <details>
 <summary>Environment blueprint</summary>
@@ -476,7 +485,7 @@ resources:
 
 </details>
 
-### Service
+### 服务
 
 <details>
 <summary>Service blueprint</summary>
@@ -593,7 +602,7 @@ resources:
 
 </details>
 
-### Incident
+###事件
 
 <details>
 <summary>Incident blueprint</summary>
@@ -746,7 +755,7 @@ resources:
 
 </details>
 
-### Retrospective
+#### 回顾
 
 <details>
 <summary>Retrospective blueprint</summary>
@@ -896,13 +905,13 @@ resources:
 
 </details>
 
-## Let's Test It
+## 让我们来测试一下
 
-This section includes a sample response data from FireHydrant. In addition, it includes the entity created from the resync event based on the Ocean configuration provided in the previous section.
+本节包括 FireHydrant 的响应数据示例。 此外，还包括根据上一节提供的 Ocean 配置从重新同步事件中创建的实体。
 
-### Payload
+### 有效载荷
 
-Here is an example of the payload structure from FireHydrant:
+下面是 FireHydrant 的有效载荷结构示例: 
 
 <details>
 <summary> Environment response data</summary>
@@ -1780,9 +1789,9 @@ Here is an example of the payload structure from FireHydrant:
 
 </details>
 
-### Mapping Result
+#### 映射结果
 
-The combination of the sample payload and the Ocean configuration generates the following Port entity:
+结合样本有效载荷和 Ocean 配置，可生成以下 Port 实体: 
 
 <details>
 <summary> Environment entity in Port</summary>

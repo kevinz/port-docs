@@ -1,17 +1,18 @@
 ---
+
 sidebar_position: 4
+
 ---
 
 import Tabs from "@theme/Tabs"
 import TabItem from "@theme/TabItem"
-import DeleteDependents from '../../../../generalTemplates/\_delete_dependents_git_explanation_template.md'
+import DeleteDependents from '../../../../generalTemplates/_delete_dependents_git_explanation_template.md'
 
-# Advanced
+# 高级
 
-The GitLab integration supports additional flags to provide additional configuration, making it easier to configure its behavior to your liking.
+GitLab 集成支持额外的 flag 以提供更多配置，从而更容易根据自己的喜好配置其行为。
 
-To use the advanced configuration and additional flags, add them as a root key to your [integration configuration](./gitlab.md#the-integration-configuration), for example to add the
-`createMissingRelatedEntities` flag:
+要使用高级配置和附加 flag，请将它们作为根键添加到[integration configuration](./gitlab.md#the-integration-configuration) ，例如添加 `createMissingRelatedEntities` flag: 
 
 ```yaml showLineNumbers
 # highlight-next-line
@@ -26,20 +27,21 @@ resources:
         ... mappings configuration
 ```
 
-## Using advanced configurations
+## 使用高级配置
 
-The following advanced configuration parameters are available and can be added to the [integration configuration](./gitlab.md#the-integration-configuration):
+以下是可用的高级配置参数，可添加到[integration configuration](./gitlab.md#the-integration-configuration) 中: 
 
 <Tabs groupId="config" queryString="parameter">
 
 <TabItem label="Spec path" value="specPath">
 
-The `specPath` parameter specifies a list of [globPatterns](https://www.malikbrowne.com/blog/a-beginners-guide-glob-patterns)[] that Port's GitLab app will search for `port.yml` files in.
+`specPath` 参数指定了一个[globPatterns](https://www.malikbrowne.com/blog/a-beginners-guide-glob-patterns)
+ [] 列表，Port 的 GitLab 应用程序将在其中搜索 `port.yml` 文件。
 
-- Default value: `**/port.yml`
-- Use case:
-  - If you want the app to scan a different file than `port.yml` (for example, change configure the app to scan files named `my-port-config.yml` using the pattern `**/my-port-config.yml`);
-  - If you want the app to ignore `port.yml` files in certain paths.
+* 默认值:  `**/port.yml
+* 被引用: 
+    - 如果希望应用程序扫描与 `port.yml` 不同的文件(例如，使用模式 `**/my-port-config.yml` 更改配置，使应用程序扫描名为 `my-port-config.yml` 的文件)；
+    - 如果希望应用程序忽略某些路径下的 `port.yml` 文件。
 
 </TabItem>
 
@@ -47,26 +49,26 @@ The `specPath` parameter specifies a list of [globPatterns](https://www.malikbro
 
 <DeleteDependents/>
 
-- Default: `false` (disabled)
-- Use case: Deletion of dependent Port entities. Must be enabled, if you want to delete a target entity (and its source entities) in a required relation.
+* 默认:  `false`(禁用)
+* 被引用: 删除从属 Port 实体。如果要删除必填关系中的目标实体(及其源实体)，则必须启用。
 
 </TabItem>
 
 <TabItem label="Enable merge entity" value="enableMergeEntity">
 
-The `enableMergeEntity` parameter specifies whether to use the [create/update](../../api/api.md?operation=create-update#usage) or [create/override](../../api/api.md?operation=create-override#usage) strategy when creating entities listed in a `port.yml` file.
+enableMergeEntity "参数用于指定在创建 `port.yml` 文件中所列实体时，是使用[create/update](../../api/api.md?operation=create-update#usage) 还是[create/override](../../api/api.md?operation=create-override#usage) 策略。
 
-- Default value: `false` (use create/override)
-- Use case: use `false` if you want GitLab to be the source-of-truth for catalog entities. Use `true` if you want to use GitLab as the source for some properties of entities in the catalog, and use other sources to for properties which are subject to change automatically.
+* 默认值: `false`(使用创建/覆盖)
+* 用例: 如果希望 GitLab 作为目录实体的真实来源，请使用 `false`。如果希望将 GitLab 作为目录中实体的某些属性的来源，而将其他来源用于自动更改的属性，则使用 `true`。
 
 </TabItem>
 
 <TabItem value="createMissingRelatedEntities" label="Create missing related entities">
 
-The `createMissingRelatedEntities` parameter is used to enable the creation of missing related Port entities automatically in cases where the target related entity does not exist in the software catalog yet.
+createMissingRelatedEntities"(创建缺失的相关实体)参数用于在软件目录中还不存在目标相关实体的情况下，自动创建缺失的相关 Port 实体。
 
-- Default value: `false` (do not create missing related entities)
-- Use case: use `true` if you want GitLab app to create barebones related entities, in case those related entities do not exist in the software catalog.
+* 默认值: `false`(不创建缺失的相关实体)
+* 用例: 如果希望 GitLab 应用程序在软件目录中不存在相关实体的情况下创建裸相关实体，请使用 `true`。
 
 </TabItem>
 

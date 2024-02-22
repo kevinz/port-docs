@@ -1,11 +1,13 @@
 ---
+
 sidebar_position: 1
 slug: /
-title: Port overview
-sidebar_label: 👋 Port overview
+title: Port概览
+sidebar_label: 👋 Port概览
+
 ---
 
-# 👋 Port overview
+# 👋 Port概览
 
 <center>
 
@@ -13,47 +15,46 @@ sidebar_label: 👋 Port overview
 
 </center>
 
-## Get started with Port
+## 开始使用 Port
 
-Trying out Port for yourself is free and easy, simply [create an account](https://app.getport.io) and follow the quick onboarding process.  
-The [Getting started](/quickstart) page will walk you through the different components of your portal and the value they provide.
+免费试用 Port 非常简单，只需登录[create an account](https://app.getport.io) 并按照快速入职流程操作即可。[Getting started](/quickstart) 页面将向您介绍门户网站的不同组件及其提供的价值。
 
-## What is Port
+## Port 是什么？
 
-Welcome to Port! :wave:
+欢迎来到 Port！ :wave: 
 
-Internal developer portals need a context-rich software catalog with maturity and quality scorecards. They also must support comprehensive developer self-service actions. Port has it all.
+内部开发人员门户网站需要一个具有成熟度和质量记分卡的、上下文丰富的软件目录。 它们还必须支持全面的开发人员自助服务操作。 Port 拥有这一切。
 
 ![Developer Platform complete vision](../static/img/port-overview/port-stack.png)
 
-### Port product pillars
+### Port 产品支柱
 
-#### Software Catalog
+#### 软件目录
 
-Give developers a holistic understanding of your development lifecycle and underlying architecture. Reduce cognitive load resulting from complex architectures, tool proliferation, and tribal knowledge.
+让开发人员全面了解您的开发生命周期和相应的架构。 减少复杂架构、工具激增和部落知识带来的认知负担。
 
 [Software Catalog live demo](https://demo.getport.io/service_catalog) 🎬
 
-#### Self-Service
+#### 自助服务
 
-Drive developer productivity by allowing developers to run free and use self-service actions like scaffolding a service or provisioning a cloud resource.
+通过允许开发人员自由运行和使用自助服务操作(如搭建服务脚手架或调配云资源)，推动开发人员的工作效率。
 
 [Self Service live demo](https://demo.getport.io/self-serve) 🎬
 
-#### Software maturity
+#### 软件成熟度
 
-Port scorecards let you define and track standards and KPIs for quality, production readiness, productivity, and more. Drive visibility and a culture of software quality.
+Port 记分卡可让您定义和跟踪质量、生产就绪程度、生产率等方面的标准和关键绩效指标。 推动软件质量的可见性和文化。
 
-[Software Maturity Live Demo](https://demo.getport.io/serviceEntity?identifier=authentication&activeTab=5) 🎬
+[Software Maturity Live Demo](https://demo.getport.io/serviceEntity?identifier=authentication&amp;activeTab=5) 🎬
 
-#### Workflow automation
+#### 工作流程自动化
 
-With Port, you can set up automations to automatically respond to events from your software catalog such as `TTL=0`, service degradation, and many more. This allows you to streamline your engineering processes, maintain a high level of performance, security, and compliance, and ensure your systems run smoothly.
+通过 Port，您可以设置自动化功能，自动响应软件目录中的事件，如`TTL=0`、服务降级等。 这样，您就可以简化工程流程，保持较高的性能、安全性和合规性，确保系统顺利运行。
 
 [Workflow Automation Live Demo ](https://demo.getport.io/self-serve) 🎬
 
-#### R&D Insights & Reports
+#### 研发洞察与报告
 
-R&D Insights & Reports is a pillar of port that provides data-driven insights and analytical reports on the development process. It allows teams, developers, and management to make informed decisions based on metrics, trends, and usage patterns to improve the development process, optimize performance, and reduce cost.
+R&amp;D Insights &amp; Reports 是 Port 的支柱，可提供有关开发流程的数据驱动型洞察力和分析报告。 它使团队、开发人员和管理层能够根据指标、趋势和 Usage 模式做出明智的决策，从而改进开发流程、优化性能并降低成本。
 
 [Insights & Reports live demo](https://demo.getport.io/dashboard_svp_engineering) 🎬

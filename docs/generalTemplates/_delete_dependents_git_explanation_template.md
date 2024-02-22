@@ -1,1 +1,1 @@
-The `deleteDependentEntities` parameter is used to enable deletion of dependent Port entities. This is useful when you have two blueprints with a required relation, and the target entity in the relation should be deleted. In this scenario, the delete operation will fail if this flag is set to `false` if the flag is set to `true`, the source entity will be deleted as well.
+deleteDependentEntities "参数用于启用删除从属 Port 实体。 当您有两个具有必填关系的蓝图，且关系中的目标实体应被删除时，该参数非常有用。 在这种情况下，如果该标志设置为 "false"，删除操作将失败；如果该标志设置为 "true"，源实体也将被删除。

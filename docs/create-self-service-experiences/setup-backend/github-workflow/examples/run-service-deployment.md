@@ -1,22 +1,24 @@
 ---
+
 sidebar_position: 1
+
 ---
 
-# Run a deployment for a service
+# 为服务运行部署
 
-In the following guide, you are going to build a self-service action in Port, that executes a GitHub workflow behind the scenes.
+在下面的指南中，您将在 Port 中创建一个自助操作，在幕后执行 GitHub 工作流。
 
-The GitHub workflow in this example, will run a new deployment and report back a deployment entity to Port.
+本例中的 GitHub 工作流程将运行新的部署，并向 Port 报告部署实体。
 
-## Prerequisites
+## 先决条件
 
-- A Port API `CLIENT_ID` and `CLIENT_SECRET`.
+* Port API `CLIENT_ID`和`CLIENT_SECRET`。
 
-## Create a GitHub workflow
+## 创建 GitHub 工作流程
 
-First, we need to set up a GitHub workflow that implements our business logic for deployment.
+首先，我们需要建立一个 GitHub 工作流来实现我们的业务逻辑，以便进行部署。
 
-Here is a skeleton for the workflow - `deploy.yml` (including a placeholder for deployment logic):
+下面是工作流程的骨架--`deploy.yml`(包括部署逻辑的占位符): 
 
 <details>
 <summary>Deployment GitHub workflow</summary>
@@ -74,16 +76,13 @@ jobs:
 
 </details>
 
-:::note
-Pay attention to the additional parameter in the workflow called `port_payload`.
-This parameter is completed by default with [Port's action message](../../../self-service-actions-deep-dive/self-service-actions-deep-dive.md#action-message-structure).
-You can disable it by specifying `"omitPayload": true` in Port's action definition.
-For more details click [here](../../../self-service-actions-deep-dive/self-service-actions-deep-dive.md#invocation-method-structure-fields)
+:::note 请注意工作流程中名为 `port_payload` 的附加参数。默认情况下该参数以[Port's action message](../../../self-service-actions-deep-dive/self-service-actions-deep-dive.md#action-message-structure) 完成。您可以在 Port 的操作定义中指定 `"omitPayload": true` 来禁用它。 更多详情请点击[here](../../../self-service-actions-deep-dive/self-service-actions-deep-dive.md#invocation-method-structure-fields)
+
 :::
 
-## Create a deployment Blueprint
+## 创建部署蓝图
 
-Let’s configure a `Deployment` Blueprint. Its base structure is:
+让我们配置一个 "部署 "蓝图，它的基本结构是
 
 ```json showLineNumbers
 {
@@ -118,7 +117,7 @@ Let’s configure a `Deployment` Blueprint. Its base structure is:
 }
 ```
 
-You can see below the `python` code of the Blueprint (remember to insert your `CLIENT_ID` and `CLIENT_SECRET` in order to get an access token).
+下面是蓝图的 "python "代码(切记插入 "CLIENT_ID "和 "CLIENT_SECRET "以获取访问令牌)。
 
 <details>
 <summary>Click here to see the code</summary>
@@ -178,11 +177,11 @@ print(response.json())
 
 </details>
 
-## Create a Port action
+## 创建 Port 操作
 
-Now let’s configure a self-service action. Add a `CREATE` action that will be triggered every time a developer wants to initiate a new deployment for a service.
+现在让我们配置一个自助服务操作。 添加一个 `CREATE` 操作，开发人员每次要为服务启动新的部署时都会触发该操作。
 
-Here is the JSON of the action:
+以下是该操作的 JSON 文件: 
 
 ```json showLineNumbers
 {
@@ -217,12 +216,12 @@ Here is the JSON of the action:
 }
 ```
 
-You can see below the `python` code to create this action (remember to insert your `CLIENT_ID` and `CLIENT_SECRET` in order to get an access token).
+您可以在下面看到创建此操作的 `python` 代码(请记住插入您的 `CLIENT_ID` 和 `CLIENT_SECRET` 以获取访问令牌)。
 
-:::note
-Note how the `deployment` Blueprint identifier is used to add the action to the new Blueprint.
+:::note 请注意 "部署 "蓝图标识符是如何被引用到新蓝图中的。
 
-Moreover, don't forget to replace the placeholders for `YOUR_GITHUB_ORG`, `YOUR_GITHUB_REPO`.
+此外，不要忘记替换 `YOUR_GITHUB_ORG`、`YOUR_GITHUB_REPO` 的占位符。
+
 :::
 
 <details>
@@ -292,11 +291,11 @@ print(response.json())
 
 </details>
 
-Now that the Self-Service Action configured, you can begin invoking it.
+自助服务操作配置完成后，就可以开始调用了。
 
-## Trigger the action
+## 触发行动
 
-Let's invoke the self-service action using Port API.
+让我们使用 Port API 引用自助服务操作。
 
 <details>
 <summary>Click here to see the API call code</summary>
@@ -337,10 +336,10 @@ print(response.json())
 
 </details>
 
-When the action is finished, it will mark the action run as successful. That way, your developers can understand your deployment has finished successfully.
+当操作完成后，它会将操作运行标记为成功。 这样，您的开发人员就可以了解您的部署已成功完成。
 
 ![Action run audit log](../../../../../static/img/self-service-actions/run-service-deployment/runs-audit-log.png)
 
-## Next step
+## 下一步
 
-This was a very basic example on how to trigger a GitHub workflow using Port's self-service action. We left placeholder code for you to insert your own custom logic that fits your infrastructure.
+这是一个非常基本的示例，说明如何使用 Port 的自助操作触发 GitHub 工作流。 我们为您留下了占位符代码，以便您插入适合自己基础架构的自定义逻辑。

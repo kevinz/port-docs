@@ -1,20 +1,22 @@
 ---
+
 sidebar_position: 4
+
 ---
 
-# Setting up a basic change log listener using AWS Lambda
+# 使用 AWS Lambda 设置基本的更改日志监听器
 
-In this guide, we will show how to deploy a new `AWS Lambda function`, that will subscribe to the `change.log` topic and react to changes in our infrastructure as reported by Port.
+在本指南中，我们将展示如何部署一个新的 "AWS Lambda 函数"，该函数将订阅 "change.logging "主题，并对 Port 报告的基础架构中的变更做出反应。
 
-## Prerequisites
+## 先决条件
 
-:::note
-To follow this example, please contact us via Intercom to receive a dedicated Kafka topic.
+:::note 要仿效此示例，请通过 Intercom 联系我们，以获得专门的 Kafka 主题。
+
 :::
 
-- AWS CLI installed and configured to your desired AWS account;
-- A Port API `CLIENT_ID` and `CLIENT_SECRET`;
-- Connection credentials to the Kafka topic provided to you by Port, will look like this:
+* AWS CLI 已安装并配置到所需的 AWS 帐户；
+* Port API `CLIENT_ID`和`CLIENT_SECRET`；
+* Port 提供给您的 Kafka 主题的连接凭证将如下所示: 
 
 ```json showLineNumbers
 KAFKA_BROKERS=b-1-public.publicclusterprod.t9rw6w.c1.kafka.eu-west-1.amazonaws.com:9196,b-2-public.publicclusterprod.t9rw6w.c1.kafka.eu-west-1.amazonaws.com:9196,b-3-public.publicclusterprod.t9rw6w.c1.kafka.eu-west-1.amazonaws.com:9196
@@ -26,17 +28,17 @@ KAFKA_PASSWORD=YOUR_KAFKA_PASSWORD
 KAFKA_CONSUMER_GROUP_NAME=YOUR_KAFKA_CONSUMER_GROUP
 ```
 
-To get yourself started quickly, you can always take a look at the [code repository](https://github.com/port-labs/port-serverless-examples) for examples.
+为了快速上手，您可以随时查看[code repository](https://github.com/port-labs/port-serverless-examples) 以了解示例。
 
-Interaction with Port will be primarily conducted using the API in this example, but everything can also be performed using the web UI as well.
+在本示例中，与 Port 的交互主要通过应用程序接口进行，但也可以通过网络用户界面进行。
 
-## Scenario
+## 场景
 
-Whenever the amount of free storage gets too low, create a new execution function that frees up or extends the storage in your VM. Let’s learn how to do that, and what are Port’s changelog capabilities.
+每当可用存储空间过低时，创建一个新的执行函数，释放或扩展虚拟机中的存储空间。 让我们来了解一下如何做到这一点，以及 Port 的更新日志功能有哪些。
 
-## Creating the VM blueprint
+## 创建虚拟机蓝图
 
-Let’s configure a `VM` Blueprint, its base structure is:
+让我们配置一个 `VM` 蓝图，它的基本结构是
 
 ```json showLineNumbers
 {
@@ -85,7 +87,7 @@ Let’s configure a `VM` Blueprint, its base structure is:
 }
 ```
 
-Below you can see the `python` code to create this Blueprint (remember to insert your `CLIENT_ID` and `CLIENT_SECRET` in order to get an access token)
+下面是创建该蓝图的 "python "代码(切记插入 "CLIENT_ID "和 "CLIENT_SECRET "以获取访问令牌)
 
 <details>
 <summary>Click here to see the code</summary>
@@ -161,22 +163,22 @@ print(response.json())
 
 </details>
 
-Now that you have a blueprint for your VM, you need to deploy the `AWS Lambda` listener that will fix the storage on the VM whenever an issue occurs.
+现在您有了虚拟机的蓝图，需要部署 "AWS Lambda "监听器，它将在出现问题时修复虚拟机上的存储。
 
-## Setting up AWS resources
+## 设置 AWS 资源
 
-In this example, you will deploy an AWS Lambda function written in python.
+在本例中，您将部署一个用 python 编写的 AWS Lambda 函数。
 
-**The AWS setup will require the following resources:**
+**AWS 设置需要以下资源: **
 
-- A secret stored in Secrets Manager with the Kafka authentication credentials.
-- An AWS Lambda execution role with access to the new secret.
-- An AWS Lambda layer for our extra python libraries.
-- An AWS Lambda is configured with the example python code, the code layer and execution role you created. Configured with a Kafka Trigger
+* 存储在 Secrets Manager 中的带有 Kafka 身份验证凭据的secret。
+* 可访问新secret的 AWS Lambda 执行角色。
+* 一个 AWS Lambda 层，用于我们的额外 python 库。
+* 将 AWS Lambda 配置为示例 python 代码、代码层和您创建的执行角色。配置 Kafka 触发器
 
-### Creating a secret for the Lambda
+#### 为 Lambda 创建secret
 
-The Lambda function will use a `secret` configured in AWS Secret Manager to authenticate with the personal Kafka topic provided by Port, let’s go ahead and create that secret in the AWS CLI:
+Lambda 函数将使用在 AWS Secret Manager 中配置的 "secret "来与 Port 提供的个人 Kafka 主题进行身份验证，让我们继续在 AWS CLI 中创建该 secret: 
 
 ```bash showLineNumbers
 # Remember to replace YOUR_KAFKA_USERNAME and YOUR_KAFKA_PASSWORD with the real username and password provided to you by Port
@@ -184,7 +186,7 @@ The Lambda function will use a `secret` configured in AWS Secret Manager to auth
 aws secretsmanager create-secret --name "PortKafkaAuthCredentials" --secret-string '{"username":"YOUR_KAFKA_USERNAME", "password":"YOUR_KAFKA_PASSWORD"}'
 ```
 
-You should see output similar to the following:
+您应该会看到类似下面的 Output: 
 
 ```json showLineNumbers
 {
@@ -194,19 +196,19 @@ You should see output similar to the following:
 }
 ```
 
-:::info Saving the `ARN`
-Make sure to save the `ARN` value, you will need it to create an execution role for the Lambda function, which can access the newly created secret.
+:::info  保存 `ARN` 确保保存 `ARN` 值，您将需要它来为 Lambda 函数创建一个执行角色，该角色可以访问新创建的 secret。
+
 :::
 
-### Creating an execution role
+### 创建执行角色
 
-Before you deploy your Lambda function, it needs an [execution role](https://docs.aws.amazon.com/lambda/latest/dg/lambda-intro-execution-role.html) with access to the Kafka username and password secret you created. Let’s create a [basic execution role](https://docs.aws.amazon.com/lambda/latest/dg/gettingstarted-awscli.html#with-userapp-walkthrough-custom-events-create-iam-role) with `assumeRole` permission and basic permissions for `cloudWatch`
+在部署 Lambda 函数之前，它需要一个可以访问您创建的 Kafka 用户名和密码secret的[execution role](https://docs.aws.amazon.com/lambda/latest/dg/lambda-intro-execution-role.html) 。让我们创建一个具有`assumeRole`权限和`cloudWatch`基本权限的[basic execution role](https://docs.aws.amazon.com/lambda/latest/dg/gettingstarted-awscli.html#with-userapp-walkthrough-custom-events-create-iam-role) 
 
 ```bash showLineNumbers
 aws iam create-role --role-name lambda-port-execution-role --assume-role-policy-document '{"Version": "2012-10-17","Statement": [{ "Effect": "Allow", "Principal": {"Service": "lambda.amazonaws.com"}, "Action": "sts:AssumeRole"}]}'
 ```
 
-You should see output similar to the following:
+您应该会看到类似下面的 Output: 
 
 ```json showLineNumbers
 {
@@ -242,20 +244,20 @@ You should see output similar to the following:
 }
 ```
 
-:::info saving the `ARN`
-Again, make sure to save the `Arn` value, you will use it when deploying your Lambda function
+:::info  保存 `ARN` 再次，确保保存 `Arn` 值，您将在部署 Lambda 函数时使用它
+
 :::
 
-Let’s attach basic Lambda execution permissions to this role with the following command:
+让我们用以下命令为该角色附加基本的 Lambda 执行权限: 
 
 ```bash showLineNumbers
 aws iam attach-role-policy --role-name lambda-port-execution-role --policy-arn arn:aws:iam::aws:policy/service-role/AWSLambdaBasicExecutionRole
 ```
 
-Now let’s add the following policy (You can refer to this [AWS document](https://docs.aws.amazon.com/mediaconnect/latest/ug/iam-policy-examples-asm-secrets.html) for more information), we’ll create a file called `execution-policy.json` and paste the following content:
+现在，让我们添加以下策略(更多信息请参阅[AWS document](https://docs.aws.amazon.com/mediaconnect/latest/ug/iam-policy-examples-asm-secrets.html) ) ，我们将创建一个名为 `execution-policy.json` 的文件，并粘贴以下内容: 
 
-:::note
-Remember to replace `ARN` value listed under `Resource` with the `ARN` you received as output when creating the **secret**
+:::note 切记将 "资源 "下的 "ARN "值替换为创建 **secret** 时输出的 "ARN "值。
+
 :::
 
 ```json showLineNumbers
@@ -283,19 +285,19 @@ Remember to replace `ARN` value listed under `Resource` with the `ARN` you recei
 }
 ```
 
-Now let’s update the execution role (we’re assuming the `execution-policy.json` file is in the same directory as the terminal you are running the command from):
+现在让我们更新执行角色(假设 `execution-policy.json` 文件与运行命令的终端位于同一目录): 
 
 ```bash showLineNumbers
 aws iam put-role-policy --role-name lambda-port-execution-role --policy-name managed-kafka-secret-access-policy --policy-document file://execution-policy.json
 ```
 
-### Creating an AWS Lambda layer
+#### 创建 AWS Lambda 层
 
-Now let’s create a [Lambda Layer](https://docs.aws.amazon.com/lambda/latest/dg/configuration-layers.html) that will include the extra libraries the Lambda function will use.
+现在，让我们创建一个[Lambda Layer](https://docs.aws.amazon.com/lambda/latest/dg/configuration-layers.html) ，其中将包含 Lambda 函数将使用的额外库。
 
-The Lambda only needs the [requests](https://pypi.org/project/requests/) library, but the example below also includes [jsonpickle](https://pypi.org/project/jsonpickle/0.3.0/) for some of the log output to make the Lambda logs more verbose and easier to understand when starting to modify the code.
+Lambda 只需要[requests](https://pypi.org/project/requests/) 库，但下面的示例还包括一些日志输出的[jsonpickle](https://pypi.org/project/jsonpickle/0.3.0/) ，以使 Lambda 日志更加冗长，在开始修改代码时更容易理解。
 
-Now, let’s just run all of the commands to both create the layer zip, and deploy it to AWS (be sure to specify the region that you want the layer and lambda to be available in):
+现在，让我们运行所有命令来创建层 zip 并将其部署到 AWS(请务必指定希望层和 lambda 可用的区域): 
 
 ```bash showLineNumbers
 # Create layer directory and specify requests as a required library
@@ -312,7 +314,7 @@ zip -r layer.zip python
 aws lambda publish-layer-version --layer-name lambda_port_execution_package_layer --description "Python pacakges layer for lambda Port execution example" --compatible-runtimes python3.6 python3.7 python3.8 python3.9 --zip-file fileb://layer.zip --region eu-west-1
 ```
 
-You should see output similar to the following:
+您应该会看到类似下面的 Output: 
 
 ```json showLineNumbers
 {
@@ -332,13 +334,13 @@ You should see output similar to the following:
 }
 ```
 
-:::info
-Again, make sure to save the `LayerVersionArn` value, you will use it to deploy your Lambda function
+:::info 再次确保保存 `LayerVersionArn` 值，您将用它来部署您的 Lambda 函数
+
 :::
 
-### Creating the Lambda function
+### 创建 Lambda 函数
 
-You can now create the Lambda function, the initial function is very basic and has specific comments where your actual execution runner logic should go.
+现在，您可以创建 Lambda 函数，初始函数非常基本，并在实际执行运行逻辑的位置有特定注释。
 
 <details>
 <summary>Click here to see the function code</summary>
@@ -453,12 +455,12 @@ def lambda_handler(event, context):
 
 </details>
 
-### Deploying the Lambda function
+### 部署 Lambda 函数
 
-In order to deploy the Lambda function, run the following commands from the terminal (Note the comment where you need to paste in the Lambda code to the new file):
+为了部署 Lambda 函数，请在终端运行以下命令(注意注释中需要将 Lambda 代码粘贴到新文件的地方): 
 
-:::info using our saved `ARN`s
-Be sure to replace `ROLE_ARN` with the ARN you received as an output when you created an execution role for the Lambda
+:::info  请确保将 `ROLE_ARN` 替换为为 Lambda 创建执行角色时作为 Output 收到的 ARN。
+
 :::
 
 ```python showLineNumbers
@@ -475,7 +477,7 @@ aws lambda create-function --function-name port-changelog-lambda \
 --role ROLE_ARN --timeout 30
 ```
 
-You should see output similar to the following:
+您应该会看到类似下面的 Output: 
 
 ```json showLineNumbers
 {
@@ -494,17 +496,17 @@ You should see output similar to the following:
 }
 ```
 
-You are just a few steps away from a complete execution flow!
+您只需几步就能实现完整的执行流程！
 
-### Putting everything together
+### 把所有东西放在一起
 
-There are just a few more steps left:
+只剩下几个步骤了: 
 
-- Add the code layer to the Lambda function
-- Add the Port `CLIENT_ID` and `CLIENT_SECRET` as environment variables to the Lambda
-- Add the Kafka trigger
+* 在 Lambda 函数中添加代码层
+* 将 Port `CLIENT_ID` 和 `CLIENT_SECRET` 作为环境变量添加到 Lambda 中
+* 添加 Kafka 触发器
 
-In order to add the layer, you just need to run a simple CLI command:
+要添加图层，只需运行一个简单的 CLI 命令即可: 
 
 ```bash showLineNumbers
 # Be sure to replace the LAYER_VERSION_ARN with the value you saved
@@ -513,19 +515,18 @@ aws lambda update-function-configuration --function-name port-changelog-lambda \
 --layers LAYER_VERSION_ARN
 ```
 
-You should see an output showing that now the `Layers` array of the Lambda includes our layer
+您应该会看到一个 Output，显示现在 Lambda 的 `Layers` 数组包含了我们的层
 
-Now add the client_id and secret variables:
+现在添加 client_id 和 secret 变量: 
 
 ```bash showLineNumbers
 # Be sure to replace YOUR_CLIENT_ID and YOUR_CLIENT_SECRET with real values
 aws lambda update-function-configuration --function-name port-changelog-lambda --environment "Variables={PORT_CLIENT_ID=YOUR_CLIENT_ID,PORT_CLIENT_SECRET=YOUR_CLIENT_SECRET}" --query "Environment"
 ```
 
-In the command output you should see all of the secrets you configured for your Lambda Function.
+在命令输出中，你应该能看到为 Lambda 函数配置的所有 secrets。
 
-:::note
-If your function needs multiple environment variables, it would be easier to put them all in a JSON file (for example `environment.json`) and run the following command:
+:::note 如果您的函数需要多个环境变量，将它们全部放入一个 JSON 文件(例如 `environment.json`)并运行以下命令会更简单: 
 
 ```bash showLineNumbers
 aws lambda update-function-configuration --function-name port-changelog-lambda --environment file://environment.json --query "Environment"
@@ -533,7 +534,7 @@ aws lambda update-function-configuration --function-name port-changelog-lambda -
 
 :::
 
-Time to add the Kafka trigger
+添加 Kafka 触发器的时间到了
 
 ```bash showLineNumbers
 # Remember to replace YOUR_ORG_ID, SECRET_ARN, and YOUR_KAFKA_CONSUMER_GROUP
@@ -546,13 +547,13 @@ aws lambda create-event-source-mapping --topics YOUR_ORG_ID.change.log --source-
 
 ## Reacting to changes
 
-Now that you have a Lambda function configured with a Kafka trigger, every change made in the Service Catalog will generate a new message in the dedicated Kafka topic you specified in the trigger. That message will be sent to the Lambda function you deployed, with all of the input data required to understand what change took place, so you can act accordingly.
+现在，您已经为 Lambda 函数配置了 Kafka 触发器，服务目录中的每次更改都会在您在触发器中指定的专用 Kafka 主题中生成一条新消息。 该消息将被发送到您部署的 Lambda 函数，其中包含了解发生了什么更改所需的所有输入数据，以便您可以自此采取相应的行动。
 
-For more information on the data format of managed Apache Kafka triggers, refer to the [AWS docs](https://docs.aws.amazon.com/lambda/latest/dg/with-kafka.html). The code you wrote in the `lambda_handler` function already goes over all of the new messages, parses them, decodes and converts to a python dictionary for ease of use.
+有关托管 Apache Kafka 触发器数据格式的更多信息，请参阅[AWS docs](https://docs.aws.amazon.com/lambda/latest/dg/with-kafka.html) 。你在 `lambda_handler` 函数中编写的代码已经对所有新消息进行过解析、解码并转换为 python 字典，以方便使用。
 
-Let’s create a VM Entity with 10 GB of total storage, with 6 GB of initial free storage.
+让我们创建一个总存储容量为 10 GB 的虚拟机实体，初始可用存储容量为 6 GB。
 
-Here is the JSON for this `VM` Entity:
+下面是这个 `VM` 实体的 JSON: 
 
 ```json showLineNumbers
 {
@@ -572,7 +573,7 @@ Here is the JSON for this `VM` Entity:
 }
 ```
 
-Below you can see the `python` code to create this VM (remember to insert your `CLIENT_ID` and `CLIENT_SECRET` in order to get an access token).
+下面是创建虚拟机的 "python "代码(切记插入 "CLIENT_ID "和 "CLIENT_SECRET "以获取访问令牌)。
 
 <details>
 <summary>Click here to see the code</summary>
@@ -619,7 +620,7 @@ print(response.json())
 
 </details>
 
-Let’s simulate an occasion where the free storage in the VM has dropped below 10% of the total available storage. We will do that using a PATCH request in python, that will update the `free_storage` property on the VM.
+让我们模拟一下虚拟机中的可用存储空间下降到总可用存储空间 10%以下的情况。 我们将使用 python 中的 PATCH 请求来更新虚拟机上的 `free_storage` 属性。
 
 <details>
 <summary>Click here to see the API call code</summary>
@@ -658,14 +659,14 @@ print(response.json())
 ```
 
 </details>
-    
-This **change** will automatically send a message to the Kafka topic.
 
-Now the CloudWatch logs for the Lambda function (Accessible in the AWS console through Lambda→functions→port-execution-lambda→Monitor→Logs→View logs in CloudWatch), will show a log of the latest executions of the Lambda function. It also includes the actual message received, and a log of the actions taken by our python code:
+这一**更改**将自动向 Kafka 主题发送一条信息。
+
+现在，Lambda 函数的 CloudWatch 日志(可在 AWS 控制台中通过 Lambda→functions→port-execution-lambda→Monitor→Logs→View logs in CloudWatch 访问)将显示 Lambda 函数的最新执行日志。 其中还包括实际收到的消息以及我们的 python 代码所执行操作的日志: 
 
 ![Cloudwatch logs example](/img/self-service-actions/basic-changelog-aws-lambda-example/exampleCloudwatchlogsWithTopicMessage.png)
 
-Here is an example of the request payload received from Port, inside the Kafka message (note the `before` and `after` keys showing the difference in our VM Entity properties):
+下面是 Kafka 消息中从 Port 接收到的请求有效载荷的示例(注意 "before "和 "after "键显示了虚拟机实体属性的不同): 
 
 ```json showLineNumbers
 {
@@ -725,10 +726,10 @@ Here is an example of the request payload received from Port, inside the Kafka m
 }
 ```
 
-In addition to seeing the message topic in Cloudwatch, the Lambda function code will also update the VM Entity, and give it a new free storage value.
+除了在 Cloudwatch 中看到消息主题外，Lambda 函数代码还会更新虚拟机实体，并赋予其新的可用存储值。
 
-## Next steps
+## 下一步
 
-This was just a very basic example of how to listen and react to changes in the Software Catalog. We left placeholder code for you to insert your own custom logic to fit your infrastructure.
+这只是一个非常基本的示例，说明如何监听软件目录中的变化并作出反应。 我们留下了占位符代码，供您插入自己的自定义逻辑，以适应您的基础架构。
 
-If you want to dive even deeper into Port's execution capabilities, you can explore other examples for Kafka-based Self-Service Actions.
+如果您想更深入地了解 Port 的执行功能，可以探索基于 Kafka 的自助服务操作的其他示例。

@@ -1,42 +1,44 @@
 ---
+
 sidebar_position: 2
+
 ---
 
-# Changelog Listener
+# 更新日志监听器
 
-A common use case of Self-Service Actions is listening to changes in the software catalog and reacting to them.
+自助服务行动的一个常见被引用案例是监听软件目录中的变化并对其做出反应。
 
-For example:
+例如
 
-- When the CPU utilization % of a DB crosses the 80% mark, you might want to trigger a job that closes stale connections, kills stalled queries, or ensures everything is behaving correctly.
-- When the health check status of a microservice deployment goes from `healthy` to `degraded`, you might want to perform some scale-up or scale-out operation, or perhaps send an alert message to the responsible microservice team's slack channel to make sure the on-call is aware of the issue.
+* 当数据库的 CPU 利用率超过 80% 时，您可能希望触发一个作业来关闭陈旧的连接、杀死停滞的查询或确保一切运行正常。
+* 当微服务部署的健康检查状态从 "健康 "变为 "降级 "时，您可能需要执行一些扩展或缩放操作，或者向负责微服务团队的 slack 频道发送警报消息，以确保值班人员了解该问题。
 
-## Goal
+## 目标
 
-In the following example, you will create a changelog listener that can react to changes in Port in a customized manner.
+在下面的示例中，您将创建一个更新日志监听器，该监听器能以自定义方式对 Port 中的更改做出反应。
 
-To implement the listener, use the following:
+要实现监听器，请被引用以下内容: 
 
-- Python with [FastAPI](https://fastapi.tiangolo.com/) - to setup an API that will handle webhook requests;
-- [Smee.io](https://smee.io) and [pysmee](https://pypi.org/project/pysmee/) - to redirect webhook requests to your local API;
-- Port's changelog capabilities - to send an event to your API every time something changes in your software catalog;
-- Slack webhooks - to send a message to your slack server, alerting your users of the change.
+* Python 与[FastAPI](https://fastapi.tiangolo.com/) - 设置 API 以处理 webhook 请求；
+* [Smee.io](https://smee.io) 和[pysmee](https://pypi.org/project/pysmee/) - 将 webhook 请求重定向到本地 API；
+* Port 的更新日志功能--每当软件目录中的内容发生变化时，向您的 API 发送事件；
+* Slack webhooks - 向您的 slack 服务器发送消息，提醒您的用户发生变化。
 
-**Your API will be triggered every time a change occurs to your `deploymentConfig` Blueprint, or one of its Entities.**
+**每当您的 "deploymentConfig "蓝图或其中一个实体发生变化时，都会触发您的 API。
 
-A message will be sent to Slack every time the `healthStatus` field of your Entity changes.
+每次实体的 "healthStatus "字段发生变化时，我们都会向 Slack 发送一条消息。
 
-## Create a webhook URL with Smee
+## 使用 Smee 创建 webhook URL
 
-Go to [smee.io](https://smee.io) and click on `Start a new channel`, you should see your `webhook proxy URL` at the top of the page. You will use it to specify the webhook destination in the next section.
+访问[smee.io](https://smee.io) 并点击 "Start a new channel"(启动一个新频道)，您应该会在页面顶部看到 "webhook proxy URL"(webhook 代理 URL)。您将在下一节中使用它来指定 webhook 目的地。
 
-## Creating the deployment config Blueprint
+## 创建部署配置蓝图
 
-A deployment config is used to represent a service deployment, in a specific environment in your infrastructure. A deployment config has multiple `deployments` tied to it, each representing a new version of the deployed code of the matching service, in the matching environment.
+部署配置用于在基础架构的特定环境中表示服务部署。 部署配置有多个与之绑定的 "部署"，每个 "部署 "代表匹配环境中已部署代码的匹配服务的新版本。
 
-A deployment config is also just what it sounds like - a `config`, which means it is a good place to store runtime variables and values, links to logging, tracing, or dashboard tools and more static data that does not change between deployments.
+部署配置 "听起来就像 "配置"，这意味着它是存储运行时变量和 Values、日志、跟踪或仪表盘工具链接以及更多在部署之间不会改变的静态数据的好地方。
 
-For this limited example, the `deployment config` Blueprint will include mostly status properties that are likely to change frequently, thus showing Port's changelog listener capabilities:
+在这个有限的示例中，"部署配置 "蓝图将主要包括可能频繁更改的状态属性，从而显示 Port 的更新日志监听器功能: 
 
 <details>
 <summary>Deployment Config Blueprint JSON</summary>
@@ -106,11 +108,11 @@ For this limited example, the `deployment config` Blueprint will include mostly 
 
 </details>
 
-:::info
-Remember that in order to report changelog events to a webhook, you need to provide the changelogDestination key in the Blueprint definition.
+:::info 请记住，要向 webhook 报告更新日志事件，您需要在 Blueprint 定义中提供 changelogDestination 关键字。
+
 :::
 
-In addition, below you can find a `deployment config` Entity matching the Blueprint schema:
+此外，您还可以在下面找到与蓝图模式相匹配的 "部署配置 "实体: 
 
 <details>
 <summary>Deployment Config Entity JSON</summary>
@@ -134,10 +136,10 @@ In addition, below you can find a `deployment config` Entity matching the Bluepr
 
 </details>
 
-Below is a `python` code snippet to create both the deployment config Blueprint and Entity:
+下面是创建部署配置蓝图和实体的 "python "代码片段: 
 
-:::note
-Remember to replace the placeholders for `YOUR_CLIENT_ID`, `YOUR_CLIENT_SECRET` and `YOUR_WEBHOOK_URL` with your Port client ID, secret and your webhook URL (or Smee proxy URL).
+:::note 切记用您的 Port 客户端 ID、secret 和 webhook URL(或 Smee 代理 URL)替换`YOUR_CLIENT_ID`、`YOUR_CLIENT_SECRET`和`YOUR_WEBHOOK_URL`的占位符。
+
 :::
 
 <details>
@@ -250,29 +252,29 @@ print(entity_response.json())
 
 </details>
 
-## Setting up a slack webhook
+## 设置松弛网络钩子
 
-Head to your [slack apps](https://api.slack.com/apps) page and create a new app (or select one of your existing apps). Then, go to the `Incoming Webhooks` page and create a new webhook, specifying the target channel on your server where messages that are sent to the slack webhook will be transferred.
+前往[slack apps](https://api.slack.com/apps) 页面，创建一个新应用程序(或从现有应用程序中选择一个) 。 然后，前往 "Incoming Webhooks "页面，创建一个新的 webhook，指定服务器上的目标频道，发送到 slack webhook 的消息将在该频道传输。
 
-Copy the webhook URL, you will use it soon to set up your python FastAPI in the next step.
+复制 webhook URL，下一步将用它来设置 python FastAPI。
 
-## Setting up a webhook target
+## 设置目标 webhook
 
-Now you're going to set up a full basic API to receive changelog events from your software catalog in Port.
+现在，您要设置一个完整的基本 API，以便从 Port 中的软件目录接收更新日志事件。
 
-### Prerequisites
+### 先决条件
 
-Please use `pip` to install `python` dependencies for the API:
+请使用 `pip` 为 API 安装 `python` 依赖项: 
 
 ```bash showLineNumbers
 pip install fastapi pysmee pydantic uvicorn slack_sdk
 ```
 
-### Setting up the API
+### 设置应用程序接口
 
-The code for the API is available in the [**changelog-listener-example-api**](https://github.com/port-labs/port-changelog-listener-example-api) repository, you can clone it and replace the `YOUR_CLIENT_ID`, `YOUR_CLIENT_SECRET` and `SLACK_WEBHOOK_URL` placeholders with your Port client ID, secret and the Slack webhook URL you generated in [setting up a slack webhook](#setting-up-a-slack-webhook).
+API 的代码可在[**changelog-listener-example-api**](https://github.com/port-labs/port-changelog-listener-example-api) 代码库中找到，您可以克隆它，然后用您的 Port 客户端 ID、secret 和在[setting up a slack webhook](#setting-up-a-slack-webhook) 中生成的 Slack webhook URL 替换 `YOUR_CLIENT_ID`、`YOUR_CLIENT_SECRET` 和 `SLACK_WEBHOOK_URL` 占位符。
 
-After cloning the repository, you will have the following directory structure:
+克隆版本库后，您将拥有以下目录结构: 
 
 ```
 .
@@ -294,15 +296,15 @@ After cloning the repository, you will have the following directory structure:
 └── main.py
 ```
 
-### Running the API
+### 运行应用程序接口
 
-To run the API, open a new terminal and run the following command in the root directory of the cloned repository:
+要运行 API，请打开一个新终端，在克隆版本库的根目录下运行以下命令: 
 
 ```bash showLineNumbers
 python main.py
 ```
 
-You will see output similar to this:
+您将看到类似这样的 Output: 
 
 ```bash showLineNumbers
 INFO:     Uvicorn running on http://0.0.0.0:80 (Press CTRL+C to quit)
@@ -317,29 +319,29 @@ INFO:     Application startup complete.
 INFO:uvicorn.error:Application startup complete.
 ```
 
-### Directing the webhook to the API
+### 将 webhook 指向应用程序接口
 
-For this step, you can follow the steps in [forwarding events to localhost](../local-debugging-webhook.md#forwarding-events-to-localhost) from the [debugging webhooks locally](../local-debugging-webhook.md) page.
+关于这一步，您可以按照[debugging webhooks locally](../local-debugging-webhook.md) 页面上[forwarding events to localhost](../local-debugging-webhook.md#forwarding-events-to-localhost) 中的步骤进行操作。
 
-:::note
-Remember to use your `Smee proxy URL`, and replace `http://localhost:3000/webhooks` with `http://localhost:80/api/slack`.
+:::note 记住要引用您的 `Smee 代理 URL`，并将 `http://localhost:3000/webhooks` 替换为 `http://localhost:80/api/slack`。
+
 :::
 
-## Watching change events in your slack channel
+## 在你的松弛频道中观察变化事件
 
-To see the result of your API, update the `healthStatus` field of a deployment config Entity.
+要查看 API 的结果，请更新部署配置实体的 `healthStatus` 字段。
 
-When the **health status** of a `deployment config` Entity changes, you should see a new message in the slack channel you chose when you created the slack webhook:
+当 "部署配置 "实体的**健康状态**发生变化时，您应该会在创建松弛 webhook 时选择的松弛频道中看到一条新消息: 
 
 ![Software catalog changelog slack message](../../../../../static/img/self-service-actions/changelog-slack-message.png)
 
-## Summary
+## 摘要
 
-This example shows you the power of Port's changelog capabilities.
+本例向您展示了 Port 更新日志功能的强大。
 
-The action taken in this guide is informative and does not trigger any changes in your infrastructure, but it can be adapted to:
+本指南所采取的行动仅供参考，不会对您的基础设施造成任何改变，但可以加以调整: 
 
-- Provision more cloud resources;
-- Perform a scale-up action;
-- Alert the on-call;
-- etc.
+* 提供更多云计算资源；
+* 执行扩展操作；
+* 提醒值班人员；
+* 等等。

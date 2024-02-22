@@ -1,64 +1,63 @@
 ---
+
 sidebar_position: 1
+
 ---
 
 import Tabs from "@theme/Tabs"
 import TabItem from "@theme/TabItem"
 
-# Jenkins Deployment
+# Jenkins 部署
 
-:::tip Available Ocean integration
-Port provides an [Ocean integration](/build-your-software-catalog/sync-data-to-catalog/ci-cd/jenkins.md) for Jenkins, which allows you to automatically sync your Jenkins resources with Port and provides more configuration options. This is the **recommended** way to integrate Port with Jenkins.  
-If you would still prefer to use Port's API, follow this page.
+:::tip  可用的 Ocean 集成 Port 为 Jenkins 提供了一个[Ocean integration](/build-your-software-catalog/sync-data-to-catalog/ci-cd/jenkins.md) ，可让您自动将 Jenkins 资源与 Port 同步，并提供更多配置选项。 这是**推荐的**将 Port 与 Jenkins 集成的方式。如果您仍希望使用 Port 的 API，请关注此页面。
+
 :::
 
-Using Jenkins build, you can easily create/update and query entities in Port.
+被引用 Jenkins 构建后，您可以在 Port 中轻松创建/更新和查询实体。
 
 <br></br>
 <br></br>
 
 ![Github Illustration](/img/build-your-software-catalog/sync-data-to-catalog/jenkins/jenkins-pipeline-illustration.jpg)
 
-## 💡 Common Jenkins build usage
+## 💡 Jenkins 的常见构建 Usage
 
-Port's API allows for easy integration between Port and your Jenkins builds, for example:
+例如，Port 的应用程序接口(API)可轻松实现 Port 与 Jenkins 构建的集成: 
 
-- Report the status of a running **CI job**;
-- Update the software catalog about a new **build version** for a **microservice**;
-- Get existing **entities**.
+* 报告正在运行的**CI任务**的状态；
+* 更新软件目录中有关**微服务**新**构建版本的信息；
+* 获取现有**实体**。
 
-## Prerequisites
+## 先决条件
 
-1. This example makes use of the following Jenkins plugins:
+1. 本例被引用了以下 Jenkins 插件: 
 
-- [Plain Credentials](https://plugins.jenkins.io/credentials-binding/) (>=143.v1b_df8b_d3b_e48)
-- [HTTP Request](https://plugins.jenkins.io/http_request/) (>=1.16)
+* [Plain Credentials](https://plugins.jenkins.io/credentials-binding/) (>=143.v1b_df8b_d3b_e48)
+* [HTTP Request](https://plugins.jenkins.io/http_request/) (>=1.16)
 
-2. The following methods are used in the example, and these signatures need to be approved:
+2.示例中被引用的方法如下，这些签名需要经过批准: 
 
 ```
 new groovy.json.JsonSlurperClassic
 method groovy.json.JsonSlurperClassic parseText java.lang.String
 ```
 
-3. Add your `PORT_CLIENT_ID` and `PORT_CLIENT_SECRET` as [Jenkins Credentials](https://www.jenkins.io/doc/book/using/using-credentials/) to use them in your CI pipelines.
+3.将您的 `PORT_CLIENT_ID` 和 `PORT_CLIENT_SECRET` 添加为[Jenkins Credentials](https://www.jenkins.io/doc/book/using/using-credentials/) ，以便在您的 Pipelines 中被引用。
+4.确保您的 Port 安装中已有[Blueprint](/build-your-software-catalog/define-your-data-model/setup-blueprint/setup-blueprint.md) ，以便创建/更新实体。
 
-4. Make sure you have an existing [Blueprint](/build-your-software-catalog/define-your-data-model/setup-blueprint/setup-blueprint.md) in your Port installation to create/update entities.
+## 设置
 
-## Set up
+:::tip 本指南中被引用的所有 Port API 路由都可以在 Port 的[API documentation](/api-reference/api-reference.mdx) 中找到。
 
-:::tip
-All Port API routes used in this guide can be found in Port's [API documentation](/api-reference/api-reference.mdx).
 :::
 
-To interact with Port inside your Jenkins builds, follow these steps:
+要在 Jenkins 构建中与 Port 交互，请按照以下步骤操作: 
 
-### Fetching your API token
+### 获取您的应用程序接口令牌
 
-The following snippet shows you how to pass your `PORT_CLIENT_ID` and `PORT_CLIENT_SECRET` credentials to your build using `withCredentials`, which utilizes the Plain Credentials plugin to bind credentials to variables.
+下面的代码段向您展示了如何使用 `withCredentials` 将 `PORT_CLIENT_ID` 和 `PORT_CLIENT_SECRET` 凭据传递给联编，它利用 Plain Credentials 插件将凭据绑定到变量。
 
-  The snippet provided also includes saving Port's API URL as an environment variable for use in future stages and makes a request to Port's API using the credentials to get an access token:
-
+Provider 提供的代码段还包括将 Port 的 API URL 保存为环境变量，以便在未来阶段使用，并使用凭据向 Port 的 API 发出请求，以获取访问令牌: 
 
 <details>
   <summary> Get API token </summary>
@@ -93,14 +92,13 @@ pipeline {
             def token = slurped_response.accessToken // Use this token for authentication with Port
             ...
         }
-
 ```
 
 </details>
 
-### Working with Port's API
+### 使用 Port 的 API
 
-Add the following code to your Jenkins build, to either create/update an entity, or get an existing one:
+在 Jenkins 构建中添加以下代码，以创建/更新实体或获取现有实体: 
 
 <Tabs groupId="usage" defaultValue="upsert" values={[
 {label: "Create/Update", value: "upsert"},
@@ -177,6 +175,6 @@ import groovy.json.JsonSlurperClassic
 </TabItem>
 </Tabs>
 
-## Examples
+## 示例
 
-Refer to the [examples](./examples.md) page for practical examples for using Port with Jenkins.
+有关与 Jenkins 一起使用 Port 的实用示例，请参阅[examples](./examples.md) 页面。

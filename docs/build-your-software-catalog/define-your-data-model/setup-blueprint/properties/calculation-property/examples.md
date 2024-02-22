@@ -1,13 +1,12 @@
-# Examples
+# 示例
 
-Here are a few examples of calculation properties use cases:
+下面是几个计算属性被引用的例子: 
 
-## Basic calculation property
+## 基本计算属性
 
-In the following example, we will create a calculation property called `MBMemory` of type `number`, and then transform it into a GB unit:
+在下面的示例中，我们将创建一个名为 "MBMemory "的计算属性，其类型为 "数"，然后将其转换为 GB 单位: 
 
 ```json showLineNumbers
-
 "properties":{
     "MBMemory":{
         "type": "number"
@@ -22,7 +21,7 @@ In the following example, we will create a calculation property called `MBMemory
 }
 ```
 
-In this instance, if you have a `MBMemory` **string** property with the value:
+在这种情况下，如果您有一个 `MBMemory` **string** 属性，其值为
 
 ```json showLineNumbers
 {
@@ -30,7 +29,7 @@ In this instance, if you have a `MBMemory` **string** property with the value:
 }
 ```
 
-Then the `GBMemory` calculation property value will be:
+那么 `GBMemory` 计算属性值将是
 
 ```json showLineNumbers
 {
@@ -38,12 +37,11 @@ Then the `GBMemory` calculation property value will be:
 }
 ```
 
-This is an example of how calculation properties can be used to perform math equations over data ingested into Port.
+下面举例说明如何利用计算属性对被引用到 Port 中的数据进行数学运算。
 
-## Concatenate strings
+## 连接字符串
 
-Assume you have two `string` properties: one is called `str1` with the value `hello`, the other is called `str2` with the value `world`.
-The following calculation will result in `hello world`:
+假设有两个 `string` 属性: 一个名为 `str1`，值为 `hello` ；另一个名为 `str2`，值为 `world`。 下面的计算结果将是 `hello world`: 
 
 ```json showLineNumbers
 {
@@ -53,15 +51,15 @@ The following calculation will result in `hello world`:
 }
 ```
 
-:::tip
-If you want to provide your own string template to concatenate properties , wrap your template string with single quotes (`'`), such as `'https://' + .properties.str1'`
+:::tip 如果您想提供自己的字符串模板来连接属性，请用单引号 (`'`)将模板字符串包起来，例如`'https://' + .properties.str1'`
+
 :::
 
-## Calculate array length
+## 计算数组长度
 
-Assume you have an `array` property called `myArr` with the value `["this", "is", "port"]`.
+假设您有一个名为 `myArr` 的 `array` 属性，其值为 `["this", "is", "port"]`。
 
-The following calculation will result in `3`:
+下面的计算结果将是 `3`: 
 
 ```json showLineNumbers
 {
@@ -71,9 +69,9 @@ The following calculation will result in `3`:
 }
 ```
 
-## Slice array
+## 切片数组
 
-Assume you have an `array` property called `array1` with the value `[1,2,3,4]`. You can use the following slicing calculation to get the result `[2,3,4]`:
+假设你有一个名为 `array1` 的 `array` 属性，其值为 `[1,2,3,4]`，你可以使用下面的切分计算来得到结果 `[2,3,4]`: 
 
 ```json showLineNumbers
 {
@@ -83,9 +81,9 @@ Assume you have an `array` property called `array1` with the value `[1,2,3,4]`. 
 }
 ```
 
-## Merge objects
+## 合并对象
 
-Assume you have two `object` properties: one called `deployed_config` with the value `{cpu: 200}`, the other called `service_config` with the value `{memory: 400}`. You can merge these two object properties and receive a unified config by using the following calculation:
+假设有两个 "对象 "属性: 一个名为 `deployed_config`，其值为`{cpu: 200}`；另一个名为 `service_config`，其值为`{memory: 400}`。 可以通过以下计算方法合并这两个对象属性，得到一个统一的配置: 
 
 ```json showLineNumbers
 "calculationProperties" : {
@@ -97,14 +95,14 @@ Assume you have two `object` properties: one called `deployed_config` with the v
 }
 ```
 
-The result will be `{cpu: 200, memory: 400}`.
+结果将是 `{cpu: 200, memory: 400}`。
 
-:::info Object merging
+:::info  对象合并
 
-- Object merging performs a deep merge, resulting in nested keys from the original objects appearing in the resulting merged object.
-- If the same `key` appears in one or more of the merged properties, the last property that appears will have its `keys` take precedence over the `keys` of properties that appeared earlier in the calculation.
+* 对象合并执行深度合并，导致原始对象中的嵌套键出现在合并后的对象中。
+* 如果合并后的一个或多个属性中出现了相同的 "键"，则最后出现的属性的 "键 "将优先于计算中较早出现的属性的 "键"。
 
-For example, Let's assume we have 2 properties with type `object`, and we want to perform a deep merge between them:
+例如，假设我们有 2 个 `object` 类型的属性，我们想在它们之间执行深度合并: 
 
 ```json showLineNumbers
 {
@@ -117,18 +115,19 @@ For example, Let's assume we have 2 properties with type `object`, and we want t
 }
 ```
 
-If the calculation is `".properties.obj1 * .properties.obj2"` , the result will be `{cpu: 400}`,
+如果计算结果为`".properties.obj1 * .properties.obj2"` ，则结果为`{cpu: 400}`、
 
-If the calculation is `".properties.obj2 * .properties.obj1"` , the result will be `{cpu: 200}`,
+如果计算结果为`".properties.obj2 * .properties.obj1"` ，则结果为`{cpu: 200}`、
 
-For merging YAML properties, the merging behavior will be the same, but if you specify `type: "string` and `format: "yaml"`, the result will be a YAML object.
+对于合并 YAML 属性，合并行为是相同的，但如果指定 `type: "string` 和 `format: "yaml"` ，结果将是一个 YAML 对象。
+
 :::
 
 ## If-else conditions
 
-Assume that your services uses multiple packages, some services use packages written in Python and some services use packages written in Node.js.
+假设您的服务使用多个软件包，有些服务使用用 Python 编写的软件包，有些服务使用用 Node.js 编写的软件包。
 
-By using an if-else JQ rule, you can specify a different URL to each package, based on its language:
+通过被引用 if-else JQ 规则，可以根据语言为每个 packages 指定不同的 URL: 
 
 ```json showLineNumbers
 "calculationProperties" : {
@@ -141,7 +140,7 @@ By using an if-else JQ rule, you can specify a different URL to each package, ba
 }
 ```
 
-For the following entity:
+针对以下实体
 
 ```json showLineNumbers
 {
@@ -152,9 +151,9 @@ For the following entity:
 }
 ```
 
-The result will be `package_manager_url: "https://pypi.org/project/requests"`.
+结果将是 `package_manager_url: "https://pypi.org/project/requests"`。
 
-For the following entity:
+针对以下实体
 
 ```json showLineNumbers
 {
@@ -165,11 +164,11 @@ For the following entity:
 }
 ```
 
-The result will be `package_manager_url: "https://www.npmjs.com/package/axios"`.
+结果将是 `package_manager_url: "https://www.npmjs.com/package/axios"`。
 
-## Calculate K8S labels
+## 计算 k8s 标签
 
-You can create a calculation property inside your Blueprint to display a specific tag. Looking at the Node Blueprint, you can find the following property:
+您可以在蓝图中创建一个计算属性来显示特定标签。 在节点蓝图中，您可以找到以下属性: 
 
 ```json
 "properties": {
@@ -181,7 +180,7 @@ You can create a calculation property inside your Blueprint to display a specifi
       },
 ```
 
-And the labels object looks like:
+标签对象看起来就像
 
 ```json
 {
@@ -190,19 +189,19 @@ And the labels object looks like:
 }
 ```
 
-To display the value of `name`, create a new calculation property within the same Blueprint. then use the following JQ calculation:
+要显示 `name` 的值，请在同一蓝图中创建一个新的计算属性，然后使用下面的 JQ 计算: 
 
 ```json
 .properties.labels."name"
 ```
 
-The result will be a property that displays `port-k8s-exporter`.
+结果将是显示 `port-k8s-exporter` 的属性。
 
-## Calculate Cloud resource tags
+## 计算云资源标签
 
-Assuming you have a property `tags` in your Blueprint, you can use JQ to display the value of a tag.
+假设您的 Blueprint 中有一个属性 `tags`, 您可以使用 JQ 来显示标签的值。
 
-In Port's AWS exporter, you can find the following array:
+在 Port 的 AWS 输出程序中，您可以找到以下数组: 
 
 ```json
 "tags": [
@@ -221,10 +220,10 @@ In Port's AWS exporter, you can find the following array:
     ]
 ```
 
-To display a Value of `applyId`, create a new calculation property within the Blueprint of the entity, and use the following JQ calculation:
+要显示 `applyId` 的 Values，请在实体的蓝图中创建一个新的计算属性，并使用下面的 JQ 计算: 
 
 ```json
 .properties.tags.[] | select(.Key=="applyId") | .Value
 ```
 
-The result will be a property that will display `1a23-4bc5d-67efg-89k10`.
+结果将显示属性 `1a23-4bc5d-67efg-89pk10`。

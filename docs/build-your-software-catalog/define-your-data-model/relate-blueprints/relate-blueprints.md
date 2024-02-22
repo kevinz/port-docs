@@ -1,15 +1,17 @@
 ---
+
 sidebar_position: 2
-title: Relate Blueprints
-sidebar_label: Relate Blueprints
+title: 相关蓝图
+sidebar_label: 相关蓝图
+
 ---
 
-import ApiRef from "../../../api-reference/\_learn_more_reference.mdx"
+import ApiRef from "../../../api-reference/_learn_more_reference.mdx"
 
 import Tabs from "@theme/Tabs"
 import TabItem from "@theme/TabItem"
 
-# Relate Blueprints
+# 相关蓝图
 
 <center>
 
@@ -17,26 +19,26 @@ import TabItem from "@theme/TabItem"
 
 </center>
 
-Relations define connections between blueprints results into dependency reflection of assets in your software catalog.
+关系定义了蓝图之间的连接，并将其转化为软件目录中资产的依赖性反映。
 
-## What is a relation?
+## 什么是关系？
 
-Relations enable us to make connections between blueprints, consequently connecting the entities based on these blueprints. That provides logical context to the software catalog.
+关系使我们能够在蓝图之间建立联系，从而将基于这些蓝图的实体连接起来。 这就为软件目录提供了逻辑上下文。
 
-## 💡 Common relations
+## 💡 共同关系
 
-Relations can be used to represent the logical connections between assets in your software catalog, for example:
+例如，关系可被引用来表示软件目录中资产之间的逻辑联系: 
 
-- The **packages** that a **microservice** uses;
-- The **run** history of a **CI job**;
-- The **Kubernetes clusters** that exist in a **cloud account**;
-- etc.
+* 一个**微服务**被引用的**packages**；
+* 一个**CI作业**的**运行**历史记录；
+* 一个**云账户中存在的**Kubernetes集群**；
+* 等等。
 
-In this [live demo](https://demo.getport.io/dev-portal) example, we can see the DevPortal Builder page with all of the blueprints and their relations. 🎬
+在[live demo](https://demo.getport.io/dev-portal) 示例中，我们可以看到 DevPortal 生成器页面，其中包含所有蓝图及其关系。
 
-## Relation schema structure
+## 关系模式结构
 
-The basic structure of a relation object:
+关系对象的基本结构: 
 
 ```json showLineNumbers
 {
@@ -49,11 +51,12 @@ The basic structure of a relation object:
 }
 ```
 
-:::info
-A relation exists under the `relations` key in the [Blueprint JSON schema](../setup-blueprint/setup-blueprint.md#blueprint-schema-structure)
+:::info 关系中的 "relations "键下存在一个关系。[Blueprint JSON schema](../setup-blueprint/setup-blueprint.md#blueprint-schema-structure)
+
 :::
 
-## Structure table
+## 结构表
+
 
 | Field        | Description                                                                                            | Notes                                                                                                                                                                                                                                                                              |
 | ------------ | ------------------------------------------------------------------------------------------------------ | ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
@@ -63,24 +66,25 @@ A relation exists under the `relations` key in the [Blueprint JSON schema](../se
 | `required`   | Boolean flag to define whether the target must be provided when creating a new entity of the blueprint |
 | `many`       | Boolean flag to define whether multiple target entities can be mapped to the Relation                  | For more information refer to [many relation](#many)                                                                                                                                                                                                                               |
 
-## Types of relations
+
+## 关系类型
 
 ### :bust_in_silhouette: Single
 
-A single type relation is used to map a single target entity to the source.
+单一类型关系被用来将单一目标实体映射到源实体。
 
-#### 💡 Common Single Relations
+#### 💡 共同单一关系
 
-- Map a **Deployment** to the **Running Service** that it deployed;
-- Map a **package version** to the **package**;
-- Map a **K8s cluster** to the **cloud account** it is provisioned in;
-- etc.
+* 将**部署**映射到所部署的**运行服务**；
+* 将**包版本**映射到**包**；
+* 将**k8s 集群**映射到它所配置的**云账户**；
+* 等等。
 
-In this [live demo](https://demo.getport.io/packageVersionEntity?identifier=AnalyticsTracker_1_2_9) example, we can see a specific package version and its related core packages. 🎬
+在[live demo](https://demo.getport.io/packageVersionEntity?identifier=AnalyticsTracker_1_2_9) 这个例子中，我们可以看到一个特定的软件包版本及其相关的核心软件包。 🎬
 
-#### Single Relation Structure
+#### 单一关系结构
 
-A single type relation is distinguished by the `many: false` configuration:
+单一类型关系由 `many: false` 配置区分: 
 
 <Tabs groupId="definition" defaultValue="api" values={[
 {label: "API", value: "api"},
@@ -124,23 +128,23 @@ resource "port_blueprint" "myBlueprint" {
 </TabItem>
 </Tabs>
 
-### 👥 Many
+### 👥 许多
 
-A many type relation is used to map multiple target entities to the source.
+多类型关系被用来将多个目标实体映射到源实体。
 
-#### 💡 Common Many Relations
+#### 💡 常见的多种关系
 
-- Map dependencies between services;
-- Map the **packages** used by a **service**;
-- Map the **cloud resources** used by a **service**;
-- Map the **services deployed** in a **developer environment**;
-- etc.
+* 映射服务之间的依赖关系；
+* 映射**服务被引用的**packages**；
+* 映射**服务被引用的**云资源；
+* 映射在**开发环境中部署的**服务；
+* 等等。
 
-In this [live demo](https://demo.getport.io/developerEnvEntity?identifier=test-shizuko) example, we can see a specific developer environment and the running services it uses. 🎬
+在这个[live demo](https://demo.getport.io/developerEnvEntity?identifier=test-shizuko) 示例中，我们可以看到一个特定的开发人员环境及其被引用的运行服务。 🎬
 
-#### Many Relation Structure
+#### 多关系结构
 
-A many type relation is distinguished by the `many: true` configuration:
+多类型关系由 `many: true` 配置区分: 
 
 <Tabs groupId="definition" defaultValue="api" values={[
 {label: "API", value: "api"},
@@ -184,13 +188,13 @@ resource "port_blueprint" "myBlueprint" {
 </TabItem>
 </Tabs>
 
-:::note
-A Relation can't be configured with both `many` and `required` set to `true`
+:::note 关系 "的 "many "和 "required "均设为 "true "时无法配置
+
 :::
 
-## Configure relations in Port
+## 在 Port 中配置关系
 
-Relations are part of the structure of a [blueprint](../setup-blueprint/setup-blueprint.md#blueprint-structure).
+关系是[blueprint](../setup-blueprint/setup-blueprint.md#blueprint-structure) 结构的一部分。
 
 <Tabs groupId="definition" queryString defaultValue="api" values={[
 {label: "API", value: "api"},
@@ -230,8 +234,8 @@ Relations are part of the structure of a [blueprint](../setup-blueprint/setup-bl
 
 <TabItem value="ui">
 
-1. Go to the [DevPortal Builder page](https://app.getport.io/dev-portal);
-2. Click the pencil icon on the blueprint that will be the `source` blueprint of the relation:
+1. 请访问[DevPortal Builder page](https://app.getport.io/dev-portal) ；
+2. 单击关系的 "源 "蓝图上的铅笔图标: 
 
 ![Blueprints page with Create Relation Marked](../../../../static/img/build-your-software-catalog/define-your-data-model/relate-blueprints/editBlueprintMarked.png)
 
@@ -259,4 +263,4 @@ resource "port_blueprint" "myBlueprint" {
 </TabItem>
 </Tabs>
 
-Once added to the blueprint definition, you can [apply the blueprint](../setup-blueprint/setup-blueprint.md#apply-blueprints-to-port) to Port
+一旦添加到蓝图定义中，您就可以[apply the blueprint](../setup-blueprint/setup-blueprint.md#apply-blueprints-to-port) 到 Port

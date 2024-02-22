@@ -1,20 +1,22 @@
 ---
+
 sidebar_position: 1
 title: Terraform
-description: Comprehensive blueprint with properties, relations and mirror properties
+description: 包含属性、关系和镜像属性的综合蓝图
+
 ---
 
-# Terraform-Managed Blueprint Example
+# Terraform 管理的蓝图示例
 
-This example includes a complete [blueprint](../../define-your-data-model/setup-blueprint/setup-blueprint.md) resource definition in Terraform, which includes:
+该示例包括 Terraform 中完整的[blueprint](../../define-your-data-model/setup-blueprint/setup-blueprint.md) 资源定义，其中包括
 
-- [Blueprint](../../define-your-data-model/setup-blueprint/setup-blueprint.md?definition=tf#configure-blueprints-in-port) definition examples;
-- All [property](../../define-your-data-model/setup-blueprint/properties/properties.md) type definitions;
-- [Relation](../../define-your-data-model/relate-blueprints/relate-blueprints.md?definition=tf#configure-relations-in-port) definition example;
-- [Mirror property](../../define-your-data-model/setup-blueprint/properties/mirror-property/mirror-property.md) definition example;
-- [Calculation property](../../define-your-data-model/setup-blueprint/properties/calculation-property/calculation-property.md) definition example.
+* [Blueprint](../../define-your-data-model/setup-blueprint/setup-blueprint.md?definition=tf#configure-blueprints-in-port) 定义示例；
+* 所有[property](../../define-your-data-model/setup-blueprint/properties/properties.md) 类型定义；
+* [Relation](../../define-your-data-model/relate-blueprints/relate-blueprints.md?definition=tf#configure-relations-in-port) 定义示例
+* [Mirror property](../../define-your-data-model/setup-blueprint/properties/mirror-property/mirror-property.md) 定义示例；
+* [Calculation property](../../define-your-data-model/setup-blueprint/properties/calculation-property/calculation-property.md) 定义示例。
 
-Here is the example definition:
+下面是定义示例: 
 
 ```hcl showLineNumbers
 terraform {

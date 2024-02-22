@@ -1,58 +1,51 @@
 import Image from "@theme/IdealImage";
 import DefineVars from "../../../../static/img/self-service-actions/setup-backend/jenkins-pipeline/define-variables.png";
 
-# Triggering Jenkins using webhooks
+# 使用 webhooks 触发 Jenkins
 
-In this guide, you will learn how to trigger your [Jenkins](https://www.jenkins.io/) Pipelines from Port, using [Webhook Actions](../webhook/).
+在本指南中，您将学习如何使用[Webhook Actions](../webhook/) 从 Port 触发您的[Jenkins](https://www.jenkins.io/) Pipelines。
 
 ![Illustration](../../../../static/img/self-service-actions/setup-backend/jenkins-pipeline/jenkins-illustration.png)
 
-The steps shown in the image above are as follows:
+上图所示步骤如下: 
 
-1. An action is invoked in Port;
-2. Port signs the action payload using SHA-1 with the [`clientSecret`](../../../build-your-software-catalog/sync-data-to-catalog/api/api.md#find-your-port-credentials) value and puts it in the `X-Port-Signature` request header.
+1. 在 Port 中调用一个操作；
+2. Port 使用 SHA-1 对操作有效载荷进行签名，签名值为[`clientSecret`](../../../build-your-software-catalog/sync-data-to-catalog/api/api.md#find-your-port-credentials) ，并将其放入 `X-Port-Signature` 请求头中。
+    信息
+    使用请求标头验证 webhook 请求有以下好处: - 确保请求有效载荷未被篡改
+    - 确保信息发送方是 Port
+    - 确保收到的信息不是旧信息的重放
+    :::
+3.Port 通过向 `https://{JENKINS_URL}/generic-webhook-trigger/invoke` 发送 `POST` 请求来发布调用的 `WEBHOOK` 消息
+    示例流程如下: 1.开发人员要求运行 Jenkins 管道；
+    2.Port 向 Jenkins webhook `URL` 发送带有动作有效载荷的 `POST` 请求；
+    3.Jenkins webhook 接收新的操作请求；
+    4.Jenkins webhook 触发 Pipelines；
 
-   :::info
-   Verifying the webhook request using the request headers provides the following benefits:
+## 先决条件
 
-   - Ensures that the request payload has not been tampered with
-   - Ensures that the sender of the message is Port
-   - Ensures that the received message is not a replay of an older message
-   :::
+Jenkins 所需插件
 
-3. Port publishes an invoked `WEBHOOK` via a `POST` request to `https://{JENKINS_URL}/generic-webhook-trigger/invoke`
+* [Generic webhook trigger](https://plugins.jenkins.io/generic-webhook-trigger/) - 允许使用 webhook 调用触发 Jenkins Pipelines。
 
-   An example flow would be:
+## 设置 webhook
 
-   1. A developer asks to run a Jenkins pipeline;
-   2. Port sends a `POST` request with the action payload to the Jenkins webhook `URL`;
-   3. The Jenkins webhook receives the new action request;
-   4. The Jenkins webhook triggers the pipeline;
+### 为 Pipelines 启用 webhook 触发器
 
-## Prerequisites
+要启用使用 webhook 引用触发 Jenkins 管道，需要在管道中添加 "通用 Webhook 触发器 "作为构建触发器。
 
-Jenkins required plugins:
-
-- [Generic webhook trigger](https://plugins.jenkins.io/generic-webhook-trigger/) - Allows triggering Jenkins pipelines using webhook calls.
-
-## Setting up the webhook
-
-### Enabling webhook trigger for a pipeline
-
-To enable triggering a Jenkins pipeline using a webhook invocation, you will need to add "Generic Webhook Trigger" as a build trigger to your pipeline.
-
-In your job's page, enter the **Configuration** tab, and scroll down to the **Build Triggers** section. Check the `Generic Webhook Trigger` box:
+在任务页面中，进入 "**配置**"选项卡，向下滚动到 "**构建触发器**"部分。 选中 "通用 Webhook 触发器 "复选框: 
 
 ![Enable generic webhook](../../../../static/img/self-service-actions/setup-backend/jenkins-pipeline/check-generic-webhook-option.png)
 
-By default, when enabling the webhook trigger for a job, it can be triggered by sending an event to `http://JENKINS_URL/generic-webhook-trigger/invoke`. This means that, if not configured otherwise, all jobs will be triggered when sending an event to this route. It is recommended to set up a [job token](jenkins-pipeline.md#token-setup) to avoid running unwanted jobs.
+默认情况下，为作业启用 webhook 触发器时，可通过向 `http://JENKINS_URL/generic-webhook-trigger/invoke` 发送事件来触发作业。这意味着，如果未另行配置，向该路由发送事件时将触发所有作业。建议设置[job token](jenkins-pipeline.md#token-setup) ，以避免运行不需要的作业。
 
-### Defining variables
+### 定义变量
 
-After checking the box, look for the **Post content parameters** section. This is where you will define the variables which will be passed to your pipeline run.
+选中复选框后，请查看 ** Pipelines 内容参数** 部分。 在这里您将定义传递给 Pipelines 运行的变量。
 
-- The `Variable` field value should match the name of the variable that is defined in your job configuration and expected by the job run.
-- The `Expression` field should be set to `JSONPath` and be directed to the relevant property sent by the Port action.
+* Varues "字段的值应与作业配置中定义的、作业运行所期望的变量名称相匹配。
+* 表达式 "字段应设置为 "JSONPath"，并指向 Port 操作发送的相关属性。
 
 <br/>
 
@@ -60,8 +53,7 @@ After checking the box, look for the **Post content parameters** section. This i
 
 <br/>
 
-:::tip
-Here is part of the JSON scheme of the Port action, which shows the inputs sent by Port when triggering the action:
+:::tip 下面是 Port 操作的部分 JSON 方案，其中显示了 Port 在触发操作时发送的输入: 
 
 ```json showLineNumber
 [
@@ -80,7 +72,7 @@ Here is part of the JSON scheme of the Port action, which shows the inputs sent 
 ]
 ```
 
-Here is a sample payload that is generated when the action is triggered and sent to Jenkins:
+以下是触发操作并发送到 Jenkins 时生成的有效载荷示例: 
 
 ```json showLineNumber
 {
@@ -95,39 +87,39 @@ Here is a sample payload that is generated when the action is triggered and sent
 }
 ```
 
-For example, the JSONPath for `input1` would be:
+例如，"输入 1 "的 JSONPath 应为
 
 ```text
 $.payload.properties.input1
 ```
 
-**Port Action** - The full Port action definition can be found [here](./jenkins-pipeline.md#setting-up-the-port-action).
+**Port操作** - 完整的Port操作定义可在[here](./jenkins-pipeline.md#setting-up-the-port-action) 上找到。
 
 :::
 
-### Token setup
+### 令牌设置
 
-The [token parameter](https://plugins.jenkins.io/generic-webhook-trigger/#plugin-content-token-parameter) allows triggering a specific (or a group) of jobs.
+[token parameter](https://plugins.jenkins.io/generic-webhook-trigger/#plugin-content-token-parameter) 允许触发特定(或一组) 作业。
 
-To set up a token for you job, scroll down to the **Token** section, and provide a job token:
+要为任务设置令牌，请向下滚动到**令牌**部分，然后提供任务令牌: 
 
 ![Configure Token](../../../../static/img/self-service-actions/setup-backend/jenkins-pipeline/configure-token.png)
 
-After saving, you will be able to specifically trigger this job job, using the following URL:
+保存后，您就可以通过以下 URL 具体触发该工作任务: 
 
 ```text showLineNumbers
 http://JENKINS_URL/generic-webhook-trigger/invoke?token=<JOB_TOKEN>
 ```
 
-:::tip
-For advanced configuration of your Jenkins webhook trigger, check out the [Generic webhook trigger](https://plugins.jenkins.io/generic-webhook-trigger/) plugin page!
+:::tip 有关 Jenkins webhook 触发器的高级配置，请查看[Generic webhook trigger](https://plugins.jenkins.io/generic-webhook-trigger/) 插件页面！
+
 :::
 
-### Setting up the Port action
+### 设置 Port 操作
 
-To trigger the Jenkins pipeline, you will setup a Port [Webhook Action](../webhook/).
+要触发 Jenkins 管道，您需要设置一个 Port[Webhook Action](../webhook/) 。
 
-Here is an example for an action that will trigger the webhook you just set up:
+下面是一个触发 webhook 的操作示例: 
 
 ```json showLineNumbers
 [
@@ -154,37 +146,38 @@ Here is an example for an action that will trigger the webhook you just set up:
 ]
 ```
 
-### Securing your webhook
+### 确保 webhook 的安全
 
-It is possible to add a protection layer to your exposed pipelines by [configuring whitelisting](https://plugins.jenkins.io/generic-webhook-trigger/#plugin-content-whitelist-hosts).
+可以通过[configuring whitelisting](https://plugins.jenkins.io/generic-webhook-trigger/#plugin-content-whitelist-hosts) 为暴露在外的 Pipelines 添加保护层。
 
-Whitelisting gives you the following security options:
+白名单为您提供了以下安全选项: 
 
-- Limit the list of IP addresses that can send a request that triggers the pipeline;
-- Add [validation](../webhook/signature-verification.md) for the webhook payload content to verify that it really originated from Port.
+* 限制可发送触发 Pipelines 请求的 IP 地址列表；
+* 为 webhook 有效负载内容添加[validation](../webhook/signature-verification.md) ，以验证其是否真正来自 Port。
 
-Here is an example of the required configuration:
+下面是所需配置的示例: 
 
 ![Webhook Validation](../../../../static/img/self-service-actions/setup-backend/jenkins-pipeline/validate-webhook.png)
 
-:::note
+:::note 
 
-- The IP field should be set to `3.251.12.205`, which is our hosted outbound WEBHOOK Gateway;
-  - For more information about Port's outbound calls, check out Port's [actions security](../../security/security.md) page.
-- In the **HMAC Secret** field, choose a secret containing your `port-client-secret`.
+* IP 字段应设置为 "3.251.12.205"，这是我们托管的外呼 WEBHOOK Gateway；
+    - 有关 Port 外呼的更多信息，请查看 Port 的[actions security](../../security/security.md) 页面。
+* 在 **HMAC Secret** 字段中，选择一个包含您的 `port-client-secret` 的 secret。
 
-If this secret doesn't already exist, create a `secret text` type secret using [this guide](https://www.jenkins.io/doc/book/using/using-credentials/). The value of the secret should be your `Port Client Secret` which can be found by following the guide [here](https://docs.getport.io/build-your-software-catalog/sync-data-to-catalog/api/#find-your-port-credentials).
+如果该secret还不存在，请使用[this guide](https://www.jenkins.io/doc/book/using/using-credentials/) 创建一个 "secret文本 "类型的secret。该secret的值应该是您的 "Port 客户端secret"，可根据指南[here](https://docs.getport.io/build-your-software-catalog/sync-data-to-catalog/api/#find-your-port-credentials) 找到。
+
 :::
 
-### Report Jenkins action run status to Port
+#### 向 Port 报告 Jenkins 操作运行状态
 
-Once you have triggered your Jenkins pipeline successfully, it is essential to update the status of the run action in Port.
+成功触发 Jenkins 管道后，必须在 Port 中更新运行操作的状态。
 
-In order to update the action, you'll need to create the `RUN_ID` variable, and to set it to be fetched from the [action payload](../../self-service-actions-deep-dive/self-service-actions-deep-dive.md#action-message-structure):
+为了更新操作，需要创建 `RUN_ID` 变量，并将其设置为从[action payload](../../self-service-actions-deep-dive/self-service-actions-deep-dive.md#action-message-structure) 获取: 
 
 ![RUN_ID variable](../../../../static/img/self-service-actions/setup-backend/jenkins-pipeline/jenkins-runid-variable.png)
 
-The code snippet below demonstrates how you can report the progress of your pipeline to Port:
+下面的代码片段演示了如何向 Port 报告 Pipelines 的进度: 
 
 <details>
 <summary> Click here to see the code</summary>

@@ -1,69 +1,70 @@
 ---
+
 sidebar_position: 5
-title: Let developers enrich services using Gitops
+title: 让开发人员使用 Gitops 丰富服务内容
+
 ---
 
 import Tabs from "@theme/Tabs"
 import TabItem from "@theme/TabItem"
 import PortTooltip from "/src/components/tooltip/tooltip.jsx"
-import FindCredentials from "/docs/build-your-software-catalog/sync-data-to-catalog/api/\_template_docs/\_find_credentials_collapsed.mdx";
+import FindCredentials from "/docs/build-your-software-catalog/sync-data-to-catalog/api/_template_docs/_find_credentials_collapsed.mdx";
 
-# Let developers enrich services using Gitops
+# 让开发人员使用 Gitops 丰富服务内容
 
-This guide takes 10 minutes to complete, and aims to demonstrate Port's flexibility when working with Gitops.
+本指南只需 10 分钟即可完成，旨在展示 Port 在使用 Gitops 时的灵活性。
 
-:::tip Prerequisites
+:::tip  先决条件
 
-- This guide assumes you have a Port account and that you have finished the [onboarding process](/quickstart). We will use the `Service` blueprint that was created during the onboarding process.
-- You will need a Git repository (Github, GitLab, or Bitbucket) in which you can place a workflow/pipeline that we will use in this guide. If you don't have one, we recommend creating a new repository named `Port-actions`.
+* 本指南假定您已拥有 Port 账户，并已完成[onboarding process](/quickstart) 。我们将使用入职过程中创建的 "服务 "蓝图。
+* 您需要一个 Git 仓库(Github、GitLab 或 Bitbucket)，您可以在其中放置我们将在本指南中使用的工作流/Pipelines。如果没有，建议创建一个名为 "Port-actions "的新仓库。
 
 :::
 
 <br/>
 
-### The goal of this guide
+### 本指南的目标
 
-In this guide we will enrich a service in Port using Gitops. In reality, this can be used by developers to independently add additional valuable data about their services to Port.
+在本指南中，我们将使用 Gitops 丰富 Port 中的一项服务。 实际上，开发人员可以利用这一点，独立地为 Port 添加有关其服务的更多有价值的数据。
 
-After completing it, you will get a sense of how it can benefit different personas in your organization:
+完成这项工作后，你就会了解它如何使你的组织中的不同角色受益: 
 
-- Developers will be able to enrich their services without needing to nag devops engineers.
-- Platform engineers will be able to create RBAC-controlled actions for developers, empowering their independence.
-- R&D managers will be able to track additional, valuable data about services in the organization.
+* 开发人员将能够丰富自己的服务，而无需唠叨开发工程师。
+* 平台工程师将能够为开发人员创建受 RBAC 控制的操作，增强他们的独立性。
+* 研发经理将能够跟踪有关组织内服务的更多有价值的数据。
 
 <br/>
 
-### Add new properties to your `Service` blueprint
+### 为你的 `Service` 蓝图添加新属性
 
-Let's start by adding two new properties to the `Service` <PortTooltip id="blueprint">blueprint</PortTooltip>, that we will later populate using Gitops.
+让我们先在 `Service`<PortTooltip id="blueprint">蓝图中</PortTooltip>添加两个新属性，稍后我们将使用 Gitops 填充这两个属性。
 
-1. Go to your [Builder](https://app.getport.io/dev-portal/data-model), expand the `Service` <PortTooltip id="blueprint">blueprint</PortTooltip>, and click on `New property`.
-
-2. The first property will be the service's type, chosen from a predefined list of options. Fill out the form like this, then click `Create`:
+1. 进入[Builder](https://app.getport.io/dev-portal/data-model) ，展开 "服务 "<PortTooltip id="blueprint">蓝图</PortTooltip>，点击 "新建属性"。
+2. 第一个属性将是从预定义选项列表中选择的服务类型。像这样填写表格，然后点击 "创建": 
 
 <img src='/img/guides/gitopsServicePropType.png' width='50%' />
 
 <br/><br/>
 
-3. The second property will be the lifecycle state of the service, also chosen from a predefined list of options. Fill out the form like this, then click `Create`:
+3.第二个属性是服务的生命周期状态，也是从预定义的选项列表中选择的。像这样填写表格，然后点击 "创建": 
 
-_Note the colors of the inputs, this will make it easier to see a service's lifecycle in your catalog_ 😎
+注意输入的颜色，这将使您更容易在目录中看到服务的生命周期_ 😎
 
 <img src='/img/guides/gitopsServicePropLifecycle.png' width='50%' />
 
 <br/><br/>
 
-### Model domains for your services
+###您的服务的示范域
 
-Services that share a business purpose (e.g. payments, shipping) are often grouped together using domains. Let's create a <PortTooltip id="blueprint">blueprint</PortTooltip> to represent a domain in Port:
+共享业务目的的服务(如支付、运输)通常使用域分组。 让我们创建一个<PortTooltip id="blueprint">蓝图</PortTooltip>来表示 Port 中的域: 
 
-1. In your [Builder](https://app.getport.io/dev-portal/data-model), click on the `Add` button in the top right corner, then choose `Custom blueprint`:
+1. 在[Builder](https://app.getport.io/dev-portal/data-model) 中，点击右上角的 "添加 "按钮，然后选择 "自定义蓝图": 
 
 <img src='/img/quickstart/builderAddCustomBlueprint.png' width='30%' />
 
 <br/><br/>
 
-2. Click on the `Edit JSON` button in the top right corner, replace the content with the following definition, then click `Create`:
+2.点击右上角的 "编辑 JSON "按钮，用以下定义替换内容，然后点击 "创建": 
 
 <details>
 <summary><b>Blueprint JSON (click to expand)</b></summary>
@@ -94,27 +95,27 @@ Services that share a business purpose (e.g. payments, shipping) are often group
 
 <br/>
 
-### Connect your services to their domains
+#### 将您的服务与它们的域连接起来
 
-Now that we have a <PortTooltip id="blueprint">blueprint</PortTooltip> to represent a domain, let's connect it to our services. We will do this by adding a relation to the `Service` blueprint:
+现在我们有了一个代表域的<PortTooltip id="blueprint">蓝图</PortTooltip>，让我们把它连接到我们的服务。 我们将通过在 `Service` 蓝图中添加一个关系来实现这一点: 
 
-1. Go to your [Builder](https://app.getport.io/dev-portal/data-model), expand the `Service` blueprint, and click on `New relation`:
+1. 进入[Builder](https://app.getport.io/dev-portal/data-model) ，展开 "服务 "蓝图，点击 "新建关系": 
 
 <img src='/img/guides/serviceCreateRelation.png' width='30%' />
 
 <br/><br/>
 
-2. Fill out the form like this, then click `Create`:
+2.像这样填写表格，然后点击 "创建": 
 
 <img src='/img/guides/gitopsDomainRelationForm.png' width='50%' />
 
 <br/><br/>
 
-### Create domains via Gitops
+### 通过 Gitops 创建域名
 
-Now that we have a `Domain` <PortTooltip id="blueprint">blueprint</PortTooltip>, we can create some domains in Port. This can be done manually from the UI, or via Gitops which is the method we will use in this guide.
+现在我们有了 "域 "<PortTooltip id="blueprint">蓝图</PortTooltip>，可以在 Port 中创建一些域。 这可以通过用户界面手动完成，也可以通过 Gitops 完成，本指南将采用这种方法。
 
-1. In your `Port-actions` (or equivalent) Github repository, create a new file named `port.yml` in the root directory, and use the following snippet as its content:
+1. 在您的 `Port-actions`(或同等文件)Github 代码库中，在根目录下新建一个名为 `port.yml` 的文件，并使用以下代码段作为其内容: 
 
 <details>
 <summary><b>port.yml (click to expand)</b></summary>
@@ -136,48 +137,46 @@ Now that we have a `Domain` <PortTooltip id="blueprint">blueprint</PortTooltip>,
 
 <br/>
 
-2. Head back to your [software catalog](https://app.getport.io/domains), you will see that Port has created two new `domain` <PortTooltip id="entity">entities</PortTooltip>:
+2.返回[software catalog](https://app.getport.io/domains) ，您会看到 Port 创建了两个新的 "域 "<PortTooltip id="entity">实体</PortTooltip>: 
 
 <img src='/img/guides/gitopsDomainEntities.png' width='50%' />
 
-The `architecture` property is a URL to a Lucidchart diagram. This is a handy way to track a domain's architecture in your software catalog.
+架构 "属性是指向 Lucidchart 图表的 URL。 这是一种在软件目录中跟踪域架构的便捷方法。
 
 <br/>
 
-### Create an action to enrich services
+#### 创建一个行动来丰富服务
 
-As platform engineers, we want to enable our developers to perform certain actions on their own. Let's create an action that developers can use to add data to a service, and allocate it to a domain.
+作为平台工程师，我们希望让开发人员能够自行执行某些操作。 让我们创建一个操作，开发人员可以用它将数据添加到服务中，并将其分配到域中。
 
-#### Setup the action's frontend
+#### 设置动作的前端
 
-:::tip Onboarding
+:::tip  入职
 
-As part of the onboarding process, you should already have an action named `Enrich service` in your [self-service tab](https://app.getport.io/self-serve). In that case, you can skip to the [Define backend type](#define-backend-type) step.  
+作为入职流程的一部分，您的[self-service tab](https://app.getport.io/self-serve) 中应该已经有一个名为 "丰富服务 "的操作。在这种情况下，您可以跳到[Define backend type](#define-backend-type) 步骤。
 
-If you **skipped** the onboarding, or you want to create the action from scratch, complete steps 1-5 below.
+如果您跳过了***登录，或者您想从头开始创建操作，请完成以下步骤 1-5。
 
 :::
 
 <details>
 <summary><b>Create the action's frontend (steps 1-5)</b></summary>
 
-1. Go to your [Self-service page](https://app.getport.io/self-serve), then click on the `+ New action` button in the top right corner.
-
-2. From the dropdown, choose the `Service` <PortTooltip id="blueprint">blueprint</PortTooltip>.
-
-3. Fill out the basic details like this, then click `Next`:
+1. 进入[Self-service page](https://app.getport.io/self-serve) ，然后点击右上角的 "+ 新操作 "按钮。
+2. 从下拉菜单中选择 "服务 "<PortTooltip id="blueprint">蓝图</PortTooltip>。
+3. 像这样填写基本信息，然后点击`下一步`: 
 
 <img src='/img/guides/gitopsActionBasicDetails.png' width='50%' />
 
 <br/><br/>
 
-4. We want our developers to be able to choose the domain to which the service will be assigned. Click on `New input`, fill out the form like this, then click `Next`:
+4.我们希望开发人员能够选择将服务分配给哪个域。点击 "新输入"，像这样填写表格，然后点击 "下一步": 
 
 <img src='/img/guides/gitopsActionInputDomain.png' width='50%' />
 
 <br/><br/>
 
-5. Let's add two more inputs for our new service properties - `type` and `lifecycle`. Create two new inputs, fill out their forms like this, then click `Next`:
+5.让我们为新服务属性添加两个输入--"类型 "和 "生命周期"。创建两个新输入，像这样填写表格，然后单击 "下一步": 
 
 <img src='/img/guides/gitopsActionInputType.png' width='50%' />
 
@@ -189,9 +188,9 @@ If you **skipped** the onboarding, or you want to create the action from scratch
 
 </details>
 
-#### Define backend type
+#### 定义后端类型
 
-Now we'll define the backend of the action. Port supports multiple invocation types, for this tutorial we will use a `Github workflow`, a `GitLab pipeline`, or a `Jenkins pipeline`(choose this option if you are using Bitbucket).
+现在我们来定义动作的后端。 Port 支持多种引用类型，本教程中我们将使用 "Github 工作流"、"GitLab 管道 "或 "Jenkins 管道"(如果使用 Bitbucket，请选择此选项)。
 
 <Tabs groupId="git-provider" queryString values={[
 {label: "Github", value: "github"},
@@ -201,10 +200,10 @@ Now we'll define the backend of the action. Port supports multiple invocation ty
 
 <TabItem value="github">
 
-  - You will need to have [Port's Github app](https://github.com/apps/getport-io) installed in your Github organization (the one that contains the repository you'll work with).
-  - Replace the `Organization` and `Repository` values with your values (this is where the workflow will reside and run).
-  - Name the workflow `portEnrichService.yaml`.
-  - Fill out the rest of the form like this, then click `Next`:
+* 您需要在 Github 组织(包含您要使用的版本库的组织)中安装[Port's Github app](https://github.com/apps/getport-io) 。
+* 用您的 Values 替换 `Organization` 和 `Repository` 值(这是工作流将驻留和运行的位置)。
+* 将工作流命名为 `portEnrichService.yaml`。
+* 像这样填写表单的其余部分，然后单击 `下一步`: 
 
 <img src='/img/guides/gitopsActionBackendForm.png' width='75%' />
 
@@ -212,20 +211,18 @@ Now we'll define the backend of the action. Port supports multiple invocation ty
 
 <TabItem value="gitlab">
 
-   - Choose `Trigger Webhook URL` as the invocation type. 
-   
-   - The endpoint URL should look like this:  
-   `https://gitlab.com/api/v4/projects/<PROJECT_ID>/ref/main/trigger/pipeline?token=<TRIGGER_TOKEN>`.  
-   We will create the `PROJECT_ID` and `TRIGGER_TOKEN` in the next section and come back to update the URL.
-   
-   - Fill out the rest of the form like this, then click `Next`:
+* 选择 "触发 Webhook URL "作为调用类型。
+* 端点 URL 应如下所示: 
+
+`https://gitlab.com/api/v4/projects/<PROJECT_ID>/ref/main/trigger/pipelines?token=<TRIGGER_TOKEN>`。我们将在下一节创建 `PROJECT_ID` 和 `TRIGGER_TOKEN`，然后回来更新 URL。
+
+* 像这样填写表格的其余部分，然后点击 "下一步": 
 
 <img src='/img/guides/gitLabWebhookSetup.png' width='70%' />
 
-:::info Webhook protection
+:::info  Webhook 保护
 
-The webhook URL can be triggered by anyone with access to it.  
-In order to protect the webhook, see the [Validating webhook signatures page](../create-self-service-experiences/setup-backend/webhook/signature-verification.md).
+任何有访问权限的人都可以触发 webhook URL。 为了保护 webhook，请参阅[Validating webhook signatures page](../create-self-service-experiences/setup-backend/webhook/signature-verification.md) 。
 
 :::
 
@@ -233,12 +230,14 @@ In order to protect the webhook, see the [Validating webhook signatures page](..
 
 <TabItem value="bitbucket">
 
-    - You will need to have [Port's Bitbucket app](https://marketplace.atlassian.com/apps/1229886/port-connector-for-bitbucket?hosting=cloud&tab=overview) installed in your Bitbucket workspace (the one that contains the repository you'll work with).
-    - Choose `Run Jenkins pipeline` as the invocation type.
-    - The webhook URL should look like this:  
-    `http://<JENKINS_URL>/generic-webhook-trigger/invoke?token=enrichService`  
-      - Replace `JENKINS_URL` with your configured Jenkins URL.
-      - We will use `enrichService` as `JOB_TOKEN`, we will set this token in Jenkins in the next section.
+```
+- You will need to have [Port's Bitbucket app](https://marketplace.atlassian.com/apps/1229886/port-connector-for-bitbucket?hosting=cloud&tab=overview) installed in your Bitbucket workspace (the one that contains the repository you'll work with).
+- Choose `Run Jenkins pipeline` as the invocation type.
+- The webhook URL should look like this:  
+`http://<JENKINS_URL>/generic-webhook-trigger/invoke?token=enrichService`  
+  - Replace `JENKINS_URL` with your configured Jenkins URL.
+  - We will use `enrichService` as `JOB_TOKEN`, we will set this token in Jenkins in the next section.
+```
 
 <img src='/img/guides/jenkinsWebhookSetup.png' width='75%' />
 
@@ -246,11 +245,11 @@ In order to protect the webhook, see the [Validating webhook signatures page](..
 
 </Tabs>
 
-The last step is customizing the action's permissions. For simplicity's sake, we will use the default settings. For more information, see the [permissions](/create-self-service-experiences/set-self-service-actions-rbac/) page. Click `Create`.
+最后一步是自定义动作的权限。 为简单起见，我们将使用默认设置。 欲了解更多信息，请参阅[permissions](/create-self-service-experiences/set-self-service-actions-rbac/) 页面。 点击 "创建"。
 
-#### Setup the action's backend
+#### 设置动作的后端
 
-Our action will create a pull-request in the service's repository, containing a `port.yml` file that will add data to the service in Port. Choose a backend type below to setup the workflow:
+我们的操作将在服务的资源库中创建一个 pull-request，其中包含一个 `port.yml` 文件，该文件将向 Port 中的服务添加数据。 在下面选择后端类型以设置工作流: 
 
 <Tabs groupId="git-provider" queryString values={[
 {label: "Github", value: "github"},
@@ -260,19 +259,17 @@ Our action will create a pull-request in the service's repository, containing a 
 
 <TabItem value="github">
 
-1. First, let's create the necessary token and secrets. If you've already completed the [`scaffold a new service guide`](/guides-and-tutorials/scaffold-a-new-service), you should already have these configured and you can skip this step.
+1. 首先，让我们创建必要的 token 和 secrets。如果您已经完成了[`scaffold a new service guide`](/guides-and-tutorials/scaffold-a-new-service) ，则应该已经配置了这些内容，可以跳过这一步。
 
-- Go to your [Github tokens page](https://github.com/settings/tokens), create a personal access token with `repo` and `admin:org` scope, and copy it (this token is needed to create a pull-request from our workflow).
+* 访问[Github tokens page](https://github.com/settings/tokens) ，创建一个具有 `repo` 和 `admin:org` 范围的个人访问令牌，并将其复制(从我们的工作流中创建拉取请求需要该令牌) 。
+   <img src='/img/guides/personalAccessToken.png' width='80%' />
+* 访问[Port application](https://app.getport.io/) ，点击右上角的"..."，然后点击 "凭据"。复制您的 `客户 ID` 和 `客户 secret`。
 
-  <img src='/img/guides/personalAccessToken.png' width='80%' />
+2.在`Port-actions`(或相应的)Github 代码库中，在`Settings->Secrets and variables->Actions` 下创建 3 个新secret: 
 
-- Go to your [Port application](https://app.getport.io/), click on the `...` in the top right corner, then click `Credentials`. Copy your `Client ID` and `Client secret`.
-
-2. In your `Port-actions` (or equivalent) Github repository, create 3 new secrets under `Settings->Secrets and variables->Actions`:
-
-- `ORG_ADMIN_TOKEN` - the personal access token you created in the previous step.
-- `PORT_CLIENT_ID` - the client ID you copied from your Port app.
-- `PORT_CLIENT_SECRET` - the client secret you copied from your Port app.
+* ORG_ADMIN_TOKEN` - 您在上一步中创建的个人访问令牌。
+* `PORT_CLIENT_ID` - 从 Port 应用程序复制的客户端 ID。
+* PORT_CLIENT_SECRET` - 从 Port 应用程序复制的客户机secret。
 
 <img src='/img/guides/repositorySecret.png' width='60%' />
 
@@ -280,18 +277,14 @@ Our action will create a pull-request in the service's repository, containing a 
 
 <TabItem value="gitlab">
 
-1. Under your [root group](https://gitlab.com/dashboard/groups), access `Settings->Access Tokens`, and create a `Maintainer` role token with the `api`, `read_repository`, and `write_repository` scopes. Copy the token's value.
+1. 在[root group](https://gitlab.com/dashboard/groups) 下访问 "设置->访问令牌"，然后创建一个具有 "api"、"read_repository "和 "write_repository "作用域的 "维护者 "角色令牌。复制令牌的 Values。
+2. 创建名为 `Port-pipelines` 的新项目。复制其 GitLab 项目 ID 并替换 webhook URL 中的 `(PROJECT_ID)` 。然后，在设置->CI/CD 下创建一个新的 Pipelines 触发令牌，并用它替换 webhook URL 中的 `(TRIGGER_TOKEN)`。
+3. 在同一菜单 (CI/CD)，向 Pipelines 添加以下变量: 
 
-2. Create a new project named `Port-pipelines`. Copy its GitLab project ID and replace the `(PROJECT_ID)` in the webhook URL . Then, under Settings->CI/CD, create a new Pipeline trigger token and use it to replace `(TRIGGER_TOKEN)` in the webhook URL.
-
-3. In the same menu (CI/CD), add the following variables to the pipeline:
-
-- PORT_CLIENT_ID
-- PORT_CLIENT_SECRET  
-  :::tip
-  To find your Port credentials, go to your [Port application](https://app.getport.io/), click on the `...` in the top right corner, then click `Credentials`.
-  :::
-- GITLAB_ACCESS_TOKEN - the token created in step 1.
+* PORT_CLIENT_ID
+* port_client_secret  
+:::提示 要查找 Port 凭据，请访问[Port application](https://app.getport.io/) ，点击右上角的 `...`，然后点击 `凭据`。 ::: 
+* GITLAB_ACCESS_TOKEN - 在步骤 1 中创建的令牌。
 
 <img src='/img/guides/gitlabVariables.png' width='80%' />
 
@@ -299,31 +292,30 @@ Our action will create a pull-request in the service's repository, containing a 
 
 <TabItem value="bitbucket">
 
-1. Create a Bitbucket [app password](https://support.atlassian.com/bitbucket-cloud/docs/app-passwords/) with `Pull requests:write` permissions, and copy its value.
+1. 创建一个具有`Pull requests:write` 权限的 Bitbucket[app password](https://support.atlassian.com/bitbucket-cloud/docs/app-passwords/) ，并复制其值。
+2. 创建以下[Jenkins 凭据](https://www.jenkins.io/doc/book/using/using-credentials/#configuring-credentials
 
-2. Create the following [Jenkins credentials](https://www.jenkins.io/doc/book/using/using-credentials/#configuring-credentials
-) in your Jenkins instance:
+) 在你的 Jenkins 实例中: 
 
-  - A `username with password` credential named `BITBUCKET_CREDENTIALS` with your Bitbucket username as the username, and the `app password` you created in the previous step as the password.
+* 一个名为 "BITBUCKET_CREDENTIALS "的 "用户名加密码 "凭证，用户名是你的 Bitbucket 用户名，密码是你在上一步创建的 "应用程序密码"。
+
   <FindCredentials />
   - A `secret text` credential named `PORT_CLIENT_ID` with your Port client ID as the secret.
   - A `secret text` credential named `PORT_CLIENT_SECRET` with your Port client secret as the secret.
 
-3. Create a Jenkins Pipeline with the following configuration:
+3.用以下配置创建一个 Jenkins Pipeline: 
 
-  - [Enable webhook trigger](https://docs.getport.io/create-self-service-experiences/setup-backend/jenkins-pipeline/#enabling-webhook-trigger-for-a-pipeline) for the pipeline.
-  - [Define post-content variables](https://docs.getport.io/create-self-service-experiences/setup-backend/jenkins-pipeline/#defining-variables) for the pipeline with the following names and values:
-    
-    | Name | Value |
+* [Enable webhook trigger](https://docs.getport.io/create-self-service-experiences/setup-backend/jenkins-pipeline/#enabling-webhook-trigger-for-a-pipeline) 的 Pipeline。
+* [Define post-content variables](https://docs.getport.io/create-self-service-experiences/setup-backend/jenkins-pipeline/#defining-variables) 为管道设置以下名称和 Values: 
+    | 名称 | Values | | 名称
     | --- | --- |
-    | LIFECYCLE | $.payload.properties.lifecycle |
-    | TYPE | $.payload.properties.type |
-    | DOMAIN | $.payload.properties.domain |
-    | ENTITY_IDENTIFIER | $.payload.entity.identifier |
-    | REPO_URL | $.payload.entity.properties.url |
-    | RUN_ID | $.context.runId |
-
-  - Set `enrichService` as the pipeline's token.
+    LIFECYCLE | $.payload.properties.LIFECYCLE | $.payload.properties.TYPE | $.payload.properties.type | $.payload.properties.type
+    | 类型
+    | DOMAIN | $.payload.properties.domain | $.payload.properties.domain
+    | ENTITY_IDENTIFIER | $.payload.entity.identifier | ENTITY_IDENTIFIER
+    | REPO_URL | $.payload.entity.properties.url | $.payload.properties.URL
+    | RUN_ID | $.context.runId | $.context.runId
+* 将 `enrichService` 设置为 Pipelines 的标记。
 
 </TabItem>
 
@@ -331,10 +323,10 @@ Our action will create a pull-request in the service's repository, containing a 
 
 ---
 
-We will now create a YML file that will serve as a template for our services' `port.yml` configuration file.
+现在我们将创建一个 YML 文件，作为服务的 `port.yml` 配置文件的模板。
 
-- In your repository, create a file named `enrichService.yml` under `/templates/` (its path should be `/templates/enrichService.yml`).
-- Copy the following snippet and paste it in the file's contents:
+* 在版本库的 `/templates/`下创建一个名为 `enrichService.yml` 的文件(其路径应为 `/templates/enrichService.yml`)。
+* 复制以下代码段并粘贴到文件内容中: 
 
 <details>
 <summary><b>enrichService.yml (click to expand)</b></summary>
@@ -355,7 +347,7 @@ We will now create a YML file that will serve as a template for our services' `p
 
 ---
 
-Now let's create the file that contains our logic:
+现在，让我们创建一个包含逻辑的文件: 
 
 <Tabs groupId="git-provider" queryString values={[
 {label: "Github", value: "github"},
@@ -365,7 +357,7 @@ Now let's create the file that contains our logic:
 
 <TabItem value="github">
 
-In the same repository, under `.github/workflows`, create a new file named `portEnrichService.yaml` and use the following snippet as its content:
+在`.github/workflows`下的同一版本库中，新建一个名为`portEnrichService.yml`的文件，并将以下代码段作为其内容: 
 
 <details>
 <summary><b>Github workflow (click to expand)</b></summary>
@@ -441,7 +433,8 @@ jobs:
 
 <TabItem value="gitlab">
 
-In the same repository, create a new file called `.gitlab-ci.yml` and inside it paste the following:
+在同一版本库中新建一个名为`.gitlab-ci.yml`的文件，并在其中粘贴以下内容: 
+
 <details>
 <summary><b> GitLab pipeline (click to expand)</b></summary>
 
@@ -517,7 +510,7 @@ enrichService:
 
 <TabItem value="bitbucket">
 
-Create a Jenkins pipeline script with the following content (replace `<PORT-ACTIONS-REPO-URL>` with the URL of the repository you used in the previous step):
+创建一个包含以下内容的 Jenkins 管道脚本(将 `<PORT-ACTIONS-REPO-URL>` 替换为上一步中被引用的版本库的 URL): 
 
 <details>
 <summary><b>Jenkins pipeline script (click to expand)</b></summary>
@@ -527,7 +520,7 @@ import groovy.json.JsonSlurper
 
 pipeline {
     agent any
-    
+
     environment {
         DOMAIN = "${DOMAIN}"
         LIFECYCLE = "${LIFECYCLE}"
@@ -673,6 +666,7 @@ pipeline {
     }
 }
 ```
+
 </details>
 
 </TabItem>
@@ -681,50 +675,47 @@ pipeline {
 
 ---
 
-The action is ready to be executed 🚀
+该操作已准备就绪 🚀
 
-#### Execute the action
+#### 执行操作
 
-1. After creating an action, it will appear under the [Self-service page](https://app.getport.io/self-serve). Find your new `Enrich service` action, and click on `Execute`.
-
-2. Choose a service from the dropdown, a domain to assign it to, and any values for its type and lifecycle, then click `Execute`:
+1. 创建动作后，它将出现在[Self-service page](https://app.getport.io/self-serve) 下。找到新的 "丰富服务 "动作，点击 "执行"。
+2. 从下拉菜单中选择一个服务、一个要将其分配给的域，以及其类型和生命周期的任何 Values，然后单击`执行`: 
 
 <img src='/img/guides/gitopsEnrichActionExecute.png' width='50%' />
 
 <br/><br/>
 
-3. A small popup will appear, click on `View details`:
+3.弹出一个小窗口，点击 "查看详情": 
 
 <img src='/img/guides/gitopsActionExecutePopup.png' width='40%' />
 
 <br/><br/>
 
-This page provides details about the action run. We can see that the backend returned `Success` and the pull-request was created successfully.
+该页面提供了操作运行的详细信息。 我们可以看到后端返回了 "Success"(成功)，拉取请求已成功创建。
 
-4. Head over to your service's repository, you will see that a new pull-request was created:
+4.前往你的服务仓库，你会看到创建了一个新的拉取请求: 
 
 <img src='/img/guides/gitopsActionRepoPullRequest.png' width='70%' />
 
 <br/>
 
-5. Merge the pull-request, then head back to your [software catalog](https://app.getport.io/services).
-
-6. Find your service, and click on its identifier. This will take you to the service's catalog page, where you can see your new properties populated with data:
+5.合并拉取请求，然后返回[software catalog](https://app.getport.io/services) 。
+6.找到您的服务，点击其标识符。这将带您进入服务的目录页面，在那里您可以看到用数据填充的新属性: 
 
 <img src='/img/guides/gitopsServicePageAfterAction.png' width='80%' />
 
 <br/><br/>
 
-All done! 💪🏽
+全部完成！ 💪🏽
 
-### Possible daily routine integrations
+### 可能的日常整合
 
-- Fetch data from a Sentry project and reflect it in your software catalog.
-- Create and onboard services with a few clicks from your developer portal.
+* 从 Sentry 项目中获取数据并反映在软件目录中。
+* 只需从开发人员门户点击几下，即可创建和上线服务。
 
-### Conclusion
+#### 结论
 
-Gitops is a common practice in modern software development, as it ensures that the state of your infrastructure is always in sync with your codebase.  
-Port allows you to easily integrate your Gitops practices with your software catalog, reflecting the state of your infrastructure, and allowing you to empower your developers with controlled actions.
+Gitops 是现代软件开发中的一种常见做法，因为它能确保基础架构的状态始终与代码库同步。 Port 可让您轻松地将 Gitops 实践与软件目录集成，反映基础架构的状态，并允许您通过受控操作赋予开发人员权力。
 
-More guides & tutorials will be available soon, in the meantime feel free to reach out with any questions via our [community slack](https://www.getport.io/community) or [Github project](https://github.com/port-labs?view_as=public).
+更多指南和教程即将推出，在此期间如有任何问题，请随时通过[community slack](https://www.getport.io/community) 或[Github project](https://github.com/port-labs?view_as=public) 联系我们。

@@ -1,22 +1,23 @@
-# Dashboard widgets
+# 仪表板小部件
 
-Port supports various visualizations in the form of widgets, allowing you to display data from your software catalog using graphic elements, making it easier to make sense of large datasets.
+Port 支持小部件形式的各种可视化功能，让您可以使用图形元素显示软件目录中的数据，从而更轻松地理解大型数据集。
 
-Dashboards are available in the following locations:
+仪表板可在以下位置使用: 
 
-1. The [Home page](https://app.getport.io/organization/home) of your Port app - the home page itself is a dashboard, allowing you to add and customize any of the widgets described on this page.
-2. Every [entity page](/customize-pages-dashboards-and-plugins/page/entity-page#dashboard-widgets) can have a `dashboard` tab with its own widgets.
-3. The [software catalog](https://app.getport.io/services) allows you to create customizable [dashboard pages](/customize-pages-dashboards-and-plugins/page/dashboard-page).
+1. Port 应用程序的[Home page](https://app.getport.io/organization/home) - 主页本身就是一个仪表盘，允许您添加和自定义本页所述的任何部件。
+2. 每个[entity page](/customize-pages-dashboards-and-plugins/page/entity-page#dashboard-widgets) 都可以有一个 "仪表盘 "标签，上面有自己的部件。
+3. [software catalog](https://app.getport.io/services) 允许您创建可定制的[dashboard pages](/customize-pages-dashboards-and-plugins/page/dashboard-page) 。
 
-## Widget types
+## 小工具类型
 
-### Pie chart
+### 饼图
 
-You can create a pie chart illustrating data from entities in your software catalog divided by categories and entity properties inside a specific entity page [**specific entity page**](../page/entity-page.md).
+您可以创建一个饼图，按照特定实体页面内的类别和实体属性来说明软件目录中的实体数据[**specific entity page**](../page/entity-page.md) 。
 
 ![Pie Chart](/img/software-catalog/widgets/pieChartExample.png)
 
-#### Visualization properties
+#### 可视化属性
+
 
 | Field                   | Type     | Description                                                                                                                  | Default | Required |
 | ----------------------- | -------- | ---------------------------------------------------------------------------------------------------------------------------- | ------- | -------- |
@@ -27,13 +28,15 @@ You can create a pie chart illustrating data from entities in your software cata
 | `Breakdown by property` | `String` | Group your chart by a specific property                                                                                      | `null`  | `true`   |
 | `Filters`               | `Array`  | Filters to include or exclude specific data based on Port's [Search Rules](../../search-and-query/search-and-query.md#rules) | []      | `false`  |
 
+
 ### Number chart
 
-You can create a number chart visualization from related entities in the [**specific entity page**](../page/entity-page.md). You can either count the entities or perform an aggregation function on a number property. You can also filter entities so the aggregation number chart will only apply to a limited set of entities with Port's [Search Rules](/search-and-query/search-and-query.md#rules)
+您可以从[**specific entity page**](../page/entity-page.md) 中的相关实体创建数字图表可视化。您既可以对实体进行计数，也可以对数字属性执行聚合函数。 您还可以过滤实体，使聚合数字图表只应用于有限的实体集，并使用 Port 的[Search Rules](/search-and-query/search-and-query.md#rules)
 
 ![Number Chart](../../../static/img/software-catalog/widgets/numberChartExample.png)
 
-#### Number chart properties
+#### 数字图表属性
+
 
 | Field             | Type     | Description                                                                                                                                                                                                                                 | Default    | Required |
 | ----------------- | -------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | ---------- | -------- |
@@ -51,19 +54,21 @@ You can create a number chart visualization from related entities in the [**spec
 | `unitCustom`      | `String` | Text to display below the number value. The `unitCustom` key is only available when `unit` equals to `custom`                                                                                                                               | `null`     | `true`   |
 | `unitAlignment`   | `String` | `left`, `right`, `bottom`.                                                                                                                                                                                                                  | `null`     | `true`   |
 
-:::note
-When performing calculations of average time intervals, such as by hour, day, week, or month, it is important to note that any partial interval is considered as a full interval. This approach ensures consistency across different time units.
 
-For example, if the dataset includes information spanning across 2 hours and 20 minutes, but the selected average timeframe is `hour`, then the summed value will be divided by 3 hours.
+:::note 在计算平均时间间隔(如按小时、天、周或月)时，必须注意任何部分时间间隔都被视为一个完整的时间间隔。 这种方法可确保不同时间单位的一致性。
+
+例如，如果数据集包含跨越 2 小时 20 分钟的信息，但选择的平均时间范围是 "小时"，那么求和值将除以 3 小时。
+
 :::
 
 ### Markdown
 
-This widget allows you to display any markdown content you wish in formatted form:
+通过该 widget，您可以以格式化的形式显示任何标记符内容: 
 
 <img src='/img/software-catalog/widgets/markdownWidget.png' width='500rem' />
 
-#### Markdown widget properties
+#### Markdown widget 属性
+
 
 | Field      | Type     | Description           | Default | Required |
 | ---------- | -------- | --------------------- | ------- | -------- |
@@ -71,15 +76,17 @@ This widget allows you to display any markdown content you wish in formatted for
 | `Icon`     | `String` | Markdown widget Icon  | `null`  | `false`  |
 | `markdown` | `String` | Markdown content      | `null`  | `false`  |
 
-### Iframe visualization
 
-You can create an iframe widget to display an embedded url in the dashboard. The iframe widget is useful to display external dashboards or other external content. It also appends to the iframe URL query params the entity identifier and the blueprint identifier so the embedded page can use it for various purposes.
+### Iframe 可视化
 
-The entity identifier will be concatenated under the `entity` query param and the blueprint identifier will be concatenated under the `blueprint` query param. For example: `https://some-iframe-url.com?entity=entity_identifier&blueprint=blueprint_identifier`.
+您可以创建 iframe widget，以便在仪表盘中显示嵌入的 url。 iframe widget 对于显示外部仪表盘或其他外部内容非常有用。 它还会在 iframe URL 查询参数中附加实体标识符和蓝图标识符，以便嵌入的页面可以将其用于各种用途。
+
+实体标识符将连接到`entity`查询参数下，蓝图标识符将连接到`blueprint`查询参数下。 例如: `https://some-iframe-url.com?entity=entity_identifier&amp;blueprint=blueprint_identifier`。
 
 ![iFrame](../../../static/img/software-catalog/widgets/iframeWidget.png)
 
-#### Widget properties
+#### Widget 属性
+
 
 | Field               | Type           | Description                                                                                                                                            | Default | Required |
 | ------------------- | -------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------ | ------- | -------- |
@@ -93,40 +100,37 @@ The entity identifier will be concatenated under the `entity` query param and th
 | `Scopes`            | `String Array` | If the `URL type` is `protected` this will be required. Read more about it [here](/build-your-software-catalog/define-your-data-model/setup-blueprint/properties/embedded-url/authentication/#authentication-code-flow--pkce) | `null`  | `false`  |
 | `Token URL`         | `URL String`   | If the `URL type` is `protected` this will be required. Read more about it [here](/build-your-software-catalog/define-your-data-model/setup-blueprint/properties/embedded-url/authentication/#authentication-code-flow--pkce) | `null`  | `false`  |
 
-### Table
 
-This widget allows you to create tables displaying all entities based on a selected blueprint.  
-Tables can be [searched, filtered and customized](/customize-pages-dashboards-and-plugins/page/catalog-page#customization) as you wish, using the corresponding buttons in the widget.
+#### 表
+
+使用该窗口小部件，您可以根据选定的蓝图创建显示所有实体的表格。您可以使用窗口小部件中的相应按钮，随心所欲地创建表格[searched, filtered and customized](/customize-pages-dashboards-and-plugins/page/catalog-page#customization) 。
 
 <img src='/img/software-catalog/widgets/tableExample.png' width='400rem' />
 
-#### Customization
+#### 定制
 
-Just like catalog pages, tables support the following customization options:
+与目录页面一样，表格也支持以下自定义选项: 
 
-- [Initial filters](/customize-pages-dashboards-and-plugins/page/catalog-page/#initial-filters)
-- [Excluded properties](/customize-pages-dashboards-and-plugins/page/catalog-page/#excluded-properties)
+* * [Initial filters](/customize-pages-dashboards-and-plugins/page/catalog-page/#initial-filters)
+* [Excluded properties](/customize-pages-dashboards-and-plugins/page/catalog-page/#excluded-properties)
 
-### Action runs
+#### 行动运行
 
-This widget allows you to create a table displaying all past runs of a [self-service action](/create-self-service-experiences) in your portal.  
-The table will automatically display data about each run, including status, input parameters, the executing user, and more. 
+通过该小工具，您可以在门户网站上创建一个表格，显示[self-service action](/create-self-service-experiences) 过去的所有运行情况。该表格将自动显示每次运行的相关数据，包括状态、输入参数、执行用户等。
 
 <img src='/img/software-catalog/widgets/actionRunsTableExample.png' width='100%' />
 
+## 图表过滤器
 
-
-## Chart filters
-
-[Pie charts](#pie-chart), [number charts](#number-chart) and [tables](#table) support filters, which allow you to include or exclude specific data from them. The filters are based on Port's [Search Rules](../../search-and-query/search-and-query.md#rules), and are set when creating the widget:
+[Pie charts](#pie-chart)、[number charts](#number-chart) 和[tables](#table) 支持筛选器，可从中包含或排除特定数据。筛选器基于 Port 的[Search Rules](../../search-and-query/search-and-query.md#rules) ，并在创建 widget 时设置: 
 
 <img src='/img/software-catalog/widgets/widgetFilterForm.png' width='400rem' />
 
-### Filter example: only deployment entities from the last week
+### 过滤器示例: 只显示上周的部署实体
 
-Let's assume we have a [blueprint](/build-your-software-catalog/define-your-data-model/setup-blueprint/setup-blueprint.md) that is called `Service` which is related to another blueprint called `Deployment`, and we want to create visualizations on top of the last week's deployments of this service.
+假设我们有一个名为 "Service "的[blueprint](/build-your-software-catalog/define-your-data-model/setup-blueprint/setup-blueprint.md) ，它与另一个名为 "Deployment "的蓝图相关，我们希望在此服务上周部署的基础上创建可视化。
 
-To achieve this desired state, we can go into one of the `Service`'s profile pages and create a new visualization. After selecting the `Deployment` blueprint in the dropdown, we can add the following filter to the `Filters` array:
+为了实现这种理想状态，我们可以进入 "服务 "的某个配置文件页面并创建一个新的可视化。 在下拉菜单中选择 "部署 "蓝图后，我们可以在 "过滤器 "数组中添加以下过滤器: 
 
 ```json showLineNumbers
 [
@@ -140,6 +144,6 @@ To achieve this desired state, we can go into one of the `Service`'s profile pag
 ]
 ```
 
-### Dynamic filters
+### 动态过滤器
 
-You can use [dynamic properties](/search-and-query/#dynamic-properties) of the logged-in user when filtering a widget.
+筛选小工具时，可以使用登录用户的[dynamic properties](/search-and-query/#dynamic-properties) 。

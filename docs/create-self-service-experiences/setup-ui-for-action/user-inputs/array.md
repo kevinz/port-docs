@@ -1,26 +1,28 @@
 ---
+
 sidebar_position: 5
-description: Array is an input for lists of data
+description: 数组是数据列表的输入端
+
 ---
 
-import ApiRef from "../../../api-reference/\_learn_more_reference.mdx"
+import ApiRef from "../../../api-reference/_learn_more_reference.mdx"
 
 import Tabs from "@theme/Tabs"
 import TabItem from "@theme/TabItem"
 
-# Array
+# 阵列
 
-Array is an input for lists of data.
+数组是数据列表的输入。
 
-## 💡 Common array usage
+## 💡 常用数组 Usage
 
-The array input type can be used to store any list of data, for example:
+例如，数组输入类型可被用来存储任何数据列表: 
 
-- Configuration parameters;
-- Ordered values;
-- etc.
+* 配置参数；
+* 有序值；
+* 等等。
 
-## API definition
+## 应用程序接口定义
 
 <Tabs groupId="api-definition" queryString defaultValue="basic" values={[
 {label: "Basic", value: "basic"},
@@ -67,7 +69,7 @@ The array input type can be used to store any list of data, for example:
 
 <ApiRef />
 
-## Terraform definition
+## Terraform 定义
 
 <Tabs groupId="tf-definition" queryString defaultValue="basic" values={[
 {label: "Basic", value: "basic"},
@@ -93,16 +95,16 @@ resource "port_action" "myAction" {
 </TabItem>
 </Tabs>
 
-## Validate array
+## 验证数组
 
-Array validations support the following operators:
+数组验证支持以下操作符: 
 
-- `minItems`
-- `maxItems`
-- `uniqueItems`
+* 最小项目
+* 最大项目
+* 唯一项目
 
-:::tip
-Array validations follow the JSON schema model, refer to the [JSON schema docs](https://json-schema.org/understanding-json-schema/reference/array.html) to learn about all of the available validations
+:::tip 数组验证遵循 JSON 模式模型，请参阅[JSON schema docs](https://json-schema.org/understanding-json-schema/reference/array.html) 了解所有可用的验证。
+
 :::
 
 <Tabs groupId="validation-definition" queryString defaultValue="basic" values={[
@@ -133,7 +135,6 @@ Array validations follow the JSON schema model, refer to the [JSON schema docs](
 <TabItem value="tf">
 
 ```hcl showLineNumbers
-
 resource "port_action" "myAction" {
   # ...action properties
   # highlight-start

@@ -1,27 +1,29 @@
 ---
+
 sidebar_position: 10
-description: Datetime is an input used to reference a date and time
+description: Datetime 是用于引用日期和时间的输入法
+
 ---
 
-import ApiRef from "../../../api-reference/\_learn_more_reference.mdx"
+import ApiRef from "../../../api-reference/_learn_more_reference.mdx"
 
 import Tabs from "@theme/Tabs"
 import TabItem from "@theme/TabItem"
 
-# Datetime
+# 日期时间
 
-Datetime is an input used to reference a date and time.
+Datetime 是用于引用日期和时间的输入法。
 
-## 💡 Common datetime usage
+## 💡 常用日期时间 Usage
 
-The datetime input type can be used to store any date and time, for example:
+例如，datetime 输入类型可被用来存储任何日期和时间: 
 
-- Deployment time;
-- Release time;
-- Creation timestamp;
-- etc.
+* 部署时间；
+* 发布时间
+* 创建时间戳；
+* 等等。
 
-## API definition
+## 应用程序接口定义
 
 <Tabs groupId="api-definition" queryString defaultValue="basic" values={[
 {label: "Basic", value: "basic"},
@@ -70,7 +72,7 @@ The datetime input type can be used to store any date and time, for example:
 
 <ApiRef />
 
-## Terraform definition
+## Terraform 定义
 
 <Tabs groupId="tf-definition" defaultValue="basic" values={[
 {label: "Basic", value: "basic"},

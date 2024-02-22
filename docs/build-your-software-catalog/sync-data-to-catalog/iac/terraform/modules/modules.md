@@ -1,7 +1,7 @@
-# Modules
+# 模块
 
 import DocCardList from '@theme/DocCardList';
 
-Check out the following Terraform modules used to integrate with Port:
+查看以下用于与 Port 集成的 Terraform 模块: 
 
 <DocCardList />

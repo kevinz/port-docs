@@ -1,18 +1,18 @@
-# Run a deployment for a service
+# 为服务运行部署
 
-In the following guide, you are going to build a self-service action in Port, that executes a GitLab pipeline behind the scenes.
+在下面的指南中，您将在 Port 中创建一个自助操作，在幕后执行 GitLab 管道。
 
-The GitLab pipeline in this example, will run a new deployment and report back the action run status and the deployment entity to Port.
+本例中的 GitLab 管道将运行一个新的部署，并向 Port 报告操作运行状态和部署实体。
 
-## Prerequisites
+## 先决条件
 
-- A Port API `CLIENT_ID` and `CLIENT_SECRET`.
+* Port API `CLIENT_ID`和`CLIENT_SECRET`。
 
-## Create a GitLab pipeline
+## 创建 GitLab Pipelines
 
-First, we need to set up a GitLab pipeline for our CI/CD flow.
+首先，我们需要为 CI/CD 流程设置一个 GitLab 管道。
 
-You can use this example of using [Port's API](../../../../build-your-software-catalog/sync-data-to-catalog/api/api.md) from GitLab CI/CD:
+您可以使用 GitLab CI/CD 中的[Port's API](../../../../build-your-software-catalog/sync-data-to-catalog/api/api.md) 这个被引用的示例: 
 
 <details>
 <summary>Click here to see the code</summary>
@@ -86,17 +86,17 @@ update-status: # Example - update the Action run status as success
 
 </details>
 
-:::important IMPORTANT
-In order to trigger GitLab Pipelines through the Port agent, you'll need to [create a GitLab Pipeline trigger token](https://docs.gitlab.com/ee/ci/triggers/).
+:::important  重要事项 为了通过 Port 代理触发 GitLab Pipelines，您需要[create a GitLab Pipeline trigger token](https://docs.gitlab.com/ee/ci/triggers/).
 
-You can trigger pipelines accross multiple GitLab projects, as long as you have a trigger token with the required permissions.
+只要拥有一个具有所需权限的触发令牌，就可以在多个 GitLab 项目中触发 Pipelines。
 
-Trigger tokens are loaded to the Port agent as environment variables.
+触发令牌作为环境变量加载到 Port 代理。
+
 :::
 
-## Create a Blueprint
+## 创建蓝图
 
-Let’s configure a new blueprint, named `Deployment`, its base structure is:
+让我们配置一个新的蓝图，命名为 "部署"，其基本结构是
 
 ```json showLineNumbers
 {
@@ -131,11 +131,11 @@ Let’s configure a new blueprint, named `Deployment`, its base structure is:
 }
 ```
 
-## Create a Port action
+## 创建 Port 操作
 
-Now let’s configure a self-service action. Add a `CREATE` action that will be triggered every time a developer wants to initiate a new deployment for a service.
+现在让我们配置一个自助服务操作。 添加一个 `CREATE` 操作，开发人员每次要为服务启动新的部署时都会触发该操作。
 
-Here is the JSON of the action:
+以下是该操作的 JSON 文件: 
 
 ```json showLineNumbers
 {
@@ -173,7 +173,8 @@ Here is the JSON of the action:
 }
 ```
 
-### Invocation method properties
+### 调用方法属性
+
 
 | Field            | Type      | Description                                                                                                                                                                                                                                                                                                                                                 | Example values                       |
 | ---------------- | --------- | ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | ------------------------------------ |

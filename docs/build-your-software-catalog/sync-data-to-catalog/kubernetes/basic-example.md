@@ -1,20 +1,22 @@
 ---
+
 sidebar_position: 3
-description: Basic Example
+description: 基本示例
+
 ---
 
 import Image from "@theme/IdealImage";
 import SpecificEntityPage from "/static/img/integrations/k8s-exporter/DeploymentConfigAndPods.png"
 import AuditLogPage from "/static/img/integrations/k8s-exporter/AuditLog.png"
 
-# Basic example
+# 基本示例
 
-## Basic Pod and ReplicaSet solution
+## 基本 Pod 和 ReplicaSet 解决方案
 
-In the following example you will export your Kubernetes `Replica Sets` and `Pods` to Port, you may use the following Port blueprint definitions, and exporter configuration:
+在下面的示例中，您将把 Kubernetes 的 "复制集 "和 "节点 "导出到 Port，您可以使用以下 Port 蓝图定义和导出器配置: 
 
-- **Deployment config** - will represent replica sets from the K8s cluster;
-- **Deployed service pod** - will represent pods from the K8s cluster.
+* **部署配置** - 将代表 K8s 集群中的副本集；
+* **部署的服务 pod** - 将代表来自 K8s 集群的 pod。
 
 <details>
 <summary> Deployment Config Blueprint </summary>
@@ -172,11 +174,11 @@ resources: # List of K8s resources to list, watch, and export to Port.
 
 </details>
 
-After creating the blueprints, open your integration in the [data sources](https://app.getport.io/dev-portal/data-sources) page, apply the provided configuration and click on the `Save & Resync` button.
+创建蓝图后，在[data sources](https://app.getport.io/dev-portal/data-sources) 页面打开集成，应用 Provider 提供的配置，然后点击 "保存并重新同步 "按钮。
 
-Done! The exporter will begin creating and updating objects from your Kubernetes cluster as Port entities shortly.
+完成！导出器将很快开始以 Port 实体的形式从 Kubernetes 集群创建和更新对象。
 
-For instance, you can see a `Deployment Config` and its `Pods` in a single Port entity page:
+例如，您可以在单个 Port 实体页面中看到 "部署配置 "及其 "节点": 
 
 <center>
 
@@ -184,11 +186,11 @@ For instance, you can see a `Deployment Config` and its `Pods` in a single Port 
 
 </center>
 
-:::note Note
-The Kubernetes exporter was instructed to fill in only some properties in a `Deployment Config` Entity. By its nature, it will keep the values of other properties untouched.
+:::note  注意 Kubernetes 输出程序只被指示在 "部署配置 "实体中填写某些属性。 根据其性质，它将保持其他属性的值不变。
+
 :::
 
-And you can look for the respective audit logs with an indication of the Kubernetes exporter as the source:
+您还可以查找相应的审计 logging，并注明 Kubernetes 输出程序为来源: 
 
 <center>
 
@@ -196,6 +198,6 @@ And you can look for the respective audit logs with an indication of the Kuberne
 
 </center>
 
-## Map your complete K8s ecosystem
+## 绘制完整的 k8s 生态系统图
 
-To learn how you can visualize a complete K8s cluster, including **nodes**, **namespaces**, **cluster roles**, **deployments**, **pods**, and more - check out our Kubernetes mapping [complete use case](./templates/full-kubernetes-exporter.md)
+要了解如何可视化一个完整的 k8s 集群，包括**节点**、**名称空间**、**集群角色**、**部署**、**节点**等，请查看我们的 Kubernetes 映射。[complete use case](./templates/full-kubernetes-exporter.md)

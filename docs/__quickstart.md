@@ -1,75 +1,76 @@
 ---
+
 sidebar_position: 2
-title: Quickstart
-sidebar_label: ⏱️ Quickstart
+title: 快速入门
+sidebar_label: ⏱️ 快速入门
+
 ---
 
-# ⏱️ Quickstart
+# ⏱️ 快速入门
 
-## What is Port?
+## Port 是什么？
 
-Port is a Developer Platform made to make life easier for developers and DevOps in an organization, by creating a single platform that acts as a single source-of-truth for all of the infrastructure assets and operations existing in the organization's tech stack.
+Port 是一个开发者平台，通过创建一个单一的平台，作为企业技术栈中所有基础设施资产和操作的单一真实来源，让企业中的开发人员和 DevOps 的生活变得更轻松。
 
-Port then allows engineers to perform actions on these assets in a self-service fashion. From provisioning a dev environment, understanding who is the owner of a microservice, or any unique use case DevOps want to self-serve and automate.
+然后，Port 允许工程师以自助方式对这些资产执行操作，包括调配开发环境、了解谁是微服务的所有者，或 DevOps 希望自助和自动化的任何独特用例。
 
-### Port helps you to
+#### Port 可以帮助您
 
-- Create a comprehensive **Software Catalog** by mapping all your software and infrastructure components in one place: microservices, monoliths, deployments, repos, databases, and more.
-- Let your developers provision, terminate and perform day 2 operations on any asset exposed (microservice or not) in your catalog, within the policies and guardrails you’ve set, ensuring unified standards and governance over the processes inside your organization.
+* 通过在一个地方映射所有软件和基础架构组件，创建一个全面的**软件目录**: 微服务、单体、部署、资源库、数据库等。
+* 让您的开发人员在您设定的策略和防护栏内，对目录中暴露的任何资产(无论是否为微服务)进行调配、终止和执行第 2 天操作，确保组织内部流程的统一标准和治理。
 
 ![Developer Platform complete vision](../static/img/quickstart/platform-vision.png)
 
-Port's three core building blocks are _Blueprints_, _Entities_ and _Relations_. This tutorial will walk you through your first steps on the platform and get you started on your Developer Portal journey!🚢
+Port 的三个核心构建模块是_Blueprint_、_Entities_和_Relations_。 本教程将指导您完成平台的第一步，开始您的开发人员门户之旅！ 🚢
 
-## The goal of this tutorial
+## 本教程的目标
 
-The goal of this tutorial is:
+本教程的目标是
 
-- Teach you about Port's core components;
-- Familiarize you with Port's web UI;
-- View functional code snippets to interact with Port's API;
-- Experience the power of Port as an internal developer platform.
+* 向您介绍 Port 的核心组件；
+* 让您熟悉 Port 的 Web UI；
+* 查看与 Port API 交互的功能代码片段；
+* 体验 Port 作为内部开发平台的强大功能。
 
-This guide will give you a foundation to start building your software catalog in Port and view a complete image of your software infrastructure.
+本指南将为您在 Port 中开始构建软件目录和查看软件基础架构的完整镜像奠定基础。
 
-Your developers will be able to see all the services in a given environment and their status:
+您的开发人员将能看到特定环境中的所有服务及其状态: 
 
 ![Developer Portal Environment View for running services](../static/img/quickstart/EndResultEnvironmentPage.png)
 
-In addition, your developers will be able to see all the environments that a specific microservice is deployed at, and which version is deployed where:
+此外，您的开发人员还能看到特定微服务部署的所有环境，以及哪个版本部署在哪里: 
 
 ![Developer Portal Service View for environments](../static/img/quickstart/EndResultServicePage.png)
 
-Let's get started! 🚢
+让我们开始吧！ 🚢
 
-## Define a Blueprint
+## 定义蓝图
 
-Blueprints are used to model data in Port. A Blueprint allows us to define what properties and fields an _Entity_ will contain.
+蓝图用于在 Port 中建立数据模型。 蓝图允许我们定义 _Entity_ 包含哪些属性和字段。
 
-Architectures and deployments vary greatly, and so do preferences and standards for data representation and asset structure. Therefore, in Port, You have full control of the way data is presented using any data format you desire, so that the Software Catalog truly represents all you need for the developer portal.
+架构和部署千差万别，对数据表示和资产结构的偏好和标准也不尽相同。 因此，在 Port 中，您可以完全控制使用任何您希望的数据格式呈现数据的方式，从而使软件目录真正代表您对开发人员门户的所有需求。
 
-But for now, let's start with a simple example:
+但现在，让我们从一个简单的例子开始: 
 
-Your organization uses a microservice architecture; a single **microservice** can be deployed to multiple **environments** (production, staging, QA, etc.).
+您的组织使用微服务架构；单个**微服务**可部署到多个**环境**(生产、暂存、质量保证等)。
 
-To create your Software Catalog, you need to ingest and track your microservices, track your existing environments, and map out which microservice is deployed at which environment.
+要创建软件目录，您需要摄取和跟踪您的微服务，跟踪您的现有环境，并绘制出哪个微服务部署在哪个环境中。
 
-In this tutorial you are going to create 3 Blueprints:
+在本教程中，您将创建 3 个蓝图: 
 
-- Service;
-- Environment;
-- Running service.
+* 服务；
+* 环境；
+* 运行服务。
 
-Note the **Running service** Blueprint - it is meant to represent a running deployment of your **service** in one of your **environments**.
+请注意**运行中的服务**蓝图--它旨在表示您的**环境**中正在运行的**服务**部署。
 
-:::tip
-In this tutorial, we will demonstrate how to perform every step using Port's web UI and Port's REST API.
+:::tip 在本教程中，我们将演示如何使用 Port 的 Web UI 和 Port 的 REST API 执行每个步骤。
 
-This tutorial includes various examples of ways to interact with Port's API. For more, you are welcome to visit the API section in Blueprint basics.
+本教程包括与 Port 的 API 进行交互的各种示例。 如需了解更多信息，欢迎访问蓝图基础知识中的 API 部分。
 
-Port also has a GitHub app and a Terraform provider you can use to ingest data and interact with Port's components.
+Port 还有一个 GitHub 应用程序和一个 Terraform Providers，您可以用它们来引用数据并与 Port 的组件进行交互。
 
-For readability, snippets to copy and paste and examples will be inside collapsed boxes:
+为便于阅读，用于复制和粘贴的片段以及示例将放在折叠框内: 
 
 <details>
 <summary>Example JSON block</summary>
@@ -93,36 +94,36 @@ print("hello world!")
 
 :::
 
-### Service Blueprint
+#### 服务蓝图
 
-Our service Blueprint is going to include the following properties (among others):
+我们的服务蓝图将包括以下属性(以及其他属性): 
 
-- **Github URL** - link to the GitHub repository of the microservice;
-- **On Call** - current on-call developer;
-- **Last Incident** - last time an incident occurred in the microservice;
-- **Language** - main programming language used for the microservice;
-- **Product** - business unit category of the microservice;
-- **Latest Version** - latest version of the microservice;
-- **Number of JIRA issues** - number of currently open JIRA issues;
-- **Slack notifications** - URL to the Slack Channel of the team responsible for the microservice.
+* **Github URL** - 微服务 GitHub 资源库的链接；
+* **On Call** - 当前待命开发人员；
+* **上次事件** - 微服务上次发生事件的时间；
+* **语言** - 微服务被引用的主要编程语言；
+* **产品** - 微服务的业务单位类别；
+* **最新版本** - 微服务的最新版本；
+* **JIRA 问题数** - 当前打开的 JIRA 问题数；
+* **Slack通知** - 微服务负责团队 Slack 频道的 URL。
 
-:::tip
-Don't worry if you want to add/remove properties, you can always go back and re-edit them later.
+:::tip 如果您想添加/删除属性，不用担心，您可以随时返回并重新编辑它们。
+
 :::
 
-In addition, the `on-call` field is marked as `required`, so that we always know who is the current on-call for the service.
+此外，"待命 "字段被标记为 "必需"，这样我们就能随时知道谁是服务的当前待命人员。
 
-#### From the UI
+#### 从用户界面
 
-Let's head to [Port](https://app.getport.io/dev-portal) and look at the DevPortal Builder page, at the top right corner let's click on **Add Blueprint** and configure our first Blueprint - **Service** as shown in the image below:
+让我们访问[Port](https://app.getport.io/dev-portal) 并查看 DevPortal Builder 页面，在右上角点击**添加蓝图**并配置我们的第一个蓝图--**服务**，如下镜像所示: 
 
 ![Developer PortalCreate New Blueprint](../static/img/quickstart/newBlueprintButton.png)
 
-After clicking the button, you will see a creation form as shown below:
+点击按钮后，您将看到如下所示的创建表单: 
 
 ![Developer Portal New Blueprint Text](../static/img/quickstart/newBlueprintDefaultText.png)
 
-In order to create the service Blueprint, use the following JSON body:
+为了创建服务蓝图，请被引用以下 JSON 主体: 
 
 <details>
 <summary>Service Blueprint JSON</summary>
@@ -253,20 +254,19 @@ In order to create the service Blueprint, use the following JSON body:
 
 </details>
 
-Click on the `save` button, and [you will see](#the-results) your new Blueprint in the DevPortal Builder page.
+单击 "保存 "按钮，然后在 DevPortal Builder 页面[you will see](#the-results) 新蓝图。
 
-#### From the API
+#### 来自应用程序接口
 
-To interact with Port's API, we will use python, the only package requirement is the [requests](https://pypi.org/project/requests/) library which you can install by running:
+为了与 Port 的应用程序接口交互，我们将使用 python，唯一需要的软件包是[requests](https://pypi.org/project/requests/) 库，运行该库即可安装: 
 
 ```bash showLineNumbers
 python -m pip install requests
 ```
 
-:::note
-For the next part, you will need your Port `CLIENT_ID` and `CLIENT_SECRET`.
+:::note 接下来，您需要输入 Port `CLIENT_ID`和`CLIENT_SECRET`。
 
-To find your Port API credentials go to [Port](https://app.getport.io), hover on the `3 dots button` at the top right corner, select `Credentials` and then you will be able to view and copy your `CLIENT_ID` and `CLIENT_SECRET`:
+要查找您的 Port API 凭据，请访问[Port](https://app.getport.io) ，将鼠标悬停在右上角的 "3 点按钮 "上，选择 "凭据"，然后您就可以查看并复制您的 "CLIENT_ID "和 "CLIENT_SECRET": 
 
 <center>
 
@@ -276,7 +276,7 @@ To find your Port API credentials go to [Port](https://app.getport.io), hover on
 
 :::
 
-In order to perform any action with Port's API, you first need an **access token**:
+要使用 Port 的应用程序接口执行任何操作，您首先需要一个**访问令牌: 
 
 <details>
 <summary>Get an API access token</summary>
@@ -299,22 +299,20 @@ token_response = requests.post(f'{API_URL}/auth/access_token', json=credentials)
 access_token = token_response.json()['accessToken']
 
 # You can now use the value in access_token when making further requests
-
 ```
 
-:::tip
-For examples in other languages you can visit the API section in Blueprint basics.
+:::tip 有关其他语言的示例，请访问 Blueprint basics 中的 API 部分。
 
 :::
 
 </details>
 
-Now that you have an access token, you can use it for every interaction you make with Port's API. You will also use it in the section below to create the `Service` Blueprint:
+现在您已经有了访问令牌，可以在与 Port 的 API 进行的每次交互中使用它。 在下面创建 "服务 "蓝图的部分也将使用它: 
 
 <details>
 <summary>Create the service Blueprint</summary>
 
-Note this example assumes the token is saved in the `access_token` variable.
+请注意，本示例假定令牌保存在 `access_token` 变量中。
 
 ```python showLineNumbers
 # Dependencies to install:
@@ -452,44 +450,43 @@ response = requests.post(f'{API_URL}/blueprints', json=blueprint, headers=header
 # response.json() contains the content of the resulting blueprint
 
 print(json.dumps(response.json(), indent=2))
-
 ```
 
 </details>
 
-#### The results
+#### 结果
 
 ![Developer Portal Blueprints graph with new Service Blueprint](../static/img/quickstart/blueprintGraphWithServiceClosed.png)
 
-Click on the `expand` button as shown in the image below:
+点击 "展开 "按钮，如下镜像所示: 
 
 ![Developer Portal Blueprints graph with new Service Blueprint And Expand Marked](../static/img/quickstart/blueprintGraphWithServiceClosedAndExpandMarked.png)
 
-You will see an expanded view of the Blueprint you just created, with all of its properties listed alongside the types you provided:
+您将看到刚刚创建的蓝图的展开视图，其所有属性都与您提供的类型一并列出: 
 
 ![Developer Portal Blueprints graph with new Service open](../static/img/quickstart/blueprintGraphWithServiceOpen.png)
 
-Congratulations! you have just created your first Blueprint! 🎉
+恭喜您！您刚刚创建了第一个蓝图！ 🎉
 
-### Environment Blueprint
+#### 环境蓝图
 
-Our environment Blueprint is going to include the following properties:
+我们的环境蓝图将包括以下属性: 
 
-- **Environment type** - type of the environment (production, staging, QA, etc.);
-- **Cloud provider** - cloud provider where the cluster is deployed;
-- **Region** - cloud region where the cluster is deployed.
+* **环境类型** - 环境类型(生产、暂存、QA 等)；
+* **Cloud Provider** - 部署集群的云提供商；
+* **Region** - 部署集群的云区域。
 
-In addition, the Blueprint is going to include the following calculation property:
+此外，蓝图还将包括以下计算属性: 
 
-- **Grafana URL** - link to the Grafana dashboard of the environment.
+* **Grafana URL** - 环境的 Grafana 面板链接。
 
-:::tip
-For more information about calculation properties click here.
+:::tip 有关计算属性的更多信息，请点击此处。
+
 :::
 
-In addition, the `environment type` field will be marked as `required`, that way we can make sure that our environments are tagged correctly.
+此外，"环境类型 "字段将被标记为 "必需"，这样我们就能确保我们的环境被正确标记。
 
-To create the environment Blueprint, use the following JSON body:
+要创建环境蓝图，请被引用以下 JSON 主体: 
 
 <details>
 <summary>Environment Blueprint JSON</summary>
@@ -546,18 +543,18 @@ To create the environment Blueprint, use the following JSON body:
 
 </details>
 
-#### From the UI
+#### 从用户界面
 
-To create the environment Blueprint from the UI, repeat the steps you took in [creating a service Blueprint from the UI](#from-the-ui) using the environment Blueprint JSON.
+要从用户界面创建环境蓝图，请使用环境蓝图 JSON 重复[creating a service Blueprint from the UI](#from-the-ui) 中的步骤。
 
-#### From the API
+#### 来自应用程序接口
 
-To create the environment Blueprint from the API, use the following code snippet (remember that an access token is required):
+要从应用程序接口创建环境蓝图，请使用以下代码片段(切记需要访问令牌): 
 
 <details>
 <summary>Create the environment Blueprint</summary>
 
-Note this example assumes the token is saved in the `access_token` variable.
+请注意，本示例假定令牌保存在 `access_token` 变量中。
 
 ```python showLineNumbers
 # Dependencies to install:
@@ -642,41 +639,41 @@ print(json.dumps(response.json(), indent=2))
 
 </details>
 
-#### The results
+#### 结果
 
 ![Developer Portal Blueprints graph with new Environment Blueprint](../static/img/quickstart/blueprintGraphWithEnvironmentClosed.png)
 
-Click on the `expand` button as shown in the image below:
+点击 "展开 "按钮，如下镜像所示: 
 
 ![Developer Portal Blueprints graph with new Environment Blueprint And Expand Marked](../static/img/quickstart/blueprintGraphWithEnvironmentClosedAndExpandMarked.png)
 
-You will see an expanded view of the Blueprint you just created, with all of its properties listed alongside the types you provided:
+您将看到刚刚创建的蓝图的展开视图，其所有属性都与您提供的类型一并列出: 
 
 ![Developer Portal Blueprints graph with new Environment open](../static/img/quickstart/blueprintGraphWithEnvironmentOpen.png)
 
-In the next part, we will start to create Entities that match the new Blueprints we created, assembling the Software Catalog!
+在下一部分，我们将开始创建与我们创建的新蓝图相匹配的实体，组装软件目录！
 
-## Create your first Entities
+## 创建第一个实体
 
-Now that we have Blueprints for `environment` and `service`, we can add some _Entities_.
+现在我们已经有了 `environment` 和 `service` 的蓝图，可以添加一些 _Entities_ 了。
 
-An **Entity** is an object that matches a type of a certain Blueprint. In our case, every Entity we create under the service Blueprint, is a microservice in our organization. And every environment we create under the environment Blueprint, is a different environment in which our code is running.
+实体**是与某个蓝图的类型相匹配的对象。 在我们的例子中，我们在服务蓝图下创建的每个实体都是我们组织中的一个微服务。 而我们在环境蓝图下创建的每个环境都是我们代码运行的不同环境。
 
-Let's take it slowly, and start by creating some initial Entities.
+让我们慢慢来，先创建一些初始实体。
 
-### Service and Environment Entity
+#### 服务和环境实体
 
-#### From the UI
+#### 从用户界面
 
-Click on the services page on the left sidebar:
+点击左侧边栏上的服务页面: 
 
 ![Developer Portal Blueprints graph with new Service and Services page marked](../static/img/quickstart/blueprintGraphWithServicesPageMarked.png)
 
-On the services page, click on the `+ Service` button to create a new Entity:
+在服务页面，单击 "+ 服务 "按钮创建新实体: 
 
 ![Developer Portal Service Entity page with create entity button marked](../static/img/quickstart/serviceEntityPageWithCreateEntityMarked.png)
 
-After clicking the button a new service form will appear. Let's fill it up with the following details:
+点击按钮后，会出现一个新的服务表格。 让我们填写以下详细信息: 
 
 <details>
 <summary>Notification service Entity JSON</summary>
@@ -703,23 +700,23 @@ After clicking the button a new service form will appear. Let's fill it up with 
 }
 ```
 
-:::tip
-You can either switch the creation form to Json Mode using the toggle, or you can just manually type the values into the fields.
+:::tip 您可以使用切换开关将创建表单切换为 Json 模式，也可以直接在字段中手动输入值。
+
 :::
 
 </details>
 
-After filling all of the above, your creation page should look like this:
+填写完以上所有内容后，您的创建页面应该是这样的: 
 
 ![Developer Portal Service Entity filled with create entity button marked](../static/img/quickstart/serviceEntityCreateFilledAndCreateMarked.png)
 
-You can go ahead and press the `Create` button at the bottom right corner (as shown in the image above).
+您可以继续按右下角的 "创建 "按钮(如上图所示)。
 
-Now to create an environment Entity, repeat the same steps, but this time go to the environments page:
+现在，要创建环境实体，请重复同样的步骤，但这次要转到环境页面: 
 
 ![Developer Portal Blueprints graph with new Environment and Environments page marked](../static/img/quickstart/blueprintGraphWithEnvironmentsPageMarked.png)
 
-And use the following data for the environment Entity:
+并为环境实体引用以下数据: 
 
 <details>
 <summary>Production environment Entity JSON</summary>
@@ -739,16 +736,16 @@ And use the following data for the environment Entity:
 
 </details>
 
-Now you can [witness your new service and environment](#the-results-2) Entities appear in the services page and environments page respectively.
+现在，您可以[witness your new service and environment](#the-results-2) 实体分别出现在服务页面和环境页面。
 
-#### From the API
+#### 来自应用程序接口
 
-To create both the service Entity and the environment Entity from the API, use the following code snippet (remember that an access token is required):
+要从应用程序接口创建服务实体和环境实体，请使用以下代码片段(切记需要访问令牌): 
 
 <details>
 <summary>Create the service Entity and the environment Entity</summary>
 
-Note this example assumes the token is saved in the `access_token` variable.
+请注意，本示例假定令牌保存在 `access_token` 变量中。
 
 ```python showLineNumbers
 # Dependencies to install:
@@ -809,42 +806,41 @@ print(json.dumps(service_response.json(), indent=2))
 env_response = requests.post(f'{API_URL}/blueprints/{env_blueprint_identifier}/entities', json=env_entity, headers=headers)
 
 print(json.dumps(env_response.json(), indent=2))
-
 ```
 
 </details>
 
-#### The results
+#### 结果
 
-The respective pages for each of our Blueprints will now show the Entities we created:
+现在，每个蓝图的相应页面都会显示我们创建的实体: 
 
 ![Developer Portal Service Entity page with first entity](../static/img/quickstart/serviceEntityPageWithFirstEntity.png)
 
 ![Developer Portal Environment Entity page with first entity](../static/img/quickstart/environmentEntityPageWithFirstEntity.png)
 
-Amazing! You have just created 2 awesome entities 🎉
+了不起！你刚刚创造了两个了不起的实体🎉。
 
-To conclude your first steps with Port, we use Blueprints to define our data model, and Entities to store data objects that match the type of our Blueprints.
+在结束使用 Port 的第一步时，我们使用 Blueprints 来定义数据模型，并使用 Entities 来存储与 Blueprints 类型相匹配的数据对象。
 
-In the next part, we will look at our last building block - _Relations_. Let's get to it!
+下一部分，我们将学习最后一个构件--"关系"。 让我们开始吧！
 
-## Create a Relation
+## 创建关系
 
-A **Relation** is a connection between two Blueprints and the Entities that are based on them. Using Relations you can create a connection graph between multiple Entities, the connection graph helps you understand the structure of your infrastructure and gain easier access to the data of related Entities.
+关系(**Relation**)是两个蓝图和基于蓝图的实体之间的连接。 使用关系，您可以在多个实体之间创建连接图，连接图可以帮助您了解基础架构的结构，并更轻松地访问相关实体的数据。
 
-Currently our Software Catalog has services and environments, but in practice a single service is deployed to multiple environments at the same time. In order to keep track of all the different services and their active deployments, we're now going to create another Blueprint `Running Service`. Our running service Blueprint will contain the following fields:
+目前，我们的软件目录包含服务和环境，但实际上，一个服务会同时部署到多个环境中。 为了跟踪所有不同的服务及其活动部署，我们现在要创建另一个蓝图 "运行中的服务"。 我们的运行中的服务蓝图将包含以下字段: 
 
-- **Health status** - health status of the running service;
-- **Deployed branch** - branch where the code of the running service is taken from;
-- **Locked** - is the running service currently locked (meaning no new deployments are allowed);
-- **Version** - current version of the running service.
+* **健康状况** - 运行服务的健康状况；
+* **Deployed branch** - 运行服务的代码所来自的分支；
+* **Locked**-运行中的服务当前是否已锁定(这意味着不允许进行新的部署)；
+* **版本** - 运行服务的当前版本。
 
-In addition, the running service Blueprint will include two **Relations**:
+此外，运行服务蓝图将包括两个**关系**: 
 
-- Relation to a service - to denote the microservice the running service belongs to;
-- Relation to an environment - to denote the environment the running service is deployed at.
+* 与服务的关系 - 表示运行服务所属的微服务；
+* 与环境的关系--表示运行服务所部署的环境。
 
-To create the running service Blueprint, use the following JSON body:
+要创建运行中的服务蓝图，请被引用以下 JSON 主体: 
 
 <details>
 <summary>Running service Blueprint JSON</summary>
@@ -925,10 +921,9 @@ To create the running service Blueprint, use the following JSON body:
 
 </details>
 
-:::tip
-In the Blueprint JSON of the running service Blueprint you will notice one new addition: the `relations` object is now filled with two keys - `service` and `environment` these two keys represent the target Blueprints for our Relations.
+:::tip 在正在运行的服务蓝图的蓝图 JSON 中，你会注意到一个新添加的内容: "关系 "对象现在填入了两个键--"服务 "和 "环境"，这两个键代表我们关系的目标蓝图。
 
-The JSON matching the two Relations is also provided here:
+这里还提供了与两个 "关系 "匹配的 JSON: 
 
 <details>
 <summary>Service Relation JSON</summary>
@@ -966,26 +961,27 @@ The JSON matching the two Relations is also provided here:
 
 :::
 
-Let's go ahead and create a **Running Service Blueprint**:
+让我们继续创建**运行服务蓝图**: 
 
-### From the UI
+#### 从用户界面
 
-- Go back to the Blueprints page;
-- Click on the Add Blueprint button;
-- Paste the running service Blueprint JSON body and click `Save`
+* 返回蓝图页面；
+* 单击 "添加蓝图 "按钮；
+* 粘贴正在运行的服务蓝图 JSON 主体，然后单击 "保存
 
-:::tip
-**Remember**, if you are having trouble at any point, you performed the exact same steps with the **Service** Blueprint in the [Define a Blueprint section](#define-a-blueprint), so feel free to go back for reference.
+:::tip 
+**请记住**，如果您在任何时候遇到问题，您都可以在[Define a Blueprint section](#define-a-blueprint) 的**服务**蓝图中执行完全相同的步骤，因此请随时回去参考。
+
 :::
 
-### From the API
+### 从应用程序接口
 
-To create the running service Blueprint from the API, use the following code snippet (remember that an access token is required):
+要从应用程序接口创建运行中的服务蓝图，请使用以下代码片段(切记需要访问令牌): 
 
 <details>
 <summary>Create the running service Blueprint</summary>
 
-Note this example assumes the token is saved in the `access_token` variable.
+请注意，本示例假定令牌保存在 `access_token` 变量中。
 
 ```python showLineNumbers
 # Dependencies to install:
@@ -1081,32 +1077,31 @@ response = requests.post(f'{API_URL}/blueprints', json=blueprint, headers=header
 # response.json() contains the content of the resulting blueprint
 
 print(json.dumps(response.json(), indent=2))
-
 ```
 
 </details>
 
-### The results
+### 结果
 
-After you're done, your DevPortal Builder page will look like this:
+完成后，您的 DevPortal Builder 页面将如下所示: 
 
 ![Developer Portal Blueprints Page with service, environment and running service](../static/img/quickstart/blueprintsGraphWithRunningServiceEnvironmentServiceRelation.png)
 
-:::note
-Look at the connection graph you have just created. You modeled the relationship between your Blueprints in a way that shows which Blueprint depends on the other.
+:::note 看一下你刚刚创建的连接图，你用一种能显示哪个蓝图依赖于另一个蓝图的方式模拟了蓝图之间的关系。
+
 :::
 
-Now we'll create a running service Entity.
+现在，我们将创建一个正在运行的服务实体。
 
-## Running Service Entity
+## 运行服务实体
 
-Our goal is to track running versions of microservices and their respective environments.
+我们的目标是跟踪微服务的运行版本及其各自的环境。
 
-You already have 2 Entities you created - those are the `Production` environment and the `Notification Service` service.
+您已经创建了 2 个实体，它们是 "生产 "环境和 "通知服务 "服务。
 
-You are now going to create a running service Entity and map the environment and the service to it using the Relation you created.
+现在，您要创建一个正在运行的服务实体，并使用您创建的关系将环境和服务映射到该实体。
 
-In order to create the running service Entity, use the following JSON body:
+为了创建运行中的服务实体，请被引用以下 JSON 主体: 
 
 <details>
 <summary>Notification service prod Running Service Entity JSON</summary>
@@ -1130,18 +1125,18 @@ In order to create the running service Entity, use the following JSON body:
 
 </details>
 
-### From the UI
+#### 从用户界面
 
-To create the Entity from the UI, repeat the steps you took in [creating service and environment Entities from the UI](#from-the-ui-2) using the `notification-service-prod` Entity JSON.
+要从用户界面创建实体，请重复[creating service and environment Entities from the UI](#from-the-ui-2) 中的步骤，使用 `notification-service-prod` 实体 JSON。
 
-### From the API
+### 从应用程序接口
 
-To create the `notification-service-prod` Entity from the API, use the following code snippet (remember that an access token is required):
+要从应用程序接口创建 "通知-服务-产品 "实体，请使用以下代码片段(切记需要访问令牌): 
 
 <details>
 <summary>Create the running service Entity</summary>
 
-Note this example assumes the token is saved in the `access_token` variable.
+请注意，本示例假定令牌保存在 `access_token` 变量中。
 
 ```python showLineNumbers
 # Dependencies to install:
@@ -1178,37 +1173,36 @@ running_service_response = requests.post(f'{API_URL}/blueprints/{running_service
                                          json=running_service_entity, headers=headers)
 
 print(json.dumps(running_service_response.json(), indent=2))
-
 ```
 
 </details>
 
-### The results
+### 结果
 
-Now you will see your new running service Entity, and if you look at the Service column and the Environment column, you will see the service and environment you created previously:
+现在，您将看到新运行的服务实体，如果查看 "服务 "栏和 "环境 "栏，您将看到之前创建的服务和环境: 
 
 ![Developer Portal Running Service with service and environment marked](../static/img/quickstart/RunningServiceWithServiceAndEnvironment.png)
 
-Click on the `Notification Service Prod` link in the `title` column and you will see what we call the **specific Entity page**. This page allows you to see the complete details and dependency graph of a specific Entity.
+点击 "title "栏中的 "Notification Service Prod "链接，您将看到我们所说的 "**特定实体 "页面**。 该页面允许您查看特定实体的完整详细信息和依赖关系图。
 
 ![Developer Portal Running Service specific entity page after relation](../static/img/quickstart/runningServiceSpecificEntityPageAfterRelation.png)
 
-You can also click on the `Graph` button and see a visualized view of the Entities you created and the connections between them:
+您还可以点击 "图表 "按钮，查看所创建实体的可视化视图以及它们之间的联系: 
 
 ![Developer Portal Running Service specific entity page graph view](../static/img/quickstart/runningServiceSpecificEntityPageGraphView.png)
 
-:::info
-In our case, the specific Entity page for a running service will also show us a tab with the **microservice** the running service belongs to, and another tab with the **environment** of the running service because that is the Relation we mapped.
+:::info 在我们的例子中，运行中服务的特定实体页面也会显示一个标签页，其中包含运行中服务所属的**微服务**，以及另一个包含运行中服务的**环境**的标签页，因为这是我们映射的关系。
+
 :::
 
-Feel free to continue exploring the specific Entity page and the environments, services and running service pages. Notice the `filter`, `hide`, `sort` and `group by` controls you can find at the top right of Port's table widgets.
+请继续浏览特定实体页面以及环境、服务和正在运行的服务页面。 请注意 Port 表格部件右上方的 "过滤"、"隐藏"、"排序 "和 "分组 "控件。
 
-You can also use Port's API to make GET requests for Blueprints and Entities, here is a code example to get the running service Entity we created in this tutorial:
+您还可以使用 Port 的 API 对蓝图和实体发出 GET 请求，下面是一个获取我们在本教程中创建的正在运行的服务实体的代码示例: 
 
 <details>
 <summary>Get the running service Entity</summary>
 
-Note this example assumes the token is saved in the `access_token` variable.
+请注意，本示例假定令牌保存在 `access_token` 变量中。
 
 ```python showLineNumbers
 # Dependencies to install:
@@ -1232,53 +1226,52 @@ running_service_response = requests.get(
     f'{API_URL}/blueprints/{running_service_blueprint_identifier}/entities/{running_service_entity_identifier}', headers=headers)
 
 print(json.dumps(running_service_response.json(), indent=2))
-
 ```
 
 </details>
 
-In addition, you can also use Port's API to search for Blueprints and Entities.
+此外，您还可以使用 Port 的 API 搜索蓝图和实体。
 
-## What now?
+#What now?
 
-Congratulations! you just modeled your first environment in Port! 🎉🚢
+恭喜！您刚刚在 Port 中建立了第一个环境模型！🎉🚢
 
-This quickstart was used to teach you the basic building blocks Port provides. Now, you have all the tools you need to start cataloging and tracking your environment!
+本快速入门手册被用来向您传授 Provider 提供的基本构件。 现在，您已经掌握了开始编目和跟踪环境所需的所有工具！
 
-You can begin creating Blueprints that describe your `services`, `applications`, `clusters` and `infrastructure resources`.
+您可以开始创建描述 "服务"、"应用程序"、"集群 "和 "基础设施资源 "的蓝图。
 
-:::tip Reuse or Restart?
-Remember that the blueprints, entities and relations you created here were used as a basic example, but Port always allows you to go back and edit them until they match the infrastructure you want to catalog.
+:::tip  重用还是重启？ 请记住，您在这里创建的蓝图、实体和关系被用作基本示例，但 Port 总是允许您返回并编辑它们，直到它们与您要编目的基础架构相匹配。
 
-And, if you want to do something completely different, you can simply delete what you created here, and start mapping out Entities exactly the way you want them to be.
+如果你想做一些完全不同的事情，你可以直接删除在这里创建的内容，然后开始按照你想要的方式绘制实体。
+
 :::
 
-### Recommended next steps
+### 建议采取的下一步措施
 
-:::tip
-These suggestions show the basic steps in creating your very own Developer Portal, if you want to learn more about Port before starting your Developer Portal journey, look at [Diving deeper](#diving-deeper) or [Using the API](#using-the-api) below.
+:::tip 这些建议展示了创建自己的开发人员门户网站的基本步骤，如果您想在开始开发人员门户网站之旅之前了解更多有关 Port 的信息，请访问[Diving deeper](#diving-deeper) 或[Using the API](#using-the-api) 。
+
 :::
 
-1. Create Blueprints for your software and infrastructure components;
-2. Map out the Relations between your Blueprints;
-3. Ingest data to your catalog by creating Entities based on your Blueprints via Port's UI or using our API;
-4. Define Self-Service Actions that can be used by you and your developers;
-5. Use one of our Complete use cases to fully set up your software catalog.
+1. 为软件和基础设施组件创建蓝图；
+2. 绘制蓝图之间的关系图；
+3. 通过 Port 的用户界面或使用我们的 API，根据您的蓝图创建实体，从而将数据引用到您的目录中；
+4. 定义可被您和您的开发人员引用的自助服务操作；
+5. 使用我们的完整用例之一，全面设置您的软件目录。
 
-### Diving deeper
+### 深入下潜
 
-If you want to learn more about Port's capabilities in a specific area, you can check out any of these resources:
+如果您想进一步了解 Port 在特定领域的能力，可以查看这些资源: 
 
-- [Build your software catalog](./build-your-software-catalog/build-your-software-catalog.md)
-- [Define your data model](./build-your-software-catalog/define-your-data-model/define-your-data-model.md)
-- [Setup blueprints](./build-your-software-catalog/define-your-data-model/setup-blueprint/setup-blueprint.md)
-- [Relate blueprints](./build-your-software-catalog/define-your-data-model/relate-blueprints/relate-blueprints.md)
-- [Ingest data to catalog](./build-your-software-catalog/sync-data-to-catalog/sync-data-to-catalog.md)
-- [Create self-service experiences](./create-self-service-experiences/create-self-service-experiences.md)
+* * [Build your software catalog](./build-your-software-catalog/build-your-software-catalog.md)
+* [Define your data model](./build-your-software-catalog/define-your-data-model/define-your-data-model.md)
+* [Setup blueprints](./build-your-software-catalog/define-your-data-model/setup-blueprint/setup-blueprint.md)
+* [Relate blueprints](./build-your-software-catalog/define-your-data-model/relate-blueprints/relate-blueprints.md)
+* [Ingest data to catalog](./build-your-software-catalog/sync-data-to-catalog/sync-data-to-catalog.md)
+* [Create self-service experiences](./create-self-service-experiences/create-self-service-experiences.md)
 
-### Using the API
+### 使用应用程序接口
 
-If you want to continue utilizing Port's REST API, take a look at these resources:
+如果您想继续使用 Port 的 REST API，请查看这些资源: 
 
-- [API guide](./build-your-software-catalog/sync-data-to-catalog/api/api.md)
-- [API Reference](./api-reference/api-reference.mdx)
+* * [API guide](./build-your-software-catalog/sync-data-to-catalog/api/api.md)
+* [API Reference](./api-reference/api-reference.mdx)

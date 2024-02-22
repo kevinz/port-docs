@@ -1,54 +1,56 @@
 ---
+
 sidebar_position: 2
+
 ---
 
 import Tabs from "@theme/Tabs"
 import TabItem from "@theme/TabItem"
 
-# Codefresh Workflow Template
+# Codefresh 工作流程模板
 
-Our [Codefresh workflow template](https://github.com/port-labs/port-codefresh-workflow-template) allows you to create/update and query entities in Port directly from your Codefresh workflow templates.
+我们的[Codefresh workflow template](https://github.com/port-labs/port-codefresh-workflow-template) 允许您直接从 Codefresh 工作流程模板中创建/更新和查询 Port 中的实体。
 
 <br></br>
 <br></br>
 
 ![CircleCI Illustration](/img/build-your-software-catalog/sync-data-to-catalog/codefresh/codefresh-iilustration.jpg)
 
-## 💡 Codefresh integration usage
+## 💡 Codefresh 集成 Usage
 
-Port's Codefresh workflow template provides a native way to integrate Port with your Codefresh CI workflows, for example:
+例如，Port 的 Codefresh 工作流模板提供了将 Port 与 Codefresh CI 工作流集成的原生方法: 
 
-- Report the status of a running **CI job**;
-- Update the software catalog about a new **build version** for a **microservice**;
-- Get existing **entities**.
+* 报告正在运行的**CI任务**的状态；
+* 更新软件目录中有关**微服务**新**构建版本的信息；
+* 获取现有**实体**。
 
-## Installation
+## 安装
 
-To use Port's Codefresh workflow template you need to perform the following steps:
+要被引用 Port 的 Codefresh 工作流程模板，您需要执行以下步骤: 
 
-1. Go to the [workflow template repository](https://github.com/port-labs/port-codefresh-workflow-template) in GitHub;
-2. Copy the file [`portWorkflowTemplate.yml`](https://github.com/port-labs/port-codefresh-workflow-template/blob/main/portWorkflowTemplate.yml) to one of your codefresh `git sources` and commit it to your git source;
-3. Add the required service account, cluster role and role binding to your codefresh runtime namespace by applying the contents of the [`rbac.yml`](https://github.com/port-labs/port-codefresh-workflow-template/blob/main/rbac.yml) file by using the command: `kubectl apply -f rbac.yml -n YOUR_NAMESPACE`;
-4. Add the required secret containing your `PORT_CLIENT_ID` and `PORT_CLIENT_SECRET` after encoding them using base64. You can use [`portCredentials.yml`](https://github.com/port-labs/port-codefresh-workflow-template/blob/main/portCredentials.yml) as an example.
+1. 访问 GitHub 中的[workflow template repository](https://github.com/port-labs/port-codefresh-workflow-template) ；
+2. 将文件[`portWorkflowTemplate.yml`](https://github.com/port-labs/port-codefresh-workflow-template/blob/main/portWorkflowTemplate.yml) 复制到您的一个 codefresh `git 源码`，然后提交到您的 git 源码；
+3. 使用命令 apply[`rbac.yml`](https://github.com/port-labs/port-codefresh-workflow-template/blob/main/rbac.yml) 文件的内容，将所需的服务账户、集群角色和角色绑定添加到您的 codefresh 运行时名称空间: `kubectl apply -f rbac.yml -n YOUR_NAMESPACE`；
+4. 使用 base64 编码后，添加包含`PORT_CLIENT_ID`和`PORT_CLIENT_SECRET`的所需 secret。可被引用[`portCredentials.yml`](https://github.com/port-labs/port-codefresh-workflow-template/blob/main/portCredentials.yml) 作为示例。
 
-:::tip
-If you save the CLIENT_ID and SECRET using the exact format shown in `portCredentials.yml`, you do not need to provide the parameters `PORT_CREDENTIALS_SECRET`, `PORT_CLIENT_ID_KEY` and `PORT_CLIENT_SECRET_KEY` when calling templates from the workflow template.
+:::tip 如果使用 `portCredentials.yml` 中显示的准确格式保存 CLIENT_ID 和 SECRET，那么从工作流模板调用模板时就不需要提供参数 `PORT_CREDENTIALS_SECRET`、`PORT_CLIENT_ID_KEY` 和 `PORT_CLIENT_SECRET_KEY`。
+
 :::
 
-### Verify
+#### 验证
 
-To verify the installation of the workflow template, follow these steps:
+要验证工作流程模板的安装，请按照以下步骤操作: 
 
-1. Go to the Codefresh interface;
-2. Under the CI OPS category, click on Workflow Templates;
-3. In the search bar, type `port` the workflow template should appear.
+1. 进入 Codefresh 界面；
+2. 在 CI OPS 类别下，点击工作流程模板；
+3. 在搜索栏中输入 "Port"，工作流程模板就会出现。
 
 ## Usage
 
-Port's Codefresh workflow template supports the following methods:
+Port 的 Codefresh 工作流程模板支持以下方法: 
 
-- Create/Update catalog entities - invoked with the `upsert-entity` template, receives the identifier and other properties of a new entity or an entity that needs to be updated;
-- Get catalog entities - invoked with the `get-entity` template, receives the identifier of an existing entity and retrieves it for use in your CI.
+* 创建/更新目录实体--使用 "upsert-entity "模板调用，接收新实体或需要更新的实体的标识符和其他属性；
+* 获取目录实体--使用 "get-entity "模板调用，接收现有实体的标识符并将其检索出来供 CI 使用。
 
 <Tabs groupId="usage" defaultValue="upsert" values={[
 {label: "Create/Update", value: "upsert"},
@@ -91,7 +93,8 @@ Port's Codefresh workflow template supports the following methods:
       }
 ```
 
-**Inputs**
+**输入**
+
 
 | Input                     | Description                                                               | Notes                                           |
 | ------------------------- | ------------------------------------------------------------------------- | ----------------------------------------------- |
@@ -106,11 +109,14 @@ Port's Codefresh workflow template supports the following methods:
 | `ENTITY_PROPERTIES`       | Properties of the new (or existing) entity                                |                                                 |
 | `ENTITY_RELATIONS`        | Relations of the new (or existing) entity.                                |                                                 |
 
-**Outputs**
+
+**输出**
+
 
 | Output              | Description                                | Notes |
 | ------------------- | ------------------------------------------ | ----- |
 | `ENTITY_IDENTIFIER` | identifier of the new (or existing) entity |       |
+
 
 </TabItem>
 <TabItem value="get">
@@ -138,7 +144,8 @@ Port's Codefresh workflow template supports the following methods:
       value: "morp"
 ```
 
-**Inputs**
+**输入**
+
 
 | Input                     | Description                                                               | Notes                               |
 | ------------------------- | ------------------------------------------------------------------------- | ----------------------------------- |
@@ -148,7 +155,9 @@ Port's Codefresh workflow template supports the following methods:
 | `BLUEPRINT_IDENTIFIER`    | Identifier of the blueprint the target entity is from                     | **Required**                        |
 | `ENTITY_IDENTIFIER`       | Identifier of the target entity                                           |                                     |
 
-**Outputs**
+
+**输出**
+
 
 | Output                      | Description                                           | Notes |
 | --------------------------- | ----------------------------------------------------- | ----- |
@@ -159,9 +168,10 @@ Port's Codefresh workflow template supports the following methods:
 | `PORT_ENTITY_PROPERTIES`    | All properties of the entity in JSON format           |       |
 | `PORT_ENTITY_RELATIONS`     | All relations of the entity in JSON format            |       |
 
+
 </TabItem>
 </Tabs>
 
-## Examples
+## 示例
 
-Refer to the [examples](./examples.mdx) page for practical examples of Port's Codefresh workflow template.
+有关 Port 的 Codefresh 工作流程模板的实用示例，请参阅[examples](./examples.mdx) 页面。

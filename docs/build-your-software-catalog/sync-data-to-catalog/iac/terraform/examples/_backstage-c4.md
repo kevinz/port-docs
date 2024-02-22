@@ -1,16 +1,18 @@
 ---
+
 sidebar_position: 1
-title: Modeling The Backstage C4 Model
-description: Create the core layout of the C4 model in Port
+title: 塑造 C4 模式的后台
+description: 在 Port 中创建 C4 模型的核心布局
+
 ---
 
 # Modeling The Backstage C4 Model
 
 <!-- TODO: complete and reveal this example when the Terraform provider supports creating entities with a many relation -->
 
-In this example you are going to create the basic layout of the [Backstage C4 model](https://www.getport.io/blog/using-backstages-c4-model-adaptation-to-visualize-software-creating-a-software-catalog-in-port).
+在本例中，您将创建[Backstage C4 model](https://www.getport.io/blog/using-backstages-c4-model-adaptation-to-visualize-software-creating-a-software-catalog-in-port) 的基本布局。
 
-Here is the complete `main.tf` file:
+下面是完整的 `main.tf` 文件: 
 
 <details>
 <summary>Complete Terraform definition file</summary>
@@ -383,7 +385,7 @@ resource "port_entity" "productService" {
 
 </details>
 
-To use this example yourself, simply replace the placeholders for `access_key`, `secret_key`, `client_id` and `secret` and then run the following commands to setup your new backend, create the new infrastructure and update the software catalog:
+要自己使用这个示例，只需替换 `access_key`、`secret_key`、`client_id` 和 `secret` 的占位符，然后运行以下命令设置新后端、创建新基础架构并更新软件目录: 
 
 ```shell showLineNumbers
 # install modules and create an initial state
@@ -394,11 +396,11 @@ terraform plan
 terraform apply
 ```
 
-Let's break down the definition file and understand the different parts:
+让我们来分解定义文件，了解其中的各个部分: 
 
-## Module imports
+## 模块导入
 
-This part includes importing and setting up the required Terraform providers and modules:
+这部分包括导入和设置所需的 Terraform Provider 和模块: 
 
 ```hcl showLineNumbers
 terraform {
@@ -422,9 +424,9 @@ provider "port" {
 }
 ```
 
-## Defining the S3 bucket and bucket ACLs
+## 定义 S3 存储桶和存储桶 ACL
 
-This part includes defining the S3 bucket and attaching an ACL policy:
+这部分包括定义 S3 存储桶和附加 ACL 策略: 
 
 ```hcl showLineNumbers
 resource "aws_s3_bucket" "port-terraform-example-bucket" {
@@ -437,9 +439,9 @@ resource "aws_s3_bucket_acl" "port-terraform-example-bucket-acl" {
 }
 ```
 
-## Creating the S3 bucket blueprint and the entity matching the new bucket
+## 创建 S3 存储桶蓝图和与新存储桶匹配的实体
 
-This part includes configuring the `s3Bucket` blueprint and creating an entity for our new bucket:
+这部分包括配置 `s3Bucket` 蓝图并为我们的新水桶创建一个实体: 
 
 ```hcl showLineNumbers
 resource "port_blueprint" "s3_bucket" {
@@ -454,7 +456,6 @@ resource "port_blueprint" "s3_bucket" {
     type       = "boolean"
   }
 }
-
 
 resource "port_entity" "s3_bucket" {
 # highlight-start
@@ -475,10 +476,10 @@ resource "port_entity" "s3_bucket" {
 }
 ```
 
-:::info Terraform dependencies
-Note how we use a `depends_on` block on the new s3 entity, this is required because the `s3Bucket` blueprint has to exist before the entity can be created. In addition, the entity relies on values that will only be available after the S3 bucket is created.
+:::info  Terraform 依赖项 请注意我们如何在新的 s3 实体上引用了 "depends_on "块，这是必需的，因为 "s3Bucket "蓝图必须在实体创建前就存在。 此外，实体依赖的 Values 只有在 S3 bucket 创建后才可用。
+
 :::
 
-## Result
+## 结果
 
-After running `terraform apply` you will see the new S3 bucket in AWS, and the matching `s3Bucket` entity in Port.
+运行 "terraform apply "后，您将在 AWS 中看到新的 S3 bucket，并在 Port 中看到匹配的 "s3Bucket "实体。

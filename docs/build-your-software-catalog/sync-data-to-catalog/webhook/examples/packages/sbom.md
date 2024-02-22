@@ -1,23 +1,25 @@
 ---
+
 sidebar_position: 7
-description: Ingest software bill of material (SBOM) into your catalog
+description: 将软件物料清单(SBOM)纳入产品目录
+
 ---
 
 import Tabs from "@theme/Tabs"
 import TabItem from "@theme/TabItem"
-import ComponentBlueprint from './resources/sbom/\_example_sbom_component_blueprint.mdx'
-import VulnerabilityBlueprint from './resources/sbom/\_example_sbom_vulnerability_blueprint.mdx'
-import SbomWebhookConfig from './resources/sbom/\_example_sbom_webhook_config.mdx'
+import ComponentBlueprint from './resources/sbom/_example_sbom_component_blueprint.mdx'
+import VulnerabilityBlueprint from './resources/sbom/_example_sbom_vulnerability_blueprint.mdx'
+import SbomWebhookConfig from './resources/sbom/_example_sbom_webhook_config.mdx'
 
 # SBOM
 
-In this example you are going to create a `sbomComponent` blueprint that ingests all third party components in your `sbom.json` or `sbom.xml` file using a combination of Port's [API](../../../api/api.md) and [webhook functionality](../../webhook.md). You will then relate this blueprint to a `sbomVulnerability` blueprint, allowing you to map all the components affected by a security vulnerability.
+在本示例中，您将创建一个 `sbomComponent` 蓝图，该蓝图将使用 Port's[API](../../../api/api.md) 和[webhook functionality](../../webhook.md) 的组合来引用 `sbom.json` 或 `sbom.xml` 文件中的所有第三方组件。然后，您将把该蓝图与 `sbomVulnerability` 蓝图关联起来，从而可以映射受安全漏洞影响的所有组件。
 
-To ingest the components and vulnerabilities to Port, a script that sends information about the SBOM file according to the webhook configuration is used.
+要将组件和漏洞被引用到 Port，需要使用一个脚本，根据 webhook 配置发送有关 SBOM 文件的信息。
 
-## Prerequisites
+## 先决条件
 
-Create the following blueprint definition and webhook configuration:
+创建以下蓝图定义和 webhook 配置: 
 
 <details>
 <summary>SBOM component blueprint</summary>
@@ -36,13 +38,13 @@ Create the following blueprint definition and webhook configuration:
 
 </details>
 
-:::note
-This documentation uses the [CycloneDX](https://cyclonedx.org/) SBOM standard. For more information on the schema structure, you can look [here](https://cyclonedx.org/docs/1.5/json/#components)
+:::note 本文档引用了[CycloneDX](https://cyclonedx.org/) SBOM 标准。有关模式结构的更多信息，可以查看[here](https://cyclonedx.org/docs/1.5/json/#components)
+
 :::
 
-## Working with Port's API and Bash script
+## 使用 Port 的 API 和 Bash 脚本
 
-Here are example snippets showing how to integrate Port's API and Webhook with your existing pipelines using Python and report SBOM entities from them:
+下面的示例片段展示了如何使用 Python 将 Port 的 API 和 Webhook 与现有的 Pipelines 集成，并从中报告 SBOM 实体: 
 
 <Tabs groupId="usage" defaultValue="json" values={[
 {label: "JSON", value: "json"},
@@ -51,7 +53,7 @@ Here are example snippets showing how to integrate Port's API and Webhook with y
 
 <TabItem value="json">
 
-Create the following Python script in your repository to create or update Port entities as part of your pipeline:
+在版本库中创建以下 Python 脚本，以创建或更新 Port 实体，作为管道的一部分: 
 
 <details>
   <summary> Python script for CycloneDX JSON </summary>
@@ -80,7 +82,6 @@ def add_entity_to_port(entity_object):
     headers = {"Content-Type": "application/json"}
     response = requests.post(WEBHOOK_URL, json=entity_object, headers=headers)
     return response.json()
-
 
 def extract_sbom_data(sbom_file):
     """This function takes an sbom file path, converts the "components" and "vulnerabilities" property into a
@@ -139,7 +140,6 @@ def extract_sbom_data(sbom_file):
     webhook_response = add_entity_to_port(entity_object)
     return webhook_response
 
-
 # Example usage
 response = extract_sbom_data(PATH_TO_SBOM_JSON_FILE)
 print(response)
@@ -151,7 +151,7 @@ print(response)
 
 <TabItem value="xml">
 
-Create the following Python script in your repository to create or update Port entities as part of your pipeline:
+在版本库中创建以下 Python 脚本，以创建或更新 Port 实体，作为管道的一部分: 
 
 <details>
   <summary> Python script for CycloneDX XML </summary>
@@ -180,7 +180,6 @@ def add_entity_to_port(entity_object):
     headers = {"Content-Type": "application/json"}
     response = requests.post(WEBHOOK_URL, json=entity_object, headers=headers)
     return response.json()
-
 
 def extract_sbom_data(sbom_file):
     """This function takes an sbom file path, converts the "components" and "vulnerabilities" property into a
@@ -263,7 +262,6 @@ def extract_sbom_data(sbom_file):
             rating_score = rating.getElementsByTagName("score")[0].firstChild.data.strip()
             rating_severity = rating.getElementsByTagName("severity")[0].firstChild.data.strip()
             rating_list.append({"source": rating_source, "score": rating_score, "severity": rating_severity})
-
 
         affected_components = []
         for target_ref in affects_target_refs:

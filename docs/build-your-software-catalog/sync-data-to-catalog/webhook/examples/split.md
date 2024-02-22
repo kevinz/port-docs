@@ -1,18 +1,20 @@
 ---
+
 sidebar_position: 13
-description: Ingest Split IO Impressions into your catalog
+description: 将拆分 IO 印象摄入您的目录
+
 ---
 
-import SplitioBlueprint from './resources/splitio/\_example_splitio_impression_blueprint.mdx'
-import SplitioWebhookConfig from './resources/splitio/\_example_splitio_webhook_configuration.mdx'
+import SplitioBlueprint from './resources/splitio/_example_splitio_impression_blueprint.mdx'
+import SplitioWebhookConfig from './resources/splitio/_example_splitio_webhook_configuration.mdx'
 
-# Split
+# 分割
 
-In this example you are going to create a webhook integration between [Split](https://www.split.io/) and Port, which will ingest impressions.
+在本示例中，您将在[Split](https://www.split.io/) 和 Port 之间创建一个 webhook 集成，用于接收印象信息。
 
-## Port configuration
+## Port 配置
 
-Create the following blueprint definition:
+创建以下蓝图定义: 
 
 <details>
 <summary>Split impression blueprint</summary>
@@ -21,38 +23,35 @@ Create the following blueprint definition:
 
 </details>
 
-
-Create the following webhook configuration [using Port's UI](/build-your-software-catalog/sync-data-to-catalog/webhook/?operation=ui#configuring-webhook-endpoints)
+创建以下 webhook 配置[using Port's UI](/build-your-software-catalog/sync-data-to-catalog/webhook/?operation=ui#configuring-webhook-endpoints)
 
 <details>
 
 <summary>Split webhook configuration</summary>
 
-1. **Basic details** tab - fill the following details:
-   1. Title : `Split Mapper`;
-   2. Identifier : `split_mapper`;
-   3. Description : `A webhook configuration to map Splitio impressions to Port`;
-   4. Icon : `Jenkins`;
-2. **Integration configuration** tab - fill the following JQ mapping:
-
+1. **基本信息** 选项卡 - 填写以下详细信息: 
+    1.title: `Split Mapper`；
+    2.标识符 : `split_mapper`；
+    3.Description : `将 Splitio 印象映射到 Port` 的 webhook 配置；
+    4.图标 : `Jenkins`；
+2. **集成配置**选项卡 - 填写以下 JQ 映射: 
    <SplitioWebhookConfig/>
-
-3. Click **Save** at the bottom of the page.
+3.点击页面底部的**保存**。
 
 </details>
 
-## Create a webhook in Split
+## 在 Split 中创建 webhook
 
-1. Go to Admin Settings.
-2. Click Integrations.
-3. Select your workspace.
-4. Click Add next to Outgoing Webhook (Impressions).
-5. Check the environments where you would like data sent from.
-6. Enter the value of the `url` key you received after creating the webhook configuration.
-7. Click Save.
+1. 转到管理设置。
+2. 单击 "集成"。
+3. 选择您的 Workspace。
+4. 单击外发 Webhook (Impressions) 旁边的添加。
+5. 选中您希望发送数据的环境。
+6. 输入创建 Webhook 配置后收到的 `url` 键的值。
+7. 单击保存。
 
-Done! any time an impression is triggered, the webhook will send the data to Port and create a new `split impression` entity
+完成！任何时候触发印象，webhook 都会将数据发送到 Port 并创建一个新的 "分割印象 "实体
 
-:::info
-To see all available data for an impression, visit [Split's documentation](https://help.split.io/hc/en-us/articles/360020700232-Webhook-impressions)
+:::info 要查看某个印象的所有可用数据，请访问[Split's documentation](https://help.split.io/hc/en-us/articles/360020700232-Webhook-impressions)
+
 :::

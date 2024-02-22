@@ -1,19 +1,21 @@
 ---
+
 sidebar_position: 2
-title: Manage an S3 Bucket Lifecycle
-description: Manage an S3 bucket lifecycle and reflect it in Port
+title: 管理 S3 Bucket 生命周期
+description: 管理 S3 桶生命周期并在 Port 中反映出来
+
 ---
 
 import Tabs from "@theme/Tabs";
 import TabItem from "@theme/TabItem";
 
-# Manage an S3 Bucket Lifecycle
+# 管理 S3 存储桶生命周期
 
-In this example you are going to create an AWS S3 bucket and then report its information to Port as an S3 bucket entity.
+在本例中，您将创建一个 AWS S3 存储桶，然后将其信息作为 S3 存储桶实体报告给 Port。
 
-## Prerequisites
+## 先决条件
 
-You will need to create a developer environment blueprint to follow this example:
+您需要创建一个开发人员环境蓝图来遵循这个示例: 
 
 <Tabs groupId="blueprint" defaultValue="api" values={[
 {label: "API", value: "api"},
@@ -82,7 +84,7 @@ resource "port_blueprint" "s3_bucket" {
 
 </Tabs>
 
-Here is the complete `main.tf` file:
+下面是完整的 `main.tf` 文件: 
 
 <details>
 <summary>Complete Terraform definition file</summary>
@@ -136,7 +138,7 @@ resource "port_entity" "s3_bucket" {
 
 </details>
 
-To use this example yourself, simply replace the placeholders for `access_key`, `secret_key`, `client_id` and `secret` and then run the following commands to setup your new backend, create the new infrastructure and update the software catalog:
+要自己使用这个示例，只需替换 `access_key`、`secret_key`、`client_id` 和 `secret` 的占位符，然后运行以下命令设置新后端、创建新基础架构并更新软件目录: 
 
 ```shell showLineNumbers
 # install modules and create an initial state
@@ -147,11 +149,11 @@ terraform plan
 terraform apply
 ```
 
-Let's break down the definition file and understand the different parts:
+让我们来分解定义文件，了解其中的各个部分: 
 
-## Module imports
+## 模块导入
 
-This part includes importing and setting up the required Terraform providers and modules:
+这部分包括导入和设置所需的 Terraform Provider 和模块: 
 
 ```hcl showLineNumbers
 terraform {
@@ -175,9 +177,9 @@ provider "port" {
 }
 ```
 
-## Defining the S3 bucket and bucket ACLs
+## 定义 S3 存储桶和存储桶 ACL
 
-This part includes defining the S3 bucket and attaching an ACL policy:
+这部分包括定义 S3 存储桶和附加 ACL 策略: 
 
 ```hcl showLineNumbers
 resource "aws_s3_bucket" "port-terraform-example-bucket" {
@@ -190,9 +192,9 @@ resource "aws_s3_bucket_acl" "port-terraform-example-bucket-acl" {
 }
 ```
 
-## Creating the S3 bucket entity matching the new bucket
+## 创建与新桶匹配的 S3 桶实体
 
-This part includes configuring the `s3Bucket` blueprint and creating an entity for our new bucket:
+这部分包括配置 `s3Bucket` 蓝图并为我们的新水桶创建一个实体: 
 
 ```hcl showLineNumbers
 resource "port_entity" "s3_bucket" {
@@ -214,19 +216,19 @@ resource "port_entity" "s3_bucket" {
 }
 ```
 
-:::info Terraform dependencies
-Note how we use a `depends_on` block on the new s3 entity because the entity relies on values that will only be available after the S3 bucket is created.
+:::info  Terraform 依赖项 请注意，我们在新的 s3 实体上使用了 "depends_on "块，因为该实体依赖的值只有在创建 S3 bucket 后才可用。
+
 :::
 
-## Result
+## 结果
 
-After running `terraform apply` you will see the new S3 bucket in AWS, and the matching `s3Bucket` entity in Port.
+运行 "terraform apply "后，您将在 AWS 中看到新的 S3 bucket，并在 Port 中看到匹配的 "s3Bucket "实体。
 
-Continue reading to learn how to make updates and how to cleanup.
+继续阅读，了解如何进行更新和清理。
 
-## Updating the S3 bucket and the matching entity
+## 更新 S3 存储桶和匹配实体
 
-Notice how we defined the `isPrivate` property of the bucket entity:
+请注意我们是如何定义水桶实体的 `isPrivate` 属性的: 
 
 ```hcl showLineNumbers
 properties = {
@@ -236,9 +238,9 @@ properties = {
 }
 ```
 
-Since the initial bucket we created was configured as `private`, the value of the property is `true`.
+由于我们创建的初始水桶被配置为 `private`，因此该属性的值为 `true`。
 
-Let's modify the bucket policy:
+让我们来修改水桶政策: 
 
 ```hcl showLineNumbers
 resource "aws_s3_bucket_acl" "port-terraform-example-bucket-acl" {
@@ -248,8 +250,8 @@ resource "aws_s3_bucket_acl" "port-terraform-example-bucket-acl" {
 }
 ```
 
-And now by running `terraform apply`, both the bucket policy will change, as well as the `isPrivate` property of the matching entity.
+现在运行 `terraform apply` 后，水桶策略和匹配实体的 `isPrivate` 属性都会改变。
 
-## Cleanup
+## 清理
 
-To cleanup your environment, you can run the command `terraform destroy`, which will delete all of the resources you created in this example (including the S3 bucket and matching Port entity).
+要清理环境，可以运行 `terraform destroy` 命令，它将删除本例中创建的所有资源(包括 S3 存储桶和匹配的 Port 实体)。

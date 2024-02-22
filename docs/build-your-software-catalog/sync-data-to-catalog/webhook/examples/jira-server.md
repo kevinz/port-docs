@@ -1,20 +1,22 @@
 ---
+
 sidebar_position: 3
-description: Ingest Jira Server projects and issues into your catalog
+description: 将 Jira Server 项目和问题纳入目录
+
 ---
 
-import JiraProjectBlueprint from "./resources/jira-server/\_example_jira_project_blueprint.mdx";
-import JiraIssueBlueprint from "./resources/jira-server/\_example_jira_issue_blueprint.mdx";
-import JiraWebhookConfiguration from "./resources/jira-server/\_example_jira_webhook_configuration.mdx";
-import JiraServerConfigurationPython from "./resources/jira-server/\_example_jira_server_configuration_python.mdx";
+import JiraProjectBlueprint from "./resources/jira-server/_example_jira_project_blueprint.mdx";
+import JiraIssueBlueprint from "./resources/jira-server/_example_jira_issue_blueprint.mdx";
+import JiraWebhookConfiguration from "./resources/jira-server/_example_jira_webhook_configuration.mdx";
+import JiraServerConfigurationPython from "./resources/jira-server/_example_jira_server_configuration_python.mdx";
 
-# Jira (Self-Hosted)
+# Jira(自行托管)
 
-In this example you are going to create a webhook integration between your Jira Server and Port. The integration will facilitate the ingestion of Jira project and issue entities into Port.
+在本示例中，您将在 Jira 服务器和 Port 之间创建一个 webhook 集成，该集成将有助于将 Jira 项目和问题实体导入 Port。
 
-## Port configuration
+## Port 配置
 
-Create the following blueprint definitions:
+创建以下蓝图定义: 
 
 <details>
 <summary>Jira project blueprint</summary>
@@ -30,61 +32,59 @@ Create the following blueprint definitions:
 
 </details>
 
-:::tip Blueprint Properties
-You may modify the properties in your blueprints depending on what you want to track in your Jira projects and issues.
+:::tip  蓝图属性 您可以根据希望在 Jira 项目和问题中跟踪的内容修改蓝图中的属性。
+
 :::
 
-Create the following webhook configuration [using Port's UI](/build-your-software-catalog/sync-data-to-catalog/webhook/?operation=ui#configuring-webhook-endpoints)
+创建以下 webhook 配置[using Port's UI](/build-your-software-catalog/sync-data-to-catalog/webhook/?operation=ui#configuring-webhook-endpoints)
 
 <details>
 <summary>Jira webhook configuration</summary>
 
-1. **Basic details** tab - fill the following details:
-   1. Title : `Jira mapper`;
-   2. Identifier : `jira_mapper`;
-   3. Description : `A webhook configuration to map Jira projects and issues to Port`;
-   4. Icon : `Jira`;
-2. **Integration configuration** tab - fill the following JQ mapping:
-
+1. **基本信息** 选项卡 - 填写以下详细信息: 
+    1.title: `Jira mapper`；
+    2.标识符 : `jira_mapper`；
+    3.Description : `将 Jira 项目和问题映射到 Port` 的 webhook 配置；
+    4.图标 : `Jira`；
+2. **集成配置**选项卡 - 填写以下 JQ 映射: 
    <JiraWebhookConfiguration/>
-    :::note
-    Take note of, and copy the Webhook URL that is provided in this tab
-    :::
-
-3. Click **Save** at the bottom of the page.
+     ::注意
+     注意并复制此选项卡中提供的 Webhook URL
+     :::
+3.点击页面底部的**保存**。
 
 </details>
 
-## Create a webhook in Jira
+## 在 Jira 中创建 webhook
 
-1. Log in to Jira as a user with the Administer global permission;
-2. Click the gear icon at the top right corner;
-3. Choose **System**;
-4. At the bottom of the sidebar on the left, under **Advanced**, choose **WebHooks**;
-5. Click on **Create a WebHook**
-6. Input the following details:
-   1. `Name` - use a meaningful name such as Port Webhook;
-   2. `Status` - be sure to keep the webhook **Enabled**;
-   3. `Webhook URL` - enter the value of the `url` key you received after creating the webhook configuration in Port;
-   4. `Description` - enter a description for the webhook;
-   5. `Issue related events` - enter a JQL query in this section to filter the issues that get sent to the webhook (if you leave this field empty, all issues will trigger a webhook event);
-   6. Under `Issue` - mark created, updated and delete;
-   7. Under the `Project related events` section, go to `Projects` and mark created, updated and deleted;
-7. Click **Create** at the bottom of the page.
+1. 以具有管理全局权限的用户身份登录 Jira；
+2. 单击右上角的齿轮图标；
+3. 选择 **系统**；
+4. 在左侧边栏底部的**高级**下，选择**Webhooks**；
+5. 点击**创建 Webhook**
+6. 输入以下详细信息: 
+    1. 名称"- 被引用一个有意义的名称，如 Port Webhook；
+    2. 状态"--请确保网络钩子已**启用**；
+    3. Webhook URL` - 输入在 Port 中创建 Webhook 配置后收到的 `url` 键的值；
+    4. `Description` - 输入 webhook 的描述；
+    5.问题相关事件"- 在此部分输入 JQL 查询，以筛选发送到 webhook 的问题(如果此字段为空，则所有问题都将触发 webhook 事件)；
+    6.问题 "下 - 标记创建、更新和删除；
+    7.在 "项目相关事件 "部分下，转到 "项目 "并标记创建、更新和删除；
+7.单击页面底部的**创建**。
 
-:::tip
-In order to view the different payloads and events available in Jira webhooks, [look here](https://developer.atlassian.com/server/jira/platform/webhooks/)
+:::tip 为了查看 Jira webhooks 中可用的不同有效载荷和事件、[look here](https://developer.atlassian.com/server/jira/platform/webhooks/)
+
 :::
 
-Done! any change you make to a project or an issue (open, close, edit, etc.) will trigger a webhook event that Jira will send to the webhook URL provided by Port. Port will parse the events according to the mapping and update the catalog entities accordingly.
+完成！您对项目或问题所做的任何更改(打开、关闭、编辑等)都会触发 webhook 事件，Jira 会将该事件发送到 Port 提供的 webhook URL。 Port 会根据映射解析事件，并相应地更新目录实体。
 
-## Let's Test It
+## 让我们来测试一下
 
-This section includes a sample webhook event sent from Jira when an issue is created or updated. In addition, it includes the entity created from the event based on the webhook configuration provided in the previous section.
+本节包括创建或更新问题时从 Jira 发送的 webhook 事件示例。 此外，还包括根据上一节提供的 webhook 配置从事件中创建的实体。
 
-### Payload
+### 有效载荷
 
-Here is an example of the payload structure sent to the webhook URL when a Jira issue is created:
+下面是创建 Jira 问题时发送到 webhook URL 的有效载荷结构示例: 
 
 <details>
 <summary> Webhook event payload</summary>
@@ -286,7 +286,7 @@ Here is an example of the payload structure sent to the webhook URL when a Jira 
 
 </details>
 
-### Mapping Result
+#### 映射结果
 
 ```json showLineNumbers
 {
@@ -311,27 +311,27 @@ Here is an example of the payload structure sent to the webhook URL when a Jira 
 }
 ```
 
-## Import Jira Historical Issues
+## 导入 Jira 历史问题
 
-In this example you are going to use the provided Python script to fetch data from the Jira Server API and ingest it to Port.
+在本例中，您将使用 Provider 提供的 Python 脚本从 Jira Server API 获取数据并将其引用到 Port。
 
-### Prerequisites
+### 先决条件
 
-This example utilizes the same [blueprint and webhook](#port-configuration) definition from the previous section.
+本示例使用的是上一节中的[blueprint and webhook](#port-configuration) 定义。
 
-In addition, you require the following environment variables:
+此外，您还需要以下环境变量: 
 
-- `PORT_CLIENT_ID` - Your Port client id
-- `PORT_CLIENT_SECRET` - Your Port client secret
-- `JIRA_API_URL` - Your Jira server host such as `https://jira.yourdomain.com`
-- `JIRA_USERNAME` - Your Jira username to use when accessing the Jira Software (Server) resources
-- `JIRA_PASSWORD` - Your Jira account password or token to use when accessing the Jira resources
+* `PORT_CLIENT_ID` - 您的 Port 客户端 ID
+* `PORT_CLIENT_SECRET` - 您的 Port 客户端secret
+* `JIRA_API_URL` - 您的 Jira 服务器主机，例如`https://jira.yourdomain.com`。
+* `JIRA_USERNAME` - 访问 Jira 软件(服务器)资源时被引用的 Jira 用户名
+* `JIRA_PASSWORD` - 访问 Jira 资源时要使用的 Jira 帐户密码或令牌
 
-:::info
-Find your Port credentials using this [guide](https://docs.getport.io/build-your-software-catalog/sync-data-to-catalog/api/#find-your-port-credentials)
+:::info 使用以下命令查找您的 Port 凭据[guide](https://docs.getport.io/build-your-software-catalog/sync-data-to-catalog/api/#find-your-port-credentials)
+
 :::
 
-Use the following Python script to ingest historical Jira issues into port:
+使用以下 Python 脚本将历史 Jira 问题引用到 Port: 
 
 <details>
 <summary>Jira Python script for historical issues</summary>
@@ -340,4 +340,4 @@ Use the following Python script to ingest historical Jira issues into port:
 
 </details>
 
-Done! you can now import historical issues from Jira into Port. Port will parse the issues according to the mapping and update the catalog entities accordingly.
+完成！现在您可以将历史问题从 Jira 导入 Port。 Port 将根据映射解析问题，并相应地更新目录实体。

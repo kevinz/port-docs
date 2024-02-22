@@ -1,40 +1,39 @@
 import Tabs from "@theme/Tabs"
 import TabItem from "@theme/TabItem"
-import Prerequisites from "../templates/\_ocean_helm_prerequisites_block.mdx"
-import AzurePremise from "../templates/\_ocean_azure_premise.mdx"
-import DockerParameters from "./\_wiz-docker-parameters.mdx"
+import Prerequisites from "../templates/_ocean_helm_prerequisites_block.mdx"
+import AzurePremise from "../templates/_ocean_azure_premise.mdx"
+import DockerParameters from "./_wiz-docker-parameters.mdx"
 import AdvancedConfig from '../../../generalTemplates/_ocean_advanced_configuration_note.md'
-import WizBlueprint from "../webhook/examples/resources/wiz/\_example_wiz_issue_blueprint.mdx";
-import WizConfiguration from "../webhook/examples/resources/wiz/\_example_wiz_issue_webhook_configuration.mdx";
+import WizBlueprint from "../webhook/examples/resources/wiz/_example_wiz_issue_blueprint.mdx";
+import WizConfiguration from "../webhook/examples/resources/wiz/_example_wiz_issue_webhook_configuration.mdx";
 
 # Wiz
 
-Our Wiz integration allows you to import `projects`, `issues`, `controls`, and `serviceTickets` from your Wiz account into Port, according to your mapping and definitions.
+通过 Wiz 集成，您可以根据您的映射和定义，将 Wiz 账户中的 "项目"、"问题"、"控件 "和 "服务单 "导入 Port。
 
-## Common use cases
+## 常见被引用情况
 
-- Map `projects`, `issues`, `controls`, and `serviceTickets` in your Wiz organization environment.
-- Watch for object changes (create/update/delete) in real-time, and automatically apply the changes to your entities in Port.
+* 映射 Wiz 组织环境中的 "项目"、"问题"、"控件 "和 "服务单"。
+* 实时观察对象更改(创建/更新/删除)，并自动将更改应用到您的 Port 实体中。
 
-## Prerequisites
+## 先决条件
 
 <Prerequisites />
 
-Your Wiz credentials should have the `read:projects` and `read:issues` permission scopes. Visit the Wiz [documentation](https://integrate.wiz.io/reference/prerequisites) for a guide on how to get your credentials as well as set permissions.
+您的 Wiz 凭据应具有 "read:projects "和 "read:issues "权限范围。请访问 Wiz[documentation](https://integrate.wiz.io/reference/prerequisites) ，了解如何获取凭据和设置权限。
 
+## 安装
 
-## Installation
-
-Choose one of the following installation methods:
+从以下安装方法中选择一种: 
 
 <Tabs groupId="installation-methods" queryString="installation-methods">
 
 <TabItem value="real-time-always-on" label="Real Time & Always On" default>
 
-Using this installation option means that the integration will be able to update Port in real time using webhooks.
+使用该安装选项意味着集成将能使用 webhook 实时更新 Port。
 
-This table summarizes the available parameters for the installation.
-Set them as you wish in the script below, then copy it and run it in your terminal:
+本表总结了安装时可用的参数，请在下面的脚本中按自己的需要进行设置，然后复制并在终端运行: 
+
 
 | Parameter                           | Description                                                                                                        | Required |
 | ----------------------------------- | ------------------------------------------------------------------------------------------------------------------ | -------- |
@@ -52,22 +51,23 @@ Set them as you wish in the script below, then copy it and run it in your termin
 | `scheduledResyncInterval`           | The number of minutes between each resync                                                                          | ❌       |
 | `initializePortResources`           | Default true, When set to true the integration will create default blueprints and the port App config Mapping      | ❌       |
 
+
 <br/>
 
 ```bash showLineNumbers
 helm repo add --force-update port-labs https://port-labs.github.io/helm-charts
 helm upgrade --install my-wiz-integration port-labs/port-ocean \
-	--set port.clientId="PORT_CLIENT_ID"  \
-	--set port.clientSecret="PORT_CLIENT_SECRET"  \
-	--set initializePortResources=true  \
-	--set scheduledResyncInterval=120 \
-	--set integration.identifier="my-wiz-integration"  \
-	--set integration.type="wiz"  \
-	--set integration.eventListener.type="POLLING"  \
-	--set integration.secrets.wizClientId="WIZ_CLIENT_ID"  \
-	--set integration.secrets.wizClientSecret="WIZ_CLIENT_SECRET" \
+    --set port.clientId="PORT_CLIENT_ID"  \
+    --set port.clientSecret="PORT_CLIENT_SECRET"  \
+    --set initializePortResources=true  \
+    --set scheduledResyncInterval=120 \
+    --set integration.identifier="my-wiz-integration"  \
+    --set integration.type="wiz"  \
+    --set integration.eventListener.type="POLLING"  \
+    --set integration.secrets.wizClientId="WIZ_CLIENT_ID"  \
+    --set integration.secrets.wizClientSecret="WIZ_CLIENT_SECRET" \
         --set integration.secrets.wizApiUrl="WIZ_API_URL"  \
-	--set integration.config.wizTokenUrl="WIZ_TOKEN_URL"  
+    --set integration.config.wizTokenUrl="WIZ_TOKEN_URL"
 ```
 
 </TabItem>
@@ -77,17 +77,17 @@ helm upgrade --install my-wiz-integration port-labs/port-ocean \
   <TabItem value="github" label="GitHub">
 This workflow will run the Wiz integration once and then exit, this is useful for **scheduled** ingestion of data.
 
-:::warning
-If you want the integration to update Port in real time using webhooks you should use the [Real Time & Always On](?installation-methods=real-time-always-on#installation) installation option
+:::warning 如果希望集成使用 webhooks 实时更新 Port，则应使用[Real Time & Always On](?installation-methods=real-time-always-on#installation) 安装选项
+
 :::
 
-Make sure to configure the following [Github Secrets](https://docs.github.com/en/actions/security-guides/using-secrets-in-github-actions):
+确保配置以下[Github Secrets](https://docs.github.com/en/actions/security-guides/using-secrets-in-github-actions) : 
 
 <DockerParameters />
 
 <br/>
 
-Here is an example for `wiz-integration.yml` workflow file:
+下面是 `wiz-integration.yml` 工作流程文件的示例: 
 
 ```yaml showLineNumbers
 name: Wiz Exporter Workflow
@@ -128,21 +128,19 @@ jobs:
   <TabItem value="jenkins" label="Jenkins">
 This pipeline will run the Wiz integration once and then exit, this is useful for **scheduled** ingestion of data.
 
-:::tip
-Your Jenkins agent should be able to run docker commands.
+:::tip 你的 Jenkins 代理应该能够运行 docker 命令。
+
 :::
-:::warning
-If you want the integration to update Port in real time using webhooks you should use
-the [Real Time & Always On](?installation-methods=real-time-always-on#installation) installation option.
+:::warning 如果希望集成使用 webhooks 实时更新 Port，则应使用 安装选项。[Real Time & Always On](?installation-methods=real-time-always-on#installation) 
+
 :::
 
-Make sure to configure the following [Jenkins Credentials](https://www.jenkins.io/doc/book/using/using-credentials/)
-of `Secret Text` type:
+请确保配置以下[Jenkins Credentials](https://www.jenkins.io/doc/book/using/using-credentials/)的 "Secret Text "类型: 
 
 <DockerParameters />
 <br/>
 
-Here is an example for `Jenkinsfile` groovy pipeline file:
+下面是 `Jenkinsfile` groovy Pipelines 文件的示例: 
 
 ```text showLineNumbers
 pipeline {
@@ -196,7 +194,7 @@ pipeline {
 
 <br/>
 
-Here is an example for `wiz-integration.yml` pipeline file:
+下面是 `wiz-integration.yml` Pipelines 文件的示例: 
 
 ```yaml showLineNumbers
 trigger:
@@ -207,7 +205,6 @@ pool:
 
 variables:
   - group: port-ocean-credentials
-
 
 steps:
 - script: |
@@ -230,8 +227,8 @@ steps:
 
     exit $?
   displayName: 'Ingest Data into Port'
-
 ```
+
 </TabItem>
 
   </Tabs>
@@ -243,9 +240,9 @@ steps:
 
 ## Ingesting Wiz objects
 
-The Wiz integration uses a YAML configuration to describe the process of loading data into the developer portal.
+Wiz 集成使用 YAML 配置来描述将数据加载到开发人员门户的过程。
 
-Here is an example snippet from the config which demonstrates the process for getting `project` data from Wiz:
+下面是配置中的一个示例片段，演示了从 Wiz 获取 "项目 "数据的过程: 
 
 ```yaml showLineNumbers
 createMissingRelatedEntities: true
@@ -266,22 +263,22 @@ resources:
             description: .description
 ```
 
-The integration makes use of the [JQ JSON processor](https://stedolan.github.io/jq/manual/) to select, modify, concatenate, transform and perform other operations on existing fields and values from Wiz's API events.
+该集成利用[JQ JSON processor](https://stedolan.github.io/jq/manual/) 从 Wiz 的 API 事件中对现有字段和 Values 进行选择、修改、连接、转换和其他操作。
 
-### Configuration structure
+### 配置结构
 
-The integration configuration determines which resources will be queried from Wiz, and which entities and properties will be created in Port.
+集成配置决定了从 Wiz 中查询哪些资源，以及在 Port 中创建哪些实体和属性。
 
-:::tip Supported resources
-The following resources can be used to map data from Wiz, it is possible to reference any field that appears in the API responses linked below for the mapping configuration.
+:::tip  支持的资源 以下资源可被引用来映射 Wiz 中的数据，可以引用下面链接的 API 响应中出现的任何字段来进行映射配置。
 
-- [`Project`](https://integrate.wiz.io/reference/pull-projects)
-- [`Issue`](https://integrate.wiz.io/reference/issues-tutorial)
-- [`Control`](https://integrate.wiz.io/docs/welcome#controls)
+* * [`Project`](https://integrate.wiz.io/reference/pull-projects)
+* [`Issue`](https://integrate.wiz.io/reference/issues-tutorial)
+* [`Control`](https://integrate.wiz.io/docs/welcome#controls)
 
 :::
 
-- The root key of the integration configuration is the `resources` key:
+* 集成配置的根密钥是 "资源 "密钥: 
+
 
   ```yaml showLineNumbers
   # highlight-next-line
@@ -291,7 +288,9 @@ The following resources can be used to map data from Wiz, it is possible to refe
       ...
   ```
 
-- The `kind` key is a specifier for a Wiz object:
+
+* 类型 "键是 Wiz 对象的指定符: 
+
 
   ```yaml showLineNumbers
     resources:
@@ -301,7 +300,9 @@ The following resources can be used to map data from Wiz, it is possible to refe
         ...
   ```
 
-- The `selector` and the `query` keys allow you to filter which objects of the specified `kind` will be ingested into your software catalog:
+
+* 通过 "选择器 "和 "查询 "键，您可以过滤哪些指定 "类型 "的对象将被录入软件目录: 
+
 
   ```yaml showLineNumbers
   resources:
@@ -313,7 +314,9 @@ The following resources can be used to map data from Wiz, it is possible to refe
       port:
   ```
 
-- The `port`, `entity` and the `mappings` keys are used to map the Wiz object fields to Port entities. To create multiple mappings of the same kind, you can add another item in the `resources` array;
+
+* Port"、"实体 "和 "映射 "键被用来将 Wiz 对象字段映射到Port实体。要创建多个同类映射，可在 `resources` 数组中添加另一项；
+
 
   ```yaml showLineNumbers
   resources:
@@ -342,26 +345,25 @@ The following resources can be used to map data from Wiz, it is possible to refe
           mappings: ...
   ```
 
-  :::tip Blueprint key
-  Note the value of the `blueprint` key - if you want to use a hardcoded string, you need to encapsulate it in 2 sets of quotes, for example use a pair of single-quotes (`'`) and then another pair of double-quotes (`"`)
-  :::
 
-### Ingest data into Port
+:::tip 蓝图键 注意 `blueprint` 键的值 - 如果要使用硬编码字符串，需要用 2 组引号封装，例如使用一对单引号 (`'`)，然后再用一对双引号 (`"`): ::: 
 
-To ingest Wiz objects using the [integration configuration](#configuration-structure), you can follow the steps below:
+#### 将数据输入Port
 
-1. Go to the DevPortal Builder page.
-2. Select a blueprint you want to ingest using Wiz.
-3. Choose the **Ingest Data** option from the menu.
-4. Select Wiz under the Code quality & security providers category.
-5. Modify the [configuration](#configuration-structure) according to your needs.
-6. Click `Resync`.
+要使用[integration configuration](#configuration-structure) 引用 Wiz 对象，可以按照以下步骤操作: 
 
-## Examples
+1. 转到 DevPortal Builder 页面。
+2. 选择要被 Wiz 引用的蓝图。
+3. 从菜单中选择**采集数据**选项。
+4. 在代码质量和安全 Provider 类别下选择 Wiz。
+5. 根据您的需要修改[configuration](#configuration-structure) 。
+6. 单击 `Resync`。
 
-Examples of blueprints and the relevant integration configurations:
+## 示例
 
-### Project
+蓝图和相关集成配置示例: 
+
+### 项目
 
 <details>
 <summary>Project blueprint</summary>
@@ -430,7 +432,7 @@ resources:
 
 </details>
 
-### Control
+### 控制
 
 <details>
 <summary>Control blueprint</summary>
@@ -485,7 +487,7 @@ resources:
 
 </details>
 
-### Issue
+### 问题
 
 <details>
 <summary>Issue blueprint</summary>
@@ -642,8 +644,7 @@ resources:
 
 </details>
 
-
-### Service Ticket
+### 服务票据
 
 <details>
 <summary>Service Ticket blueprint</summary>
@@ -670,6 +671,7 @@ resources:
   "relations": {}
 }
 ```
+
 </details>
 
 <details>
@@ -692,18 +694,19 @@ resources:
 
 </details>
 
-## Alternative installation via webhook
-While the Ocean integration described above is the recommended installation method, you may prefer to use a webhook to ingest data from Wiz. If so, use the following instructions:
+## 通过 webhook 进行替代安装
+
+虽然上述 Ocean 集成是推荐的安装方法，但您可能更喜欢使用 webhook 从 Wiz 引用数据。 如果是这样，请使用以下说明: 
 
 <details>
 
 <summary><b>Webhook installation (click to expand)</b></summary>
 
-In this example you are going to create a webhook integration between [Wiz](https://wiz.io/) and Port, which will ingest Wiz issue entities into Port.
+在本示例中，您将在[Wiz](https://wiz.io/) 和 Port 之间创建 webhook 集成，将 Wiz 问题实体导入 Port。
 
 <h2>Port configuration</h2>
 
-Create the following blueprint definition:
+创建以下蓝图定义: 
 
 <details>
 <summary>Wiz issue blueprint</summary>
@@ -712,26 +715,26 @@ Create the following blueprint definition:
 
 </details>
 
-Create the following webhook configuration [using Port's UI](/build-your-software-catalog/sync-data-to-catalog/webhook/?operation=ui#configuring-webhook-endpoints)
+创建以下 webhook 配置[using Port's UI](/build-your-software-catalog/sync-data-to-catalog/webhook/?operation=ui#configuring-webhook-endpoints)
 
 <details>
 <summary>Wiz issue webhook configuration</summary>
 
-1. **Basic details** tab - fill the following details:
-   1. Title : `Wiz Mapper`;
-   2. Identifier : `wiz_mapper`;
-   3. Description : `A webhook configuration to map Wiz issues to Port`;
-   4. Icon : `Box`;
-2. **Integration configuration** tab - fill the following JQ mapping:
-
+1. **基本信息** 选项卡 - 填写以下详细信息: 
+    1.title: `Wiz Mapper`；
+    2.标识符 : `wiz_mapper`；
+    3.Description : `将 Wiz 问题映射到 Port` 的 webhook 配置；
+    4.图标 : `Box`；
+2. **集成配置**选项卡 - 填写以下 JQ 映射: 
    <WizConfiguration/>
 
 </details>
 
 <h2>Create a webhook in Wiz</h2>
 
-1. Send an email to win@wiz.io requesting for access to the developer documentation or reach out to your Wiz account manager.
-2. Follow this [guide](https://integrate.wiz.io/reference/webhook-tutorial#create-a-custom-webhook) in the documentation to create a webhook.
+1. 向 win@wiz.io 发送电子邮件，请求访问开发人员文档，或联系您的 Wiz 客户经理。
+2. 按照文档中的[guide](https://integrate.wiz.io/reference/webhook-tutorial#create-a-custom-webhook) 创建 webhook。
 
-Done! Any issue created in Wiz will trigger a webhook event to the webhook URL provided by Port. Port will parse the events according to the mapping and update the catalog entities accordingly.
+完成！在 Wiz 中创建的任何问题都将触发一个 webhook 事件，该事件将发送到 Provider 提供的 webhook URL。 Port 将根据映射解析事件，并相应地更新目录实体。
+
 </details>

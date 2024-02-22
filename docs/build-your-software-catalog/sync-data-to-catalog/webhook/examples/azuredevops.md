@@ -1,22 +1,23 @@
 ---
+
 sidebar_position: 15
-description: Ingest Azure DevOps resources into your catalog
+description: 将 Azure DevOps 资源收录到您的目录中
+
 ---
 
-import ProjectBlueprint from './resources/azuredevops/\_example_project_blueprint.mdx'
-import RepositoryBlueprint from './resources/azuredevops/\_example_repository_blueprint.mdx'
-import PipelineBlueprint from './resources/azuredevops/\_example_pipeline_blueprint.mdx'
-import WorkItemBlueprint from './resources/azuredevops/\_example_work_item_blueprint.mdx'
-import AzureDevopsWebhookConfig from './resources/azuredevops/\_example_webhook_configuration.mdx'
+import ProjectBlueprint from './resources/azuredevops/_example_project_blueprint.mdx'
+import RepositoryBlueprint from './resources/azuredevops/_example_repository_blueprint.mdx'
+import PipelineBlueprint from './resources/azuredevops/_example_pipeline_blueprint.mdx'
+import WorkItemBlueprint from './resources/azuredevops/_example_work_item_blueprint.mdx'
+import AzureDevopsWebhookConfig from './resources/azuredevops/_example_webhook_configuration.mdx'
 
 # Azure DevOps
 
-In this example, we are going to use a script to fetch data from the Azure DevOps API and ingest it into Port.  
-We will also create a webhook integration between [Azure DevOps](https://azure.microsoft.com/en-us/products/devops) and Port, which will ingest `project`, `repository`, `work item` and `pipeline` entities.
+在本示例中，我们将使用脚本从 Azure DevOps API 获取数据并将其导入 Port。我们还将在[Azure DevOps](https://azure.microsoft.com/en-us/products/devops) 和 Port 之间创建 webhook 集成，该集成将导入 "项目"、"资源库"、"工作项 "和 "Pipelines "实体。
 
-## Port configuration
+## Port 配置
 
-Create the following blueprint definition:
+创建以下蓝图定义: 
 
 <details>
 <summary>Project blueprint</summary>
@@ -46,9 +47,9 @@ Create the following blueprint definition:
 
 </details>
 
-## Running the python script
+## 运行 python 脚本
 
-To ingest data from your Azure DevOps account to Port, run the following commands:
+要从 Azure DevOps 账户向 Port 输入数据，请运行以下命令: 
 
 ```bash
 export PORT_CLIENT_ID=<ENTER CLIENT ID>
@@ -63,54 +64,51 @@ cd azure-devops-resources
 pip install -r ./requirements.txt
 
 python app.py
-
 ```
 
-:::tip
-Find more information about the python script [here](https://github.com/port-labs/azure-devops-resources)
+:::tip 查找有关 python 脚本的更多信息[here](https://github.com/port-labs/azure-devops-resources)
 
-Follow the official documentation on how to [create an azure devops app password](https://learn.microsoft.com/en-us/azure/devops/organizations/accounts/use-personal-access-tokens-to-authenticate?view=azure-devops&tabs=Windows).
+请按照官方文档了解如何[create an azure devops app password](https://learn.microsoft.com/en-us/azure/devops/organizations/accounts/use-personal-access-tokens-to-authenticate?view=azure-devops&amp;tabs=Windows) 。
+
 :::
 
-## Port Webhook Configuration
+## Port Webhook 配置
 
-Create the following webhook configuration [using Port's UI](/build-your-software-catalog/sync-data-to-catalog/webhook/?operation=ui#configuring-webhook-endpoints)
+创建以下 webhook 配置[using Port's UI](/build-your-software-catalog/sync-data-to-catalog/webhook/?operation=ui#configuring-webhook-endpoints)
 
 <details>
 
 <summary>Webhook configuration</summary>
 
-1. **Basic details** tab - fill the following details:
-   1. Title : `Azure DevOps Mapper`.
-   2. Identifier : `azure_devops_mapper`.
-   3. Description : `A webhook configuration to map Azure DevOps resources to Port`.
-   4. Icon : `AzureDevops`.
-2. **Integration configuration** tab - fill the following JQ mapping:
-
+1. **基本信息** 选项卡 - 填写以下详细信息: 
+    1.title: `Azure DevOps Mapper`。
+    2.标识符: `azure_devops_mapper`。
+    3.描述 : `将 Azure DevOps 资源映射到 Port` 的 webhook 配置。
+    4.图标 : `AzureDevops`.
+2. **集成配置**选项卡--填写以下 JQ 映射: 
    <AzureDevopsWebhookConfig/>
-
-3. Click **Save** at the bottom of the page.
+3.单击页面底部的**保存**。
 
 </details>
 
-## Create a webhook in Azure DevOps
+## 在 Azure DevOps 中创建 webhook
 
-1. From your Azure DevOps account, open the project where you want to add the webhook.
-2. Click **Project settings** on the left sidebar.
-3. On the General section, select **Service hook** on the left sidebar.
-4. Click the plus **+** button to create a webhook for the project.
-5. A pop up page will be shown. Select **Web Hooks** from the list and click **Next**.
-6. Under **Trigger**, select the type of event you want to receive webhook notifications for. The example webhook configuration supports the following events:
-   1. Code pushed
-   2. Run state changed
-   3. Run job state changed
-   4. Run stage state changed
-   5. Work item created
-   6. Work item updated
-7. Leave the **Filters** section unchanged and click **Next**.
-8. On the final page (**Action Settings**), enter the value of the webhook `URL` you received after creating the webhook configuration in Port in the `URL` textbox.
-9. Test your webhook subscription and click **Finish**.
+1. 从你的 Azure DevOps 账户，打开要添加 webhook 的项目。
+2. 单击左侧边栏上的**项目设置**。
+3. 在常规部分，选择左侧边栏上的**服务钩子**。
+4. 单击加 **+** 按钮，为项目创建 webhook。
+5. 将弹出一个页面。从列表中选择**网络钩子**，然后点击**下一步**。
+6. 在**触发器**下，选择要接收 webhook 通知的事件类型。示例 webhook 配置支持以下事件: 
+    1.代码推送
+    2.运行状态改变
+    3.运行任务状态已更改
+    4.运行阶段状态已更改
+    5.创建工作项
+    6.更新工作项
+7.保留**过滤器**部分不变，然后单击**下一步**。
+8.在最后一页(**操作设置**)，在 `URL` 文本框中输入您在 Port 中创建 webhook 配置后收到的 webhook `URL` 的值。
+9.测试您的 Webhook 订阅，然后单击**完成**。
 
-Follow [this documentation](https://learn.microsoft.com/en-us/azure/devops/service-hooks/events?toc=%2Fazure%2Fdevops%2Fmarketplace-extensibility%2Ftoc.json&view=azure-devops) to learn more about webhook events in Azure DevOps.
+请关注[this documentation](https://learn.microsoft.com/en-us/azure/devops/service-hooks/events?toc=%2Fazure%2Fdevops%2Fmarketplace-extensibility%2Ftoc.json&amp;view=azure-devops) ，了解有关 Azure DevOps 中 webhook 事件的更多信息。
 
-Done! Any change that happens to your repository, work item or pipeline in Azure DevOps will trigger a webhook event to the webhook URL provided by Port. Port will parse the events according to the mapping and update the catalog entities accordingly.
+完成！Azure DevOps 中的版本库、工作项或管道发生的任何更改都会触发指向 Port 提供的 webhook URL 的 webhook 事件。 Port 将根据映射解析事件并相应地更新目录实体。

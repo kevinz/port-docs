@@ -1,30 +1,32 @@
 ---
+
 sidebar_position: 14
-description: String is a primitive data type used to save text data
+description: 字符串是一种原语数据类型，被引用用于保存文本数据
+
 ---
 
-import ApiRef from "../../../../api-reference/\_learn_more_reference.mdx"
+import ApiRef from "../../../../api-reference/_learn_more_reference.mdx"
 
 import Tabs from "@theme/Tabs"
 import TabItem from "@theme/TabItem"
 
-# String
+# 字符串
 
-String is a primitive data type used to save text data.
+字符串是一种原语数据类型，被引用来保存文本数据。
 
-## 💡 Common string usage
+## 💡 常用字符串 Usage
 
-The string property type can be used to store any text based data, for example:
+字符串属性类型可被引用来存储任何基于文本的数据，例如: 
 
-- Image tags;
-- Variable keys;
-- Commit SHA;
-- File names;
-- etc.
+* 镜像标签；
+* 可变密钥
+* 提交 SHA；
+* 文件名；
+* 等等。
 
-In this [live demo](https://demo.getport.io/service_catalog) example, we can see the `Language` string property. 🎬
+在[live demo](https://demo.getport.io/service_catalog) 这个示例中，我们可以看到 `Language` 字符串属性。
 
-## API definition
+## 应用程序接口定义
 
 <Tabs groupId="api-definition" queryString defaultValue="basic" values={[
 {label: "Basic", value: "basic"},
@@ -117,7 +119,7 @@ In this [live demo](https://demo.getport.io/service_catalog) example, we can see
 
 <ApiRef />
 
-## Terraform definition
+## Terraform 定义
 
 <Tabs groupId="tf-definition" queryString defaultValue="basic" values={[
 {label: "Basic", value: "basic"},
@@ -166,7 +168,6 @@ resource "port_blueprint" "myBlueprint" {
   }
   # highlight-end
 }
-
 ```
 
 </TabItem>
@@ -193,13 +194,12 @@ resource "port_blueprint" "myBlueprint" {
     # highlight-end
   }
 }
-
 ```
 
 </TabItem>
 </Tabs>
 
-## Pulumi definition
+## Pulumi 的定义
 
 <Tabs groupId="pulumi-definition" queryString defaultValue="basic" values={[
 {label: "Basic", value: "basic"},
@@ -299,32 +299,32 @@ exports.title = entity.title;
 package main
 
 import (
-	"github.com/port-labs/pulumi-port/sdk/go/port"
-	"github.com/pulumi/pulumi/sdk/v3/go/pulumi"
+    "github.com/port-labs/pulumi-port/sdk/go/port"
+    "github.com/pulumi/pulumi/sdk/v3/go/pulumi"
 )
 
 func main() {
-	pulumi.Run(func(ctx *pulumi.Context) error {
-		blueprint, err := port.NewBlueprint(ctx, "myBlueprint", &port.BlueprintArgs{
-			Identifier: pulumi.String("myBlueprint"),
-			Title:      pulumi.String("My Blueprint"),
+    pulumi.Run(func(ctx *pulumi.Context) error {
+    	blueprint, err := port.NewBlueprint(ctx, "myBlueprint", &port.BlueprintArgs{
+    		Identifier: pulumi.String("myBlueprint"),
+    		Title:      pulumi.String("My Blueprint"),
       // highlight-start
-			Properties: port.BlueprintPropertiesArgs{
-				StringProps: port.BlueprintPropertiesStringPropsMap{
-					"myStringProp": &port.BlueprintPropertiesStringPropsArgs{
+    		Properties: port.BlueprintPropertiesArgs{
+    			StringProps: port.BlueprintPropertiesStringPropsMap{
+    				"myStringProp": &port.BlueprintPropertiesStringPropsArgs{
                         Title:      pulumi.String("My String"),
                         Required:   pulumi.Bool(true),
                     },
                 },
-			},
+    		},
       // highlight-end
-		})
-		ctx.Export("blueprint", blueprint.Title)
-		if err != nil {
-			return err
-		}
-		return nil
-	})
+    	})
+    	ctx.Export("blueprint", blueprint.Title)
+    	if err != nil {
+    		return err
+    	}
+    	return nil
+    })
 }
 ```
 
@@ -443,19 +443,19 @@ exports.title = entity.title;
 package main
 
 import (
-	"github.com/port-labs/pulumi-port/sdk/go/port"
-	"github.com/pulumi/pulumi/sdk/v3/go/pulumi"
+    "github.com/port-labs/pulumi-port/sdk/go/port"
+    "github.com/pulumi/pulumi/sdk/v3/go/pulumi"
 )
 
 func main() {
-	pulumi.Run(func(ctx *pulumi.Context) error {
-		blueprint, err := port.NewBlueprint(ctx, "myBlueprint", &port.BlueprintArgs{
-			Identifier: pulumi.String("myBlueprint"),
-			Title:      pulumi.String("My Blueprint"),
+    pulumi.Run(func(ctx *pulumi.Context) error {
+    	blueprint, err := port.NewBlueprint(ctx, "myBlueprint", &port.BlueprintArgs{
+    		Identifier: pulumi.String("myBlueprint"),
+    		Title:      pulumi.String("My Blueprint"),
       // highlight-start
-			Properties: port.BlueprintPropertiesArgs{
-				StringProps: port.BlueprintPropertiesStringPropsMap{
-					"myStringProp": port.BlueprintPropertiesStringPropsArgs{
+    		Properties: port.BlueprintPropertiesArgs{
+    			StringProps: port.BlueprintPropertiesStringPropsMap{
+    				"myStringProp": port.BlueprintPropertiesStringPropsArgs{
                         Title:      pulumi.String("My String"),
                         Required:   pulumi.Bool(false),
                         Type:       pulumi.String("string"),
@@ -469,17 +469,16 @@ func main() {
                         },
                     },
                 },
-			},
+    		},
       // highlight-end
-		})
-		ctx.Export("blueprint", blueprint.Title)
-		if err != nil {
-			return err
-		}
-		return nil
-	})
+    	})
+    	ctx.Export("blueprint", blueprint.Title)
+    	if err != nil {
+    		return err
+    	}
+    	return nil
+    })
 }
-
 ```
 
 </TabItem>
@@ -489,13 +488,13 @@ func main() {
 </TabItem>
 </Tabs>
 
-## Validate string
+## 验证字符串
 
-String validations support the following operators:
+字符串验证支持以下操作符: 
 
-- `minLength` - enforce minimal string length;
-- `maxLength` - enforce maximal string length;
-- `pattern` - enforce Regex patterns.
+* `minLength` - 执行最小字符串长度；
+* `maxLength` - 执行最大字符串长度；
+* `pattern` - 执行 Regex 模式。
 
 <Tabs groupId="validation-definition" queryString defaultValue="basic" values={[
 {label: "Basic", value: "basic"},
@@ -550,7 +549,6 @@ String validations support the following operators:
 <TabItem value="tf">
 
 ```hcl showLineNumbers
-
 resource "port_blueprint" "myBlueprint" {
   # ...blueprint properties
   # highlight-start
@@ -569,7 +567,6 @@ resource "port_blueprint" "myBlueprint" {
   }
   # highlight-end
 }
-
 ```
 
 </TabItem>

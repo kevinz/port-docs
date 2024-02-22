@@ -1,19 +1,15 @@
 import Tabs from "@theme/Tabs"
 import TabItem from "@theme/TabItem"
 
-# Control the payload
+# 控制有效载荷
 
-Some of the 3rd party applications that you may want to integrate with may not accept the raw payload incoming from
-Port's
-self-service actions. The Port agent allows you to control the payload that is sent to every 3rd party application.
+您可能希望集成的某些第三方应用程序可能不接受从 Port 自助服务操作传入的原始有效载荷。 Port 代理允许您控制发送到每个第三方应用程序的有效载荷。
 
-You can alter the requests sent to your third-party application by providing a payload mapping config file when
-deploying the
-Port-agent container.
+您可以在部署 Port-agent 容器时提供有效载荷映射配置文件，从而更改发送到第三方应用程序的请求。
 
-### Setting up the mapping
+### 设置映射
 
-Setting up the mapping depends on how you install the agent.
+设置映射取决于安装代理的方式。
 
 <Tabs groupId="installationMethod" queryString defaultValue="helm" values={[
   {label: "Helm", value: "helm"},
@@ -22,19 +18,19 @@ Setting up the mapping depends on how you install the agent.
 
 <TabItem value="helm">
 
-In order to provide the mapping configuration to the agent, run the installation command again, and add the following parameter:
+为了向 Provider 提供映射配置，请再次运行安装命令，并添加以下参数: 
 
 ```bash showLineNumbers
-        --set-file controlThePayloadConfig=/PATH/TO/LOCAL/FILE.yml
+--set-file controlThePayloadConfig=/PATH/TO/LOCAL/FILE.yml
 ```
 
 </TabItem>
 
 <TabItem value="argo">
 
-In order to provide the mapping to the agent, add the mapping to the `values.yaml` file created in the installation [here](https://docs.getport.io/create-self-service-experiences/setup-backend/webhook/port-execution-agent/installation-methods/argocd#installation). The needs to be added as a top level field.
+为了向 Provider 提供映射，请将映射添加到安装[here](https://docs.getport.io/create-self-service-experiences/setup-backend/webhook/port-execution-agent/installation-methods/argocd#installation) 中创建的 `values.yaml` 文件中。需要将其添加为顶层字段。
 
-Below you can find the default mapping to use as a starting point:
+下面是被引用的默认映射: 
 
 ```yaml showLineNumbers
 controlThePayloadConfig: |
@@ -46,21 +42,19 @@ controlThePayloadConfig: |
     }
   ]
 ```
+
 </TabItem>
 </Tabs>
 
-### Control the payload mapping
+### 控制有效载荷映射
 
-The payload mapping file is a json file that contains a list of mappings. Each mapping contains the request fields that
-will be overridden and sent to the 3rd party application.
+有效载荷映射文件是一个包含映射列表的 json 文件，每个映射都包含将被覆盖并发送到第三方应用程序的请求字段。
 
-You can see examples showing how to deploy the Port agent with different mapping configurations for various common use
-cases below.
+下面的示例展示了如何针对各种常见用例使用不同的映射配置来部署 Port 代理。
 
-Each of the mapping fields can be constructed by JQ expressions. The JQ expression will be evaluated against the
-original payload that is sent to the port agent from Port and the result will be sent to the 3rd party application.
+每个映射字段都可由 JQ 表达式构建，JQ 表达式将根据从 Port 发送给Port代理的原始有效载荷进行评估，评估结果将发送给第三方应用程序。
 
-Here is the mapping file schema:
+下面是映射文件模式: 
 
 ```showLineNumbers
 [ # Can have multiple mappings. Will use the first one it will find with enabled = True (Allows you to apply mapping over multiple actions at once)
@@ -81,7 +75,7 @@ Here is the mapping file schema:
 ]
 ```
 
-**The body can be partially constructed by json as follows:**
+*** 主体可由 json 部分构建如下: **
 
 ```json showLineNumbers
 {
@@ -95,32 +89,31 @@ Here is the mapping file schema:
 }
 ```
 
-### Mapping examples
+### 映射示例
 
-Below you can find some mapping examples to demonstate how you can use JQ and the action payload sent from Port to change the payload sent to your target endpoint by the agent.
-In each mapping, we will show the relevant fields.
+下面是一些映射示例，说明如何使用 JQ 和从 Port 发送的操作有效载荷来更改代理向目标端点发送的有效载荷。 在每个映射中，我们将显示相关字段。
 
-#### Apply a filter to the mapping
+#### 应用映射过滤器
 
-Assuming you have a few different invocation methods for your actions, you can create a mapping configuration that is only applied to actions that are of a specific type.
+假设你的操作有几种不同的调用方法，你可以创建一个映射配置，只应用于特定类型的操作。
 
-For example, to create a filter that applies only to actions with the `GitLab` method:
+例如，要创建一个过滤器，只应用于使用 `GitLab` 方法的操作: 
 
 ```text showLineNumbers
 "enabled": ".payload.invocationMethod.type == \"GITLAB\""
 ```
 
-#### Create a URL based on a property
+#### 根据属性创建 URL
 
-Assuming a `webhook` invocation action is configured to forward the request to the URL `http://test.com/`, and the action in Port contains a `number` type input called `network_port` meant to specify the network port to send the request to, here is how you can construct the complete URL using the URL and the additional input:
+假设配置了一个 `webhook` 调用操作，将请求转发到 URL `http://test.com/`，并且 Port 中的操作包含一个名为 `network_port` 的 `number` 类型输入，用于指定发送请求的网络Port，下面是如何使用 URL 和附加输入构建完整的 URL: 
 
 ```text showLineNumbers
 "url": ".payload.invocationMethod.url + .payload.properties.network_port"
 ```
 
-Invoking the action with the input 8080 to the property `network_port` will cause the agent to send the webhook request to `http://test.com/8080`.
+在属性 `network_port` 中输入 8080 后，调用该操作将导致代理向 `http://test.com/8080` 发送 webhook 请求。
 
-### The incoming message to base your mapping on
+###要以映射为基础的接收信息
 
 ```json showLineNumbers
 {
@@ -182,32 +175,28 @@ Invoking the action with the input 8080 to the property `network_port` will caus
 }
 ```
 
-## Report action status back to Port
+## 向 Port 报告行动状态
 
-The agent is capable of reporting the action status back to Port using the `report` field in the mapping.
+代理可使用映射中的 "report "字段向 Port 报告操作状态。
 
-The report request will be sent to the Port API right after the request to the 3rd party application is sent and update
-the run status in Port.
+向第三方应用程序发出请求后，报告请求将立即发送到 Port API，并更新 Port 中的运行状态。
 
-The agent uses the JQ in the `report` field to construct the report request body.
+代理被引用 "报告 "字段中的 JQ 来构建报告请求正文。
 
-The available fields are:
+可用字段有
 
-- `status` - The status of the run. Can be one of the following values: `SUCCESS` / `FAILURE`
-- `link` - A link to the run in the 3rd party application. Can be a string or a list of strings.
-- `summary` - A string summary of the run.
-- `externalRunId` - The external run id in the 3rd party application. The external run id is used to allow a search of
-  the action runs in Port by the external run id.
+* `status` - 运行状态。可以是以下 Values 之一: 成功/失败
+* `link` - 指向第三方应用程序中运行的链接。可以是字符串或字符串列表。
+* `summary` - 运行的字符串摘要。
+* `externalRunId` - 第三方应用程序中的外部运行 ID。外部运行 ID 用于被引用，以便通过外部运行 ID 搜索 Port 中的运行。
 
-The report mapping can use the following fields:
+报告映射可被引用以下字段: 
 
-`.body` - The incoming message as mentioned [above](#the-incoming-message-to-base-your-mapping-on)
-`.request` - The request that was calculated using the control the payload mapping and sent to the 3rd party application
-`.response` - The response that was received from the 3rd party application
+`.body` - 如[above](#the-incoming-message-to-base-your-mapping-on)所述的传入信息 `.request` - 使用控制有效载荷映射计算并发送给第三方应用程序的请求 `.response` - 从第三方应用程序收到的响应
 
-The `response` field contains the following fields:
+响应 "字段包含以下字段: 
 
-- `statusCode` - The status code of the response
-- `json` - The response body as a json object
-- `text` - The response body as a string
-- `headers` - The response headers as a json object
+* `statusCode` - 响应的状态代码
+* `json` - 以 json 对象形式显示的响应正文
+* `text` - 字符串形式的响应正文
+* `headers` - json 对象的响应标题

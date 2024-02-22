@@ -1,7 +1,7 @@
-# Examples
+# 示例
 
 import DocCardList from '@theme/DocCardList';
 
-Checkout the following examples for integrating Port with GCP:
+查看以下将 Port 与 GCP 集成的示例: 
 
 <DocCardList/>

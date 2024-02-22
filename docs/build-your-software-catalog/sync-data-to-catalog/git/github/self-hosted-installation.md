@@ -1,97 +1,99 @@
 ---
+
 sidebar_position: 5
+
 ---
 
-import FindCredentials from "../../api/\_template_docs/\_find_credentials.mdx"
+import FindCredentials from "../../api/_template_docs/_find_credentials.mdx"
 
-# Self Hosted Installation
+# 自主安装
 
-:::note Prerequisites
+:::note  先决条件
 
-- A registered organization in Port;
-- Your Port user role is set to `Admin`.
+* 已在 Port 注册的机构；
+* 您的 Port 用户角色设置为 "Admin"。
 
 :::
 
-In organizations that have a self-hosted GitHub installation there is no access to our official public app, therefore there are some extra steps you need to take to install the GitHub app:
+对于自行安装 GitHub 的组织，无法访问我们的官方公共应用程序，因此需要采取一些额外步骤来安装 GitHub 应用程序: 
 
-1. [Register](#register-ports-github-app) Port's GitHub app in your GitHub organization;
-2. [Deploy](#deployment) Port's GitHub app Docker image inside your VPC;
-3. [Install](#installing-ports-github-application) Port's GitHub app in your GitHub organization and on select repositories.
+1. [Register](#register-ports-github-app) Port 在 GitHub 组织中的 GitHub 应用程序；
+2. [Deploy](#deployment) Port 的 GitHub 应用程序在您的 VPC 中的 Docker 镜像；
+3. [Install](#installing-ports-github-application) Port's GitHub 应用程序在您的 GitHub 组织和特定软件源中。
 
-## Register Port's GitHub App
+## 注册 Port 的 GitHub 应用程序
 
-1. Navigate to your organization inside your self-hosted GitHub and click on Settings:
+1. 在自我托管的 GitHub 中导航到你的组织，点击设置: 
 
 ![Org view](../../../../../static/img/integrations/github-app/SelfHostedOrganizaionView.png)
 
-2. Inside the settings view, click on Developer Settings -> and then select GitHub Apps:
+2.在设置视图中，点击开发者设置 -> 然后选择 GitHub 应用程序: 
 
 ![Settings view](../../../../../static/img/integrations/github-app/SelfHostedOrganizationSettings.png)
 
-3. Click on "New GitHub App":
+3.点击 "新建 GitHub 应用程序": 
 
 ![New GitHub App](../../../../../static/img/integrations/github-app/SelfHostedNewGitHubApp.png)
 
-4. Insert the following properties:
+4.插入以下属性
 
-- **GitHub App name:** port.io
-- **Homepage URL:** https://getport.io
-- **Setup URL:** https://app.getport.io
-- **Webhook URL:** HTTP Server URL, if you don't yet know the value of this step, leave it blank until you deploy the GitHub backend
-- **Webhook secret:** Webhook secret (Any string you would like)
-- **Repository Permissions:**
-  - Actions: Read and Write (for executing self-service action using GitHub workflow)
-  - Checks: Read and Write (for validating `Port.yml`)
-  - Contents: Readonly (for reading port configuration files and repository files)
-  - Metadata: Readonly
-  - Issues: Readonly
-  - Pull Request: Read and Write
-  - Dependabot alerts: Readonly
-  - Administration: Readonly (for syncing github teams)
-- **Organization Permissions:**
-  - Members: Readonly (for syncing github teams)
-- **Repository Events** (required to receive webhook changes from GitHub):
-  - Issues
-  - Pull Request
-  - Push
-  - Workflow Run
-  - Team
-  - Dependabot alerts
+* **GitHub 应用程序名称: ** Port.io
+* **主页 URL:** https://getport.io
+* **设置 URL:** https://app.getport.io
+* **Webhook URL: ** HTTP 服务器 URL，如果您还不知道这一步的值，请留空，直到您部署了 GitHub 后端为止
+* **Webhook secret: ** Webhook secret(任何你想要的字符串)
+* **存储库权限: **
+    - 操作: 读取和写入(用于使用 GitHub 工作流执行自助操作)
+    - 检查: 读取和写入(用于验证 Port.yml)
+    - 内容: 只读(用于读取Port配置文件和版本库文件)
+    - 元数据: 只读
+    - 问题: 只读
+    - 拉取请求: 读写
+    - Dependabot 警报只读
+    - 管理: 只读(用于同步 github 团队)
+* **组织权限: **
+    - 成员: 只读(用于同步 Github 团队)
+* **Repository Events**(接收来自 GitHub 的 webhook 变动所需的权限): 
+    - 问题
+    - 拉取请求
+    - 推送
+    - 工作流运行
+    - 团队
+    - Dependabot 警报
 
-Then select "Create GitHub App"
+然后选择 "创建 GitHub 应用程序
 
-5. Go to the settings of the created GitHub App and generate a private key and save the downloaded file:
+5.进入已创建的 GitHub App 的设置，生成私钥并保存下载的文件: 
 
 ![Generate Private key](../../../../../static/img/integrations/github-app/SelfHosetdGeneratePrivayKey.png)
 
-Keep the file, you will need it for the deployment step.
+保留该文件，部署步骤将需要它。
 
-## Deployment
+## 部署
 
-:::note Prerequisites
+:::note  先决条件
 
-You will need your Port `CLIENT_ID` and `CLIENT_SECRET`.
+您需要输入 Port `CLIENT_ID`和`CLIENT_SECRET`。
 
 <FindCredentials/>
 
 :::
 
-In order to make use of [Self-Service Actions using GitHub Workflow](../../../../create-self-service-experiences/setup-backend/github-workflow/github-workflow.md), please contact us at support@getport.io.
+如需使用[Self-Service Actions using GitHub Workflow](../../../../create-self-service-experiences/setup-backend/github-workflow/github-workflow.md) ，请通过 support@getport.io 与我们联系。
 
 ## Docker
 
-To use our GitHub app you will need to deploy our official GitHub app docker image on your VPC.
+要使用我们的 GitHub 应用程序，您需要在 VPC 上部署我们的 GitHub 应用程序官方 docker 镜像。
 
-It can be deployed on any platform that allows deploying images as containers such as: K8S, ECS, AWS App Runner, etc.
+它可以部署在任何允许将镜像作为容器部署的平台上，如: K8s、ECS、AWS App Runner 等。
 
-You can pull the Docker image by running:
+您可以通过运行以下命令拉取 Docker 镜像: 
 
 ```bash showLineNumbers
 docker pull ghcr.io/port-labs/port-self-hosted-github-app:0.12.0
 ```
 
-Run the following command to start the app:
+运行以下命令启动应用程序: 
 
 ```bash showLineNumbers
 docker run \
@@ -107,6 +109,7 @@ docker run \
   ghcr.io/port-labs/port-self-hosted-github-app
 ```
 
+
 | Env variable         | Description                                                                         |
 | -------------------- | ----------------------------------------------------------------------------------- |
 | `APP_ID`             | Application ID, you can find it in the edit GitHub App page                         |
@@ -118,38 +121,37 @@ docker run \
 | `PORT_CLIENT_SECRET` | Port client secret for interacting with the API                                     |
 | `PRIVATE_KEY`        | A base64 encoded private key. You can use a tool like https://www.base64encode.org/ |
 
-## Health check route
 
-A health check is a route that is used to check the health of a service. It is a means to ensure that the service is running properly and can perform its intended function.
+## 健康检查路线
 
-Our GitHub App image exposes a health check route at `https://host:port/health` to monitor its status.
+健康检查是一种被引用来检查服务健康状况的途径，是确保服务正常运行并能执行其预期功能的一种手段。
 
-## Installing Port's GitHub application
+我们的 GitHub 应用镜像在 `https://host:port/health` 公开了一个健康检查路由，以监控其状态。
 
-After you have the app registered in your organization and the Docker is up and running, you can install the app and select the repositories to integrate it with:
+## 安装 Port 的 GitHub 应用程序
 
-1. First, navigate to your organization inside your self-hosted GitHub and click on Settings:
+在您的组织中注册了应用程序，Docker 也已启动并运行后，您就可以安装应用程序，并选择要与之集成的软件源: 
+
+1. 首先，在自我托管的 GitHub 中导航到你的组织，然后点击设置: 
 
 ![Org view](../../../../../static/img/integrations/github-app/SelfHostedOrganizaionView.png)
 
-2. Inside the settings view, click on Developer Settings -> and then select GitHub Apps:
+2.在设置视图中，点击开发者设置 -> 然后选择 GitHub 应用程序: 
 
 ![Settings view](../../../../../static/img/integrations/github-app/SelfHostedOrganizationSettings.png)
 
-3. Click `edit` on the GitHub app created at the step before:
+3.在前一步创建的 GitHub 应用程序上点击 "编辑": 
 
 ![GitHub app installation page](../../../../../static/img/integrations/github-app/SelfHostedEditGitHubApp.png)
 
-4. Go to Install App -> and select the installation button on your wanted organization;
-
-5. Choose the repositories you want the app to be installed for:
+4.转到 "安装应用程序"->，选择您想要的组织的安装按钮；
+5.选择要安装应用程序的软件源: 
 
 ![GitHub app installation chooses repositories](../../../../../static/img/integrations/github-app/SelfHostedInstallationRepoSelection.png)
 
-## Limitations
+## 限制
 
-As this is a self-hosted version, there are some limitations due to security considerations and the fact that we don't have access to your GitHub instance
+由于这是一个自托管版本，出于安全考虑会有一些限制，而且我们无法访问您的 GitHub 实例。
 
-- You must include configuration as part of the repository, and you can't configure it via Port's UI/API;
-
-- To use self-service actions, you will need [Kafka Credentials](/create-self-service-experiences/setup-backend/webhook/kafka/kafka.md) configured for your organization;
+* 您必须将配置作为版本库的一部分，而且不能通过 Port 的用户界面/API 进行配置；
+* 要使用自助服务操作，您需要为组织配置[Kafka Credentials](/create-self-service-experiences/setup-backend/webhook/kafka/kafka.md) ；

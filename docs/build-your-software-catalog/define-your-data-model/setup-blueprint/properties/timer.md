@@ -1,30 +1,32 @@
 ---
+
 sidebar_position: 17
-description: Timer is a data type used to define an expiration date/lifespan of a specific entity
+description: 定时器计时器是一种数据类型，用于定义特定实体的过期日期/生命周期
+
 ---
 
-import ApiRef from "../../../../api-reference/\_learn_more_reference.mdx"
+import ApiRef from "../../../../api-reference/_learn_more_reference.mdx"
 
 import Tabs from "@theme/Tabs"
 import TabItem from "@theme/TabItem"
 
-# Timer
+# 定时器
 
-Timer is a data type used to define an expiration date/lifespan of a specific entity.
+定时器是一种数据类型，用于定义特定实体的过期日期/寿命。
 
-## 💡 Common timer usage
+## 💡 常用计时器 Usage
 
-The timer property type can be used to store the future expiration date of catalog entities and properties, for example:
+例如，计时器属性类型可被用来存储目录实体和属性的未来到期日期: 
 
-- Temporary development environment;
-- Countdown to next healthcheck;
-- Temporary cloud resources;
-- Add temporary permissions to resource;
-- etc.
+* 临时开发环境；
+* 下一次健康检查倒计时；
+* 临时云资源；
+* 为资源添加临时权限；
+* 等等。
 
-In this [live demo](https://demo.getport.io/developerEnvs) example, we can see the `TTL` timer property. 🎬
+在[live demo](https://demo.getport.io/developerEnvs) 这个示例中，我们可以看到 `TTL` 定时器属性。
 
-## API definition
+## 应用程序接口定义
 
 <Tabs groupId="api-definition" queryString defaultValue="basic" values={[
 {label: "Basic", value: "basic"}
@@ -52,7 +54,7 @@ In this [live demo](https://demo.getport.io/developerEnvs) example, we can see t
 
 <ApiRef />
 
-## Terraform definition
+## Terraform 定义
 
 <Tabs groupId="tf-definition" queryString defaultValue="basic" values={[
 {label: "Basic", value: "basic"}
@@ -82,7 +84,7 @@ resource "port_blueprint" "myBlueprint" {
 </TabItem>
 </Tabs>
 
-## Pulumi definition
+## Pulumi 的定义
 
 <Tabs groupId="pulumi-definition" queryString defaultValue="basic" values={[
 {label: "Basic", value: "basic"},
@@ -185,33 +187,33 @@ exports.title = entity.title;
 package main
 
 import (
-	"github.com/port-labs/pulumi-port/sdk/go/port"
-	"github.com/pulumi/pulumi/sdk/v3/go/pulumi"
+    "github.com/port-labs/pulumi-port/sdk/go/port"
+    "github.com/pulumi/pulumi/sdk/v3/go/pulumi"
 )
 
 func main() {
-	pulumi.Run(func(ctx *pulumi.Context) error {
-		blueprint, err := port.NewBlueprint(ctx, "myBlueprint", &port.BlueprintArgs{
-			Identifier: pulumi.String("myBlueprint"),
-			Title:      pulumi.String("My Blueprint"),
+    pulumi.Run(func(ctx *pulumi.Context) error {
+    	blueprint, err := port.NewBlueprint(ctx, "myBlueprint", &port.BlueprintArgs{
+    		Identifier: pulumi.String("myBlueprint"),
+    		Title:      pulumi.String("My Blueprint"),
       // highlight-start
-			Properties: port.BlueprintPropertiesArgs{
-				StringProps: port.BlueprintPropertiesStringPropsMap{
-					"myTimerProp": &port.BlueprintPropertiesStringPropsArgs{
+    		Properties: port.BlueprintPropertiesArgs{
+    			StringProps: port.BlueprintPropertiesStringPropsMap{
+    				"myTimerProp": &port.BlueprintPropertiesStringPropsArgs{
                         Title:    pulumi.String("My timer"),
                         Format:   pulumi.String("timer"),
                         Required: pulumi.Bool(true),
                     },
                 },
-			},
+    		},
       // highlight-end
-		})
-		ctx.Export("blueprint", blueprint.Title)
-		if err != nil {
-			return err
-		}
-		return nil
-	})
+    	})
+    	ctx.Export("blueprint", blueprint.Title)
+    	if err != nil {
+    		return err
+    	}
+    	return nil
+    })
 }
 ```
 
@@ -222,14 +224,14 @@ func main() {
 </TabItem>
 </Tabs>
 
-## Example
+## 示例
 
-Here is an entity for a `timerExample` blueprint which has a timer property with the identifier `timer`.
+下面是一个 `timerExample` 蓝图的实体，它有一个标识符为 `timer` 的定时器属性。
 
-In the example entity, an expiration datetime is specified:
+在示例实体中，指定了过期日期: 
 
 ```json showLineNumbers
-  "identifier": "entityIdentifier",
+"identifier": "entityIdentifier",
   "title": "Timer Example",
   "icon": "Microservice",
   "blueprint": "timerExample",
@@ -240,21 +242,21 @@ In the example entity, an expiration datetime is specified:
   "relations": {}
 ```
 
-Looking at Port's UI, we can see that the timer we created expires in 2 hours:
+查看 Port 的用户界面，可以看到我们创建的计时器将在 2 小时后过期: 
 
 ![Timer entity](../../../../../static/img/software-catalog/entity/TTLCreateEntity.png)
 
-After 2 hours pass, the property status will change to `Expired`, and an event of `Timer Expired` will be sent to the ChangeLog:
+2 小时后，属性状态将变为 "已过期"，"定时器已过期 "事件将被发送到更改日志: 
 
 ![Timer entity expired](../../../../../static/img/software-catalog/entity/TTLExpiredEntity.png)
 
-The timer expiration event will also appear in Port's audit log:
+计时器过期事件也会出现在 Port 的审核日志中: 
 
 ![Timer Audit log](../../../../../static/img/software-catalog/entity/AuditLogTTL.png)
 
 <!-- TODO: add a link to the docs about changelog destination and event listener -->
 
-In order to notify about the timer expiration, the following notification body will be sent to the Webhook/Kafka topic configured in the blueprint's `changelogDestination`:
+为了通知定时器到期，以下通知正文将被发送到在蓝图的 "changelogDestination "中配置的 Webhook/Kafka 主题: 
 
 ```json showLineNumbers
 {

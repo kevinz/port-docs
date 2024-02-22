@@ -1,28 +1,30 @@
 ---
+
 sidebar_position: 2
-description: Array is a data type used to save lists of data
+description: 数组数组是一种数据类型，被引用用于保存数据列表
+
 ---
 
-import ApiRef from "../../../../api-reference/\_learn_more_reference.mdx"
+import ApiRef from "../../../../api-reference/_learn_more_reference.mdx"
 
 import Tabs from "@theme/Tabs"
 import TabItem from "@theme/TabItem"
 
-# Array
+# 阵列
 
-Array is a data type used to save lists of data.
+数组是一种用于保存数据列表的数据类型。
 
-## 💡 Common array usage
+## 💡 常用数组 Usage
 
-The array property type can be used to store any list of data, for example:
+例如，数组属性类型可被引用来存储任何数据列表: 
 
-- Used packages
-- Dependencies
-- Badges
+* 被引用的软件包
+* 依赖关系
+* 徽章
 
-In this [live demo](https://demo.getport.io/service_catalog) example, we can see the `Monitor Tooling` array property. 🎬
+在[live demo](https://demo.getport.io/service_catalog) 这个示例中，我们可以看到 `Monitor Tooling` 数组属性。
 
-## API definition
+## 应用程序接口定义
 
 ```json showLineNumbers
 {
@@ -40,7 +42,7 @@ In this [live demo](https://demo.getport.io/service_catalog) example, we can see
 
 <ApiRef />
 
-## Terraform definition
+## Terraform 定义
 
 ```hcl showLineNumbers
 resource "port_blueprint" "myBlueprint" {
@@ -58,9 +60,7 @@ resource "port_blueprint" "myBlueprint" {
 }
 ```
 
-:::info
-To set the type of an array property, you need to use the `<type>_items` property type.
-For example, to set an array of strings, you need to use the `string_items` property type.
+:::info 要设置数组属性的类型，需要使用 `<type>_items` 属性类型。例如，要设置字符串数组，需要使用 `string_items` 属性类型。
 
 ```
 resource "port_blueprint" "myBlueprint" {
@@ -77,10 +77,11 @@ resource "port_blueprint" "myBlueprint" {
 }
 ```
 
-We currently support the following types of array items: `string_items`, `number_items`, `boolean_items`, `object_items`.
+我们目前支持以下类型的数组项: `string_items`, `number_items`, `boolean_items`, `object_items`。
+
 :::
 
-## Pulumi definition
+## Pulumi 的定义
 
 <Tabs groupId="basic" queryString defaultValue="python" values={[
 {label: "Python", value: "python"},
@@ -173,32 +174,32 @@ exports.title = entity.title;
 package main
 
 import (
-	"github.com/port-labs/pulumi-port/sdk/go/port"
-	"github.com/pulumi/pulumi/sdk/v3/go/pulumi"
+    "github.com/port-labs/pulumi-port/sdk/go/port"
+    "github.com/pulumi/pulumi/sdk/v3/go/pulumi"
 )
 
 func main() {
-	pulumi.Run(func(ctx *pulumi.Context) error {
-		blueprint, err := port.NewBlueprint(ctx, "myBlueprint", &port.BlueprintArgs{
-			Identifier: pulumi.String("myBlueprint"),
-			Title:      pulumi.String("My Blueprint"),
+    pulumi.Run(func(ctx *pulumi.Context) error {
+    	blueprint, err := port.NewBlueprint(ctx, "myBlueprint", &port.BlueprintArgs{
+    		Identifier: pulumi.String("myBlueprint"),
+    		Title:      pulumi.String("My Blueprint"),
       // highlight-start
-			Properties: port.BlueprintPropertiesArgs{
-				ArrayProps: port.BlueprintPropertiesArrayPropsMap{
+    		Properties: port.BlueprintPropertiesArgs{
+    			ArrayProps: port.BlueprintPropertiesArrayPropsMap{
                     "myArrayProp": port.BlueprintPropertyArgs{
                         Title:    pulumi.String("My array"),
                         Required: pulumi.Bool(true),
                     },
                 },
-			},
+    		},
       // highlight-end
-		})
-		ctx.Export("blueprint", blueprint.Title)
-		if err != nil {
-			return err
-		}
-		return nil
-	})
+    	})
+    	ctx.Export("blueprint", blueprint.Title)
+    	if err != nil {
+    		return err
+    	}
+    	return nil
+    })
 }
 ```
 
@@ -206,16 +207,16 @@ func main() {
 
 </Tabs>
 
-## Validate array
+## 验证数组
 
-Array validations support the following operators:
+数组验证支持以下操作符: 
 
-- `minItems`
-- `maxItems`
-- `uniqueItems`
+* 最小项目
+* 最大项目
+* 唯一项目
 
-:::tip
-Array validations follow the JSON schema model, refer to the [JSON schema docs](https://json-schema.org/understanding-json-schema/reference/array.html) to learn about all of the available validations
+:::tip 数组验证遵循 JSON 模式模型，请参阅[JSON schema docs](https://json-schema.org/understanding-json-schema/reference/array.html) 了解所有可用的验证。
+
 :::
 
 <Tabs groupId="validation-definition" queryString defaultValue="basic" values={[

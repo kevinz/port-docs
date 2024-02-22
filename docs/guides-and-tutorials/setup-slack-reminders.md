@@ -1,40 +1,44 @@
 ---
+
 sidebar_position: 7
-title: Send Slack reminders for scorecards
+title: 为记分卡发送 Slack 提醒
+
 ---
 
 import Tabs from "@theme/Tabs"
 import TabItem from "@theme/TabItem"
 import PortTooltip from "/src/components/tooltip/tooltip.jsx"
 
-# Slack reminders for scorecards
+# Slack 记分卡提醒
 
-This guide takes 7 minutes to complete, and aims to demonstrate:
-* How to initiate changes in the organization using scorecards
-* How to automate Slack reminders using Port's self service actions
+本指南只需 7 分钟即可完成，旨在展示以下内容: 
 
-:::tip Prerequisites
+* 如何使用记分卡启动组织变革
+* 如何使用 Port 的自助服务操作自动执行 Slack 提醒
 
-- This guide assumes you have a Port account and that you have finished the [onboarding process](/quickstart). We will use the `Service` blueprint that was created during the onboarding process.
-- You will need a Git repository in which you can place a workflow/pipeline that we will use in this guide. If you don't have one, we recommend creating a new repository named `Port-actions`.
+:::tip  先决条件
+
+* 本指南假定您已拥有 Port 账户，并已完成[onboarding process](/quickstart) 。我们将使用入职过程中创建的 "服务 "蓝图。
+* 您需要一个 Git 仓库，在其中放置本指南将使用的工作流/Pipelines。如果没有，建议创建一个名为 `Port-actions` 的新仓库。
+
 :::
 
 <br/>
 
-### The goal of this guide
+### 本指南的目标
 
-In this guide we will create a self-service action that sends a Slack reminder for uncompleted [scorecard rules](https://docs.getport.io/promote-scorecards/#what-is-a-scorecard). In reality, such an action can be used by R&D managers / Platform engineers to remind developers of unmet standards.
+在本指南中，我们将创建一个自助操作，为未完成的[scorecard rules](https://docs.getport.io/promote-scorecards/#what-is-a-scorecard) 发送 Slack 提醒。实际上，这样的操作可被研发经理/平台工程师用来提醒开发人员未达到的标准。
 
-After completing it, you will get a sense of how it can benefit different personas in your organization:
+完成这项工作后，你就会了解它如何使你的组织中的不同角色受益: 
 
-- Developers will be notified about policies set by the platform engineer that need to be fixed.
-- R&D managers & Platform engineers will be able to remind developers about unmet requirements in the services.
+* 开发人员将收到平台工程师设定的需要修复的政策通知。
+* 研发经理和平台工程师将能提醒开发人员服务中未满足的要求。
 
 <br/>
 
-### Setup the action's frontend
+#### 设置动作的前端
 
-Let's start by creating the action's frontend. This is the part that will be used by developers to trigger the action:
+让我们从创建动作的前端开始。 这部分将被开发人员用来触发动作: 
 
 <Tabs groupId="git-provider" queryString values={[
 {label: "Github", value: "github"},
@@ -43,98 +47,96 @@ Let's start by creating the action's frontend. This is the part that will be use
 
 <TabItem value="github" label="Github">
 
-:::tip Onboarding
+:::tip  入职
 
-As part of the onboarding process, you should already have an action named `Send scorecard reminder` in your [self-service tab](https://app.getport.io/self-serve). In that case, you can skip to the [Define action type](#define-backend-type) step.  
+作为入职流程的一部分，您的[self-service tab](https://app.getport.io/self-serve) 中应该已经有一个名为 "发送记分卡提醒 "的操作。在这种情况下，您可以跳到[Define action type](#define-backend-type) 步骤。
 
-If you **skipped** the onboarding, or you want to create the action from scratch, complete steps 1-4 below.
+如果您跳过了***登录，或者您想从头开始创建操作，请完成以下 1-4 步骤。
 
 :::
 
 <details>
 <summary><b>Create the action's frontend (steps 1-4)</b></summary>
 
-1. To get started, head to the [Self-service tab](https://app.getport.io/self-serve) in your Port application, and click on `New action`:
+1. 要开始操作，请访问 Port 应用程序中的[Self-service tab](https://app.getport.io/self-serve) ，然后点击 "新建操作": 
 
 <img src='/img/guides/actionsCreateNew.png' width='50%' />
 
-2. Each action in Port is directly tied to a <PortTooltip id="blueprint">blueprint</PortTooltip>. Since we are sending a reminder for a service, we will use the `Service` blueprint we created in the [quickstart guide](/quickstart) from the dropdown.
-
-3. Fill in the basic details of the action like this, then click `Next`:
+2.Port 中的每个操作都与一个<PortTooltip id="blueprint">蓝图</PortTooltip>直接相关。由于我们要发送的是服务提醒，因此将从下拉菜单中引用我们在[quickstart guide](/quickstart) 中创建的 "服务 "蓝图。
+3.像这样填写操作的基本细节，然后单击 "下一步": 
 
 <img src='/img/guides/actionReminderBasicDetails.png' width='60%' />
 
-4. Click `Next` again, since we won't need inputs from the user in this action.
+4.再次单击 "下一步"，因为在此操作中我们不需要用户输入信息。
 
 </details>
 
-#### Define backend type
+#### 定义后端类型
 
-Now we'll define the backend of the action:
-  
-  - Choose `Github workflow` as the invocation type.
-  - Replace the `Organization` and `Repository` values with your values (this is where the workflow will reside and run).
-  - Name the workflow `portSlackReminder.yaml`.
-  - Fill out the rest of the form like this, then click `Next`:
+现在我们来定义动作的后端: 
+
+* 选择 "Github 工作流 "作为调用类型。
+* 用您的 Values 替换 `Organization` 和 `Repository` 值(这是工作流将驻留和运行的位置)。
+* 将工作流命名为 `portSlackReminder.yaml`。
+* 像这样填写表单的其余部分，然后单击 `下一步`: 
 
 <img src='/img/guides/slackReminderBackend.png' width='70%' />
 
 <br/><br/>
 
-The last step is customizing the action's permissions. For simplicity's sake, we will use the default settings. For more information, see the [permissions](/create-self-service-experiences/set-self-service-actions-rbac/) page. Click `Create`.
+最后一步是自定义动作的权限。 为简单起见，我们将使用默认设置。 欲了解更多信息，请参阅[permissions](/create-self-service-experiences/set-self-service-actions-rbac/) 页面。 点击 "创建"。
 
 </TabItem>
 
 <TabItem value="gitlab" label="GitLab">
 
-:::tip Onboarding
+:::tip  入职
 
-As part of the onboarding process, you should already have an action named `Send scorecard reminder` in your [self-service tab](https://app.getport.io/self-serve). In that case, you can skip to the [Define action type](#define-backend-type) step.  
+作为入职流程的一部分，您的[self-service tab](https://app.getport.io/self-serve) 中应该已经有一个名为 "发送记分卡提醒 "的操作。在这种情况下，您可以跳到[Define action type](#define-backend-type) 步骤。
 
-If you **skipped** the onboarding, or you want to create the action from scratch, complete steps 1-4 below.
+如果您跳过了***登录，或者您想从头开始创建操作，请完成以下 1-4 步骤。
 
 :::
 
 <details>
 <summary><b>Create the action's frontend (steps 1-4)</b></summary>
 
-1. To get started, head to the [Self-service tab](https://app.getport.io/self-serve) in your Port application, and click on `New action`:
+1. 要开始操作，请访问 Port 应用程序中的[Self-service tab](https://app.getport.io/self-serve) ，然后点击 "新建操作": 
 
 <img src='/img/guides/actionsCreateNew.png' width='50%' />
 
-2. Each action in Port is directly tied to a <PortTooltip id="blueprint">blueprint</PortTooltip>. Since we are sending a reminder for a service, we will use the `Service` blueprint we created in the [quickstart guide](/quickstart) from the dropdown.
-
-3. Fill in the basic details of the action like this, then click `Next`:
+2.Port 中的每个操作都与一个<PortTooltip id="blueprint">蓝图</PortTooltip>直接相关。由于我们要发送的是服务提醒，因此将从下拉菜单中引用我们在[quickstart guide](/quickstart) 中创建的 "服务 "蓝图。
+3.像这样填写操作的基本细节，然后单击 "下一步": 
 
 <img src='/img/guides/actionReminderBasicDetails.png' width='60%' />
 
-4. Click `Next` again, since we won't need inputs from the user in this action.
+4.再次单击 "下一步"，因为在此操作中我们不需要用户输入信息。
 
 </details>
 
-Now we'll define the backend of the action:
+现在我们来定义动作的后端: 
 
-  - Choose `Trigger Webhook URL` as the `Invocation type`.
-  - Leave `Endpoint URL` blank for now, we will create it in the next section and come back to update it.
-  - Fill the rest of the form out like this, then click `Next`:
+* 选择 "触发 Webhook URL "作为 "调用类型"。
+* 端点 URL "暂时留空，我们将在下一节创建它，然后回来更新。
+* 像这样填写表单的其余部分，然后点击`下一步`: 
 
 <img src='/img/guides/slackReminderBackendGitLab.png' width='70%' />
 
 <br/><br/>
 
-The last step is customizing the action's permissions. For simplicity's sake, we will use the default settings. For more information, see the [permissions](/create-self-service-experiences/set-self-service-actions-rbac/) page. Click `Create`.
+最后一步是自定义动作的权限。 为简单起见，我们将使用默认设置。 欲了解更多信息，请参阅[permissions](/create-self-service-experiences/set-self-service-actions-rbac/) 页面。 点击 "创建"。
 
 </TabItem>
 
 </Tabs>
 
-The action's frontend is now ready 🥳
+行动的前端已准备就绪 🥳
 
 <br/>
 
-### Setup the action's backend
+#### 设置行动的后端
 
-Now we want to write the logic that our action will trigger:
+现在，我们要编写我们的操作将触发的逻辑: 
 
 <Tabs groupId="git-provider" queryString values={[
 {label: "Github", value: "github"},
@@ -143,23 +145,20 @@ Now we want to write the logic that our action will trigger:
 
 <TabItem value="github" label="Github">
 
-1. First, let's create the necessary token and secrets:
+1. 首先，让我们创建必要的 token 和 secrets: 
+    - 转到所需的 Slack 频道，然后[setup incoming webhooks](https://api.slack.com/messaging/webhooks) 。确保复制 webhook URL，我们将在 Github 工作流程中使用它。
+    - 进入[Port application](https://app.getport.io/) ，点击右上角的"..."，然后点击 "Credentials"。复制 "客户端 ID "和 "客户端 secret"。
+2.在工作流程所在的版本库中，在 "设置 -> secret和变量 -> 操作 "下创建 3 个新secret: 
 
-   - Go to your desired Slack channel and [setup incoming webhooks](https://api.slack.com/messaging/webhooks). Make sure you copy the webhook URL, we will use it in the Github workflow.
-
-   - Go to your [Port application](https://app.getport.io/), click on the `...` in the top right corner, then click `Credentials`. Copy your `Client ID` and `Client secret`.
-
-2. In the repository where your workflow will reside, create 3 new secrets under `Settings -> Secrets and variables -> Actions`:
-
-- `SLACK_WEBHOOK_URL` - the Slack Webhook URL of the destination channel.
-- `PORT_CLIENT_ID` - the client ID you copied from your Port app.
-- `PORT_CLIENT_SECRET` - the client secret you copied from your Port app.
+* `SLACK_WEBHOOK_URL` - 目标频道的 Slack Webhook URL。
+* `PORT_CLIENT_ID` - 从 Port 应用程序复制的客户端 ID。
+* `PORT_CLIENT_SECRET` - 从 Port 应用程序复制的客户端secret。
 
 <img src='/img/guides/repositorySecretSlack.png' width='80%' />
 
 <br/><br/>
 
-3. Now let's create the workflow file that contains our logic. Under `.github/workflows`, create a new file named `portSlackReminder.yaml` and use the following snippet as its content:
+3.现在，让我们创建包含逻辑的工作流文件。在`.github/workflows`下，创建一个名为`portSlackReminder.yaml`的新文件，并使用以下代码段作为其内容: 
 
 <details>
 <summary><b>Github workflow (click to expand)</b></summary>
@@ -201,34 +200,34 @@ jobs:
 
 </details>
 
-:::tip Port Initiatives sender Github action
-This workflow uses Port's [Initiatives Sender GitHub Action](https://github.com/marketplace/actions/port-sender) to send a Slack message.
+:::tip  Port Initiatives sender Github action 此工作流程被引用到 Port 的[Initiatives Sender GitHub Action](https://github.com/marketplace/actions/port-sender) 中，用于发送 Slack 消息。
+
 :::
 
 </TabItem>
 
 <TabItem value="gitlab" label="GitLab">
 
-1. First, let's create the required webhooks and variables:
+1. 首先，让我们创建所需的 webhook 和变量: 
 
-  - Go to your desired Slack channel and [setup incoming webhooks](https://api.slack.com/messaging/webhooks). Make sure you copy the webhook URL, we will use it in the Github workflow.
-  
-  - Go to your [Port application](https://app.getport.io/), click on the `...` in the top right corner, then click `Credentials`. Copy your `Client ID` and `Client secret`.
+* 转到所需的 Slack 频道，然后[setup incoming webhooks](https://api.slack.com/messaging/webhooks) 。确保复制 webhook URL，我们将在 Github 工作流程中使用它。
+* 进入[Port application](https://app.getport.io/) ，点击右上角的"..."，然后点击 "凭据"。复制 "客户端 ID "和 "客户端 secret"。
 
-2. In the GitLab project where your pipeline will reside, create 3 new variables under `Settings->CI/CD->Variables`:
+2.在管道所在的 GitLab 项目中，在 "设置->CI/CD->变量 "下创建 3 个新变量: 
 
-- `SLACK_WEBHOOK_URL` - the Slack Webhook URL of the destination channel.
-- `PORT_CLIENT_ID` - the client ID you copied from your Port app.
-- `PORT_CLIENT_SECRET` - the client secret you copied from your Port app.
+* `SLACK_WEBHOOK_URL` - 目标频道的 Slack Webhook URL。
+* `PORT_CLIENT_ID` - 从 Port 应用程序复制的客户端 ID。
+* `PORT_CLIENT_SECRET` - 从 Port 应用程序复制的客户端secret。
 
 <img src='/img/guides/repositorySecretSlackGitLab.png' width='75%' />
 
-3. Create a webhook in GitLab for triggering your GitLab:
-  - Create a [pipeline trigger token](https://docs.gitlab.com/ee/ci/triggers);
-  - Construct the [pipeline trigger webhook URL](https://docs.gitlab.com/ee/ci/triggers/#use-a-webhook) with your project details.
-  - Back in Port, edit your action and in its `backend` step paste the webhook URL in the `Endpoint URL` field.
+3.在 GitLab 中创建用于触发 GitLab 的 webhook: 
 
-4. Now let's create the pipeline file that contains our logic. In your GitLab project create a new file named `gitlab-ci.yaml` and use the following snippet as its content:
+* 创建[pipeline trigger token](https://docs.gitlab.com/ee/ci/triggers) ；
+* 使用项目详细信息构建[pipeline trigger webhook URL](https://docs.gitlab.com/ee/ci/triggers/#use-a-webhook) 。
+* 返回 Port，编辑您的操作，并在其 "后端 "步骤的 "端点 URL "字段中粘贴 webhook URL。
+
+4.现在让我们创建包含逻辑的 Pipelines 文件。在 GitLab 项目中新建一个名为 `gitlab-ci.yaml` 的文件，并将以下代码段作为其内容: 
 
 <details>
 <summary><b>GitLab pipeline (click to expand)</b></summary>
@@ -306,13 +305,12 @@ update-run-status:
         -H "Authorization: Bearer $ACCESS_TOKEN" \
         -d '{"status":"SUCCESS", "message": {"run_status": "Created Merge Request for '"$bucket_name"' successfully! Merge Request URL: '"$MR_URL"'"}}' \
         "https://api.getport.io/v1/actions/runs/$RUN_ID"
-    
+
 variables:
   PORT_CLIENT_ID: $PORT_CLIENT_ID
   PORT_CLIENT_SECRET: $PORT_CLIENT_SECRET
   SLACK_WEBHOOK_URL: $SLACK_WEBHOOK_URL
   VERSION: "0.2.3"
-
 ```
 
 </details>
@@ -323,43 +321,44 @@ variables:
 
 <br/>
 
-All done! The action is ready to be used 🚀
+完成！动作已准备就绪，可以开始使用 🚀
 
 <br/>
 
-### Execute the action
+### 执行操作
 
-After creating an action, it will appear under the `Self-service` tab of your Port application:
+创建操作后，该操作将出现在 Port 应用程序的 "自助服务 "选项卡下: 
 
 <img src='/img/guides/selfServiceAfterReminderCreation.png' width='75%' />
 
-1. Click on `Create` to begin executing the action.
-
-2. Click `Execute`. A small popup will appear, click on `View details`:
+1. 点击 "创建 "开始执行操作。
+2. 点击 "执行"。弹出一个小窗口，点击`查看详情`: 
 
 <img src='/img/guides/executionDetails.png' width='45%' />
 
 <br/><br/>
 
-3. This page provides details about the action run. As you can see, the backend returned `Success` and the repo was successfully created:
+3.该页面提供了有关操作运行的详细信息。可以看到，后端返回了 `Success`， repo 已成功创建: 
 
 <img src='/img/guides/runStatusReminder.png' width='90%' />
 
-:::tip Logging action progress
-💡 Note the `Log stream` at the bottom, this can be used to report progress, results and errors. Click [here](https://docs.getport.io/create-self-service-experiences/reflect-action-progress/) to learn more.
+:::tip  记录操作进度 💡 注意底部的 "日志流"，它可用于报告进度、结果和错误。 点击[here](https://docs.getport.io/create-self-service-experiences/reflect-action-progress/) 了解更多信息。
+
 :::
 
 <br/>
 
-4. You can now enter your Slack channel and view the scorecard reminder:
+4.现在您可以进入 Slack 频道并查看记分卡提醒: 
+
 <img src='/img/guides/slackReminderExample.png' width='50%' />
 
+恭喜！您现在可以从 Port 💪🏽 轻松发送 Slack 提醒信息了。
 
-Congratulations! You can now send send Slack reminders easily from Port 💪🏽
+#### 结论
 
-### Conclusion
-Creating scorecards is the first step in setting standards in our development lifecycle. However, to ensure these standards are met, we need to turn rule violations into action items. By automating Slack reminders and the creation of Jira tasks, we can drive change across the entire organization using familiar tools to combine it natively within our delievery lifecycle.
+创建记分卡是我们在开发生命周期中设定标准的第一步。 然而，为了确保达到这些标准，我们需要将违反规则的行为转化为行动项目。 通过自动化 Slack 提醒和创建 Jira 任务，我们可以使用熟悉的工具在整个组织内推动变革，将其原生结合到我们的交付生命周期中。
 
-### More Examples
-- [Open/Close JIRA issues based on scorecards](/promote-scorecards/manage-using-3rd-party-apps/jira)
-- [Send a scorecard report on Slack](/promote-scorecards/manage-using-3rd-party-apps/slack#slack-scorecard-report-example)
+### 更多例子
+
+* * [Open/Close JIRA issues based on scorecards](/promote-scorecards/manage-using-3rd-party-apps/jira)
+* [Send a scorecard report on Slack](/promote-scorecards/manage-using-3rd-party-apps/slack#slack-scorecard-report-example)

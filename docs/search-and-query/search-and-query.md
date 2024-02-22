@@ -1,32 +1,33 @@
 ---
-title: Search & query
-sidebar_label: 🔍 Search & query
+
+title: 搜索和查询搜索和查询
+sidebar_label: 🔍 搜索和查询
+
 ---
 
-# 🔍 Search & query
+# 🔍 搜索和查询
 
-import CombinatorIntro from "./\_combinator_intro.md"
+import CombinatorIntro from "./_combinator_intro.md"
 
 import Tabs from "@theme/Tabs"
 import TabItem from "@theme/TabItem"
 
-Port's API provides tools to easily query, search and filter software catalog data.
+Port 的应用程序接口(API)提供了轻松查询、搜索和过滤软件目录数据的工具。
 
-## 💡 Common queries usage
+## 💡 常用查询 Usage
 
-High quality search is essential to effectively track assets in your software catalog, using Port's search you can:
+要有效跟踪软件目录中的资产，高质量的搜索是必不可少的，而使用 Port 的搜索功能则可以做到这一点: 
 
-- Find all running services that are not healthy;
-- List all libraries that have known vulnerabilities;
-- Get all services running in a specific cluster;
-- etc.
+* 查找所有不健康的运行服务；
+* 列出存在已知漏洞的所有库；
+* 获取特定集群中运行的所有服务；
+* 等等。
 
-## Search request
+## 搜索请求
 
-The base search route is `https://api.getport.io/v1/entities/search`, it receives HTTP POST requests.
+基本搜索路由是 "https://api.getport.io/v1/entities/search"，它接收 HTTP POST 请求。
 
-A search request defines the logical Relation between different search rules, and contains filters and rules to find suitable Entities.
-Each search request is represented by a JSON object, as shown in the following example:
+搜索请求定义了不同搜索规则之间的逻辑关系，并包含用于查找合适实体的过滤器和规则。 每个搜索请求都由一个 JSON 对象表示，如下例所示: 
 
 ```json showLineNumbers
 {
@@ -46,14 +47,16 @@ Each search request is represented by a JSON object, as shown in the following e
 }
 ```
 
-The above query searches for all entities from the `myBlueprint` blueprint that their `identifier` contains the string `myIdentifierPart`
+上述查询会从 `myBlueprint` 蓝图中搜索其 `identifier` 包含字符串 `myIdentifierPart` 的所有实体。
 
-## Search request elements
+## 搜索请求要素
+
 
 | Field        | Description                                               |
 | ------------ | --------------------------------------------------------- |
 | `combinator` | Defines the logical operation to apply to the query rules |
 | `rules`      | An array of search rules to filter results with           |
+
 
 ## Combinator
 
@@ -112,11 +115,11 @@ The above query searches for all entities from the `myBlueprint` blueprint that 
 
 </Tabs>
 
-## Rules
+## 规则
 
-A search rule is a small filtering unit, used to control the search output.
+搜索规则是一个小型过滤单元，用于控制搜索输出。
 
-Here is an example search rule:
+下面是一个搜索规则示例: 
 
 ```json showLineNumbers
 {
@@ -126,14 +129,15 @@ Here is an example search rule:
 }
 ```
 
-Port has 2 types of search rule operators:
+Port 有 2 种搜索规则操作符: 
 
-1. Comparison operators (`=` `>`, etc.);
-2. Relation operators (`relatedTo`, etc.).
+1. 比较运算符(`=` `>`等)；
+2. 关系运算符(`relatedTo` 等)。
 
-### Comparison and operators
+#### 比较和运算符
 
-#### Structure
+#### 结构
+
 
 | Field      | Description                                                                                                                                                                                                                                                                                                                                                    |
 | ---------- | -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
@@ -141,7 +145,8 @@ Port has 2 types of search rule operators:
 | `property` | Property to filter by according to its value. It can be a [meta-property](../build-your-software-catalog/define-your-data-model/setup-blueprint/properties/meta-properties.md) such as `$identifier`, or one of the [standard properties](../build-your-software-catalog/define-your-data-model/setup-blueprint/properties/properties.md#available-properties) |
 | `value`    | The value to filter by                                                                                                                                                                                                                                                                                                                                         |
 
-#### Operators
+
+#### 操作员
 
 <Tabs className="operators-tabs" groupId="comparison" defaultValue="=" values={[
 {label: "=", value: "="},
@@ -162,7 +167,7 @@ Port has 2 types of search rule operators:
 
 <TabItem value="=">
 
-The `=` operator checks exact matches of the specified value:
+操作符 `=` 检查指定值是否完全匹配: 
 
 ```json showLineNumbers
 {
@@ -176,7 +181,7 @@ The `=` operator checks exact matches of the specified value:
 
 <TabItem value="!=">
 
-The `!=` operator checks exact matches of the specified value and returns all results that fail to satisfy the check:
+操作符 `!=` 检查指定值是否完全匹配，并返回所有不满足检查的结果: 
 
 ```json showLineNumbers
 {
@@ -190,7 +195,7 @@ The `!=` operator checks exact matches of the specified value and returns all re
 
 <TabItem value=">">
 
-The `>` operator checks values larger than the specified value:
+操作符 `>` 检查大于指定值的值: 
 
 ```json showLineNumbers
 {
@@ -204,7 +209,7 @@ The `>` operator checks values larger than the specified value:
 
 <TabItem value=">=">
 
-The `>=` operator checks values larger than or equal to the specified value:
+操作符 `>=` 检查大于或等于指定值的值: 
 
 ```json showLineNumbers
 {
@@ -218,7 +223,7 @@ The `>=` operator checks values larger than or equal to the specified value:
 
 <TabItem value="<">
 
-The `<` operator checks values less than the specified value:
+操作符 `<` 检查小于指定值的值: 
 
 ```json showLineNumbers
 {
@@ -232,7 +237,7 @@ The `<` operator checks values less than the specified value:
 
 <TabItem value="<=">
 
-The `<=` operator checks values less than or equal to the specified value:
+操作符 `<=` 检查小于或等于指定值的值: 
 
 ```json showLineNumbers
 {
@@ -246,7 +251,7 @@ The `<=` operator checks values less than or equal to the specified value:
 
 <TabItem value="isEmpty">
 
-The `isEmpty` operator checks if the value of the specified property is `null`:
+isEmpty "操作符会检查指定属性的值是否为 "空": 
 
 ```json showLineNumbers
 {
@@ -259,7 +264,7 @@ The `isEmpty` operator checks if the value of the specified property is `null`:
 
 <TabItem value="isNotEmpty">
 
-The `isNotEmpty` operator checks if the value of the specified property is not `null`:
+isNotEmpty` 操作符会检查指定属性的值是否为 `null`: 
 
 ```json showLineNumbers
 {
@@ -272,7 +277,7 @@ The `isNotEmpty` operator checks if the value of the specified property is not `
 
 <TabItem value="property-schema">
 
-The `propertySchema` filter can be used with any standard operator. It allows you to filter entities based on a properties matching a specific type (for example, find all string properties with a given value):
+`propertySchema` 过滤器可与任何标准操作符一起使用。 它允许您根据与特定类型相匹配的属性过滤实体(例如，查找具有给定值的所有字符串属性): 
 
 <Tabs values={[
 {label: "String", value: "string"},
@@ -314,10 +319,10 @@ The `propertySchema` filter can be used with any standard operator. It allows yo
 
 </Tabs>
 
-:::tip
+:::tip 
 
-- The `propertySchema` can be used with any Port [property](../build-your-software-catalog/define-your-data-model/setup-blueprint/properties/properties.md#supported-properties);
-- The `propertySchema` replaces the `property` filter when performing property schema search.
+* `propertySchema` 可被引用到任何 Port[property](../build-your-software-catalog/define-your-data-model/setup-blueprint/properties/properties.md#supported-properties) ；
+* 在执行属性模式搜索时，`propertySchema` 可取代`property` 过滤器。
 
 :::
 
@@ -325,7 +330,7 @@ The `propertySchema` filter can be used with any standard operator. It allows yo
 
 <TabItem value="between">
 
-The `between` operator checks datetime values and returns entities whose relevant datetime property matches the given range:
+between "操作符会检查日期时间值，并返回相关日期时间属性符合给定范围的实体: 
 
 ```json showLineNumbers
 {
@@ -337,19 +342,19 @@ The `between` operator checks datetime values and returns entities whose relevan
 }
 ```
 
-**Available Presets:**
+**可用预设: **
 
-- tomorrow
-- today
-- yesterday
-- lastWeek
-- last2Weeks
-- lastMonth
-- last3Months
-- last6Months
-- last12Months
+* 明天
+* 今天
+* 昨天
+* 上周
+* 最近两周
+* 上个月
+* 最近 3 个月
+* 最近 6 个月
+* 最近 12 个月
 
-The `between` operator also supports standard date ranges:
+between "操作符还支持标准日期范围: 
 
 ```json showLineNumbers
 {
@@ -371,7 +376,7 @@ The `between` operator also supports standard date ranges:
 
 <TabItem value="notBetween">
 
-The `notBetween` operator checks datetime values and returns entities whose relevant datetime property does not match the given range:
+notBetween" 操作符会检查日期时间值，并返回相关日期时间属性与给定范围不匹配的实体: 
 
 ```json showLineNumbers
 {
@@ -387,7 +392,7 @@ The `notBetween` operator checks datetime values and returns entities whose rele
 
 <TabItem value="contains">
 
-The `contains` operator checks if the specified substring exists in the specified property:
+包含 "操作符检查指定的子串是否存在于指定的属性中: 
 
 ```json showLineNumbers
 {
@@ -401,7 +406,7 @@ The `contains` operator checks if the specified substring exists in the specifie
 
 <TabItem value="containsAny">
 
-The `containsAny` operator checks if **any** of the specified strings exist in the target array:
+containsAny "操作符检查目标数组中是否存在***指定的字符串: 
 
 ```json showLineNumbers
 {
@@ -415,7 +420,7 @@ The `containsAny` operator checks if **any** of the specified strings exist in t
 
 <TabItem value="in">
 
-The `in` operator checks if a `string` property is equal to one or more specified `string` values:
+in` 操作符检查一个 `string` 属性是否等于一个或多个指定的 `string` 值: 
 
 <Tabs values={[
 {label: "Standard", value: "array"},
@@ -444,16 +449,16 @@ The `in` operator checks if a `string` property is equal to one or more specifie
 }
 ```
 
-:::note
+:::note 
 
-- In order to filter entities that **belong to your teams** you can use the special `myTeamsDynamicFilter` filter.
+* 为了过滤**属于你的团队**的实体，你可以使用特殊的 "myTeamsDynamicFilter "过滤器。
 
 :::
 
-**UI:**
+**用户界面: **
 
-- Choose field of type `string` format `team` or the metadata `Team` field;
-- Choose `has any of` operator:
+* 选择类型为 `string` 格式的字段 `team` 或元数据 `Team` 字段；
+* 选择 `has any of` 操作符: 
 
 ![My Teams Filter](../../static/img/software-catalog/pages/MyTeamsFilter.png)
 
@@ -465,9 +470,10 @@ The `in` operator checks if a `string` property is equal to one or more specifie
 
 </Tabs>
 
-### Relation structure and operators
+###关系结构和操作符
 
-#### Structure
+#### 结构
+
 
 | Field       | Description                                                                               |
 | ----------- | ----------------------------------------------------------------------------------------- |
@@ -475,7 +481,8 @@ The `in` operator checks if a `string` property is equal to one or more specifie
 | `blueprint` | Blueprint of the entity identifier specified in the `value` field                         |
 | `value`     | Value to filter by                                                                        |
 
-#### Operators
+
+#### 操作员
 
 <Tabs groupId="relation" defaultValue="relatedTo" values={[
 {label: "Related To", value: "relatedTo"},
@@ -485,7 +492,7 @@ The `in` operator checks if a `string` property is equal to one or more specifie
 
 <TabItem value="relatedTo">
 
-The `relatedTo` operator will return all entities that have a relationship with the specified entity:
+relatedTo` 操作符将返回与指定实体有关系的所有实体: 
 
 ```json showLineNumbers
 {
@@ -499,13 +506,13 @@ The `relatedTo` operator will return all entities that have a relationship with 
 
 <TabItem value="required">
 
-The `relatedTo` operator also supports the `required` property - which allows you to search for:
+`relatedTo` 操作符还支持 `required` 属性--允许您搜索: 
 
-- Related entities from all relations (relations with either required `true` or `false`);
-- Related entities only from required relations (relations with required `true`);
-- Related entities only from non-required relations (relations with required `false`).
+* 来自所有关系的相关实体(具有必填 "true "或 "false "的关系)；
+* 仅来自必填关系(带有必填 `true`的关系)的相关实体；
+* 仅来自非必填关系(带有必填 `false` 的关系)的相关实体。
 
-For example, to search only for related entities that _require_ the `myEntity` entity from the `myBlueprint` blueprint, use the following search rule:
+例如，要只搜索 _require_ `myBlueprint` 蓝图中的 `myEntity` 实体的相关实体，请使用以下搜索规则: 
 
 ```json showLineNumbers
 {
@@ -520,9 +527,9 @@ For example, to search only for related entities that _require_ the `myEntity` e
 
 <TabItem value="direction">
 
-The `relatedTo` operator also supports the `direction` property - which allows you to search for dependent entities in a specific direction on the dependency graph. To better understand the functionality of this property, let's take a look at the example below:
+`relatedTo` 操作符还支持 `direction` 属性--它允许您在依赖关系图上按特定方向搜索依赖实体。 为了更好地理解该属性的功能，让我们来看看下面的示例: 
 
-Let's assume that we have the blueprints `deploymentConfig` and `microservice` with the following relation definition (declared on the `deploymentConfig` blueprint):
+假设我们有两个蓝图 `deploymentConfig` 和 `microservice`，它们的关系定义如下(在 `deploymentConfig` 蓝图上声明式): 
 
 ```json showLineNumbers
 "relations": {
@@ -536,7 +543,7 @@ Let's assume that we have the blueprints `deploymentConfig` and `microservice` w
 }
 ```
 
-In addition, we have the following entities:
+此外，我们还有以下实体: 
 
 ```text showLineNumbers
 Deployment Configs:
@@ -551,7 +558,7 @@ Environments:
 - Production
 ```
 
-And the following relations:
+以及以下关系
 
 ```text showLineNumbers
 Order-Service-Production -> Order-Service
@@ -561,14 +568,14 @@ Cart-Service-Production -> Cart-Service
 Cart-Service-Production -> Production
 ```
 
-By looking at the resulting graph layout, we can also map the directions:
+通过查看图表布局，我们还可以绘制出方向图: 
 
 ![Dependency graph upstream downstream diagram](../../static/img/software-catalog/search-in-port/search-direction-diagram.png)
 
-- To search for entities which the source depends on - use `"direction": "upstream"`;
-- To search for entities which depend on the source - use `"direction": "downstream"`.
+* 要搜索源依赖的实体，请使用 `"方向": "上游"；
+* 要搜索依赖于源的实体 - 使用 `"direction": "下游"。
 
-In the example shown above, if we want to get the `Microservice` and `Environment` that _Order-Service-Production_ depends on, the search rule would be:
+在上面的示例中，如果我们要获取 _Order-Service-Production_ 所依赖的 `Microservice` 和 `Environment`，搜索规则将是
 
 ```json showLineNumbers
 {
@@ -579,7 +586,7 @@ In the example shown above, if we want to get the `Microservice` and `Environmen
 }
 ```
 
-And the result shall be:
+结果将是
 
 <details>
 <summary>Order-Service-Production upstream related entities</summary>
@@ -628,7 +635,7 @@ And the result shall be:
 
 </details>
 
-If we want to get all of the `deploymentConfigs` that are deployed in the _Production_ `Environment`, the search rule would be:
+如果我们要获取部署在 _Production_ `Environment` 中的所有 `deploymentConfigs` ，搜索规则将是
 
 ```json showLineNumbers
 {
@@ -639,7 +646,7 @@ If we want to get all of the `deploymentConfigs` that are deployed in the _Produ
 }
 ```
 
-And the result shall be:
+结果将是
 
 <details>
 <summary>Production downstream related entities</summary>
@@ -707,20 +714,20 @@ And the result shall be:
 
 </Tabs>
 
-### Dynamic properties
+#### 动态属性
 
-When using Port's UI, you can use properties of the logged-in user when writing rules by using the following functions:
+使用 Port 的用户界面时，可以通过以下函数在编写规则时使用已登录用户的属性: 
 
-- `getUserTeams` - a list of the teams the user belongs to.
-- `getUserEmail` - the user's email.
-- `getUserFullName` - the user's full name.
-- `blueprint` - the blueprint identifier of the current page.
+* `getUserTeams` - 用户所属团队的列表。
+* `getUserEmail` - 用户的电子邮件。
+* `getUserFullName` - 用户的全名。
+* `blueprint` - 当前页面的蓝图标识符。
 
-:::info UI only
-Since we don't have context of the logged-in user when using the API, these functions are only available when using the UI. This is useful when creating [chart/table widgets](/customize-pages-dashboards-and-plugins/dashboards/#chart-filters) and [catalog pages](/customize-pages-dashboards-and-plugins/page/catalog-page#page-creation).
+:::info  仅限用户界面 由于使用 API 时我们没有登录用户的上下文，因此这些函数仅在使用用户界面时可用。这在创建[chart/table widgets](/customize-pages-dashboards-and-plugins/dashboards/#chart-filters) 和[catalog pages](/customize-pages-dashboards-and-plugins/page/catalog-page#page-creation) 时非常有用。
+
 :::
 
-#### Usage examples
+#### Usage 示例
 
 ```json showLineNumbers
 [
@@ -762,11 +769,10 @@ Since we don't have context of the logged-in user when using the API, these func
 ]
 ```
 
+## 示例
 
-## Examples
+有关搜索的实用代码片段，请参阅[examples](./examples.md) 页面。
 
-Refer to the [examples](./examples.md) page for practical code snippets for search.
+## 高级
 
-## Advanced
-
-Refer to the [advanced](./advanced.md) page for advanced search use cases and outputs.
+有关高级搜索用例和 Output，请参阅[advanced](./advanced.md) 页面。

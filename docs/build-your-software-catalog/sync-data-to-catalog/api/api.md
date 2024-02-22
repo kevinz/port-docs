@@ -1,8 +1,10 @@
 ---
+
 sidebar_position: 1
+
 ---
 
-import FindCredentials from "./\_template_docs/\_find_credentials.mdx";
+import FindCredentials from "./_template_docs/_find_credentials.mdx";
 
 import Tabs from "@theme/Tabs";
 import TabItem from "@theme/TabItem";
@@ -15,35 +17,35 @@ import TabItem from "@theme/TabItem";
 
 </center>
 
-Port's [API](../../../api-reference/api-reference.mdx) is a generic interface to model your software catalog, ingest data, invoke actions, query scorecards and more.
+Port's[API](../../../api-reference/api-reference.mdx) 是一个通用接口，用于为软件目录建模、摄取数据、调用操作、查询记分卡等。
 
-## 💡 Common Port API usage
+## 💡 通用Port API Usage
 
-Since Port API is a generic interface, anything that can be done with Port is possible through the API, for example:
+由于 Port API 是一个通用接口，因此任何可以通过 Port 实现的功能都可以通过 API 实现，例如
 
-- Update the software catalog using a script;
-- Import your existing asset inventory from a CSV file;
-- Integrate Port with your custom CI/CD;
-- Report the status of a running **CI job**;
-- Update the software catalog about a new **build version** for a **microservice**;
-- Get existing data from your software catalog.
+* 被引用脚本更新软件目录；
+* 从 CSV 文件导入现有资产目录；
+* 将 Port 与您自定义的 CI/CD 集成；
+* 报告正在运行的 **CI 作业的状态；
+* 为**微服务更新有关新**构建版本**的软件目录；
+* 从软件目录中获取现有数据。
 
-## Get API Token
+## 获取应用程序接口令牌
 
-In order to interact with the API you will need an API token.
+要与应用程序接口交互，您需要一个应用程序接口令牌。
 
-Getting an API token involves 2 steps:
+获取 API 令牌需要两个步骤: 
 
-1. Finding your Port API credentials;
-2. Making an API request to generate a valid token.
+1. 查找 Port API 证书；
+2. 提出 API 请求以生成有效令牌。
 
-### Find your Port credentials
+### 查找您的 Port 凭据
 
 <FindCredentials />
 
-### Generate an API token
+### 生成应用程序接口令牌
 
-Here are some code examples showing how to generate an API token in various programming languages:
+下面是一些代码示例，展示了如何用各种编程语言生成 API 令牌: 
 
 <Tabs groupId="code-examples" defaultValue="python" values={[
 {label: "Python", value: "python"},
@@ -71,7 +73,6 @@ token_response = requests.post(f'{API_URL}/auth/access_token', json=credentials)
 access_token = token_response.json()['accessToken']
 
 # You can now use the value in access_token when making further requests
-
 ```
 
 </TabItem>
@@ -126,28 +127,28 @@ access_token=$(curl --location --request POST 'https://api.getport.io/v1/auth/ac
 
 </Tabs>
 
-## Ingest data via API
+## 通过应用程序接口获取数据
 
-Since Port is API-first it is possible to create and update entities using simple REST calls from any platform you use.
+由于 Port 以 API 为先，因此可以使用简单的 REST 调用从您使用的任何平台创建和更新实体。
 
-### Setup
+#### 设置
 
-To use Port's REST API you need to perform the following steps:
+要被引用 Port 的 REST API，您需要执行以下步骤: 
 
-1. Find your [Port credentials](../api/api.md#find-your-port-credentials);
-2. Save them as secrets or in some other same manner such that you can reference them in your code or CI/CD flow;
-3. Make sure you have an HTTP-capable client.
-   1. For example: cURL, python with the requests package, nodejs with fetch/axios, etc.
+1. 查找您的[Port credentials](../api/api.md#find-your-port-credentials) ；
+2. 将它们保存为 secrets 或以其他相同方式保存，以便在代码或 CI/CD 流程中引用；
+3. 确保你有一个支持 HTTP 的客户端。
+    1.例如: cURL、使用请求包的 python、使用 fetch/axios 的 nodejs 等。
 
 ### Usage
 
-Since you are using Port's REST API directly, any method that the API provides is at your disposal.
+由于您直接引用的是 Provider 的 REST API，因此 API 提供的任何方法都可以使用。
 
-We will focus on three specific use cases:
+我们将重点关注三个具体的被引用案例: 
 
-- **Get** catalog entities - available by making HTTP GET requests to `https://api.getport.io/v1/blueprints/{blueprint_identifier}/entities/{entity_identifier}`, receives the identifier of an existing entity and retrieves it for use in your CI;
-- **Create/Update** catalog entities - available by making HTTP POST requests to `https://api.getport.io/v1/blueprints/{blueprint_identifier}/entities/`, receives the identifier and other properties of a new entity or an entity that needs to be updated;
-- **Delete** catalog entities - available by making HTTP DELETE requests to `https://api.getport.io/v1/blueprints/{blueprint_identifier}/entities/{entity_identifier}`, receives the identifier of an existing entity and deletes it.
+* **获取**目录实体--可通过 HTTP GET 向`https://api.getport.io/v1/blueprints/{blueprint_identifier}/entities/{entity_identifier}`提出请求，接收现有实体的标识符并将其引用到 CI 中；
+* **创建/更新**目录实体--可通过 HTTP POST 向 `https://api.getport.io/v1/blueprints/{blueprint_identifier}/entities/` 提出请求，接收新实体或需要更新的实体的标识符和其他属性；
+* **删除**目录实体--可通过向 `https://api.getport.io/v1/blueprints/{blueprint_identifier}/entities/{entity_identifier}` 发送 HTTP DELETE 请求来实现，接收现有实体的标识符并将其删除。
 
 <Tabs groupId="usage" queryString="operation" defaultValue="get" values={[
 {label: "Get", value: "get"},
@@ -201,7 +202,6 @@ entity_id = 'MY_ENTITY_IDENTIFIER'
 response = requests.get(f'{API_URL}/blueprints/{blueprint_id}/entities/{entity_id}', headers=headers)
 
 # response.json() contains the content of the resulting entity
-
 ```
 
 </TabItem>
@@ -295,9 +295,9 @@ curl --location --request GET "https://api.getport.io/v1/blueprints/${blueprint_
 
 <TabItem value="create">
 
-A basic create request will create a new entity if one with the provided `identifier` doesn't exist yet, and will fail with a `409 CONFLICT` status code otherwise.
+如果 Provider 的 "标识符 "不存在，则基本创建请求将创建一个新实体，否则将以 "409 CONFLICT "状态代码失败。
 
-A basic create request is noted by providing no query parameters, or providing the `upsert` query parameter with its value set to `false`.
+不提供查询参数，或提供值设置为 `values` 的 `upsert` 查询参数，即为基本的创建请求。
 
 <Tabs groupId="code-examples" defaultValue="python" values={[
 {label: "Python", value: "python"},
@@ -460,9 +460,9 @@ curl --location --request POST "https://api.getport.io/v1/blueprints/${blueprint
 
 <TabItem value="create-update">
 
-A create/update request will create a new entity if one with the provided `identifier` doesn't exist yet, and will only update the values of fields provided in the request, if an entity with the `identifier` already exists.
+创建/更新请求将创建一个新实体(如果所提供的 "标识符 "实体还不存在)，如果 "标识符 "实体已经存在，则只会更新请求中提供的字段值。
 
-A create/update request is noted by providing the query parameter: `upsert=true&merge=true`.
+通过提供查询参数: "upsert=true&amp;merge=true"，可以注意到创建/更新请求。
 
 <Tabs groupId="code-examples" defaultValue="python" values={[
 {label: "Python", value: "python"},
@@ -628,9 +628,9 @@ curl --location --request POST "https://api.getport.io/v1/blueprints/${blueprint
 
 <TabItem value="create-override">
 
-A create/override request will create a new entity if one with the provided `identifier` doesn't exist yet, and will override all existing values if an entity with the `identifier` already exists, keeping only the values of fields provided in the request.
+如果所提供的 `identifier` 实体还不存在，则创建/覆盖请求将创建一个新实体；如果所提供的 `identifier` 实体已经存在，则覆盖所有现有 Values，只保留请求中提供的字段值。
 
-A create/override request is noted by providing the query parameter: `upsert=true`, while not including the `merge` parameter (or setting its value to `false`)
+通过提供查询参数: "upsert=true"，同时不包含 "merge "参数(或将其值设置为 "false")，可注意到创建/覆盖请求
 
 <Tabs groupId="code-examples" defaultValue="python" values={[
 {label: "Python", value: "python"},
@@ -930,12 +930,12 @@ curl --location --request DELETE "https://api.getport.io/v1/blueprints/${bluepri
 
 <TabItem value="delete-all">
 
-It is possible to delete all entities of a blueprint with a single request using a dedicated route.
+可以使用专用路由，通过一次请求删除蓝图中的所有实体。
 
-It is also possible to delete the blueprint containing the entities within the same delete operation by adding the `delete_blueprint=true` query parameter, for example: `https://api.getport.io/v1/blueprints/<BLUEPRINT_IDENTIFIER>/all-entities?delete_blueprint=true`.
+也可以通过添加 `delete_blueprint=true` 查询参数，在同一删除操作中删除包含实体的蓝图，例如:  `https://api.getport.io/v1/blueprints/<BLUEPRINT_IDENTIFIER>/all-entities?delete_blueprint=true` 。
 
-:::note limitations
-The delete all route can only be used if the blueprint does not have required relations.
+:::note  限制 只有当蓝图中没有所需的关系时，才能使用删除所有路径。
+
 :::
 
 <Tabs groupId="code-examples" defaultValue="python" values={[
@@ -1059,14 +1059,13 @@ curl --location --request DELETE "https://api.getport.io/v1/blueprints/${bluepri
 
 </Tabs>
 
-:::tip
-It is also possible to delete all entities using Port's web UI:
+:::tip 也可以使用 Port 的 Web UI 删除所有实体: 
 
-1. Go to the [DevPortal Builder page](https://app.getport.io/dev-portal);
-2. Click on the "Delete All `BLUEPRINT_NAME`" button on the desired blueprint;
-3. Follow the instructions.
+1. 请访问[DevPortal Builder page](https://app.getport.io/dev-portal) ；
+2. 点击所需蓝图上的 "删除所有 `BLUEPRINT_NAME`"按钮；
+3. 按照说明操作。
 
-**Note:** only users with the [admin](../../../sso-rbac/rbac/rbac.md#roles) role can use Port's UI to perform the delete all operation.
+**注意: ** 只有具有[admin](../../../sso-rbac/rbac/rbac.md#roles) 角色的用户才能使用 Port 的用户界面执行全部删除操作。
 
 :::
 

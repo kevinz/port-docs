@@ -1,18 +1,20 @@
 ---
+
 sidebar_position: 16
-description: Ingest Prometheus alerts into your catalog
+description: 将 Prometheus 警报纳入目录
+
 ---
 
-import AlertBlueprint from './resources/prometheus/\_example_alert_blueprint.mdx'
-import AlertWebhookConfig from './resources/prometheus/\_example_alert_webhook_config.mdx'
+import AlertBlueprint from './resources/prometheus/_example_alert_blueprint.mdx'
+import AlertWebhookConfig from './resources/prometheus/_example_alert_webhook_config.mdx'
 
-# Prometheus
+# 普罗米修斯
 
-In this example you are going to create a webhook integration between [Prometheus Alertmanager](https://prometheus.io/docs/alerting/latest/alertmanager/) and Port, which will ingest alert entities.
+在本示例中，您将在[Prometheus Alertmanager](https://prometheus.io/docs/alerting/latest/alertmanager/) 和 Port 之间创建一个 webhook 集成，用于接收警报实体。
 
-## Port configuration
+## Port 配置
 
-Create the following blueprint definition:
+创建以下蓝图定义: 
 
 <details>
 <summary>Alert blueprint</summary>
@@ -21,35 +23,30 @@ Create the following blueprint definition:
 
 </details>
 
-Create the following webhook configuration [using Port's UI](/build-your-software-catalog/sync-data-to-catalog/webhook/?operation=ui#configuring-webhook-endpoints)
+创建以下 webhook 配置[using Port's UI](/build-your-software-catalog/sync-data-to-catalog/webhook/?operation=ui#configuring-webhook-endpoints)
 
 <details>
 
 <summary>Alert webhook configuration</summary>
 
-1. **Basic details** tab - fill the following details:
-   1. Title : `Prometheus Alert Mapper`;
-   2. Identifier : `prometheus_alert_mapper`;
-   3. Description : `A webhook configuration to map Prometheus alerts to Port`;
-   4. Icon : `Prometheus`;
-2. **Integration configuration** tab - fill the following JQ mapping:
-
+1. **基本信息** 选项卡 - 填写以下详细信息: 
+    1.title: `Prometheus Alert Mapper`；
+    2.标识符 : `prometheus_alert_mapper`；
+    3.Description : `将 Prometheus 警报映射到 Port` 的 webhook 配置；
+    4.图标 : `Prometheus`；
+2. **集成配置**选项卡 - 填写以下 JQ 映射: 
    <AlertWebhookConfig/>
-
-3. Click **Save** at the bottom of the page.
+3.点击页面底部的**保存**。
 
 </details>
 
-## Configure Alertmanager to send webhook
+## 配置 Alertmanager 以发送 webhook
 
-1. Ensure you have the Prometheus Alertmanager installed as described in [prometheus/alertmanager](https://github.com/prometheus/alertmanager#installation);
-2. Configure the Alertmanager to send alert information from your server to Port. Edit your Alertmanager configuration file (`alertmanager.yaml`) to add the generated webhook from Port as a **receivers**;
-
-   1. Create a new **receivers** object called `port_webhook`. Paste the webhook `URL` into the `url` field and set the `send_resolved` value to `true`.
-   2. Add the `port_webhook` **receivers** to the **route** object;
-
+1. 确保已按照[prometheus/alertmanager](https://github.com/prometheus/alertmanager#installation) 中的说明安装 Prometheus Alertmanager；
+2. 配置 Alertmanager，以便从服务器发送警报信息到 Port。编辑 Alertmanager 配置文件 (`alertmanager.yaml`)，将从 Port 生成的 webhook 添加为**接收器**；
+    1.创建名为 `port_webhook` 的新**接收器**对象。将 webhook 的 `URL` 粘贴到 `url` 字段，并将 `send_resolved` 值设置为 `true`。
+    2.将 `port_webhook` **receivers** 添加到 **route** 对象中；
    <details>
-
    <summary>Example configuration file.</summary>
 
    ```yaml showLineNumbers
@@ -74,3 +71,4 @@ Create the following webhook configuration [using Port's UI](/build-your-softwar
 3. Save the `alertmanager.yaml` file and restart the alertmanager to apply the changes.
 
 Done! Any change that happens to your alerts in your server will trigger a webhook event to the webhook URL provided by Port. Port will parse the events according to the mapping and update the catalog entities accordingly.
+```

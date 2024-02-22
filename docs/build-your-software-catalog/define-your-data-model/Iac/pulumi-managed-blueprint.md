@@ -1,23 +1,25 @@
 ---
+
 sidebar_position: 1
 title: Pulumi
-description: Comprehensive blueprint with properties, relations and mirror properties
+description: 包含属性、关系和镜像属性的综合蓝图
+
 ---
 
 import Tabs from "@theme/Tabs"
 import TabItem from "@theme/TabItem"
 
-# Pulumi-Managed Blueprint Example
+# Pulumi 管理的蓝图示例
 
-This example includes a complete [blueprint](../../define-your-data-model/setup-blueprint/setup-blueprint.md) resource definition in Pulumi, which includes:
+该示例包括一个完整的[blueprint](../../define-your-data-model/setup-blueprint/setup-blueprint.md) 资源定义，其中包括 Pulumi: 
 
-- [Blueprint](../../define-your-data-model/setup-blueprint/setup-blueprint.md?definition=pulumi#configure-blueprints-in-port) definition examples;
-- All [property](../../define-your-data-model/setup-blueprint/properties/properties.md) type definitions;
-- [Relation](../../define-your-data-model/relate-blueprints/relate-blueprints.md?definition=pulumi#configure-relations-in-port) definition example;
-- [Mirror property](../../define-your-data-model/setup-blueprint/properties/mirror-property/mirror-property.md) definition example;
-- [Calculation property](../../define-your-data-model/setup-blueprint/properties/calculation-property/calculation-property.md) definition example.
+* [Blueprint](../../define-your-data-model/setup-blueprint/setup-blueprint.md?definition=pulumi#configure-blueprints-in-port) 定义示例；
+* 所有[property](../../define-your-data-model/setup-blueprint/properties/properties.md) 类型定义；
+* [Relation](../../define-your-data-model/relate-blueprints/relate-blueprints.md?definition=pulumi#configure-relations-in-port) 定义示例
+* [Mirror property](../../define-your-data-model/setup-blueprint/properties/mirror-property/mirror-property.md) 定义示例；
+* [Calculation property](../../define-your-data-model/setup-blueprint/properties/calculation-property/calculation-property.md) 定义示例。
 
-Here is the example definition in all the supported languages:
+以下是所有支持语言的定义示例: 
 
 <Tabs groupId="pulumi-definition" queryString defaultValue="python" values={[
 {label: "Python", value: "python"},
@@ -394,138 +396,138 @@ const myBlueprint = new port.Blueprint(
 package main
 
 import (
-	"github.com/port-labs/pulumi-port/sdk/go/port"
-	"github.com/pulumi/pulumi/sdk/v3/go/pulumi"
+    "github.com/port-labs/pulumi-port/sdk/go/port"
+    "github.com/pulumi/pulumi/sdk/v3/go/pulumi"
 )
 
 func main() {
-	pulumi.Run(func(ctx *pulumi.Context) error {
+    pulumi.Run(func(ctx *pulumi.Context) error {
 
-		other, err := port.NewBlueprint(ctx, "other", &port.BlueprintArgs{
-			Identifier: pulumi.String("test-docs-relation"),
-			Icon:       pulumi.String("Microservice"),
-			Title:      pulumi.String("Test Docs Relation"),
-			Properties: port.BlueprintPropertiesArgs{
-				StringProps: port.BlueprintPropertiesStringPropsMap{
-					"myStringProp": port.BlueprintPropertiesStringPropsArgs{
-						Title:    pulumi.String("My string"),
-						Required: pulumi.Bool(false),
-					},
-				},
-			},
-		})
-		if err != nil {
-			return err
-		}
+    	other, err := port.NewBlueprint(ctx, "other", &port.BlueprintArgs{
+    		Identifier: pulumi.String("test-docs-relation"),
+    		Icon:       pulumi.String("Microservice"),
+    		Title:      pulumi.String("Test Docs Relation"),
+    		Properties: port.BlueprintPropertiesArgs{
+    			StringProps: port.BlueprintPropertiesStringPropsMap{
+    				"myStringProp": port.BlueprintPropertiesStringPropsArgs{
+    					Title:    pulumi.String("My string"),
+    					Required: pulumi.Bool(false),
+    				},
+    			},
+    		},
+    	})
+    	if err != nil {
+    		return err
+    	}
 
-		myBlueprint, err := port.NewBlueprint(ctx, "myBlueprint", &port.BlueprintArgs{
-			Identifier: pulumi.String("test-docs"),
-			Icon:       pulumi.String("Microservice"),
-			Title:      pulumi.String("Test Docs"),
-			Properties: port.BlueprintPropertiesArgs{
-				StringProps: port.BlueprintPropertiesStringPropsMap{
-					"myStringProp": port.BlueprintPropertiesStringPropsArgs{
-						Title:    pulumi.String("My string"),
-						Required: pulumi.Bool(false),
-					},
-					"myUrlProp": port.BlueprintPropertiesStringPropsArgs{
-						Title:    pulumi.String("My url"),
-						Required: pulumi.Bool(false),
-						Format:   pulumi.String("url"),
-					},
-					"myEmailProp": port.BlueprintPropertiesStringPropsArgs{
-						Title:    pulumi.String("My email"),
-						Required: pulumi.Bool(false),
-						Format:   pulumi.String("email"),
-					},
-					"myUserProp": port.BlueprintPropertiesStringPropsArgs{
-						Title:    pulumi.String("My user"),
-						Required: pulumi.Bool(false),
-						Format:   pulumi.String("user"),
-					},
-					"myTeamProp": port.BlueprintPropertiesStringPropsArgs{
-						Title:    pulumi.String("My team"),
-						Required: pulumi.Bool(false),
-						Format:   pulumi.String("team"),
-					},
-					"myDatetimeProp": port.BlueprintPropertiesStringPropsArgs{
-						Title:    pulumi.String("My datetime"),
-						Required: pulumi.Bool(false),
-						Format:   pulumi.String("date-time"),
-					},
-					"myTimerProp": port.BlueprintPropertiesStringPropsArgs{
-						Title:    pulumi.String("My timer"),
-						Required: pulumi.Bool(false),
-						Format:   pulumi.String("timer"),
-					},
-					"myYAMLProp": port.BlueprintPropertiesStringPropsArgs{
-						Title:    pulumi.String("My yaml"),
-						Required: pulumi.Bool(false),
-						Format:   pulumi.String("yaml"),
-					},
-				},
-				NumberProps: port.BlueprintPropertiesNumberPropsMap{
-					"myNumberProp": port.BlueprintPropertiesNumberPropsArgs{
-						Title:    pulumi.String("My number"),
-						Required: pulumi.Bool(false),
-					},
-				},
-				BooleanProps: port.BlueprintPropertiesBooleanPropsMap{
-					"myBooleanProp": port.BlueprintPropertiesBooleanPropsArgs{
-						Title:    pulumi.String("My boolean"),
-						Required: pulumi.Bool(false),
-					},
-				},
-				ObjectProps: port.BlueprintPropertiesObjectPropsMap{
-					"myObjectProp": port.BlueprintPropertiesObjectPropsArgs{
-						Title:    pulumi.String("My object"),
-						Required: pulumi.Bool(false),
-					},
-				},
-				ArrayProps: port.BlueprintPropertiesArrayPropsMap{
-					"myArrayProp": port.BlueprintPropertiesArrayPropsArgs{
-						Title:    pulumi.String("My array"),
-						Required: pulumi.Bool(false),
-					},
-				},
-			},
-			MirrorProperties: port.BlueprintMirrorPropertiesMap{
-				"myMirrorProp": port.BlueprintMirrorPropertiesArgs{
-					Title: pulumi.String("My mirror property"),
-					Path:  pulumi.String("myRelation.myStringProp"),
-				},
-				"myMirrorPropWithMeta": port.BlueprintMirrorPropertiesArgs{
-					Title: pulumi.String("My mirror property of meta property"),
-					Path:  pulumi.String("myRelation.$identifier"),
-				},
-			},
-			CalculationProperties: port.BlueprintCalculationPropertiesMap{
-				"myCalculation": port.BlueprintCalculationPropertiesArgs{
-					Title:       pulumi.String("My calculation property"),
-					Calculation: pulumi.String(".properties.myStringProp + .properties.myStringProp"),
-					Type:        pulumi.String("string"),
-				},
-				"myCalculationWithMeta": port.BlueprintCalculationPropertiesArgs{
-					Title:       pulumi.String("My calculation property with meta properties"),
-					Calculation: pulumi.String(".identifier + \"-\" + .title + \"-\" + .properties.myStringProp"),
-					Type:        pulumi.String("string"),
-				},
-			},
-			Relations: port.BlueprintRelationsMap{
-				"myRelation": &port.BlueprintRelationsArgs{
-					Title:    pulumi.String("My relation"),
-					Target:   pulumi.String("test-docs-relation"),
-					Many:     pulumi.Bool(false),
-					Required: pulumi.Bool(false),
-				},
-			},
-		}, pulumi.DependsOn([]pulumi.Resource{other}))
+    	myBlueprint, err := port.NewBlueprint(ctx, "myBlueprint", &port.BlueprintArgs{
+    		Identifier: pulumi.String("test-docs"),
+    		Icon:       pulumi.String("Microservice"),
+    		Title:      pulumi.String("Test Docs"),
+    		Properties: port.BlueprintPropertiesArgs{
+    			StringProps: port.BlueprintPropertiesStringPropsMap{
+    				"myStringProp": port.BlueprintPropertiesStringPropsArgs{
+    					Title:    pulumi.String("My string"),
+    					Required: pulumi.Bool(false),
+    				},
+    				"myUrlProp": port.BlueprintPropertiesStringPropsArgs{
+    					Title:    pulumi.String("My url"),
+    					Required: pulumi.Bool(false),
+    					Format:   pulumi.String("url"),
+    				},
+    				"myEmailProp": port.BlueprintPropertiesStringPropsArgs{
+    					Title:    pulumi.String("My email"),
+    					Required: pulumi.Bool(false),
+    					Format:   pulumi.String("email"),
+    				},
+    				"myUserProp": port.BlueprintPropertiesStringPropsArgs{
+    					Title:    pulumi.String("My user"),
+    					Required: pulumi.Bool(false),
+    					Format:   pulumi.String("user"),
+    				},
+    				"myTeamProp": port.BlueprintPropertiesStringPropsArgs{
+    					Title:    pulumi.String("My team"),
+    					Required: pulumi.Bool(false),
+    					Format:   pulumi.String("team"),
+    				},
+    				"myDatetimeProp": port.BlueprintPropertiesStringPropsArgs{
+    					Title:    pulumi.String("My datetime"),
+    					Required: pulumi.Bool(false),
+    					Format:   pulumi.String("date-time"),
+    				},
+    				"myTimerProp": port.BlueprintPropertiesStringPropsArgs{
+    					Title:    pulumi.String("My timer"),
+    					Required: pulumi.Bool(false),
+    					Format:   pulumi.String("timer"),
+    				},
+    				"myYAMLProp": port.BlueprintPropertiesStringPropsArgs{
+    					Title:    pulumi.String("My yaml"),
+    					Required: pulumi.Bool(false),
+    					Format:   pulumi.String("yaml"),
+    				},
+    			},
+    			NumberProps: port.BlueprintPropertiesNumberPropsMap{
+    				"myNumberProp": port.BlueprintPropertiesNumberPropsArgs{
+    					Title:    pulumi.String("My number"),
+    					Required: pulumi.Bool(false),
+    				},
+    			},
+    			BooleanProps: port.BlueprintPropertiesBooleanPropsMap{
+    				"myBooleanProp": port.BlueprintPropertiesBooleanPropsArgs{
+    					Title:    pulumi.String("My boolean"),
+    					Required: pulumi.Bool(false),
+    				},
+    			},
+    			ObjectProps: port.BlueprintPropertiesObjectPropsMap{
+    				"myObjectProp": port.BlueprintPropertiesObjectPropsArgs{
+    					Title:    pulumi.String("My object"),
+    					Required: pulumi.Bool(false),
+    				},
+    			},
+    			ArrayProps: port.BlueprintPropertiesArrayPropsMap{
+    				"myArrayProp": port.BlueprintPropertiesArrayPropsArgs{
+    					Title:    pulumi.String("My array"),
+    					Required: pulumi.Bool(false),
+    				},
+    			},
+    		},
+    		MirrorProperties: port.BlueprintMirrorPropertiesMap{
+    			"myMirrorProp": port.BlueprintMirrorPropertiesArgs{
+    				Title: pulumi.String("My mirror property"),
+    				Path:  pulumi.String("myRelation.myStringProp"),
+    			},
+    			"myMirrorPropWithMeta": port.BlueprintMirrorPropertiesArgs{
+    				Title: pulumi.String("My mirror property of meta property"),
+    				Path:  pulumi.String("myRelation.$identifier"),
+    			},
+    		},
+    		CalculationProperties: port.BlueprintCalculationPropertiesMap{
+    			"myCalculation": port.BlueprintCalculationPropertiesArgs{
+    				Title:       pulumi.String("My calculation property"),
+    				Calculation: pulumi.String(".properties.myStringProp + .properties.myStringProp"),
+    				Type:        pulumi.String("string"),
+    			},
+    			"myCalculationWithMeta": port.BlueprintCalculationPropertiesArgs{
+    				Title:       pulumi.String("My calculation property with meta properties"),
+    				Calculation: pulumi.String(".identifier + \"-\" + .title + \"-\" + .properties.myStringProp"),
+    				Type:        pulumi.String("string"),
+    			},
+    		},
+    		Relations: port.BlueprintRelationsMap{
+    			"myRelation": &port.BlueprintRelationsArgs{
+    				Title:    pulumi.String("My relation"),
+    				Target:   pulumi.String("test-docs-relation"),
+    				Many:     pulumi.Bool(false),
+    				Required: pulumi.Bool(false),
+    			},
+    		},
+    	}, pulumi.DependsOn([]pulumi.Resource{other}))
 
-		if err != nil {
-			return err
-		}
-		return nil
-	})
+    	if err != nil {
+    		return err
+    	}
+    	return nil
+    })
 }
 ```
 

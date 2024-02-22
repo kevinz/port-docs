@@ -1,5 +1,7 @@
 ---
+
 sidebar_position: 15
+
 ---
 
 import Tabs from "@theme/Tabs"
@@ -8,17 +10,17 @@ import PortTooltip from "/src/components/tooltip/tooltip.jsx"
 
 # Swagger UI
 
-The `Swagger UI` property is used to import and display [OpenAPI](https://www.openapis.org/) and/or [AsyncAPI](https://www.asyncapi.com/) specification files within an <PortTooltip id="entity">entity</PortTooltip> in Port.  
+Swagger UI` 属性被用来在 Port<PortTooltip id="entity">实体</PortTooltip>中引用和显示[OpenAPI](https://www.openapis.org/) 和/或[AsyncAPI](https://www.asyncapi.com/) 规范文件。
 
-Using this property will automatically create an additional tab in each [entity page](/customize-pages-dashboards-and-plugins/page/entity-page.md), displaying the specification files in [Swagger UI](https://swagger.io/) format. Within this tab, you will be able to perform HTTP calls to the spec target directly from Port.
+使用该属性将自动在每个[entity page](/customize-pages-dashboards-and-plugins/page/entity-page.md) 中创建一个附加选项卡，以[Swagger UI](https://swagger.io/) 格式显示规范文件。在该选项卡中，您可以直接从 Port 对规范目标执行 HTTP 调用。
 
-The following is an example of a `Swagger UI` tab in an entity page:
+下面是实体页面中 "Swagger UI "选项卡的示例: 
 
 <img src='/img/software-catalog/blueprint/swaggerUiExample.png' width='85%' />
 
 ## OpenAPI
 
-### Definition
+#### 定义
 
 <Tabs groupId="definition" defaultValue="url" values={[
 {label: "URL", value: "url"},
@@ -28,13 +30,14 @@ The following is an example of a `Swagger UI` tab in an entity page:
 
 <TabItem value="url">
 
-When using the URL format, Port will query the provided URL for the OpenAPI spec and expects a JSON OpenAPI spec
+使用 URL 格式时，Port 将查询所引用 URL 的 OpenAPI 规范，并希望得到 JSON OpenAPI 规范
 
-:::note
+:::note 
 
-When using URL for the `open-api` display please make sure that your server allows cross-origin (CORS) requests from `app.getport.io`.
+在使用 URL 进行 `open-api` 显示时，请确保您的服务器允许来自 `app.getport.io` 的跨源 (CORS) 请求。
 
-To serve the OpenAPI spec from an AWS S3 bucket, please add a CORS policy to the bucket that allows requests from `app.getport.io`, check out the [AWS documentation](https://docs.aws.amazon.com/AmazonS3/latest/userguide/enabling-cors-examples.html?icmpid=docs_amazons3_console) for more information.
+要从 AWS S3 存储桶提供 OpenAPI 规范，请向存储桶添加 CORS 策略，允许来自 `app.getport.io` 的请求，请查看[AWS documentation](https://docs.aws.amazon.com/AmazonS3/latest/userguide/enabling-cors-examples.html?icmpid=docs_amazons3_console) 了解更多信息。
+
 :::
 
 <Tabs groupId="lang" defaultValue="api" values={[
@@ -86,7 +89,7 @@ resource "port_blueprint" "myBlueprint" {
 
 <TabItem value="json">
 
-When using the JSON type, you will need to provide the full JSON OpenAPI spec as an object to the entity:
+使用 JSON 类型时，您需要将完整的 JSON OpenAPI 规范作为一个对象提供给实体: 
 
 <Tabs groupId="lang" defaultValue="api" values={[
 {label: "API", value: "api"},
@@ -135,7 +138,7 @@ resource "port_blueprint" "myBlueprint" {
 
 <TabItem value="yaml">
 
-When using the YAML type, you will need to provide the full YAML OpenAPI spec to the entity:
+使用 YAML 类型时，您需要向实体提供完整的 YAML OpenAPI 规范: 
 
 <Tabs groupId="lang" defaultValue="api" values={[
 {label: "API", value: "api"},
@@ -187,15 +190,15 @@ resource "port_blueprint" "myBlueprint" {
 
 ---
 
-### Example
+### 示例
 
-Here is how the Swagger tab in the specific entity page appears when an OpenAPI spec is provided:
+以下是提供 OpenAPI 规范时，特定实体页面中 Swagger 标签的显示方式: 
 
 ![OpenAPI Example](/img/software-catalog/widgets/openAPI.png)
 
 ## AsyncAPI
 
-### Definition
+#### 定义
 
 <Tabs groupId="definition" defaultValue="url" values={[
 {label: "URL", value: "url"},
@@ -205,13 +208,14 @@ Here is how the Swagger tab in the specific entity page appears when an OpenAPI 
 
 <TabItem value="url">
 
-When using the URL format, Port will query the provided URL for the AsyncAPI spec and expects a JSON AsyncAPI spec
+当使用 URL 格式时，Port 将查询 Provider 提供的 URL 以获取 AsyncAPI 规范，并期望得到 JSON AsyncAPI 规范
 
-:::note
+:::note 
 
-When using URL for the `async-api` display please make sure that your server allows cross-origin (CORS) requests from `app.getport.io`
+当使用 URL 显示 "async-api "时，请确保您的服务器允许来自 "app.getport.io "的跨源 (CORS) 请求
 
-To serve the OpenAPI spec from an AWS S3 bucket, please add a CORS policy to the bucket that allows requests from `app.getport.io`, check out the [AWS documentation](https://docs.aws.amazon.com/AmazonS3/latest/userguide/enabling-cors-examples.html?icmpid=docs_amazons3_console) for more information.
+要从 AWS S3 存储桶提供 OpenAPI 规范，请向存储桶添加 CORS 策略，允许来自 `app.getport.io` 的请求，请查看[AWS documentation](https://docs.aws.amazon.com/AmazonS3/latest/userguide/enabling-cors-examples.html?icmpid=docs_amazons3_console) 了解更多信息。
+
 :::
 
 <Tabs groupId="lang" defaultValue="api" values={[
@@ -263,7 +267,7 @@ resource "port_blueprint" "myBlueprint" {
 
 <TabItem value="json">
 
-When using the JSON type, you will need to provide the full JSON AsyncAPI spec as an object to the Entity:
+使用 JSON 类型时，需要将完整的 JSON AsyncAPI 规范作为一个对象提供给 Entity: 
 
 <Tabs groupId="lang" defaultValue="api" values={[
 {label: "API", value: "api"},
@@ -312,7 +316,7 @@ resource "port_blueprint" "myBlueprint" {
 
 <TabItem value="yaml">
 
-When using the YAML type, you will need to provide the full YAML AsyncAPI spec to the entity:
+使用 YAML 类型时，您需要向实体提供完整的 YAML AsyncAPI 规范: 
 
 <Tabs groupId="lang" defaultValue="api" values={[
 {label: "API", value: "api"},
@@ -364,8 +368,8 @@ resource "port_blueprint" "myBlueprint" {
 
 ---
 
-### Example
+### 示例
 
-Here is how the Swagger tab in the specific entity page appears when an AsyncAPI spec is provided:
+以下是提供 AsyncAPI 规范时，特定实体页面中 Swagger 标签的显示方式: 
 
 ![AsyncAPI Example](/img/software-catalog/widgets/asyncAPI.png)

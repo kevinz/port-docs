@@ -1,27 +1,27 @@
 ---
+
 sidebar_position: 8
+
 ---
 
 import PortTooltip from "/src/components/tooltip/tooltip.jsx"
 
 # Markdown
 
-The `Markdown` property is used to display [Markdown](https://en.wikipedia.org/wiki/Markdown) content within an <PortTooltip id="entity">entity</PortTooltip> in Port.  
-Using this property will automatically create an additional tab in each [entity page](/customize-pages-dashboards-and-plugins/page/entity-page.md), displaying the formatted content.
+Markdown "属性用于在 Port<PortTooltip id="entity">实体</PortTooltip>中显示[Markdown](https://en.wikipedia.org/wiki/Markdown) 内容。使用该属性将自动在每个[entity page](/customize-pages-dashboards-and-plugins/page/entity-page.md) 中创建一个额外的选项卡，显示格式化的内容。
 
-In the following example, we see the `awesome-kubectl-plugins` entity page, which is an instance on the `Service` blueprint.  
-The blueprint has a `Markdown` property that takes the Readme file from the service's Git repository, and automatically displays it in a dedicated tab:
+在下面的示例中，我们看到了 `awesome-kubectl-plugins` 实体页面，它是 `Service` 蓝图上的一个实例。 该蓝图有一个 `Markdown` 属性，可从服务的 Git 代码库中获取 Readme 文件，并自动将其显示在专用标签页中: 
 
 <img src='/img/software-catalog/blueprint/markdownExample.png' width='85%' />
 
-With Port, you can import and display [Markdown](https://en.wikipedia.org/wiki/Markdown) files as tabs.
+通过 Port，您可以导入[Markdown](https://en.wikipedia.org/wiki/Markdown) 文件并将其显示为标签页。
 
-## 💡 Common embedded URL usage
+## 💡 常见嵌入式 URL Usage
 
-- Display a service's Readme file
-- Display relevant documentation for a service/package
+* 显示服务的自述文件
+* 显示服务/ packages 的相关文件
 
-## Schema definition
+## 模式定义
 
 ```json showLineNumbers
 {
@@ -34,16 +34,15 @@ With Port, you can import and display [Markdown](https://en.wikipedia.org/wiki/M
 
 ## Mermaid
 
-The markdown widget also supports [Mermaid](https://mermaid-js.github.io/mermaid/#/), a diagramming and charting tool that uses text and code to generate diagrams and charts.
+markdown widget 还支持[Mermaid](https://mermaid-js.github.io/mermaid/#/) ，这是一款图表制作工具，可使用文本和代码生成图表。
 
-To use Mermaid with the markdown widget, all you need to do is add mermaid syntax to the markdown property. You can refer to the [Mermaid Examples](https://mermaid.js.org/syntax/examples.html) for more examples and information on how to use it.
+要将 Mermaid 与 markdown widget 结合使用，只需在 markdown 属性中添加 mermaid 语法即可。更多使用示例和信息可参考[Mermaid Examples](https://mermaid.js.org/syntax/examples.html) 。
 
 ![Markdown Mermaid Example](/img/software-catalog/widgets/markdownMermaid.png)
 
 <details>
 <summary><b>Mermaid diagram example (click to expand)</b></summary>
 
-````
 ```mermaid
 sequenceDiagram
     participant ClientService
@@ -59,6 +58,5 @@ sequenceDiagram
     PaymentService-->>ClientService: Return Payment Status
 
 ```
-````
 
 </details>

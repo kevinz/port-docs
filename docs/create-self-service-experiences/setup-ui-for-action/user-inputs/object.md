@@ -1,30 +1,32 @@
 ---
+
 sidebar_position: 4
-description: Object is a basic input for JSON data
+description: 对象是 JSON 数据的基本输入
+
 ---
 
-import ApiRef from "../../../api-reference/\_learn_more_reference.mdx"
+import ApiRef from "../../../api-reference/_learn_more_reference.mdx"
 
 import Tabs from "@theme/Tabs"
 import TabItem from "@theme/TabItem"
 
-# Object
+# 对象
 
-Object is a basic input for JSON data.
+对象是 JSON 数据的基本输入。
 
-## 💡 Common object usage
+## 💡 常用对象 Usage
 
-The object input type can be used to store any key/value based data, for example:
+对象输入类型可被引用来存储任何基于键/值的数据，例如: 
 
-- Configurations;
-- Tags;
-- HTTP responses;
-- Dictionaries/Hash maps;
-- etc.
+* 配置；
+* 标签
+* HTTP 响应；
+* 字典/哈希映射；
+* 等等。
 
-In the [live demo](https://demo.getport.io/self-serve) self-service hub page, we can see the **Open terraform PR to add S3 bucket** action whose `policy` input is an object input. 🎬
+在[live demo](https://demo.getport.io/self-serve) 自助服务集线器页面，我们可以看到**打开 terraform PR 以添加 S3 存储桶**操作，其 `policy` 输入是对象输入。
 
-## API definition
+## 应用程序接口定义
 
 <Tabs groupId="api-definition" queryString defaultValue="basic" values={[
 {label: "Basic", value: "basic"},
@@ -97,7 +99,7 @@ In the [live demo](https://demo.getport.io/self-serve) self-service hub page, we
 
 <ApiRef />
 
-## Terraform definition
+## Terraform 定义
 
 <Tabs groupId="tf-definition" queryString defaultValue="basic" values={[
 {label: "Basic", value: "basic"},
@@ -128,7 +130,6 @@ resource "port_action" "myAction" {
 <TabItem value="array">
 
 ```hcl showLineNumbers
-
 resource "port_action" "myAction" {
   # ...action properties
   # highlight-start
@@ -149,16 +150,16 @@ resource "port_action" "myAction" {
 
 </Tabs>
 
-## Validate object
+## 验证对象
 
-Object validations support the following operators:
+对象验证支持以下操作符: 
 
-- `properties` - which keys must appear and what their type should be;
-- `additionalProperties` - are keys not defined in `properties` allowed and what their type should be;
-- `patternProperties` - which regex pattern should properties follow
+* `properties` - 必须出现的键及其类型；
+* `additionalProperties` - 是否允许使用 `properties` 中未定义的键，以及它们的类型；
+* `patternProperties` - 属性应遵循哪种 regex 模式
 
-:::tip
-Object validations follow the JSON schema model, refer to the [JSON schema docs](https://json-schema.org/understanding-json-schema/reference/object.html) to learn about all of the available validations
+:::tip 对象验证遵循 JSON 模式模型，请参阅[JSON schema docs](https://json-schema.org/understanding-json-schema/reference/object.html) 了解所有可用验证
+
 :::
 
 <Tabs groupId="validation-definition" queryString defaultValue="basic" values={[

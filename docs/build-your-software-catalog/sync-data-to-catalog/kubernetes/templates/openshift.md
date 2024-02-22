@@ -1,7 +1,9 @@
 ---
-title: "Red Hat Openshift"
+
+title: "Red Hat Openshift
 sidebar_position: 4
-description: Openshift quickstart
+description: Openshift 快速入门
+
 ---
 
 import TemplateInstallation from "./_template_installation.mdx";
@@ -9,83 +11,80 @@ import TemplatePrerequisites from "./_template_prerequisites.mdx";
 
 # Red Hat Openshift
 
-[Red Hat Openshift](https://www.redhat.com/en/technologies/cloud-computing/openshift) is a versatile platform for scalable application development, modernization, and deployment over Kubernetes, offering a complete service set for app delivery on your preferred infrastructure.
+[Red Hat Openshift](https://www.redhat.com/en/technologies/cloud-computing/openshift) 是通过 Kubernetes 进行可扩展应用程序开发、现代化和部署的多功能平台，可为在您首选的基础设施上交付应用程序提供一整套服务。
 
-Using Port's Kubernetes Exporter, you can keep track of important Openshift resources across your different clusters and export the data to Port. You will use built in metadata from your Openshift resources and CRDs to create entities in Port and keep track of their state.
+使用 Port 的 Kubernetes Exporter，您可以跟踪不同集群中的重要 Openshift 资源，并将数据导出到 Port。 您将从 Openshift 资源和 CRD 中引用内置元数据，在 Port 中创建实体并跟踪其状态。
 
-:::tip
-Get to know the basics of our Kubernetes exporter [here!](/build-your-software-catalog/sync-data-to-catalog/kubernetes/kubernetes.md)
+:::tip 了解 Kubernetes 输出程序的基础知识[here!](/build-your-software-catalog/sync-data-to-catalog/kubernetes/kubernetes.md)
+
 :::
 
-## Mapping Red Hat Openshift - Goals
+## 绘制 Red Hat Openshift - 目标
 
-While Red Hat Openshift provides great visibility when it comes to your Openshift (Kubernetes) environments, there are still some questions that remain about how your Openshift environment connects and interacts with the rest of your infrastructure, for example:
+虽然 Red Hat Openshift 在您的 Openshift(Kubernetes)环境方面提供了很好的可视性，但仍然存在一些问题，例如您的 Openshift 环境如何与基础架构的其他部分进行连接和交互: 
 
-- Which cloud provider is the cluster running in?
-- Which VPC is the cluster running in?
-- Who is on-call for a given cluster?
-- What are all the endpoints provided by all different Openshift clusters in a cloud region?
+* 集群在哪个云 Provider 中运行？
+* 集群在哪个 VPC 中运行？
+* 某个集群的值班人员是谁？
+* 一个云区域中所有不同的 Openshift 集群提供的所有端点是什么？
 
-Importing your Openshift resources to Port makes it easy to create multiple tailored views for different use cases. For example, you can create a view that shows you how your Openshift cluster interacts with the rest of your infrastructure, or you can create a high-level view that allows management to understand the business value provided by your Openshift installations.
+将您的 Openshift 资源被引用到 Port 后，就可以轻松地为不同的用例创建多个定制视图。 例如，您可以创建一个视图，向您展示 Openshift 集群如何与基础架构的其他部分进行交互，也可以创建一个高级视图，让管理层了解 Openshift 安装所提供的业务价值。
 
-In this example you will map your Openshift clusters, their workloads and the Openshift routes which are exposed by your different clusters.
+在这个示例中，您将映射您的 Openshift 集群、它们的工作负载以及不同集群所暴露的 Openshift 路由。
 
-:::tip
-Get to know the basics of our Kubernetes exporter [here!](/build-your-software-catalog/sync-data-to-catalog/kubernetes/kubernetes.md)
+:::tip 了解 Kubernetes 输出程序的基础知识[here!](/build-your-software-catalog/sync-data-to-catalog/kubernetes/kubernetes.md)
+
 :::
 
-## Prerequisites
+## 先决条件
 
 <TemplatePrerequisites />
 
-## Setting up blueprints & resource mapping
+## 设置蓝图和资源映射
 
-The following section will guide you through the process of setting up your blueprints and resource mapping using the
-installation script. You can read more about the installation script [here](#how-does-the-installation-script-work).
+下文将指导您使用安装脚本设置蓝图和资源映射。您可以阅读有关安装脚本的更多信息[here](#how-does-the-installation-script-work) 。
 
-### Creating blueprints
+### 创建蓝图
 
-The installation script provides a convenient way to create your blueprints. Using the `CUSTOM_BP_PATH` environment variable, you can fetch a pre-defined `blueprints.json` to create your blueprints. For this use-case, you will use [this file](https://github.com/port-labs/template-assets/blob/main/kubernetes/blueprints/openshift-blueprints.json) to define your blueprints. Do this by running:
+安装脚本提供了一种创建蓝图的便捷方法。 使用 `CUSTOM_BP_PATH` 环境变量，您可以获取预定义的 `blueprints.json` 来创建蓝图。 在本例中，您将使用[this file](https://github.com/port-labs/template-assets/blob/main/kubernetes/blueprints/openshift-blueprints.json) 来定义蓝图。请通过运行
 
 ```bash showLineNumbers
 export CUSTOM_BP_PATH="https://github.com/port-labs/template-assets/blob/main/kubernetes/blueprints/openshift-blueprints.json"
 ```
 
-This `blueprints.json` file defines the following blueprints:
+该 `blueprints.json` 文件定义了以下蓝图: 
 
-- Cluster;
-- Namespace;
-- Node;
-- Pod;
-- ReplicaSet;
-- Workload \*;
-- Service;
-- Openshift Route \*.
+* 集群；
+* namespace；
+* 节点
+* Pod
+* ReplicaSet；
+* 工作负载 *；
+* 服务；
+* Openshift 路由 *。
 
-:::note
+:::note 
 
-- `Workload` is an abstraction of Kubernetes objects which create and manage pods. By creating this blueprint, you can avoid creating a dedicated blueprint per Workload type, all of which will likely look pretty similar.
-  Here is the list of kubernetes objects `Workload` will represent:
-
-  - Deployment;
-  - StatefulSet;
-  - DaemonSet.
-
-- `Openshift Route` is one of the most important Openshift resources, giving developers the capability to connect to their services, while the entire network layer is managed by the Openshift API, and providing a simple DNS record for accessability.
+* Workload "是创建和管理 pod 的 Kubernetes 对象的抽象。通过创建该蓝图，可以避免为每种工作负载类型创建一个专用蓝图，因为所有这些蓝图可能看起来都非常相似。
+以下是 "Workload "将代表的 kubernetes 对象列表: 
+    - 部署；
+    - StatefulSet；
+    - DaemonSet。
+* `Openshift Route` 是 Openshift 最重要的资源之一，它赋予开发人员连接服务的能力，而整个网络层由 Openshift API 管理，并提供简单的 DNS 记录以实现可访问性。
 
 :::
 
-### Exporting custom resource mapping
+### 导出自定义资源映射
 
-Using the `CONFIG_YAML_URL` parameter, you can define a custom resource configuration to use when installing the exporter.
+使用 `CONFIG_YAML_URL` 参数，可以定义自定义资源配置，以便在安装导出程序时使用。
 
-In this use-case you will be using **[this configuration file](https://github.com/port-labs/template-assets/blob/main/kubernetes/full-configs/openshift_usecase.yaml)**. To achieve this, run:
+在本例中，您将被引用 ** [this configuration file](https://github.com/port-labs/template-assets/blob/main/kubernetes/full-configs/openshift_usecase.yaml)**。为此，请运行
 
 ```bash showLineNumbers
 export CONFIG_YAML_URL="https://raw.githubusercontent.com/port-labs/template-assets/main/kubernetes/full-configs/openshift_usecase.yaml"
 ```
 
-You can now run the installation script using the following code snippet:
+现在，您可以使用以下代码片段运行安装脚本: 
 
 ```bash showLineNumbers
 export CLUSTER_NAME="my-cluster"
@@ -94,8 +93,8 @@ export PORT_CLIENT_SECRET="my-port-client-secret"
 curl -s https://raw.githubusercontent.com/port-labs/template-assets/main/kubernetes/install.sh | bash
 ```
 
-You can now browse to your Port environment to see that your blueprints have been created, and your Kubernetes resources, including Openshift routes are being reported to Port using the freshly installed k8s exporter.
+现在，您可以浏览 Port 环境，查看蓝图是否已创建，Kubernetes 资源(包括 Openshift 路由)是否正在使用新安装的 k8s 输出程序向 Port 报告。
 
-## How does the installation script work?
+## 安装脚本如何工作？
 
 <TemplateInstallation />

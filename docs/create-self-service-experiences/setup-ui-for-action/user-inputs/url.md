@@ -1,27 +1,29 @@
 ---
+
 sidebar_position: 6
-description: URL is an input used to save links to websites
+description: URL 是用于保存网站链接的输入法
+
 ---
 
-import ApiRef from "../../../api-reference/\_learn_more_reference.mdx"
+import ApiRef from "../../../api-reference/_learn_more_reference.mdx"
 
 import Tabs from "@theme/Tabs"
 import TabItem from "@theme/TabItem"
 
 # URL
 
-URL is an input used to save links to websites.
+URL 是用于保存网站链接的输入法。
 
-## 💡 Common url usage
+## 💡 常用网址 Usage
 
-The URL input type can be used to store a link to any web resource, for example:
+例如，URL 输入类型可被用来存储指向任何网络资源的链接: 
 
-- Link to Datadog dashboard;
-- Link to configuration file;
-- Link to pull request;
-- etc.
+* Datadog 仪表板链接；
+* 配置文件链接；
+* 链接到拉取请求；
+* 等等。
 
-## API definition
+## 应用程序接口定义
 
 <Tabs groupId="api-definition" queryString defaultValue="basic" values={[
 {label: "Basic", value: "basic"},
@@ -88,7 +90,7 @@ The URL input type can be used to store a link to any web resource, for example:
 
 <ApiRef />
 
-## Terraform definition
+## Terraform 定义
 
 <Tabs groupId="tf-definition" queryString defaultValue="basic" values={[
 {label: "Basic", value: "basic"},
@@ -145,7 +147,6 @@ resource "port_action" "myAction" {
 <TabItem value="array">
 
 ```hcl showLineNumbers
-
 resource "port_action" "myAction" {
   # ...action properties
   # highlight-start

@@ -1,44 +1,46 @@
 ---
+
 sidebar_position: 1
+
 ---
 
 import Tabs from "@theme/Tabs"
 import TabItem from "@theme/TabItem"
-import Prerequisites from "../templates/\_ocean_helm_prerequisites_block.mdx"
-import AzurePremise from "../templates/\_ocean_azure_premise.mdx"
-import DockerParameters from "./\_pagerduty_docker_params.mdx"
-import AdvancedConfig from '../../../generalTemplates/\_ocean_advanced_configuration_note.md'
-import PagerDutyServiceBlueprint from "../webhook/examples/resources/pagerduty/\_example_pagerduty_service.mdx"
-import PagerDutyIncidentBlueprint from "../webhook/examples/resources/pagerduty/\_example_pagerduty_incident.mdx"
-import PagerDutyWebhookConfig from "../webhook/examples/resources/pagerduty/\_example_pagerduty_webhook_config.mdx"
-import PagerDutyWebhookHistory from "../webhook/examples/resources/pagerduty/\_example_pagerduty_webhook_history_config.mdx"
-import PagerDutyScript from "../webhook/examples/resources/pagerduty/\_example_pagerduty_shell_history_config.mdx"
+import Prerequisites from "../templates/_ocean_helm_prerequisites_block.mdx"
+import AzurePremise from "../templates/_ocean_azure_premise.mdx"
+import DockerParameters from "./_pagerduty_docker_params.mdx"
+import AdvancedConfig from '../../../generalTemplates/_ocean_advanced_configuration_note.md'
+import PagerDutyServiceBlueprint from "../webhook/examples/resources/pagerduty/_example_pagerduty_service.mdx"
+import PagerDutyIncidentBlueprint from "../webhook/examples/resources/pagerduty/_example_pagerduty_incident.mdx"
+import PagerDutyWebhookConfig from "../webhook/examples/resources/pagerduty/_example_pagerduty_webhook_config.mdx"
+import PagerDutyWebhookHistory from "../webhook/examples/resources/pagerduty/_example_pagerduty_webhook_history_config.mdx"
+import PagerDutyScript from "../webhook/examples/resources/pagerduty/_example_pagerduty_shell_history_config.mdx"
 
 # PagerDuty
 
-Our PagerDuty integration allows you to import `schedules`, `services` and `incidents` from your PagerDuty account into Port, according to your mapping and definitions.
+我们的 PagerDuty 集成允许您根据映射和定义，将 PagerDuty 账户中的 "日程"、"服务 "和 "事件 "导入 Port。
 
-## Common use cases
+## 常见被引用情况
 
-- Map `schedules`, `services` and `incidents` in your PagerDuty organization environment.
-- Watch for object changes (create/update/delete) in real-time, and automatically apply the changes to your entities in Port.
+* 映射 PagerDuty 组织环境中的 "日程"、"服务 "和 "事件"。
+* 实时观察对象更改(创建/更新/删除)，并自动将更改应用到您的 Port 实体中。
 
-## Prerequisites
+## 先决条件
 
 <Prerequisites />
 
-## Installation
+## 安装
 
-Choose one of the following installation methods:
+从以下安装方法中选择一种: 
 
 <Tabs groupId="installation-methods" queryString="installation-methods">
 
 <TabItem value="real-time-always-on" label="Real Time & Always On" default>
 
-Using this installation option means that the integration will be able to update Port in real time using webhooks.
+使用该安装选项意味着集成将能使用 webhook 实时更新 Port。
 
-This table summarizes the available parameters for the installation.
-Set them as you wish in the script below, then copy it and run it in your terminal:
+本表总结了安装时可用的参数，请在下面的脚本中按自己的需要进行设置，然后复制并在终端运行: 
+
 
 | Parameter                        | Description                                                                                                             | Required |
 | -------------------------------- | ----------------------------------------------------------------------------------------------------------------------- | -------- |
@@ -53,6 +55,7 @@ Set them as you wish in the script below, then copy it and run it in your termin
 | `integration.config.appHost`     | The host of the Port Ocean app. Used to set up the integration endpoint as the target for Webhooks created in PagerDuty | ❌       |
 | `scheduledResyncInterval`        | The number of minutes between each resync                                                                               | ❌       |
 | `initializePortResources`        | Default true, When set to true the integration will create default blueprints and the port App config Mapping           | ❌       |
+
 
 <br/>
 
@@ -75,16 +78,18 @@ helm upgrade --install my-pagerduty-integration port-labs/port-ocean \
   --set integration.secrets.token="string"  \
   --set integration.config.apiUrl="string"
 ```
+
 </TabItem>
 
 <TabItem value="argocd" label="ArgoCD" default>
 To install the integration using ArgoCD, follow these steps:
 
-1. Create a `values.yaml` file in `argocd/my-ocean-pagerduty-integration` in your git repository with the content:
+1. 在 git 仓库的`argocd/my-ocean-pagerduty-integration`中创建一个`values.yaml`文件，内容如下: 
 
-:::note
-Remember to replace the placeholders for `PAGERDUTY_API_URL` and `PAGERDUTY_API_TOKEN`.
+:::note 请记住替换 `PAGERDUTY_API_URL` 和 `PAGERDUTY_API_TOKEN` 的占位符。
+
 :::
+
 ```yaml showLineNumbers
 initializePortResources: true
 scheduledResyncInterval: 120
@@ -100,13 +105,15 @@ integration:
   // highlight-next-line
     token: PAGERDUTY_API_TOKEN
 ```
+
 <br/>
 
-2. Install the `my-ocean-pagerduty-integration` ArgoCD Application by creating the following `my-ocean-pagerduty-integration.yaml` manifest:
-:::note
-Remember to replace the placeholders for `YOUR_PORT_CLIENT_ID` `YOUR_PORT_CLIENT_SECRET` and `YOUR_GIT_REPO_URL`.
+2.创建下面的 "my-ocean-pagerduty-integration.yaml "配置清单，安装 "my-ocean-pagerduty-integration "ArgoCD应用程序: 
 
-Multiple sources ArgoCD documentation can be found [here](https://argo-cd.readthedocs.io/en/stable/user-guide/multiple_sources/#helm-value-files-from-external-git-repository).
+:::note 记住要替换 `YOUR_PORT_CLIENT_ID``YOUR_PORT_CLIENT_SECRET` 和 `YOUR_GIT_REPO_URL` 的占位符。
+
+多种来源的 ArgoCD 文档可在[here](https://argo-cd.readthedocs.io/en/stable/user-guide/multiple_sources/#helm-value-files-from-external-git-repository) 上找到。
+
 :::
 
 <details>
@@ -151,10 +158,12 @@ spec:
 </details>
 <br/>
 
-3. Apply your application manifest with `kubectl`:
+3.使用 `kubectl` 配置应用程序清单: 
+
 ```bash
 kubectl apply -f my-ocean-pagerduty-integration.yaml
 ```
+
 </TabItem>
 </Tabs>
 
@@ -165,17 +174,17 @@ kubectl apply -f my-ocean-pagerduty-integration.yaml
   <TabItem value="github" label="GitHub">
 This workflow will run the PagerDuty integration once and then exit, this is useful for **scheduled** ingestion of data.
 
-:::warning
-If you want the integration to update Port in real time using webhooks you should use the [Real Time & Always On](?installation-methods=real-time-always-on#installation) installation option
+:::warning 如果希望集成使用 webhooks 实时更新 Port，则应使用[Real Time & Always On](?installation-methods=real-time-always-on#installation) 安装选项
+
 :::
 
-Make sure to configure the following [Github Secrets](https://docs.github.com/en/actions/security-guides/using-secrets-in-github-actions):
+确保配置以下[Github Secrets](https://docs.github.com/en/actions/security-guides/using-secrets-in-github-actions) : 
 
 <DockerParameters />
 
 <br/>
 
-Here is an example for `pagerduty-integration.yml` workflow file:
+下面是 "pagerduty-integration.yml "工作流文件的示例: 
 
 ```yaml showLineNumbers
 name: PagerDuty Exporter Workflow
@@ -214,21 +223,19 @@ jobs:
   <TabItem value="jenkins" label="Jenkins">
 This pipeline will run the PagerDuty integration once and then exit, this is useful for **scheduled** ingestion of data.
 
-:::tip
-Your Jenkins agent should be able to run docker commands.
+:::tip 你的 Jenkins 代理应该能够运行 docker 命令。
+
 :::
-:::warning
-If you want the integration to update Port in real time using webhooks you should use
-the [Real Time & Always On](?installation-methods=real-time-always-on#installation) installation option.
+:::warning 如果希望集成使用 webhooks 实时更新 Port，则应使用 安装选项。[Real Time & Always On](?installation-methods=real-time-always-on#installation) 
+
 :::
 
-Make sure to configure the following [Jenkins Credentials](https://www.jenkins.io/doc/book/using/using-credentials/)
-of `Secret Text` type:
+请确保配置以下[Jenkins Credentials](https://www.jenkins.io/doc/book/using/using-credentials/)的 "Secret Text "类型: 
 
 <DockerParameters />
 <br/>
 
-Here is an example for `Jenkinsfile` groovy pipeline file:
+下面是 `Jenkinsfile` groovy Pipelines 文件的示例: 
 
 ```text showLineNumbers
 pipeline {
@@ -277,7 +284,7 @@ pipeline {
 
 <br/>
 
-Here is an example for `pagerduty-integration.yml` pipeline file:
+下面是 "pagerduty-integration.yml "管道文件的示例: 
 
 ```yaml showLineNumbers
 trigger:
@@ -289,7 +296,6 @@ pool:
 variables:
   - group: port-ocean-credentials
 
-
 steps:
 - script: |
     # Set Docker image and run the container
@@ -297,7 +303,7 @@ steps:
     version="latest"
 
     image_name="ghcr.io/port-labs/port-ocean-$integration_type:$version"
-    
+
     docker run -i --rm --platform=linux/amd64 \
         -e OCEAN__EVENT_LISTENER='{"type":"ONCE"}' \
         -e OCEAN__INITIALIZE_PORT_RESOURCES=true \
@@ -309,7 +315,6 @@ steps:
 
     exit $?
   displayName: 'Ingest Data into Port'
-
 ```
 
   </TabItem>
@@ -321,26 +326,26 @@ steps:
 
 <AdvancedConfig/>
 
-## Ingesting PagerDuty objects
+## 接收 PagerDuty 对象
 
-The PagerDuty integration uses a YAML configuration to describe the process of loading data into the developer portal. See [examples](#examples) below.
+PagerDuty 集成使用 YAML 配置来描述将数据加载到开发人员门户的过程。 请参阅下面的[examples](#examples) 。
 
-The integration makes use of the [JQ JSON processor](https://stedolan.github.io/jq/manual/) to select, modify, concatenate, transform and perform other operations on existing fields and values from PagerDuty's API events.
+该集成利用[JQ JSON processor](https://stedolan.github.io/jq/manual/) 对来自 PagerDuty API 事件的现有字段和值进行选择、修改、连接、转换和其他操作。
 
-### Configuration structure
+### 配置结构
 
-The integration configuration determines which resources will be queried from PagerDuty, and which entities and properties will be created in Port.
+集成配置决定从 PagerDuty 查询哪些资源，以及在 Port 中创建哪些实体和属性。
 
-:::tip Supported resources
-The following resources can be used to map data from PagerDuty, it is possible to reference any field that appears in the API responses linked below for the mapping configuration.
+:::tip  支持的资源 以下资源可被引用来映射来自 PagerDuty 的数据，可以引用下面链接的 API 响应中出现的任何字段来进行映射配置。
 
-- [`Schedule`](https://developer.pagerduty.com/api-reference/846ecf84402bb-list-schedules)
-- [`Service`](https://developer.pagerduty.com/api-reference/e960cca205c0f-list-services)
-- [`Incident`](https://developer.pagerduty.com/api-reference/9d0b4b12e36f9-list-incidents)
+* * [`Schedule`](https://developer.pagerduty.com/api-reference/846ecf84402bb-list-schedules)
+* [`Service`](https://developer.pagerduty.com/api-reference/e960cca205c0f-list-services)
+* [`Incident`](https://developer.pagerduty.com/api-reference/9d0b4b12e36f9-list-incidents)
 
 :::
 
-- The root key of the integration configuration is the `resources` key:
+* 集成配置的根密钥是 "资源 "密钥: 
+
 
   ```yaml showLineNumbers
   # highlight-next-line
@@ -350,7 +355,9 @@ The following resources can be used to map data from PagerDuty, it is possible t
       ...
   ```
 
-- The `kind` key is a specifier for a PagerDuty object:
+
+* 类型 "键是 PagerDuty 对象的指定符: 
+
 
   ```yaml showLineNumbers
     resources:
@@ -360,7 +367,9 @@ The following resources can be used to map data from PagerDuty, it is possible t
         ...
   ```
 
-- The `selector` and the `query` keys allow you to filter which objects of the specified `kind` will be ingested into your software catalog:
+
+* 通过 "选择器 "和 "查询 "键，您可以过滤哪些指定 "类型 "的对象将被录入软件目录: 
+
 
   ```yaml showLineNumbers
   resources:
@@ -372,7 +381,9 @@ The following resources can be used to map data from PagerDuty, it is possible t
       port:
   ```
 
-- The `port`, `entity` and the `mappings` keys are used to map the PagerDuty object fields to Port entities. To create multiple mappings of the same kind, you can add another item in the `resources` array;
+
+* Port"、"实体 "和 "映射 "键被用来将 PagerDuty 对象字段映射到Port实体。要创建多个同类映射，可在 `resources` 数组中添加另一项；
+
 
   ```yaml showLineNumbers
   resources:
@@ -397,26 +408,26 @@ The following resources can be used to map data from PagerDuty, it is possible t
           mappings: ...
   ```
 
-  :::tip Blueprint key
-  Note the value of the `blueprint` key - if you want to use a hardcoded string, you need to encapsulate it in 2 sets of quotes, for example use a pair of single-quotes (`'`) and then another pair of double-quotes (`"`)
-  :::
 
-### Ingest data into Port
+:::tip 蓝图键 注意 `blueprint` 键的值 - 如果要使用硬编码字符串，需要用 2 组引号封装，例如使用一对单引号 (`'`)，然后再用一对双引号 (`"`) 
+::: 
 
-To ingest PagerDuty objects using the [integration configuration](#configuration-structure), you can follow the steps below:
+#### 将数据输入Port
 
-1. Go to the DevPortal Builder page.
-2. Select a blueprint you want to ingest using PagerDuty.
-3. Choose the **Ingest Data** option from the menu.
-4. Select PagerDuty under the Incident management category.
-5. Modify the [configuration](#configuration-structure) according to your needs.
-6. Click `Resync`.
+要使用[integration configuration](#configuration-structure) 引用 PagerDuty 对象，可以按照以下步骤操作: 
 
-## Examples
+1. 转到 DevPortal Builder 页面。
+2. 选择要被 PagerDuty 引用的蓝图。
+3. 从菜单中选择**采集数据**选项。
+4. 在事件管理类别下选择 PagerDuty。
+5. 根据需要修改[configuration](#configuration-structure) 。
+6. 单击 `Resync`。
 
-Examples of blueprints and the relevant integration configurations:
+## 示例
 
-### Schedule
+蓝图和相关集成配置示例: 
+
+### 时间表
 
 <details>
 <summary>Schedule blueprint</summary>
@@ -483,7 +494,7 @@ resources:
 
 </details>
 
-### Service
+### 服务
 
 <details>
 <summary>Service blueprint</summary>
@@ -562,7 +573,7 @@ resources:
 
 </details>
 
-### Incident
+###事件
 
 <details>
 <summary>Incident blueprint</summary>
@@ -662,11 +673,13 @@ resources:
 
 </details>
 
-## Ingesting incident analytics
-To enrich your PagerDuty incident entities with analytics data, follow the steps below:
+## 收录事件分析
 
-1. Update the incident blueprint to include an `analytics` property.
+要利用分析数据丰富 PagerDuty 事件实体，请按照以下步骤操作: 
+
+1. 更新事件蓝图以包含 "分析 "属性。
     <details>
+
     <summary>Updated incident blueprint</summary>
 
     ```json showLineNumbers
@@ -740,9 +753,10 @@ To enrich your PagerDuty incident entities with analytics data, follow the steps
     }
     ```
 
-    </details>
+   </details>
 
-2. Add `incidentAnalytics` property to the integration `selector` key. When set to `true`, the integration will fetch data from the [PagerDuty Analytics API](https://developer.pagerduty.com/api-reference/328d94baeaa0e-get-raw-data-single-incident) and ingest it to Port. By default, this property is set to `false`.
+2. 在集成的 `selector` 键中添加 `incidentAnalytics` 属性。设置为 `true`时，集成将从[PagerDuty Analytics API](https://developer.pagerduty.com/api-reference/328d94baeaa0e-get-raw-data-single-incident) 获取数据并摄取到 Port。默认情况下，此属性设置为 `false`。
+
 
     ```yaml showLineNumbers
     resources:
@@ -762,7 +776,9 @@ To enrich your PagerDuty incident entities with analytics data, follow the steps
                 url: .self
     ```
 
-3. Establish a mapping between the `analytics` blueprint property and the analytics data response.
+
+3. 在 "分析 "蓝图属性和分析数据响应之间建立映射。
+
 
     ```yaml showLineNumbers
     resources:
@@ -789,10 +805,12 @@ To enrich your PagerDuty incident entities with analytics data, follow the steps
               relations:
                 pagerdutyService: .service.id
     ```
+
 4. Below is the complete integration configuration for enriching the incident blueprint with analytics data.
 
-    <details>
-    <summary>Incident analytics integration configuration</summary>
+<details>
+<summary>Incident analytics integration configuration</summary>
+
 
     ```yaml showLineNumbers
     resources:
@@ -818,15 +836,16 @@ To enrich your PagerDuty incident entities with analytics data, follow the steps
             relations:
               pagerdutyService: .service.id
     ```
-    </details>
 
-## Let's Test It
+</details>
 
-This section includes a sample response data from Pagerduty. In addition, it includes the entity created from the resync event based on the Ocean configuration provided in the previous section.
+## 让我们来测试一下
 
-### Payload
+本节包括来自 Providerduty 的响应数据示例，此外还包括根据上一节提供的 Ocean 配置从重新同步事件中创建的实体。
 
-Here is an example of the payload structure from Pagerduty:
+### 有效载荷
+
+下面是 Pagerduty 的有效载荷结构示例: 
 
 <details>
 <summary> Schedule response data</summary>
@@ -1075,9 +1094,9 @@ Here is an example of the payload structure from Pagerduty:
 
 </details>
 
-### Mapping Result
+#### 映射结果
 
-The combination of the sample payload and the Ocean configuration generates the following Port entity:
+结合样本有效载荷和 Ocean 配置，可生成以下 Port 实体: 
 
 <details>
 <summary> Schedule entity in Port</summary>
@@ -1161,20 +1180,21 @@ The combination of the sample payload and the Ocean configuration generates the 
 
 </details>
 
-## Alternative installation via webhook
-While the Ocean integration described above is the recommended installation method, you may prefer to use a webhook to ingest data from PagerDuty. If so, use the following instructions:
+## 通过 webhook 进行替代安装
+
+虽然上述 Ocean 集成是推荐的安装方法，但您可能更喜欢使用 webhook 从 PagerDuty 引用数据。 如果是这样，请使用以下说明: 
 
 <details>
 
 <summary><b>Webhook installation (click to expand)</b></summary>
 
-In this example you are going to create a webhook integration between [PagerDuty](https://www.pagerduty.com/) and Port, which will ingest PagerDuty services and its related incidents into Port. This integration will involve setting up a webhook to receive notifications from PagerDuty whenever an incident is created or updated, allowing Port to ingest and process the incident entities accordingly.
+在本示例中，您将在[PagerDuty](https://www.pagerduty.com/) 和 Port 之间创建 webhook 集成，将 PagerDuty 服务及其相关事件导入 Port。该集成将涉及设置 webhook，以便在创建或更新事件时接收来自 PagerDuty 的通知，使 Port 能够相应地导入和处理事件实体。
 
 <h2>Import PagerDuty services and incidents</h2>
 
 <h3>Port configuration</h3>
 
-Create the following blueprint definitions:
+创建以下蓝图定义: 
 
 <details>
 <summary>PagerDuty service blueprint</summary>
@@ -1190,47 +1210,43 @@ Create the following blueprint definitions:
 
 </details>
 
-Create the following webhook configuration [using Port UI](/build-your-software-catalog/sync-data-to-catalog/webhook/?operation=ui#configuring-webhook-endpoints)
+创建以下 webhook 配置[using Port UI](/build-your-software-catalog/sync-data-to-catalog/webhook/?operation=ui#configuring-webhook-endpoints)
 
 <details>
 <summary>PagerDuty webhook configuration</summary>
 
-1. **Basic details** tab - fill the following details:
-   1. Title : `PagerDuty Mapper`;
-   2. Identifier : `pagerduty_mapper`;
-   3. Description : `A webhook configuration to map PagerDuty services and its related incidents to Port`;
-   4. Icon : `Pagerduty`;
-2. **Integration configuration** tab - fill the following JQ mapping:
-
+1. **基本信息** 选项卡 - 填写以下详细信息: 
+    1.title: `PagerDuty Mapper`；
+    2.标识符 : `pagerduty_mapper`；
+    3.Description : `将 PagerDuty 服务及其相关事件映射到 Port` 的 webhook 配置；
+    4.图标 : `Pagerduty`；
+2. **集成配置**选项卡 - 填写以下 JQ 映射: 
    <PagerDutyWebhookConfig/>
-
-3. Scroll down to **Advanced settings** and input the following details:
-
-   1. secret: `WEBHOOK_SECRET`;
-   2. Signature Header Name : `X-Pagerduty-Signature`;
-   3. Signature Algorithm : Select `sha256` from dropdown option;
-   4. Signature Prefix : `v1=`
-   5. Click **Save** at the bottom of the page.
-
-   Remember to update the `WEBHOOK_SECRET` with the real secret you receive after subscribing to the webhook in PagerDuty.
+3.向下滚动到**高级设置**，输入以下详细信息: 
+    1. secret: `WEBHOOK_SECRET`；
+    2.签名头名称:  `X-Pagerduty-Signature`；
+    3.签名算法: 从下拉选项中选择 `sha256`；
+    4.签名前缀 : `v1=`.
+    5.点击页面底部的**保存**。
+    切记用在 PagerDuty 中订阅 webhook 后收到的真实secret更新 `WEBHOOK_SECRET`。
 
 </details>
 
 <h3>Create a webhook in PagerDuty</h3>
 
-1. Go to [PagerDuty](https://www.pagerduty.com/) and select the account you want to configure the webhook for.
-2. Navigate to **Integrations** in the navigation bar and click on **Generic Webhooks (v3)**.
-3. Click **New Webhook** and provide the following information:
-   1. `Webhook URL` - enter the value of the `url` key you received after [creating the webhook configuration](/build-your-software-catalog/sync-data-to-catalog/webhook/?operation=ui#configuring-webhook-endpoints).
-   2. `Scope Type` - select whether you want to receive webhook events for a specific service (select `Service` if applicable) or for all services in your account (select `Account` if applicable).
-   3. `Description` - provide an optional description for your webhook.
-   4. `Event Subscription` - choose the event types you would like to subscribe to.
-   5. `Custom Header` - enter any optional HTTP header to be added to your webhook payload.
-4. Click **Add webhook** to create your webhook.
-5. Alternatively, you can use the `curl` method to create the webhook. Copy the code below and run it in your terminal:
+1. 转到[PagerDuty](https://www.pagerduty.com/) ，选择要配置 webhook 的账户。
+2. 导航至导航栏中的**集成**，然后点击**通用 Webhook (v3)**。
+3. 点击 ** 新建 Webhook**，并提供以下信息: 
+    1. Webhook URL` - 输入[creating the webhook configuration](/build-your-software-catalog/sync-data-to-catalog/webhook/?operation=ui#configuring-webhook-endpoints) 后收到的 `url` 键的值。
+    2. 范围类型"- 选择是接收特定服务的 webhook 事件(如果适用，请选择 "服务")，还是接收账户中所有服务的 webhook 事件(如果适用，请选择 "账户")。
+    3. `Description` - 为您的 webhook 提供可选描述。
+    4. 事件订阅"- 选择要订阅的事件类型。
+    5.自定义标头"- 输入要添加到 webhook 有效负载的任何可选 HTTP 标头。
+4.单击 ** 添加 webhook** 创建您的 webhook。
+5.或者，你也可以使用 `curl` 方法来创建 webhook。复制下面的代码并在终端运行: 
 
 ```curl showLineNumbers
-  curl --request POST \
+curl --request POST \
   --url \
  https://api.pagerduty.com/webhook_subscriptions
   --header 'Accept: application/vnd.pagerduty+json;version=2' \
@@ -1275,19 +1291,19 @@ Create the following webhook configuration [using Port UI](/build-your-software-
   }'
 ```
 
-:::tip
-In order to view the different events available in PagerDuty webhooks, [look here](https://developer.pagerduty.com/docs/db0fa8c8984fc-overview#event-types)
+:::tip 为了查看 PagerDuty webhooks 中可用的不同事件、[look here](https://developer.pagerduty.com/docs/db0fa8c8984fc-overview#event-types)
+
 :::
 
-Done! any change that happens to your services or incidents in PagerDuty will trigger a webhook event to the webhook URL provided by Port. Port will parse the events according to the mapping and update the catalog entities accordingly.
+完成！您在 PagerDuty 中的服务或事件发生的任何变化都将触发指向 Port 提供的 webhook URL 的 webhook 事件。 Port 将根据映射解析事件并相应地更新目录实体。
 
 <h2>Let's Test It</h2>
 
-This section includes a sample webhook event sent from PagerDuty when an incident is created or updated. In addition, it includes the entity created from the event based on the webhook configuration provided in the previous section.
+本节包括当创建或更新事件时从 PagerDuty 发送的 webhook 事件示例。 此外，本节还包括根据上一节提供的 webhook 配置从事件中创建的实体。
 
 <h3>Payload</h3>
 
-Here is an example of the payload structure sent to the webhook URL when a PagerDuty incident is created:
+下面是创建 PagerDuty 事件时发送到 webhook URL 的有效载荷结构示例: 
 
 <details>
 <summary>Webhook event payload</summary>
@@ -1354,7 +1370,7 @@ Here is an example of the payload structure sent to the webhook URL when a Pager
 
 <h3>Mapping Result</h3>
 
-The combination of the sample payload and the webhook configuration generates the following Port entity:
+结合示例有效载荷和 webhook 配置可生成以下 Port 实体: 
 
 ```json showLineNumbers
 {
@@ -1378,35 +1394,34 @@ The combination of the sample payload and the webhook configuration generates th
 
 <h2>Import PagerDuty historical data</h2>
 
-In this example you are going to use the provided Bash script to fetch data from the PagerDuty API and ingest it to Port.
+在本例中，您将使用 Provider 提供的 Bash 脚本从 PagerDuty API 获取数据并将其引用到 Port。
 
-The script extracts services and incidents from PagerDuty, and sends them to Port as microservice and incident entities respectively.
+脚本从 PagerDuty 中提取服务和事件，并分别作为微服务和事件实体发送到 Port。
 
 <h3>Port configuration</h3>
 
-This example utilizes the same [blueprint](#prerequisites) definition from the previous section, along with a new webhook configuration:
+本示例使用了上一节中相同的[blueprint](#prerequisites) 定义以及新的 webhook 配置: 
 
-Create the following webhook configuration [using Port UI](/build-your-software-catalog/sync-data-to-catalog/webhook/?operation=ui#configuring-webhook-endpoints)
+创建以下 webhook 配置[using Port UI](/build-your-software-catalog/sync-data-to-catalog/webhook/?operation=ui#configuring-webhook-endpoints)
 
 <details>
 <summary>PagerDuty webhook configuration for historical data</summary>
 
-1. **Basic details** tab - fill the following details:
-   1. Title : `PagerDuty History Mapper`;
-   2. Identifier : `pagerduty_history_mapper`;
-   3. Description : `A webhook configuration to map PagerDuty Historical services and its related incidents to Port`;
-   4. Icon : `Pagerduty`;
-2. **Integration configuration** tab - fill the following JQ mapping:
+1. **基本信息** 选项卡 - 填写以下详细信息: 
+    1.title: `PagerDuty History Mapper`；
+    2.标识符 : `pagerduty_history_mapper`；
+    3.Description : `将 PagerDuty 历史服务及其相关事件映射到 Port` 的 webhook 配置；
+    4.图标 : `Pagerduty`；
+2. **集成配置**选项卡 - 填写以下 JQ 映射: 
    <PagerDutyWebhookHistory/>
+3.向下滚动到**高级设置**，输入以下详细信息: 
+    1. secret: `WEBHOOK_SECRET`；
+    2.签名头名称:  `X-Pagerduty-Signature`；
+    3.签名算法: 从下拉选项中选择 `sha256`；
+    4.签名前缀 : `v1=`.
+    5.点击页面底部的**保存**。
 
-3. Scroll down to **Advanced settings** and input the following details:
-   1. secret: `WEBHOOK_SECRET`;
-   2. Signature Header Name : `X-Pagerduty-Signature`;
-   3. Signature Algorithm : Select `sha256` from dropdown option;
-   4. Signature Prefix : `v1=`
-   5. Click **Save** at the bottom of the page.
-
-Remember to update the `WEBHOOK_SECRET` with the real secret you receive after subscribing to the webhook in PagerDuty.
+切记用在 PagerDuty 中订阅 webhook 后收到的真实secret更新`WEBHOOK_SECRET`。
 
 </details>
 
@@ -1419,22 +1434,23 @@ Remember to update the `WEBHOOK_SECRET` with the real secret you receive after s
 
 <h3>How to Run the script</h3>
 
-This script requires two configuration values:
+该脚本需要两个配置值: 
 
-1. `PD_TOKEN`: your PagerDuty API token;
-2. `PORT_URL`: your Port webhook URL.
+1. PD_TOKEN": 您的 PagerDuty API 标记；
+2. PORT_URL: 您的 Port webhook URL。
 
-Then trigger the script by running:
+然后运行脚本触发: 
 
 ```bash showLineNumbers
 bash pagerduty_to_port.sh
 ```
 
-This script fetches services and incidents from PagerDuty and sends them to Port.
+该脚本从 PagerDuty 获取服务和事件，并将其发送到 Port。
 
-:::tip
-The script writes the JSON payload for each service and incident to a file named `output.json`. This can be useful for debugging if you encounter any issues.
+:::tip 脚本会将每个服务和事件的 JSON 有效载荷写入名为 `output.json` 的文件。 如果遇到任何问题，这将有助于调试。
+
 :::
 
-Done! you can now import historical data from PagerDuty into Port. Port will parse the events according to the mapping and update the catalog entities accordingly.
+完成！现在您可以将历史数据从 PagerDuty 导入 Port。 Port 将根据映射解析事件并相应更新目录实体。
+
 </details>

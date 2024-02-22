@@ -1,40 +1,39 @@
-# GitHub Workflow Self-Service Actions
+# GitHub 工作流自助服务操作
 
-[Port's GitHub application](../../../build-your-software-catalog/sync-data-to-catalog/git/github/installation.md) can trigger a [GitHub workflow](https://docs.github.com/en/actions/using-workflows) using a customer provided input and [`port_payload`](../../self-service-actions-deep-dive/self-service-actions-deep-dive.md#action-message-structure).
+[Port's GitHub application](../../../build-your-software-catalog/sync-data-to-catalog/git/github/installation.md) 可使用客户提供的输入和[`port_payload`](../../self-service-actions-deep-dive/self-service-actions-deep-dive.md#action-message-structure) 触发[GitHub workflow](https://docs.github.com/en/actions/using-workflows) 。
 
-:::tip
-Self-service actions using GitHub workflows are available both with the standard Port [GitHub app](../../../build-your-software-catalog/sync-data-to-catalog/git/github/github.md), and with the [self-hosted version](../../../build-your-software-catalog/sync-data-to-catalog/git/github/self-hosted-installation.md)
+:::tip 使用 GitHub 工作流的自助操作既可通过标准的 Port[GitHub app](../../../build-your-software-catalog/sync-data-to-catalog/git/github/github.md) ，也可通过[self-hosted version](../../../build-your-software-catalog/sync-data-to-catalog/git/github/self-hosted-installation.md)
+
 :::
 
 ![Port GitHub workflow Architecture](../../../../static/img/self-service-actions/portGithubWorkflowArchitecture.png)
 
-The steps shown in the image above are as follows:
+上图所示步骤如下: 
 
-1. Port publishes an invoked `Action` message to a topic;
-2. A secure topic (`ORG_ID.github.runs`) holds all the action invocations;
-3. A listener implemented on Port's GitHub application receives the new topic message and runs GitHub workflow defined by the DevOps team.
+1. Port将调用的 "操作 "信息发布到主题；
+2. 安全主题 (`ORG_ID.github.runs`)保存所有调用的操作；
+3. Port 的 GitHub 应用程序上的监听器会接收新的主题消息，并运行 DevOps 团队定义的 GitHub 工作流。
 
-An example flow would be:
+流程示例如下
 
-1. A developer asks to deploy a new version of an existing `Microservice`;
-2. The `create` action is sent to the `github.runs` topic;
-3. Port's GitHub application event handler is triggered by this new action message;
-4. Port's GitHub application triggers the GitHub workflow that deploys a new version of the service;
-5. As part of the workflow, the new microservice `Deployment` is reported back to Port;
-6. When the workflow is done, Port's GitHub application reports back to Port about the status of the action run (`SUCCESS` or `FAILURE`), according to workflow's `conclusion`.
+1. 开发人员要求部署现有 "Microservice "的新版本；
+2. 创建 "操作会发送到 "github.runs "主题；
+3. Port的 GitHub 应用程序事件处理程序会被该新操作消息触发；
+4. Port 的 GitHub 应用程序触发部署新版本服务的 GitHub 工作流；
+5. 作为工作流的一部分，新的微服务 "部署 "将报告给 Port；
+6. 工作流结束后，Port 的 GitHub 应用程序会根据工作流的 "结论 "向 Port 报告运行状态("成功 "或 "失败")。
 
-:::info triggering workflow chains
-A workflow triggered using the `workflow_dispatch` trigger is self-contained. This means its actions and effects over the repository cannot trigger other automatic workflows.
+:::info  触发工作流链 使用 `workflow_dispatch` 触发器触发的工作流是自包含的。 这意味着它在资源库上的操作和效果不能触发其他自动工作流。
 
-1. A developer invokes a "provision new microservice in monorepo" workflow;
-2. The workflow opens a new PR in the target repository based on a pre-defined template;
-3. The repository also has a workflow which is automatically triggered using the `on: pull_request: types: "opened"` trigger;
-4. In this instance, the automatic PR workflow will not be triggered.
+1. 开发人员调用 "在 monorepo 中提供新的微服务 "工作流；
+2. 工作流根据预定义模板在目标资源库中打开一个新 PR；
+3. 该版本库也有一个工作流，该工作流被 "on: pull_request: types: "opened"` trigger；
+4. 在这种情况下，不会触发自动 PR 工作流。
 
 :::
 
-## Examples
+## 示例
 
-See the [examples](/create-self-service-experiences/setup-backend/github-workflow/examples/) page for implementations of various use-cases using a Github workflow backend.  
+有关使用 Github 工作流程后端实现各种用例的情况，请参阅[examples](/create-self-service-experiences/setup-backend/github-workflow/examples/) 页面。
 
-Additional examples can be found in our [action examples Github repository](https://github.com/port-labs/self-service-actions-examples).
+更多示例请参见我们的网站[action examples Github repository](https://github.com/port-labs/self-service-actions-examples) 。

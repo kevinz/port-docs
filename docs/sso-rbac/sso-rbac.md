@@ -1,35 +1,37 @@
 ---
+
 sidebar_position: 1
-title: SSO & RBAC
-sidebar_label: 🔒 SSO & RBAC
+title: SSO 和 RBAC
+sidebar_label: 🔒 SSO &amp; RBAC
+
 ---
 
-# 🔒 SSO & RBAC
+# 🔒 SSO 和 RBAC
 
-The following section discusses the roles, teams and ownership functionality, as well as guides to configure the integration between Port and your SSO.
+下文将讨论角色、团队和所有权功能，以及配置 Port 和 SSO 之间集成的指南。
 
-:::tip
+:::tip 
 
-For other guides related to Port's RBAC mechanism check out the following resources:
+有关 Port 的 RBAC 机制的其他指南，请查看以下资源: 
 
-- The [catalog RBAC](../build-your-software-catalog/set-catalog-rbac/set-catalog-rbac.md) section to learn more about RBAC configuration related to Port's software catalog;
-- The [self-service actions RBAC](../create-self-service-experiences/set-self-service-actions-rbac/set-self-service-actions-rbac.md) section to learn more about RBAC configuration related to self-service actions and manual approval.
+* [catalog RBAC](../build-your-software-catalog/set-catalog-rbac/set-catalog-rbac.md) 部分，了解与 Port 软件目录相关的 RBAC 配置；
+* [self-service actions RBAC](../create-self-service-experiences/set-self-service-actions-rbac/set-self-service-actions-rbac.md) 部分，了解与自助操作和手动审批相关的 RBAC 配置的更多信息。
 
 :::
 
-## Role-based access control
+## 基于角色的访问控制
 
-Port provides a high granularity RBAC mechanism, allowing you to fully control who sees, modifies, creates and deletes data and resources within the software catalog, and in actions that are exposed using the software catalog.
+Provider 提供高粒度的 RBAC 机制，让您可以完全控制谁可以查看、修改、创建和删除软件目录内的数据和资源，以及在使用软件目录暴露的操作中的数据和资源。
 
-For more information on Port's RBAC capabilities check out the following resources:
+有关 Port 的 RBAC 功能的更多信息，请查看以下资源: 
 
-- [Roles, teams & ownership in Port](rbac/rbac.md)
-- [Software catalog RBAC](../build-your-software-catalog/set-catalog-rbac/set-catalog-rbac.md)
+* * [Roles, teams & ownership in Port](rbac/rbac.md)
+* [Software catalog RBAC](../build-your-software-catalog/set-catalog-rbac/set-catalog-rbac.md)
 
-## Single sign-on
+## 单点登录
 
-Port integrates with all major SSO providers, allowing you to seamlessly import users, and teams, and also exposing Port to your organization in a managed manner.
+Port 与所有主要的 SSO Provider 集成，允许您无缝导入用户和团队，并以可管理的方式将 Port 暴露给您的组织。
 
-By integrating an SSO with Port, you can utilize existing teams to assign permissions to users inside the software catalog.
+通过将 SSO 与 Port 集成，可以利用现有团队为软件目录内的用户分配权限。
 
-To learn more about Port's SSO integrations and integrate the SSO provider you use with your Port, check out the [SSO](./sso-providers/sso-providers.md) page.
+要了解有关 Port 的 SSO 集成以及将您使用的 SSO Provider 与 Port 集成的更多信息，请查看[SSO](./sso-providers/sso-providers.md) 页面。

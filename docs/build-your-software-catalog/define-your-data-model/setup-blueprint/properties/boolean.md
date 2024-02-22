@@ -1,27 +1,29 @@
 ---
+
 sidebar_position: 3
-description: Boolean is a primitive data type that has one of two possible values - true and false
+description: 布尔值布尔是一种原语数据类型，它有两种可能的值--true 和 false 其中之一
+
 ---
 
-import ApiRef from "../../../../api-reference/\_learn_more_reference.mdx"
+import ApiRef from "../../../../api-reference/_learn_more_reference.mdx"
 
 import Tabs from "@theme/Tabs"
 import TabItem from "@theme/TabItem"
 
-# Boolean
+# 布尔型
 
-Boolean is a primitive data type that has one of two possible values - `true` and `false`.
+布尔是一种原语数据类型，有两个可能的值--"true "和 "false"。
 
-## 💡 Common boolean usage
+## 💡 常用布尔用法
 
-The boolean property type can be used to store any true/false gate, for example:
+例如，布尔属性类型可被引用来存储任何真/假门: 
 
-- Is environment locked for deployments
-- Should environment perform nightly shutdown
-- Does service handle PII
-- Is environment public
+* 环境是否为部署锁定
+* 环境是否应每晚关闭
+* 服务是否处理 PII
+* 环境是否公开
 
-## API definition
+## 应用程序接口定义
 
 ```json showLineNumbers
 {
@@ -39,7 +41,7 @@ The boolean property type can be used to store any true/false gate, for example:
 
 <ApiRef />
 
-## Terraform definition
+## Terraform 定义
 
 ```hcl showLineNumbers
 resource "port_blueprint" "myBlueprint" {
@@ -57,7 +59,7 @@ resource "port_blueprint" "myBlueprint" {
 }
 ```
 
-## Pulumi definition
+## Pulumi 的定义
 
 <Tabs groupId="pulumi-definition-boolean-basic" queryString defaultValue="python" values={[
 {label: "Python", value: "python"},
@@ -151,32 +153,32 @@ exports.title = entity.title;
 package main
 
 import (
-	"github.com/port-labs/pulumi-port/sdk/go/port"
-	"github.com/pulumi/pulumi/sdk/v3/go/pulumi"
+    "github.com/port-labs/pulumi-port/sdk/go/port"
+    "github.com/pulumi/pulumi/sdk/v3/go/pulumi"
 )
 
 func main() {
-	pulumi.Run(func(ctx *pulumi.Context) error {
-		blueprint, err := port.NewBlueprint(ctx, "myBlueprint", &port.BlueprintArgs{
-			Identifier: pulumi.String("myBlueprint"),
-			Title:      pulumi.String("My Blueprint"),
+    pulumi.Run(func(ctx *pulumi.Context) error {
+    	blueprint, err := port.NewBlueprint(ctx, "myBlueprint", &port.BlueprintArgs{
+    		Identifier: pulumi.String("myBlueprint"),
+    		Title:      pulumi.String("My Blueprint"),
       // highlight-start
-			Properties: port.BlueprintPropertiesArgs{
-				BooleanProps: port.BlueprintPropertiesBooleanPropsMap{
-					"myBooleanProp": port.BlueprintPropertiesBooleanPropsArgs{
-						Title:    pulumi.String("My boolean"),
-						Required: pulumi.Bool(false),
-					},
+    		Properties: port.BlueprintPropertiesArgs{
+    			BooleanProps: port.BlueprintPropertiesBooleanPropsMap{
+    				"myBooleanProp": port.BlueprintPropertiesBooleanPropsArgs{
+    					Title:    pulumi.String("My boolean"),
+    					Required: pulumi.Bool(false),
+    				},
                 },
             },
       // highlight-end
-		})
-		ctx.Export("blueprint", blueprint.Title)
-		if err != nil {
-			return err
-		}
-		return nil
-	})
+    	})
+    	ctx.Export("blueprint", blueprint.Title)
+    	if err != nil {
+    		return err
+    	}
+    	return nil
+    })
 }
 ```
 

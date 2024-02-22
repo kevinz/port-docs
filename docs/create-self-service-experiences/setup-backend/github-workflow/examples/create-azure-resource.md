@@ -1,30 +1,32 @@
 ---
+
 sidebar_position: 3
+
 ---
 
 import PortTooltip from "/src/components/tooltip/tooltip.jsx";
 
-# Deploy Azure Resource using Terraform
+# 使用 Terraform 部署 Azure 资源
 
-In the following guide, you are going to create a self-service action in Port that executes a [GitHub workflow](/create-self-service-experiences/setup-backend/github-workflow/github-workflow.md) to deploy a [storage account](https://learn.microsoft.com/en-us/azure/storage/common/storage-account-overview) in Azure using Terraform templates.
+在以下指南中，您将在 Port 中创建一个自助操作，执行[GitHub workflow](/create-self-service-experiences/setup-backend/github-workflow/github-workflow.md) ，使用 Terraform 模板在 Azure 中部署[storage account](https://learn.microsoft.com/en-us/azure/storage/common/storage-account-overview) 。
 
+## 示例 - 创建存储账户
 
-## Example - creating a storage account
+请按照以下步骤开始操作: 
 
-Follow these steps to get started:
+1. 创建以下 GitHub Action secrets: 
+    1.创建以下 Port 凭据: 
+        1. `PORT_CLIENT_ID` - Port客户端 ID[learn more](/build-your-software-catalog/sync-data-to-catalog/api/#get-api-token) 。
+        2. `PORT_CLIENT_SECRET` - Port客户端secret[learn more](/build-your-software-catalog/sync-data-to-catalog/api/#get-api-token).
+    2.创建以下 Azure 云凭证: 
+     提示
+     按照此[guide](https://learn.microsoft.com/en-us/azure/developer/terraform/get-started-cloud-shell-bash?tabs=bash#create-a-service-principal) 创建服务 principal，以便获取 Azure 凭据。
+     :::
+        1. `ARM_CLIENT_ID` - 应用程序的 Azure 客户 ID(APP ID)。
+        2. `ARM_CLIENT_SECRET` - 应用程序的 Azure 客户端secret(密码)。
+        3. `ARM_SUBSCRIPTION_ID` - 应用程序的 Azure 订阅 ID。
+        4. `ARM_TENANT_ID` - Azure[Tenant ID](https://learn.microsoft.com/en-us/azure/azure-portal/get-subscription-tenant-id) 。
 
-1. Create the following GitHub Action secrets:
-    1. Create the following Port credentials:
-        1. `PORT_CLIENT_ID` - Port Client ID [learn more](/build-your-software-catalog/sync-data-to-catalog/api/#get-api-token).
-        2. `PORT_CLIENT_SECRET` - Port Client Secret [learn more](/build-your-software-catalog/sync-data-to-catalog/api/#get-api-token).
-    2. Create the following Azure Cloud credentials:
-        :::tip
-        Follow this [guide](https://learn.microsoft.com/en-us/azure/developer/terraform/get-started-cloud-shell-bash?tabs=bash#create-a-service-principal) to create a service principal in order to get the Azure credentials.
-        :::
-        1. `ARM_CLIENT_ID` - Azure Client ID (APP ID) of the application.
-        2. `ARM_CLIENT_SECRET` - Azure Client Secret (Password) of the application.
-        3. `ARM_SUBSCRIPTION_ID` - Azure Subscription ID.
-        4. `ARM_TENANT_ID` - The Azure [Tenant ID](https://learn.microsoft.com/en-us/azure/azure-portal/get-subscription-tenant-id).
 <br />
 2. Install Port's GitHub app by clicking [here](https://github.com/apps/getport-io/installations/new).
 <br />
@@ -83,8 +85,8 @@ Follow these steps to get started:
    :::tip
 - `<GITHUB-ORG>` - your GitHub organization or user name.
 - `<GITHUB-REPO-NAME>` - your GitHub repository name.
-:::
 
+:::
 
 ```json showLineNumbers
 [
@@ -137,9 +139,11 @@ Follow these steps to get started:
     Fork our [example repository](https://github.com/port-labs/pipelines-terraform-azure) to get started.
     :::
 
-    1. `main.tf` - This file will contain the resource blocks which define the Storage Account to be created in the Azure cloud and the entity to be created in Port.
-    2. `variables.tf` – This file will contain the variable declarations that will be used in the resource blocks e.g. the Port credentials and Port run id.
-    3. `output.tf` – This file will contain the URL of the Storage Account that needs to be generated on successful completion of an “apply” operation. This URL will be used in the `endpoint` property when creating the Port entity.
+```
+1. `main.tf` - This file will contain the resource blocks which define the Storage Account to be created in the Azure cloud and the entity to be created in Port.
+2. `variables.tf` – This file will contain the variable declarations that will be used in the resource blocks e.g. the Port credentials and Port run id.
+3. `output.tf` – This file will contain the URL of the Storage Account that needs to be generated on successful completion of an “apply” operation. This URL will be used in the `endpoint` property when creating the Port entity.
+```
 
 <details>
   <summary><b>main.tf</b></summary>
@@ -201,7 +205,7 @@ resource "port_entity" "azure_storage_account" {
 </details>
 
 <details>
-  
+
   <summary><b>variables.tf</b></summary>
   :::note
   Replace the default `resource_group_name` with a resource group from your Azure account. Check this [guide](https://learn.microsoft.com/en-us/azure/azure-resource-manager/management/manage-resource-groups-portal) to find your resource groups. You may also wish to set the default values of other variables.
@@ -246,7 +250,7 @@ variable "port_client_secret" {
 
 <details>
 <summary><b>output.tf</b></summary>
-  
+
 ```hcl showLineNumbers title="output.tf"
 output "endpoint_url" {
     value = azurerm_storage_account.storage_account.primary_web_endpoint
@@ -294,7 +298,6 @@ jobs:
         shell: bash
         working-directory: ./terraform
 
-
     steps:
       - name: Checkout the repository to the runner
         uses: actions/checkout@v2
@@ -303,7 +306,7 @@ jobs:
         uses: hashicorp/setup-terraform@v2
         with:
           terraform_version: 1.6.0
-      
+
       - name: Terraform init
         id: init
         run: terraform init
@@ -312,7 +315,7 @@ jobs:
       - name: Terraform format
         id: fmt
         run: terraform fmt -check
-      
+
       - name: Terraform validate
         id: validate
         run: terraform validate

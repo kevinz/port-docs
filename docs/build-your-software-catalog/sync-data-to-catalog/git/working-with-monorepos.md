@@ -1,29 +1,32 @@
 ---
+
 sidebar_position: 4
+
 ---
 
 import Tabs from "@theme/Tabs"
 import TabItem from "@theme/TabItem"
 import PortTooltip from "/src/components/tooltip/tooltip.jsx"
 
-# Working with monorepos
+# 使用 monorepos
 
-After [connecting your Git provider](/build-your-software-catalog/sync-data-to-catalog/git/) to Port, Port will automatically create an <PortTooltip id="entity">entity</PortTooltip> for each repository in the organization in which you installed the integration.  
+[connecting your Git provider](/build-your-software-catalog/sync-data-to-catalog/git/) 到 Port 后，Port 会自动为安装集成的组织中的每个存储库创建一个<PortTooltip id="entity">实体</PortTooltip>。
 
-If you're working with a **monorepo** and would like to create an entity for each microservice in a single repository instead, you can do that by making an adjustment to your Git integration's mapping:
+如果你使用的是**monorepo**，并希望在单个仓库中为每个微服务创建一个实体，你可以通过调整 Git 集成的映射来实现这一点: 
 
-1. Go to the [data-sources page](https://app.getport.io/dev-portal/data-sources) of your portal.
-2. Under `Exporters`, click on the Git provider you would like to edit, for example:
+1. 访问门户网站[data-sources page](https://app.getport.io/dev-portal/data-sources) 。
+2. 在 "Exporters"(出口商)下，点击要编辑的 Git Provider，例如
 
 <img src='/img/sync-data-to-catalog/monorepoDataSourcesExample.png' width='50%' />
 
 <br/><br/>
 
-3. A window will open with a YAML mapping of the integration.  
-Use the following snippet as needed for your use-case (either add the `folder` entry to the `resources` array, or replace the entire YAML with it):
+3.将打开一个窗口，其中包含集成的 YAML 映射。
 
-:::info Choose repos and folders to include
-In the snippet below, change the `path` and `repos` fields to your desired values before copying.
+根据被引用的情况使用以下代码段(在 `resources` 数组中添加 `folder` 条目，或者用它替换整个 YAML): 
+
+:::info  选择要包含的 repos 和文件夹 在下面的代码段中，复制前将 `path` 和 `repos` 字段更改为所需数值。
+
 :::
 
 <Tabs groupId="git-provider" queryString values={[
@@ -116,6 +119,5 @@ resources:
 
 </Tabs>
 
-4. Click on `Resync` to apply the changes.
-
-5. Head back to your [catalog](https://app.getport.io/services), as you can see Port has now created an entity for each folder in the specified repositories, instead of creating an entity for each repository.
+4.点击 "Resync "应用更改。
+5.返回[catalog](https://app.getport.io/services) ，可以看到 Port 已为指定存储库中的每个文件夹创建了一个实体，而不是为每个存储库创建一个实体。

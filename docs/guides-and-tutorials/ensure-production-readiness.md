@@ -1,84 +1,84 @@
 ---
+
 sidebar_position: 2
-title: Ensure production readiness
+title: 确保生产准备就绪
+
 ---
 
 import Tabs from "@theme/Tabs"
 import TabItem from "@theme/TabItem"
 import PortTooltip from "/src/components/tooltip/tooltip.jsx"
 
-# Ensure production readiness
+# 确保生产准备就绪
 
-This guide takes 10 minutes to complete, and aims to cover:
+本指南只需 10 分钟即可完成，内容包括
 
-- Some advanced types of properties that can be added to <PortTooltip id="blueprint">blueprints</PortTooltip>, and what can be achieved by using them.
-- The value and flexibility of scorecards in Port.
+* 可添加到<PortTooltip id="blueprint">蓝图</PortTooltip>中的一些高级类型的属性，以及使用这些属性可以实现的功能。
+* 记分卡在 Port 中的价值和灵活性。
 
-:::tip Prerequisites
+:::tip  先决条件
 
-- This guide assumes you have a Port account and that you have finished the [onboarding process](/quickstart). We will use the `Service` blueprint that was created during the onboarding process.
-- You will need an accessible k8s cluster. If you don't have one, here is how to quickly set-up a [minikube cluster](https://minikube.sigs.k8s.io/docs/start/).
-- [Helm](https://helm.sh/docs/intro/install/) - required to install a relevant integration.
+* 本指南假定您已拥有 Port 账户，并已完成[onboarding process](/quickstart) 。我们将使用入职过程中创建的 "服务 "蓝图。
+* 您需要一个可访问的 k8s 集群。如果没有，以下是如何快速设置[minikube cluster](https://minikube.sigs.k8s.io/docs/start/) 。
+* [Helm](https://helm.sh/docs/intro/install/) - 需要安装相关集成。
 
 :::
 
 <br/>
 
-### The goal of this guide
+### 本指南的目标
 
-In this guide we will set various standards for the production readiness of our services, and see how to use them as part of our CI.
+在本指南中，我们将为服务的生产就绪状态设定各种标准，并了解如何将其作为 CI 的一部分加以引用。
 
-After completing it, you will get a sense of how it can benefit different personas in your organization:
+完成这项工作后，你就会了解它如何使你的组织中的不同角色受益: 
 
-- Platform engineers will be able to define policies for any service, and automatically pass/fail releases accordingly.
-- Developers will be able to easily see which policies set by the platform engineer are not met, and what they need to fix.
-- R&D managers will get a bird's-eye-view of the state of all services in the organization.
+* 平台工程师可以为任何服务定义策略，并据此自动通过/失败发布。
+* 开发人员将能轻松查看平台工程师设定的哪些策略未得到满足，以及他们需要修正哪些策略。
+* 研发经理可以鸟瞰组织内所有服务的状态。
 
 <br/>
 
-## Expand your service blueprint
+## 扩展你的服务蓝图
 
-In this guide we will add two new properties to our `service` <PortTooltip id="blueprint">blueprint</PortTooltip>, which we will then use to set production readiness standards:
+在本指南中，我们将在 `service`<PortTooltip id="blueprint">蓝图</PortTooltip>中添加两个新属性，然后用它们来设置生产就绪标准: 
 
-1. The service's `on-call`, fetched from Pagerduty.
-2. The service's `Code owners`, fetched from Github.
+1. 从 Pagerduty 获取的 "待命 "服务。
+2. 服务的 "代码所有者"，从 Github 获取。
 
-### Add an on-call to your services
+### 在您的服务中加入随叫随到功能
 
-In this guide we will use Pagerduty to get our services' on-call. Note that Port also has integrations for other incident response platforms.
+在本指南中，我们将使用 Pagerduty 来获取服务的待命状态。 请注意，Port 还集成了其他事件响应平台。
 
-#### Create the necessary Pagerduty resources
+#### 创建必要的 Pagerduty 资源
 
-If you already have a Pagerduty account that you can play around with, feel free to skip this step.
+如果您已经有一个可以随意使用的 Pagerduty 账户，请跳过这一步。
 
-1. Create a [Pagerduty account](https://www.pagerduty.com/sign-up/) (free 14-day trial).
-
-2. Create a new service:
+1. 创建[Pagerduty account](https://www.pagerduty.com/sign-up/) (免费试用 14 天) 。
+2. 创建新服务: 
 
 ![pagerdutyServiceCreation](/img/guides/pagerdutyServiceCreation.png)
 
-- Name the service `DemoPdService`.
-- Choose the existing `Default` escalation policy.
-- Under `Reduce noise` use the recommended settings.
-- Under `Integrations` scroll down and click on `Create service without an integration`.
+* 将服务命名为 `DemoPdService`。
+* 选择现有的 `Default` 升级策略。
+* 在 "减少噪音 "下使用被引用的设置。
+* 在 "集成 "下向下滚动并单击 "创建无集成服务"。
 
-#### Integrate Pagerduty into Port
+#### 将 Pagerduty 整合到 Port 中
 
-Now let's bring our Pagerduty data into Port. Port's Pagerduty integration automatically fetches `Services` and `Incidents`, and creates <PortTooltip id="blueprint">blueprints</PortTooltip> and <PortTooltip id="entity">entities</PortTooltip> for them.
+现在，让我们将 Pagerduty 数据导入 Port。 Port 的 Pagerduty 集成会自动获取 "服务 "和 "事件"，并为它们创建<PortTooltip id="blueprint">蓝图</PortTooltip>和<PortTooltip id="entity">实体</PortTooltip>。
 
-:::info Note
-For this installation you will need Helm and a running K8s cluster (see [prerequisites](/guides-and-tutorials/ensure-production-readiness)).
+:::info  注 要进行此安装，您需要 Helm 和一个正在运行的 k8s 集群(请参阅[prerequisites](/guides-and-tutorials/ensure-production-readiness)) 。
+
 :::
 
-1. Install Port's Pagerduty integration using Helm, by running the command below in your terminal.
+1. 在终端运行以下命令，使用 Helm 引用安装 Port 的 Pagerduty 集成。
 
-- Replace `CLIENT_ID` and `CLIENT_SECRET` with your credentials (get them [here](https://docs.getport.io/build-your-software-catalog/sync-data-to-catalog/api/#find-your-port-credentials)).
-
-- Replace `token` with your Pagerduty token. To obtain it:
-  - Hover over your avatar in the top right corner of your Pagerduty app, then click `My profile`.
-  - Click the `User settings` tab and scroll to the bottom.
-  - Click on `Create API User Token` and provide a name.
-  - Copy the new token value.
+* 将 `CLIENT_ID`和 `CLIENT_SECRET`替换为您的凭证(获取它们[here](https://docs.getport.io/build-your-software-catalog/sync-data-to-catalog/api/#find-your-port-credentials)) 。
+* 将 `token` 替换为您的 Pagerduty 令牌。获取令牌
+    - 将鼠标悬停在 Pagerduty 应用程序右上角您的头像上，然后单击 "我的个人资料"。
+    - 点击 "用户设置 "选项卡并滚动到底部。
+    - 点击 "创建 API 用户令牌 "并 Provider 一个名称。
+    - 复制新的令牌值。
 
 ![pagerdutyUserSettings](/img/guides/pagerdutyUserSettings.png)
 
@@ -100,44 +100,43 @@ helm upgrade --install my-pagerduty-integration port-labs/port-ocean \
 
 </details>
 
-Great! Now that the integration is installed, we should see some new components in Port:
+太好了！现在集成已安装完毕，我们应该可以在 Port 中看到一些新组件了: 
 
-- Go to your [Builder](https://app.getport.io/dev-portal/data-model), you should now see two new <PortTooltip id="blueprint">blueprints</PortTooltip> created by the integration - `PagerDuty Service` and `PagerDuty Incident`.
-- Go to your [Software catalog](https://app.getport.io/services), click on `PagerDuty Services` in the sidebar, you should now see a new <PortTooltip id="entity">entity</PortTooltip> created for our `DemoPdService`, with a populated `On-call` property.
+* 访问[Builder](https://app.getport.io/dev-portal/data-model) ，现在应该可以看到集成创建的两个新<PortTooltip id="blueprint">蓝图</PortTooltip>--"PagerDuty 服务 "和 "PagerDuty 事件"。
+* 访问[Software catalog](https://app.getport.io/services) ，单击侧边栏中的 "PagerDuty Services"，现在应该可以看到为我们的 "DemoPdService "创建的新<PortTooltip id="entity">实体</PortTooltip>，并填充了 "On-call "属性。
 
-#### Add an on-call property to the service blueprint
+#### 在服务蓝图中添加待命属性
 
-Now that Port is synced with our Pagerduty resources, let's reflect the Pagerduty service's on-call in our services.  
-First, we will need to create a [relation](/build-your-software-catalog/define-your-data-model/relate-blueprints/#what-is-a-relation) between our services and the corresponding Pagerduty services.
+现在 Port 已与 Pagerduty 资源同步，让我们在我们的服务中反映 Pagerduty 服务的待命状态。 首先，我们需要在我们的服务和相应的 Pagerduty 服务之间创建一个[relation](/build-your-software-catalog/define-your-data-model/relate-blueprints/#what-is-a-relation) 。
 
-1. Head back to the [Builder](https://app.getport.io/dev-portal/data-model), choose the `Service` <PortTooltip id="blueprint">blueprint</PortTooltip>, and click on `New relation`:
+1. 返回[Builder](https://app.getport.io/dev-portal/data-model) ，选择 "服务 "<PortTooltip id="blueprint">蓝图</PortTooltip>，点击 "新建关系": 
 
 <img src='/img/guides/serviceCreateRelation.png' width='40%' />
 
 <br/><br/>
 
-2. Fill out the form like this, then click `Create`:
+2.像这样填写表格，然后点击 "创建": 
 
 <img src='/img/guides/prodReadinessRelationCreation.png' width='50%' />
 
 <br/><br/>
 
-Now that the <PortTooltip id="blueprint">blueprints</PortTooltip> are related, let's create a [mirror property](https://docs.getport.io/build-your-software-catalog/define-your-data-model/setup-blueprint/properties/mirror-property/) in our service to display its on-call.
+既然<PortTooltip id="blueprint">蓝图</PortTooltip>是相关的，那就让我们在服务中创建一个[mirror property](https://docs.getport.io/build-your-software-catalog/define-your-data-model/setup-blueprint/properties/mirror-property/) 来显示它的待命状态。
 
-1. Choose the `Service` <PortTooltip id="blueprint">blueprint</PortTooltip> again, and under the `PagerDuty Service` relation, click on `New mirror property`.  
-   Fill the form out like this, then click `Create`:
+1. 再次选择 "服务 "<PortTooltip id="blueprint">蓝图</PortTooltip>，在 "PagerDuty 服务 "关系下点击 "新建镜像属性"。  
+像这样填写表格，然后点击 "创建": 
 
 <img src='/img/guides/mirrorPropertyCreation.png' width='40%' />
 
 <br/><br/>
 
-2. Now that our mirror property is set, we need to assign the relevant Pagerduty service to each of our services. This can be done by adding some mapping logic. Go to your [data sources page](https://app.getport.io/dev-portal/data-sources), and click on your Pagerduty integration:
+2.既然镜像属性已经设置，我们就需要为每个服务分配相关的 Pagerduty 服务。这可以通过添加一些映射逻辑来完成。访问[data sources page](https://app.getport.io/dev-portal/data-sources) ，点击 Pagerduty 集成: 
 
 <img src='/img/guides/pdDataSources.png' width='60%' />
 
 <br/><br/>
 
-Add the following YAML block to the mapping under the `resources` key, then click `save & resync`:
+在 "资源 "键下的映射中添加以下 YAML 块，然后点击 "保存并重新同步": 
 
 <details>
 <summary>Relation mapping (click to expand)</summary>
@@ -159,26 +158,25 @@ Add the following YAML block to the mapping under the `resources` key, then clic
 
 </details>
 
-What we just did was map the `Pagerduty service` to the relation between it and our `services`.  
-Now, if our `service` identifier is equal to the Pagerduty service's name, the `service` will automatically have its `on-call` property filled: &nbsp;🎉
+现在，如果我们的 `service` 标识符等于 Pagerduty 服务的名称，则该 `service` 的 `on-call` 属性将自动填充:  🎉
 
 ![entitiesAfterOnCallMapping](/img/guides/entitiesAfterOnCallMapping.png)
 
-**Note** that you can always perform this assignment manually if you wish:
+**注意**，如果您愿意，可以随时手动执行这项分配: 
 
-1. Go to your [Software catalog](https://app.getport.io/services), choose any service in the table under `Services`, click on the `...`, and click `Edit`:
+1. 进入[Software catalog](https://app.getport.io/services) ，在 "服务 "下的表格中选择任何服务，点击"..."，然后点击 "编辑": 
 
 ![editServiceEntity](/img/guides/editServiceEntity.png)
 
-2. In the form you will now see a property named `PagerDuty Service`, choose the `DemoPdService` we created from the dropdown, then click `Update`:
+2.现在你会在表单中看到一个名为 "PagerDuty Service "的属性，从下拉菜单中选择我们创建的 "DemoPdService"，然后点击 "更新": 
 
 <img src='/img/guides/editServiceChoosePdService.png' width='40%' />
 
 <br/><br/>
 
-### Display each service's code owners
+#### 显示每个服务的代码 Owner
 
-Git providers allow you to add a `CODEOWNERS` file to a repository specifiying its owner/s. See the relevant documentation for details and examples:
+Git Provider 允许你在一个版本库中添加 "CODEOWNERS "文件，指定其 Owners。 详情和示例请参阅相关文档: 
 
 <Tabs groupId="git-provider" queryString defaultValue="github" values={[
 {label: "GitHub", value: "github"},
@@ -209,52 +207,48 @@ Git providers allow you to add a `CODEOWNERS` file to a repository specifiying i
 <br/>
 Let's see how we can easily ingest a CODEOWNERS file into our existing services:
 
-#### Add a codeowners property to the service blueprint
+#### 在服务蓝图中添加代码所有者属性
 
-1. Go to your [Builder](https://app.getport.io/dev-portal/data-model) again, choose the `Service` <PortTooltip id="blueprint">blueprint</PortTooltip>, and click `New property`.
-
-2. Fill in the form like this:  
-   _Note the `identifier` field value, we will need it in the next step._
+1. 再次进入[Builder](https://app.getport.io/dev-portal/data-model) ，选择 "服务 "<PortTooltip id="blueprint">蓝图</PortTooltip>，然后点击 "新建属性"。
+2. 像这样填写表格  
+注意 `identifier` 字段的值，下一步我们将需要它。
 
 <img src='/img/guides/addCodeownersForm.png' width='40%' />
 
-3. Next we will update the Github exporter mapping and add the new property. Go to your [data sources page](https://app.getport.io/dev-portal/data-sources).
-
-4. Under `Exporters`, click on the Github exporter with your organization name.
-
-5. In the mapping YAML, add the line `code_owners: file://CODEOWNERS` as shown here, then click `Resync`:
+3.接下来，我们将更新 Github 输出程序映射，并添加新属性。请访问[data sources page](https://app.getport.io/dev-portal/data-sources) 。
+4.在 "导出器 "下，点击带有组织名称的 Github 导出器。
+5.在映射 YAML 中，添加一行 `code_owners: file://CODEOWNERS`，如图所示，然后点击 `Resync`: 
 
 ![mappingAddCodeOwners](/img/guides/mappingAddCodeOwners.png)
 
-_Remember the `identifier` from step 2? This tells Port how to populate the new property_ 😎
+这将告诉 Port 如何填充新属性_ 😎
 
-Going back to our Catalog, we can now see that our <PortTooltip id="entity">entities</PortTooltip> have their code owners displayed:
+回到我们的目录，现在可以看到我们的<PortTooltip id="entity">实体</PortTooltip>已经显示了它们的代码 Owners: 
 
 ![entityAfterCodeowners](/img/guides/entityAfterCodeowners.png)
 
 <br/>
 
-### Update your service's scorecard
+### 更新服务记分卡
 
-Now let's use the properties we created to set standards for our services.  
+现在，让我们使用我们创建的属性来为我们的服务设定标准。
 
-#### Add rules to existing scorecard
+#### 为现有记分卡添加规则
 
-Say we want to ensure each service meets our new requirements, with different levels of importance. Our `Service` blueprint already has a scorecard called `Production readiness`, with three rules.  
-Let's add our metrics to it: 
+假设我们要确保每项服务都能满足我们的新要求，并有不同的重要程度。 我们的 "服务 "蓝图已经有了一个名为 "生产准备就绪 "的记分卡，其中有三条规则。 让我们把我们的衡量标准添加进去: 
 
-- `Bronze` - each service must have a `Readme` (we have already defined this in the quickstart guide).
-- `Silver` - each service must have an on-call defined.
+* 青铜色"--每项服务都必须有 "Readme"(我们已在快速入门指南中对此进行了定义)。
+* 银色"--每项服务都必须定义 "on-call"。
 
-Now let's implement it:
+现在，让我们来实施它: 
 
-1. Go to your [Builder](https://app.getport.io/dev-portal/data-model), choose the `Service` <PortTooltip id="blueprint">blueprint</PortTooltip>, click on `Scorecards`, then click our existing `Production readiness` scorecard:
+1. 进入[Builder](https://app.getport.io/dev-portal/data-model) ，选择 "服务 "<PortTooltip id="blueprint">蓝图</PortTooltip>，点击 "记分卡"，然后点击我们现有的 "生产准备就绪 "记分卡: 
 
 <img src='/img/guides/editReadinessScorecard.png' width='30%' />
 
 <br/><br/>
 
-2. Replace the content with this, then click `Save`:
+2.用以下内容替换，然后点击 "保存": 
 
 <details>
 <summary>Scorecard schema (click to expand)</summary>
@@ -341,22 +335,21 @@ Now let's implement it:
 
 </details>
 
-Now go to your Catalog and click on any of your services. Click on the `Scorecards` tab and you will see the score of the service, with details of which checks passed/failed:
+点击 "记分卡 "选项卡，您将看到该服务的得分，以及通过/未通过检查的详细信息: 
 
 <img src='/img/guides/entityAfterReadinessScorecard.png' width='100%' />
 
-### Possible daily routine integrations
+### 可能的日常整合
 
-- Use Port's API to check for scorecard compliance from your CI and pass/fail it accordingly.
-- Notify periodically via Slack about services that fail gold/silver/bronze validations.
-- Send a weekly/monthly report for managers showing the number of services that do not meet specific standards.
+* 使用 Port 的 API 从您的 CI 检查记分卡合规性，并相应地通过/未通过。
+* 定期通过 Slack 通知未通过金牌/银牌/铜牌验证的服务。
+* 每周/每月向管理人员发送报告，显示不符合特定标准的服务数量。
 
-### Conclusion
+#### 结论
 
-Production readiness is something that needs to be monitored and handled constantly. In a microservice-heavy environment, things like codeowners and on-call management are critical.  
-With Port, standards are easy to set-up, prioritize and track. Using Port's API, you can also create/get/modify your scorecards from anywhere, allowing seamless integration with other platforms and services in your environment.
+生产就绪状态是需要持续监控和处理的问题。 在微服务密集的环境中，代码所有者和待命管理等问题至关重要。 有了 Port，标准的设置、优先级排序和跟踪都变得非常容易。 使用 Port 的 API，您还可以从任何地方创建/获取/修改记分卡，从而与环境中的其他平台和服务实现无缝集成。
 
-More relevant guides and examples:
+更多相关指南和示例: 
 
-- [Port's OpsGenie integration](https://docs.getport.io/build-your-software-catalog/sync-data-to-catalog/incident-management/opsgenie/)
-- [Integrate scorecards with Slack](https://docs.getport.io/promote-scorecards/manage-using-3rd-party-apps/slack)
+* * [Port's OpsGenie integration](https://docs.getport.io/build-your-software-catalog/sync-data-to-catalog/incident-management/opsgenie/)
+* [Integrate scorecards with Slack](https://docs.getport.io/promote-scorecards/manage-using-3rd-party-apps/slack)

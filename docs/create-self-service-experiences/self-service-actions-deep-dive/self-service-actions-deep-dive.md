@@ -1,32 +1,34 @@
 ---
+
 sidebar_position: 1
-sidebar_label: Self-service actions deep dive
+sidebar_label: 自助行动深度挖掘
+
 ---
 
-# Self-service actions deep dive
+# 自助行动深度挖掘
 
-**Self-Service Actions** in Port enable developer self-service by configuring one of the 3 Self-Service Action types on Blueprints and the Entities that originated from them:
+*Port 中的 *Self-Service Actions** 通过在蓝图和源于蓝图的实体上配置 3 种 Self-Service Action 类型中的一种，实现开发人员的自助服务: 
 
-- **Create** - a new Entity by triggering a provisioning process in your infrastructure.
-- **Delete** - an existing Entity by triggering delete logic in your infrastructure.
-- **Day-2 Operations** - trigger an existing Entity’s logic in your infrastructure to update or modify the existing Entity on demand.
+* **创建** - 通过触发基础架构中的配置流程，创建一个新实体。
+* **删除** - 通过触发基础架构中的删除逻辑来删除现有实体。
+* **Day-2 Operations** - 在基础架构中触发现有实体的逻辑，按需更新或修改现有实体。
 
-:::info
-This deep dive's purpose is to teach you how to configure Self-Service Actions, understand their structure and the different options they offer you.
+:::info 本深度 dive 的目的是教你如何配置自助服务操作，了解其结构以及为你提供的不同选项。
 
-To learn how to update the status of an existing Self-Service Action invocation, refer to the [reflect action progress](../reflect-action-progress/reflect-action-progress.md) page
+要了解如何更新现有自助服务操作调用的状态，请参阅[reflect action progress](../reflect-action-progress/reflect-action-progress.md) 页面。
+
 :::
 
-## Configuring a new self-service action
+## 配置新的自助服务操作
 
-Let's configure new Self-Service Actions, starting with the Blueprints.
+让我们从蓝图开始，配置新的自助服务操作。
 
-### Creating blueprints
+### 创建蓝图
 
-For example, let’s create 2 Blueprints and connect them to each other:
+例如，让我们创建 2 个蓝图，并将它们相互连接起来: 
 
-- **Blueprint #1**: Microservice;
-- **Blueprint #2**: Deployment.
+* **蓝图 1**: 微服务；
+* **蓝图 #2**: 部署。
 
 ![Target blueprints and relations expanded](../../../static/img/self-service-actions/setting-self-service-actions-in-port/targetBlueprintsAndRelationExpanded.png)
 
@@ -127,15 +129,15 @@ For example, let’s create 2 Blueprints and connect them to each other:
 
 </details>
 
-### Creating the blueprint self-service action
+### 创建蓝图自助行动
 
-In order to create a Self-Service Action, go to the DevPortal Builder page, expand the Microservice Blueprint and click on the `Create action` button as shown below:
+要创建自助服务操作，请转到 DevPortal 生成器页面，展开微服务蓝图并单击 "创建操作 "按钮，如下图所示: 
 
 ![Create action button on blueprint marked](../../../static/img/self-service-actions/setting-self-service-actions-in-port/createActionOnBlueprintButtonMarked.png)
 
-After clicking the button, you should see an editor with an empty array (`[]`) appear, that's where we will add our Self-Service Action
+点击按钮后，你会看到一个带有空数组(`[]`)的编辑器出现，这就是我们要添加自助服务操作的地方
 
-Here is an action array with a `CREATE` action already filled in:
+这是一个已填入 `CREATE` 操作的操作数组: 
 
 ```json showLineNumbers
 [
@@ -167,21 +169,21 @@ Here is an action array with a `CREATE` action already filled in:
 ]
 ```
 
-This is how the JSON editor looks after submitting the Self-Service Action:
+这就是提交自助服务操作后 JSON 编辑器的外观: 
 
 ![Action editor filled](../../../static/img/self-service-actions/setting-self-service-actions-in-port/microserviceEditorWithCreateAction.png)
 
-Now when you go to the Microservices Blueprint page, you will see a new button - `Create Microservice`:
+现在，当你进入微服务蓝图页面时，会看到一个新按钮--"创建微服务": 
 
 ![Create button marked](../../../static/img/self-service-actions/setting-self-service-actions-in-port/microservicePageWithCreateMarked.png)
 
-After clicking the `Create Microservice` option, we will see a form with the inputs specified when the new action was entered to the actions array:
+单击 "创建微服务 "选项后，我们将看到一个表单，其中包含在新操作输入到操作数组时指定的输入: 
 
 ![Action create form](../../../static/img/self-service-actions/setting-self-service-actions-in-port/actionCreateForm.png)
 
-### More Self-Service Actions
+### 更多自助服务行动
 
-Let's go back to the actions array of our `Microservice` Blueprint and paste in the following JSON, which has 2 additional configured actions:
+让我们回到 "Microservice "蓝图的动作数组，粘贴以下 JSON，其中有 2 个额外的配置动作: 
 
 ```json showLineNumbers
 [
@@ -256,21 +258,21 @@ Let's go back to the actions array of our `Microservice` Blueprint and paste in 
 ]
 ```
 
-Now when we go back to the Microservice page, if we click on the 3 dots next to an existing entity, we should see the Day-2 and delete Self-Service Actions we just added:
+现在，当我们回到微服务页面时，如果点击现有实体旁边的 3 个点，就会看到我们刚刚添加的 Day-2 和删除自助服务操作: 
 
-**Day-2:**
+**第 2 天: **
 
 ![Day-2 button marked](../../../static/img/self-service-actions/setting-self-service-actions-in-port/day-2-action-marked.png)
 
-**Delete:**
+**删除: **
 
 ![Delete button marked](../../../static/img/self-service-actions/setting-self-service-actions-in-port/delete-action-marked.png)
 
-#### Add multiple Self-Service Actions of the same type
+#### 添加多个相同类型的自助服务操作
 
-You can add multiple Self-Service Actions of the same type (e.g. `Create` or `Delete`).
+您可以添加多个相同类型的自助服务操作(如 "创建 "或 "删除")。
 
-For instance, you can add 2 `Create` Self-Service Actions to the `Microservice` Blueprint, to support different programming languages:
+例如，你可以在 "Microservice "蓝图中添加 2 个 "创建 "自助服务操作，以支持不同的编程语言: 
 
 ```json showLineNumbers
 [
@@ -327,7 +329,7 @@ For instance, you can add 2 `Create` Self-Service Actions to the `Microservice` 
 ]
 ```
 
-Now when you go to the Microservices Blueprint page, you will see 2 new buttons - `Create Python Microservice` and `Create Go Microservice`:
+现在，当你进入微服务蓝图页面时，会看到 2 个新按钮--"创建 Python 微服务 "和 "创建 Go 微服务": 
 
 <center>
 
@@ -335,11 +337,11 @@ Now when you go to the Microservices Blueprint page, you will see 2 new buttons 
 
 </center>
 
-## Manual approval
+## 人工批准
 
-You can configure a manual approval step for your actions. This is useful when an action might be dangerous/destructive/expensive or organizational policy determines that it requires an extra pair of eyes before going through.
+您可以为您的操作配置一个手动审批步骤。 当一个操作可能具有危险性/破坏性/昂贵性，或组织政策决定在通过前需要多一双眼睛时，这个步骤就非常有用。
 
-To configure a manual approval step, add the `requiredApproval` field to your action:
+要配置手动审批步骤，请在操作中添加 `requiredApproval` 字段: 
 
 ```json showLineNumbers
 [
@@ -372,15 +374,15 @@ To configure a manual approval step, add the `requiredApproval` field to your ac
 ]
 ```
 
-When a user clicks on the `execute` button of an action that requires approval, a new `run` object will be created in Port. The `run` object will have the status `WAITING_FOR_APPROVAL` and will be visible in the `Runs` tab of the action.
+当用户点击需要审批的操作的 "执行 "按钮时，将在 Port 中创建一个新的 "运行 "对象，该 "运行 "对象的状态为 "WAITING_FOR_APPROVAL"，并在操作的 "运行 "选项卡中可见。
 
-To configure which users can approve the action, see [Managing permissions](../../build-your-software-catalog/set-catalog-rbac/examples.md#setting-action-permissions).
+要配置哪些用户可以批准操作，请参阅[Managing permissions](../../build-your-software-catalog/set-catalog-rbac/examples.md#setting-action-permissions) 。
 
-## Self-Service Action definition structure
+### 自助服务行动定义结构
 
-### Self-Service Action JSON Structure
+### 自助服务操作 JSON 结构
 
-The basic structure of a Self-Service Action:
+自助服务行动的基本结构: 
 
 ```json showLineNumbers
 {
@@ -414,7 +416,8 @@ The basic structure of a Self-Service Action:
 }
 ```
 
-### Structure table
+#### 结构表
+
 
 | Field              | Description                                                                                                                                                                                                 |
 | ------------------ | ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
@@ -428,9 +431,11 @@ The basic structure of a Self-Service Action:
 | `requiredApproval` | Whether the action requires approval or not                                                                                                                                                                 |
 | `description`      | Action description                                                                                                                                                                                          |
 
-### Properties structure table
 
-The following table includes the different fields that can be specified in the `properties` key:
+#### 属性结构表
+
+下表列出了可在 `properties` 键中指定的不同字段: 
+
 
 | Field                    | Description                                                                                                                                                                                                                                                          |
 | ------------------------ | -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
@@ -443,20 +448,23 @@ The following table includes the different fields that can be specified in the `
 | `enum` (Optional)        | A list of predefined values the user can choose from                                                                                                                                                                                                                 |
 | `icon` (Optional)        | Icon for the user input property. Icon options: `Airflow, Ansible, Argo, Aws, Azure, Blueprint, Bucket, Cloud,...` <br /><br />See the [full icon list](../../build-your-software-catalog/define-your-data-model/setup-blueprint/setup-blueprint.md#full-icon-list). |
 
-### Special formats
 
-In addition to the formats that were introduced in [Blueprint string property formats](../../build-your-software-catalog/define-your-data-model/setup-blueprint/properties/properties.md#supported-properties), Port's Self-Service Actions also support the following special formats:
+### 特殊格式
+
+除了在[Blueprint string property formats](../../build-your-software-catalog/define-your-data-model/setup-blueprint/properties/properties.md#supported-properties) 中引入的格式外，Port 的自助服务操作还支持以下特殊格式: 
+
 
 | `type`       | Description                                  | Example values                                  |
 | ------------ | -------------------------------------------- | ----------------------------------------------- |
 | `entity`     | Entity from a specified Blueprint            | `"notifications-service"`                       |
 | Entity array | Array of Entities from a specified Blueprint | `["notifications-service", "frontend-service"]` |
 
-#### Examples
 
-Here is how to use property formats:
+#### 示例
 
-#### Entity
+下面介绍如何被引用的属性格式: 
+
+#### 实体
 
 ```json showLineNumbers
 "entity_prop": {
@@ -470,11 +478,11 @@ Here is how to use property formats:
 }
 ```
 
-When `"format": "entity"` is used, a `blueprint` field is available.
+被引用`"format": "entity"`时，会出现一个`blueprint`字段。
 
-The `blueprint` field takes an identifier of an existing Blueprint. Then, when using the configured Self-Service Action in Port's UI, the specified field will include a list of existing Entities of the selected Blueprint from your software catalog to choose from.
+蓝图 "字段会被引用一个现有蓝图的标识符。 然后，当在 Port 的用户界面中使用已配置的自助服务操作时，指定字段将包括软件目录中选定蓝图的现有实体列表，供用户选择。
 
-#### Entity Array
+#### 实体阵列
 
 ```json showLineNumbers
 "entity_prop": {
@@ -491,20 +499,21 @@ The `blueprint` field takes an identifier of an existing Blueprint. Then, when u
 }
 ```
 
-When `"type": "array"` is used, you can create an `items` property. Within `items` you can use `"format": "entity"` and write the identifier of the selected `blueprint` which you want to include Entities from (similar to [Entity](#entity) format). You can then pass an Entity array to your Port Action.
+当使用 `"type": "array"`时，您可以创建一个 `items` 属性。在 `items` 中，您可以使用 `"format": "entity"`，并写入所选 `blueprint` 的标识符，您希望从该标识符中包含 Entities(类似于[Entity](#entity) 格式) 。然后，您就可以将 Entity 数组传递给 Port 操作。
 
-## Invocation method
+## 调用方法
 
-The `invocationMethod` object controls where Self-Service Actions are reported to.
+invocationMethod "对象控制向何处报告自助服务操作。
 
-The `invocationMethod` supports 3 configurations:
+invocationMethod "支持 3 种配置: 
 
-- [Webhook](../setup-backend/webhook/webhook.md)
-- [Kafka](/create-self-service-experiences/setup-backend/webhook/kafka/kafka.md)
-- [GitHub](../setup-backend/github-workflow/github-workflow.md)
-- [GitLab](../setup-backend/gitlab-pipeline/gitlab-pipeline.md)
+* * [Webhook](../setup-backend/webhook/webhook.md)
+* [Kafka](/create-self-service-experiences/setup-backend/webhook/kafka/kafka.md)
+* [GitHub](../setup-backend/github-workflow/github-workflow.md)
+* [GitLab](../setup-backend/gitlab-pipeline/gitlab-pipeline.md)
 
-### Invocation method structure fields
+### 调用方法结构字段
+
 
 | Field                  | Type      | Description                                                                                                                                                                                                                                                                                                     | Example values                                  |
 | ---------------------- | --------- | --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | ----------------------------------------------- |
@@ -521,54 +530,53 @@ The `invocationMethod` supports 3 configurations:
 | `projectName`          | `string`  | Can be added only if `type` is set to `GITLAB` <br></br> Defines the GitLab project name                                                                                                                                                                                                                        | `port`                                          |
 | `groupName`            | `string`  | Can be added only if `type` is set to `GITLAB` <br></br> Defines the GitLab group name                                                                                                                                                                                                                          | `port-labs`                                     |
 
-## Triggering actions
 
-We will now look at trigger examples for each action type and explain what happens behind the scenes when we execute each type.
+## 触发行动
 
-When we click on the `execute` button of an action, a Port [action message](#action-message-structure) is published to the invocation destination specified by the user.
+现在，我们将查看每种操作类型的触发器示例，并解释执行每种操作类型时的幕后情况。
 
-For example, you can deploy a new version of your microservice when a `CREATE` action is triggered.
+当我们点击操作的 "执行 "按钮时，一个 Port[action message](#action-message-structure) 就会发布到用户指定的调用目的地。
 
-### CREATE action
+例如，您可以在触发 "创建 "操作时部署微服务的新版本。
 
-The action is triggered from the page matching the Blueprint we configured the action on:
+#### CREATE action
+
+该操作由与我们配置的操作蓝图相匹配的页面触发: 
 
 ![Create button marked](../../../static/img/self-service-actions/setting-self-service-actions-in-port/microservicePageWithCreateMarked.png)
 
-:::tip create vs register
-When you define a `CREATE` action on a Blueprint, when viewing the Blueprint page you will notice that the create button now has a dropdown. Two options will appear: `Register` and `Create`:
+:::tip  创建与注册 在蓝图上定义 "创建 "操作后，在查看蓝图页面时，您会发现创建按钮现在有一个下拉菜单。 会出现两个选项: "注册 "和 "创建": 
 
-- `Register` - this option is used to add a new Entity to your catalog without triggering a `CREATE` action. This option is useful for cases when an infrastructure Entity was created before using Port, and you want to import its data into the Software Catalog.
-
-  This option is also useful for cases where an entity was created manually and you want to document it in Port after-the-fact.
-
-- `Create` - this option will display the form containing the required `userInputs` of our actions. After clicking execute, a new execution message will be sent to Port's Kafka Topics so you can handle the create request in your infrastructure.
+* 注册"(Register)--该选项用于在不触发 "创建 "操作的情况下将新实体添加到目录中。如果基础结构实体是在使用 Port 之前创建的，而您希望将其数据引用到软件目录中，则此选项非常有用。
+    如果实体是手动创建的，而您希望事后将其记录到 Port 中，该选项也很有用。
+* 创建"--该选项将显示包含操作所需的 "用户输入 "的表单。点击执行后，新的执行消息将发送到 Port 的 Kafka Topics，以便您在基础架构中处理创建请求。
 
 :::
 
-When clicking the `Create Microservice` option, we will see a form with the inputs we specified when we entered the new action to the actions array:
+点击 "创建微服务 "选项后，我们将看到一个表单，其中包含我们在动作数组中输入新动作时指定的输入: 
 
 ![Action create form](../../../static/img/self-service-actions/setting-self-service-actions-in-port/actionCreateForm.png)
 
-### DAY-2 action
+### DAY-2 行动
 
-The action can be triggered by selecting it from the sub-menu of an existing Entity:
+从现有实体的子菜单中选择该操作即可触发: 
 
 ![Day-2 button marked](../../../static/img/self-service-actions/setting-self-service-actions-in-port/day-2-action-marked.png)
 
-:::note DAY-2 actions
-All Day-2 operations will appear in this sub-menu.
+:::note  DAY-2 操作 所有 Day-2 操作都将出现在该子菜单中。
+
 :::
 
-### DELETE action
+### DELETE 操作
 
-The action can be triggered by selecting it from the sub-menu of an existing Entity:
+从现有实体的子菜单中选择该操作即可触发: 
 
 ![Delete button marked](../../../static/img/self-service-actions/setting-self-service-actions-in-port/delete-action-marked.png)
 
-## Action message structure
+## 行动信息结构
 
-Every invocation of a Self-Service Action publishes a new `run` message (with its own unique `runId` value). Let’s explore the structure of a Self-Service Action run message:
+Self-Service Action 的每次调用都会发布一条新的 "run "消息(具有自己唯一的 "runId "值)。 让我们来探讨一下 Self-Service Action 运行消息的结构: 
+
 
 | Field          | Description                                                                                  | Example               |
 | -------------- | -------------------------------------------------------------------------------------------- | --------------------- |
@@ -579,9 +587,10 @@ Every invocation of a Self-Service Action publishes a new `run` message (with it
 | `context`      | Contains the context of the action, and has keys for `blueprint`, `entity` and `runId`       | Example below         |
 | `payload`      | Explanation below                                                                            | Example below         |
 
-### Example Trigger
 
-The trigger includes audit data such as who triggered the action, and when and how did they trigger it (`UI` or `API`)
+### 触发器示例
+
+触发器包括审计数据，例如谁触发了操作，何时以及如何触发("用户界面 "或 "应用程序接口")。
 
 ```json showLineNumbers
 "trigger": {
@@ -600,7 +609,7 @@ The trigger includes audit data such as who triggered the action, and when and h
 }
 ```
 
-### Example context
+#### 示例语境
 
 ```json showLineNumbers
 "context": {
@@ -610,15 +619,15 @@ The trigger includes audit data such as who triggered the action, and when and h
 }
 ```
 
-### Self-Service Action run payload
+#### 自助服务行动运行有效载荷
 
-The `payload` object contains the data of the Self-Service Action invocation, it includes the following keys:
+支付负载 "对象包含调用自助服务操作的数据，它包括以下键值: 
 
-- `entity` - The Entity the run is executed on (in the case of `DAY-2` or `DELETE`, for `CREATE` it will be null).
-- `action` - Definition of the action that was triggered, includes all of the action configuration, including expected `userInputs`, `description`, etc.
-- `properties` - This key includes the values provided by the developer when executing the action. The keys in this object match the keys defined under the `userInputs` key in the action definition.
+* `entity` - 执行运行的实体(在 `DAY-2` 或 `DELETE` 的情况下，对于 `CREATE` 它将为空)。
+* `action` - 被触发的操作的定义，包括所有操作配置，包括预期的 `userInputs`, `description` 等。
+* `properties` - 此键包括开发人员在执行动作时提供的 Values。此对象中的键与动作定义中的 `userInputs` 键下定义的键相匹配。
 
-Here is an example `payload` object for a `CREATE` action:
+下面是一个 `CREATE` 操作的 `payload` 对象示例: 
 
 ```json showLineNumbers
 "payload": {

@@ -1,26 +1,26 @@
 import Tabs from "@theme/Tabs"
 import TabItem from "@theme/TabItem"
 
-# Examples
+# 示例
 
-In this section we'll show you a few examples of ways to use catalog permissions in your organization, and how to apply them.
+在本节中，我们将举例说明在组织中使用目录权限的方法，以及如何应用这些权限。
 
-## Use cases 💡
+## 用例 💡
 
-The following configurations, among others, are available when using catalog permissions management:
+在使用目录权限管理时，除其他配置外，还可以使用以下配置: 
 
-1. Entities can be made immutable/partially immutable (can only create/delete/modify) for specific users/roles. For example:
-   1. `Deployment` entities are immutable for all roles, and `Cluster` entities are editable only by the blueprint **Moderators**.
-   2. **Members** can create a new `Microservice` entity, but are not permitted to delete a `Microservice` entity.
-2. Each entity property/relation can be immutable separately for specific users/roles. For example, the `repository_link` property can be immutable for all roles (except **Admin**).
-3. Allow specific users/roles to modify only entities [owned by their team](#setting-permissions-by-team-ownership). For example, **Members** can edit only `Microservices` that belong to their team.
-4. Action execution permissions can be given to specific users or roles. For example, you can allow every **Member** to create a new `Deployment` entity, however only `Deployment` **Moderators** can perform a day-2 action of "adding resources".
+1. 可以为特定用户/角色设置实体不可变/部分不可变(只能创建/删除/修改)。例如
+    1. 部署 "实体对所有角色都是不可变的，而 "集群 "实体只有蓝图的**管理者**才能编辑。
+    2. **成员**可以创建新的`Microservice`实体，但不允许删除`Microservice`实体。
+2.对于特定用户/角色，每个实体的属性/关系都可以是不可变的。例如，"repository_link "属性对所有角色(除**Admin**外)都是不可变的。
+3.只允许特定用户/角色修改实体[owned by their team](#setting-permissions-by-team-ownership) 。例如，**Members** 只能编辑属于其团队的 `Microservices`。
+4.可向特定用户或角色授予操作执行权限。例如，您可以允许每个**成员**创建新的 "部署 "实体，但只有 "部署 "**管理员**才能执行 "添加资源 "的第 2 天操作。
 
-## Setting blueprint permissions
+## 设置蓝图权限
 
-To set permissions for a blueprint, click on the permissions button of the desired blueprint in the DevPortal Builder page. This will open a modal that contains the permissions JSON and allows you to control every operation that can be performed on the blueprint or its entities.
+要为蓝图设置权限，请单击 DevPortal Builder 页面上所需蓝图的权限按钮。 这将打开一个包含权限 JSON 的模态，允许您控制可对蓝图或其实体执行的所有操作。
 
-### Role examples
+### 角色示例
 
 <Tabs groupId="blueprint-permissions" defaultValue="register" values={[
 {label: "Let member register entity", value: "register"},
@@ -29,7 +29,7 @@ To set permissions for a blueprint, click on the permissions button of the desir
 
 <TabItem value="register">
 
-If you want to enable **Members** to register entities of a blueprint, you can change the JSON as follows:
+如果要启用 **Members** 来注册蓝图的实体，可以按如下方式更改 JSON: 
 
 ```json showLineNumbers
 {
@@ -49,7 +49,7 @@ If you want to enable **Members** to register entities of a blueprint, you can c
 
 <TabItem value="only-admin">
 
-To allow only **Admins** to change the property `slackChannelUrl`, remove the Moderator role:
+要只允许 **Admins** 更改属性 `slackChannelUrl` ，请删除版主角色: 
 
 ```json showLineNumbers
 {
@@ -71,7 +71,7 @@ To allow only **Admins** to change the property `slackChannelUrl`, remove the Mo
 
 </Tabs>
 
-### User examples
+### 用户示例
 
 <Tabs groupId="user-permissions" defaultValue="let-user-relation" values={[
 {label: "Let user edit relation", value: "let-user-relation"}
@@ -79,7 +79,7 @@ To allow only **Admins** to change the property `slackChannelUrl`, remove the Mo
 
 <TabItem value="let-user-relation">
 
-To grant permissions for a specific user to edit the `deployedAt` relation, add them to the users array:
+要授予特定用户编辑 `deployedAt` 关系的权限，请将其添加到用户数组中: 
 
 ```json showLineNumbers
 {
@@ -101,7 +101,7 @@ To grant permissions for a specific user to edit the `deployedAt` relation, add 
 
 </Tabs>
 
-### Team examples
+### 团队范例
 
 <Tabs groupId="team-permissions" defaultValue="let-team-relation" values={[
 {label: "Let team edit relation", value: "let-team-relation"}
@@ -109,7 +109,7 @@ To grant permissions for a specific user to edit the `deployedAt` relation, add 
 
 <TabItem value="let-team-relation">
 
-To grant permissions for a specific team to edit the `deployedAt` relation, add them to the teams array:
+要授予特定团队编辑 `deployedAt` 关系的权限，请将其添加到团队数组中: 
 
 ```json showLineNumbers
 {
@@ -131,11 +131,11 @@ To grant permissions for a specific team to edit the `deployedAt` relation, add 
 
 </Tabs>
 
-### Team ownership examples
+### 团队所有权范例
 
-Some operations have the `ownedByTeam` flag. This allows you to set permissions by team ownership, rather than by roles or direct assignment to users.
+有些操作有 "ownedByTeam"(团队所有)flag，这样就可以按团队所有设置权限，而不是按角色或直接分配给用户。
 
-For example, the following JSON will allow **every user**, regardless of their role, to perform the action `delete_env` on `Env` entities that belong to a team they are a part of (entities that have the `team` property set):
+例如，以下 JSON 将允许**每个用户**(无论其角色如何)对属于其所属团队的`Env`实体(设置了`team`属性的实体)执行`delete_env`操作: 
 
 ```json showLineNumbers
 {
@@ -153,23 +153,23 @@ For example, the following JSON will allow **every user**, regardless of their r
 }
 ```
 
-### Team inheritance
+### 团队继承
 
-Team inheritance allows you to utilize relations to automatically assign and manage entity ownership.
+团队继承允许您利用关系自动分配和管理实体所有权。
 
-By using team inheritance, you can configure entities to automatically inherit their `team` from entities they are related to.
+通过使用 "团队继承"，您可以配置实体自动从与之相关的实体继承其 "团队"。
 
-Team inheritance can be configured by adding the `teamInheritance` key to the [blueprint structure](../define-your-data-model/relate-blueprints/relate-blueprints.md#structure-table). The `teamInheritance` object has a `path` key that represents the relation path to the blueprint whose entity's teams we want to inherit.
+团队继承可以通过在[blueprint structure](../define-your-data-model/relate-blueprints/relate-blueprints.md#structure-table) 中添加`teamInheritance`键来配置。`teamInheritance`对象有一个`path`键，表示我们要继承的实体团队蓝图的关系路径。
 
-:::info Path
+:::info  路径
 
-- The `path` key works similarly to the `path` key in [mirror properties](../define-your-data-model/setup-blueprint/properties/mirror-property/mirror-property.md#api-definition);
-- The `path` does not need to end with the `$team` meta-property since it is inferred;
-- Team inheritance can only be configured using a path of [`single`](../define-your-data-model/relate-blueprints/relate-blueprints.md#single-relation-structure) type relations.
+* 路径 "键的作用与[mirror properties](../define-your-data-model/setup-blueprint/properties/mirror-property/mirror-property.md#api-definition) 中的 "路径 "键类似；
+* 路径 "不需要以"$team "元属性结尾，因为它会被推断出来；
+* 团队继承只能使用[`single`](../define-your-data-model/relate-blueprints/relate-blueprints.md#single-relation-structure) 类型关系的路径来配置。
 
 :::
 
-For example, the following JSON (added to the **blueprint definition**) will configure the `myBlueprint` blueprint's entities to inherit their teams from the `myExtraRelatedBlueprint` blueprint's entities:
+例如，下面的 JSON(添加到**蓝图定义**)将配置`myBlueprint`蓝图的实体，使其从`myExtraRelatedBlueprint`蓝图的实体继承其团队: 
 
 ```json showLineNumbers
 {
@@ -181,19 +181,18 @@ For example, the following JSON (added to the **blueprint definition**) will con
 }
 ```
 
-:::note
-In the example above, the relation chain is:
-myBlueprint -> myRelatedBlueprint -> myExtraRelatedBlueprint
+:::note 在上面的示例中，关系链是: myBlueprint -> myRelatedBlueprint -> myExtraRelatedBlueprint
+
 :::
 
 ### Global VS granular permissions
 
-When granting write permissions for entities of a blueprint, you have 2 levels of control:
+为蓝图实体授予写入权限时，有两个控制级别: 
 
-1. Global permissions - create/update an entity as a whole. For example, allow **Member** users to update `Env` entities (all properties and relations).
-2. Granular permissions - control which properties and relations a user/role can update when creating or updating an entity. For example, allow **Member** users to only update the property `slackChannelUrl` of `Env` entities.
+1. global 权限 - 创建/更新整个实体。例如，允许 **Member** 用户更新 `Env` 实体(所有属性和关系)。
+2. 细粒度权限--控制用户/角色在创建或更新实体时可以更新哪些属性和关系。例如，只允许**成员**用户更新`Env`实体的`slackChannelUrl`属性。
 
-To apply granular permissions for a blueprint, use the `updateProperties` and `updateRelations` fields in the JSON, see the examples below:
+要为蓝图引用细粒度权限，可使用 JSON 中的 "updateProperties "和 "updateRelations "字段，请参阅下面的示例: 
 
 <Tabs groupId="global-granular-permissions" defaultValue="let-user-property" values={[
 {label: "Let user edit property", value: "let-user-property"},
@@ -202,7 +201,7 @@ To apply granular permissions for a blueprint, use the `updateProperties` and `u
 
 <TabItem value="let-user-property">
 
-The following change will allow **Member** users to update _only_ the `slackChannelUrl` property of `Env` entities:
+以下更改将允许 **Member** 用户仅更新 `Env` 实体的 `slackChannelUrl` 属性: 
 
 ```json showLineNumbers
 {
@@ -224,9 +223,9 @@ The following change will allow **Member** users to update _only_ the `slackChan
 
 <TabItem value="let-user-entity">
 
-If you want to apply global permissions, use the `update` field in the JSON.
+如果要引用全局权限，请使用 JSON 中的 `update` 字段。
 
-The following change will allow **Member** users to update _every_ property/relation of `Env` entities that are owned by their team:
+以下更改将允许 **Member** 用户更新其团队拥有的 `Env` 实体的每一个属性/关系: 
 
 ```json showLineNumbers
 {
@@ -246,12 +245,12 @@ The following change will allow **Member** users to update _every_ property/rela
 
 </Tabs>
 
-:::warning
-Using global permissions override any granular permission that have been set.
+:::warning 使用 global 权限会覆盖任何已设置的细粒度权限。
 
-If both permission types are set, then the global setting will be used when evaluating permissions.
+如果同时设置了两种权限类型，则在评估权限时将引用 global 设置。
+
 :::
 
-:::info
-`update`, `updateProperties` and `updateRelations` settings apply when registering new entities as well. This means that a user can't register a new entity with a property (or relation) that he doesn't have permissions to edit.  
+:::info 在注册新实体时，"更新"、"更新属性 "和 "更新关系 "设置也同样适用。 这意味着用户不能用他没有权限编辑的属性(或关系)注册新实体。
+
 :::

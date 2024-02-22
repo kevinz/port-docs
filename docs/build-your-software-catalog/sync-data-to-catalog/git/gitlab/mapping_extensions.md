@@ -1,37 +1,39 @@
 ---
+
 sidebar_position: 5
+
 ---
 
-import RepositoryBlueprint from './\_gitlab_exporter_example_repository_blueprint.mdx'
+import RepositoryBlueprint from './_gitlab_exporter_example_repository_blueprint.mdx'
 
-# Mapping Extensions
+# 映射扩展
 
-## Introduction
+## 简介
 
-The default way to map your data to Port is by using [JQ JSON processor](https://stedolan.github.io/jq/manual/) to map and transform your data to Port entities.
+将数据映射到 Port 的默认方式是使用[JQ JSON processor](https://stedolan.github.io/jq/manual/) 将数据映射和转换为 Port 实体。
 
-However, in some cases you may want to map data to Port in a way that default JQ mapping is not enough.
+不过，在某些情况下，您可能希望将数据映射到 Port，而默认的 JQ 映射是不够的。
 
-Possible Use Cases:
+可能的被引用案例: 
 
-- Map your repository README.md file contents into Port;
-- Check if a specific file exists in your repository;
-- Check if a specific string exists in your repository;
-- Check if a specific version of a package is used in your repository;
-- Check if a CI/CD pipeline is configured in your repository;
+* 将版本库 README.md 文件内容映射到 Port；
+* 检查版本库中是否存在特定文件；
+* 检查版本库中是否存在特定字符串；
+* 检查版本库中是否被引用了特定版本的 packages；
+* 检查版本库中是否配置了 CI/CD Pipelines；
 
-## Mapping file content into Port
+## 将文件内容映射到Port中
 
-In the following example you will define and export your GitLab projects and their **README.md** file contents to Port:
+在下面的示例中，您将定义 GitLab 项目并将其 **README.md** 文件内容导出到 Port: 
 
 <RepositoryBlueprint/>
 
-As we can see one of the properties is of type markdown, this means that we need to map the **README.md** file contents into Port.
+我们可以看到，其中一个属性的类型是 markdown，这意味着我们需要将 **README.md** 文件的内容映射到 Port 中。
 
-To do so, we will use the `file://` prefix with the path of the file to tell the GitLab exporter that we want to map the contents of a file into Port.
+为此，我们将使用带有文件路径的 `file://` 前缀来告诉 GitLab 输出程序，我们要将文件内容映射到 Port 中。
 
 ```yaml showLineNumbers
-  - kind: project
+- kind: project
     selector:
       query: "true"
     port:
@@ -50,39 +52,38 @@ To do so, we will use the `file://` prefix with the path of the file to tell the
             defaultBranch: .default_branch
 ```
 
-## Search checks
+## 搜索检查
 
-We can use the GitLab exporter to perform search checks on our repositories to ensure that they are compliant with our organization's policies and standards.
+我们可以被引用 GitLab 输出程序对我们的资源库进行搜索检查，以确保它们符合我们组织的政策和标准。
 
-With Port Scorecards and the search checks feature, organization can define a set of checks that will be performed on each repository, and the results of those checks will be reflected in the repository's scorecard in Port which will help the organization to identify repositories that are not compliant with the organization's policies and standards.
+利用 Port 记分卡和搜索检查功能，组织可以定义对每个存储库执行的一系列检查，检查结果将反映在 Port 中存储库的记分卡中，这将有助于组织识别不符合组织政策和标准的存储库。
 
-### How it works
+### 工作原理
 
-The search checks are performed using the [GitLab Advanced Search API](https://docs.gitlab.com/ee/api/search.html).
+搜索检查使用[GitLab Advanced Search API](https://docs.gitlab.com/ee/api/search.html) 。
 
-This means that any search query supported by the GitLab Search API can be used with the GitLab exporter.
+这意味着 GitLab Search API 支持的任何搜索查询都可以被 GitLab 输出程序引用。
 
-### Syntax
+#### 语法
 
-- `search://scope=<scope>&&query=<query>`
-  - `search://` - This ist the prefix to indicate that the mapping is a search check;
-  - `scope` - The scope of the search, currently only `blobs` are supported (searches in the repository files) (see [GitLab Search API](https://docs.gitlab.com/ee/api/search.html#scope) for more details);
-  - `query` - The query to search for, expected to be a valid GitLab Advanced Search query (see [GitLab Advanced Search syntax](https://docs.gitlab.com/ee/user/search/advanced_search.html#syntax) for more details).
+* `search://scope=<scope>&&query=<query>`
+    - `search://` - 这是表示映射是搜索检查的前缀；
+    - `scope` - 搜索范围，目前只支持 `blobs` (在资源库文件中搜索) (更多详情请参见[GitLab Search API](https://docs.gitlab.com/ee/api/search.html#scope) ) ；
+    - `query` - 要搜索的查询，应是有效的 GitLab 高级搜索查询(详情请参见[GitLab Advanced Search syntax](https://docs.gitlab.com/ee/user/search/advanced_search.html#syntax) ) 。
 
-### Search Checks Examples
+#### 搜索检查示例
 
-- `search://scope=blobs&&query=filename:README.md` - Check whether the project contains a `README.md` file;
-- `search://scope=blobs&&query=filename:test_* extension:py` - Check whether the project contains tests;
-- `search://scope=blobs&&query=filename:".gitlab-ci.yml` - Check whether the project has gitlab CI configured;
-- `search://scope=blobs&&query=fastapi filename:requirements.txt` - Check whether the project uses fastapi in the `requirements.txt` file;
+* `search://scope=blobs&amp;&amp;query=filename:README.md` - 检查项目是否包含 `README.md` 文件；
+* `search://scope=blobs&amp;&amp;query=filename:test_* extension:py` - 检查项目是否包含测试；
+* `search://scope=blobs&amp;&amp;query=filename:".gitlab-ci.yml` - 检查项目是否配置了 gitlab CI；
+* `search://scope=blobs&amp;&amp;query=fastapi filename:requirements.txt` - 检查项目是否在`requirements.txt`文件中引用了 fastapi；
+    在下面的截图中，我们可以看到我们使用了与 gitlab 高级搜索完全相同的查询语句
+    ![GitLab Search Query Syntax](../../../../../static/img/integrations/gitlab/GitlabSearchQueryExample.png)
 
-  In the screenshot below we can see that we use the exact same query as gitlab advanced search
-  ![GitLab Search Query Syntax](../../../../../static/img/integrations/gitlab/GitlabSearchQueryExample.png)
-
-### Integration Config Example
+### 集成配置示例
 
 ```yaml showLineNumbers
-  - kind: project
+- kind: project
     selector:
       query: 'true'
     port:
@@ -107,6 +108,6 @@ This means that any search query supported by the GitLab Search API can be used 
             // highlight-end
 ```
 
-Example of a Scorecard that reflects the results of the search checks:
+反映搜索检查结果的记分卡示例: 
 
 ![GitLab Search Checks Scorecard](../../../../../static/img/integrations/gitlab/GitlabSearchScorecardExample.png)

@@ -1,3 +1,3 @@
-The `create_missing_related_entities` parameter is used to enable the creation of missing related Port entities. This is useful when you want to create an entity and its related entity in one call, or if you want to create an entity that its related entity does not exist yet.
+`create_missing_related_entities` 参数用于创建缺失的相关 Port 实体。 当您想在一次调用中创建一个实体及其相关实体，或者您想创建一个其相关实体尚不存在的实体时，这个参数就非常有用。
 
-In both of these scenarios, the resulting _related_ entity will be a barebones entity which you can later on update with relevant information as usual.
+在这两种情况下，产生的_related_实体都将是一个裸实体，以后可以像往常一样用相关信息进行更新。

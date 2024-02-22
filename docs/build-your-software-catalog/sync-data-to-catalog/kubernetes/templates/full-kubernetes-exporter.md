@@ -1,73 +1,73 @@
 ---
+
 sidebar_position: 1
-description: Extended Kubernetes installation
+description: 扩展 Kubernetes 安装
+
 ---
 
 import TemplateInstallation from "./_template_installation.mdx";
 import TemplatePrerequisites from "./_template_prerequisites.mdx";
 
-# Kubernetes (extended)
+# Kubernetes(扩展自)
 
-:::info
-This use-case is an extension of the [basic Kubernetes use-case](/build-your-software-catalog/sync-data-to-catalog/kubernetes/kubernetes.md). If you haven't already, we recommend you to read it first.
+:::info 本用例是[basic Kubernetes use-case](/build-your-software-catalog/sync-data-to-catalog/kubernetes/kubernetes.md) 的扩展。如果您还没有阅读，建议您先阅读本用例。
+
 :::
 
-Kubernetes has become one of the most popular ways to deploy microservice based applications. As the number of your microservices grow, and more clusters are deployed across several regions, it becomes complicated and tedious to keep track of all of your deployments, services, and jobs.
+Kubernetes 已成为部署基于微服务的应用程序的最流行方式之一。 随着微服务数量的增长，以及在多个区域部署更多集群，跟踪所有部署、服务和作业变得复杂而乏味。
 
-Using Port's Kubernetes Exporter, you can keep track of your K8s resources and export all the data to Port. You will use K8s' built in metadata to create Entities in Port and keep track of their state.
+使用 Port 的 Kubernetes Exporter，您可以跟踪 K8s 资源并将所有数据导出到 Port。 您将使用 K8s 内置的元数据在 Port 中创建实体并跟踪其状态。
 
-:::tip
-Get to know the basics of our Kubernetes exporter [here!](/build-your-software-catalog/sync-data-to-catalog/kubernetes/kubernetes.md)
+:::tip 了解 Kubernetes 输出程序的基础知识[here!](/build-your-software-catalog/sync-data-to-catalog/kubernetes/kubernetes.md)
+
 :::
 
-## Prerequisites
+## 先决条件
 
 <TemplatePrerequisites />
 
-## Setting up blueprints & resource mapping
+## 设置蓝图和资源映射
 
-The following section will guide you through the process of setting up your blueprints and resource mapping using the
-installation script. You can read more about the installation script [here](#how-does-the-installation-script-work).
+下文将指导您使用安装脚本设置蓝图和资源映射。您可以阅读有关安装脚本的更多信息[here](#how-does-the-installation-script-work) 。
 
-### Creating blueprints
+### 创建蓝图
 
-The installation script provides a convenient way to create your blueprints. Using the `CUSTOM_BP_PATH` environment variable, you can fetch a pre-defined `blueprints.json` to create your blueprints. For this use-case, you will use [this file](https://github.com/port-labs/template-assets/blob/main/kubernetes/blueprints/kubernetes_complete_usecase_bps.json) to define your blueprints. Do this by running:
+安装脚本提供了一种创建蓝图的便捷方法。 使用 `CUSTOM_BP_PATH` 环境变量，您可以获取预定义的 `blueprints.json` 来创建蓝图。 在本例中，您将使用[this file](https://github.com/port-labs/template-assets/blob/main/kubernetes/blueprints/kubernetes_complete_usecase_bps.json) 来定义蓝图。请通过运行
 
 ```bash showLineNumbers
 export CUSTOM_BP_PATH="https://raw.githubusercontent.com/port-labs/template-assets/main/kubernetes/blueprints/kubernetes_complete_usecase_bps.json"
 ```
 
-This `blueprints.json` file defines the following blueprints:
+该 `blueprints.json` 文件定义了以下蓝图: 
 
-- Cluster;
-- Namespace;
-- Node;
-- Pod;
-- ReplicaSet
-- Workload \*;
+* 集群；
+* namespace；
+* 节点
+* Pod
+* 复制集
+* 工作负载 *；
 
-:::note
+:::note 
 
-- `Workload` is an abstraction of Kubernetes objects which create and manage pods. By creating this blueprint, you can avoid creating a dedicated blueprint per Workload type, all of which will likely look pretty similar.
-  Here is the list of kubernetes objects `Workload` will represent:
-
-  - Deployment;
-  - StatefulSet;
-  - DaemonSet.
+* Workload "是创建和管理 pod 的 Kubernetes 对象的抽象。通过创建该蓝图，可以避免为每种工作负载类型创建一个专用蓝图，因为所有这些蓝图可能看起来都非常相似。
+以下是 "Workload "将代表的 kubernetes 对象列表: 
+    - 部署；
+    - StatefulSet；
+    - DaemonSet。
 
 :::
 
-### Exporting custom resource mapping
+### 导出自定义资源映射
 
-Using the `CONFIG_YAML_URL` parameter, you can define a custom resource mapping to use when installing the exporter.
+使用 `CONFIG_YAML_URL` 参数，可以定义自定义资源映射，以便在安装导出程序时使用。
 
-In this use-case you will be using **[this configuration file](https://github.com/port-labs/template-assets/blob/main/kubernetes/kubernetes_v1_config.yaml)**. To achieve this, run:
+在本例中，您将被引用 ** [this configuration file](https://github.com/port-labs/template-assets/blob/main/kubernetes/kubernetes_v1_config.yaml)**。为此，请运行
 
 ```bash showLineNumbers
 export CONFIG_YAML_URL="https://raw.githubusercontent.com/port-labs/template-assets/main/kubernetes/kubernetes_v1_config.yaml"
 ```
 
-You can now run the installation script using the following code snippet:
+现在，您可以使用以下代码片段运行安装脚本: 
 
 ```bash showLineNumbers
 export CLUSTER_NAME="my-cluster"
@@ -76,16 +76,16 @@ export PORT_CLIENT_SECRET="my-port-client-secret"
 curl -s https://raw.githubusercontent.com/port-labs/template-assets/main/kubernetes/install.sh | bash
 ```
 
-That's it! You can now browse to your Port environment to see that your blueprints have been created, and entities are being reported to Port using the freshly installed k8s exporter.
+就是这样！现在您可以浏览 Port 环境，查看蓝图是否已创建，实体是否已使用新安装的 k8s 导出器报告到 Port。
 
-## Summary
+## 摘要
 
-In this use-case, using the installation script, you:
+在这种被引用的情况下，您可以使用安装脚本: 
 
-- set up your Port environment by creating blueprints defining different k8s resources;
-- installed Port's k8s exporter with a configuration allowing you to export important data from your cluster;
-- fetched k8s resources from you cluster as entities to your Port environment
+* 通过创建定义不同 k8s 资源的蓝图来设置 Port 环境；
+* 通过配置安装 Port 的 k8s 导出器，以便从集群导出重要数据；
+* 将集群中的 k8s 资源作为实体提取到 Port 环境中
 
-## How does the installation script work?
+## 安装脚本如何工作？
 
 <TemplateInstallation />

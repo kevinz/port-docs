@@ -1,38 +1,37 @@
 import Tabs from "@theme/Tabs"
 import TabItem from "@theme/TabItem"
-import Prerequisites from "../templates/\_ocean_helm_prerequisites_block.mdx"
-import DockerParameters from "./\_newrelic-docker-parameters.mdx"
-import AzurePremise from "../templates/\_ocean_azure_premise.mdx"
+import Prerequisites from "../templates/_ocean_helm_prerequisites_block.mdx"
+import DockerParameters from "./_newrelic-docker-parameters.mdx"
+import AzurePremise from "../templates/_ocean_azure_premise.mdx"
 import AdvancedConfig from '../../../generalTemplates/_ocean_advanced_configuration_note.md'
 
-# New Relic
+# 新 Relic
 
-Our New Relic integration allows you to import `entities` and `issues` from your New Relic cloud account into Port, according to your mapping and definition.
+通过我们的 New Relic 集成，您可以根据您的映射和定义，将 New Relic 云账户中的 "实体 "和 "问题 "导入 Port。
 
-An `Entity` can be a host, an application, a service, a database, or any other component that sends data to New Relic.  
-An `Issue` is a group of incidents that describe the underlying problem of your symptoms.
+实体 "可以是主机、应用程序、服务、数据库或任何其他向 New Relic 发送数据的组件。 问题 "是一组描述症状的相应问题的事件。
 
-## Common use cases
+## 常见被引用情况
 
-- Map your monitored applications and services in New Relic with their current open alerts.
-- Watch for new alerts and updates raised on your monitored applications and automatically synchronize them into Port.
+* 将 New Relic 中受监控的应用程序和服务与其当前打开的警报进行映射。
+* 关注受监控应用程序上发出的新警报和更新，并自动将它们同步到 Port 中。
 
-## Prerequisites
+## 先决条件
 
 <Prerequisites />
 
-## Installation
+## 安装
 
-Choose one of the following installation methods:
+从以下安装方法中选择一种: 
 
 <Tabs groupId="installation-methods" queryString="installation-methods">
 
 <TabItem value="real-time-always-on" label="Real Time & Always On" default>
 
-Using this installation option means that the integration will be able to update Port in real time.
+被引用此安装选项意味着集成将能实时更新 Port。
 
-This table summarizes the available parameters for the installation.
-Set them as you wish in the script below, then copy it and run it in your terminal:
+本表总结了安装时可用的参数，请在下面的脚本中按自己的需要进行设置，然后复制并在终端运行: 
+
 
 | Parameter                               | Description                                                                                                   | Required |
 | --------------------------------------- | ------------------------------------------------------------------------------------------------------------- | -------- |
@@ -47,16 +46,17 @@ Set them as you wish in the script below, then copy it and run it in your termin
 | `scheduledResyncInterval`               | The number of minutes between each resync                                                                     | ❌       |
 | `initializePortResources`               | Default true, When set to true the integration will create default blueprints and the port App config Mapping | ❌       |
 
+
 <br/>
 <Tabs groupId="deploy" queryString="deploy">
 
 <TabItem value="helm" label="Helm" default>
 To install the integration using Helm, run the following command:
 
-:::note
-If you are using New Relic's EU region, add the following flag to the command:
+:::note 如果您正在引用 New Relic 的欧盟地区，请在命令中添加以下 flag: 
 
-`--set integration.config.newRelicGraphqlURL="https://api.eu.newrelic.com/graphql"`
+`-set integration.config.newRelicGraphqlURL="https://api.eu.newrelic.com/graphql"`
+
 :::
 
 ```bash showLineNumbers
@@ -67,26 +67,28 @@ If you are using New Relic's EU region, add the following flag to the command:
 
 helm repo add --force-update port-labs https://port-labs.github.io/helm-charts
 helm upgrade --install my-newrelic-integration port-labs/port-ocean \
-	--set port.clientId="PORT_CLIENT_ID"  \
-	--set port.clientSecret="PORT_CLIENT_SECRET"  \
-	--set port.baseUrl="https://api.getport.io"  \
-	--set initializePortResources=true  \
-	--set scheduledResyncInterval=120 \
-	--set integration.identifier="my-newrelic-integration"  \
-	--set integration.type="newrelic"  \
-	--set integration.eventListener.type="POLLING"  \
-	--set integration.secrets.newRelicAPIKey="<NR_API_KEY>"  \
-	--set integration.secrets.newRelicAccountID="<NR_ACCOUNT_ID>"
+    --set port.clientId="PORT_CLIENT_ID"  \
+    --set port.clientSecret="PORT_CLIENT_SECRET"  \
+    --set port.baseUrl="https://api.getport.io"  \
+    --set initializePortResources=true  \
+    --set scheduledResyncInterval=120 \
+    --set integration.identifier="my-newrelic-integration"  \
+    --set integration.type="newrelic"  \
+    --set integration.eventListener.type="POLLING"  \
+    --set integration.secrets.newRelicAPIKey="<NR_API_KEY>"  \
+    --set integration.secrets.newRelicAccountID="<NR_ACCOUNT_ID>"
 ```
+
 </TabItem>
 <TabItem value="argocd" label="ArgoCD" default>
 To install the integration using ArgoCD, follow these steps:
 
-1. Create a `values.yaml` file in `argocd/my-ocean-newrelic-integration` in your git repository with the content:
+1. 在你的 git 仓库的 `argocd/my-ocean-newrelic-integration` 中创建一个 `values.yaml` 文件，内容如下: 
 
-:::note
-Remember to replace the placeholders for `NEW_RELIC_API_KEY` and `NEW_RELIC_ACCOUNT_ID`.
+:::note 请记住替换 `NEW_RELIC_API_KEY` 和 `NEW_RELIC_ACCOUNT_ID` 的占位符。
+
 :::
+
 ```yaml showLineNumbers
 initializePortResources: true
 scheduledResyncInterval: 120
@@ -101,10 +103,10 @@ integration:
     newRelicAccountID: NEW_RELIC_ACCOUNT_ID
   // highlight-end
 ```
+
 <br/>
 
-:::note
-If you are using New Relic's EU region, add the highlighted code (GraphQL configuration value) to the `values.yaml`:
+:::note 如果您正在使用 New Relic 的欧盟地区，请将突出显示的代码(GraphQL 配置值)添加到 `values.yaml` 中: 
 
 ```yaml showLineNumbers
 initializePortResources: true
@@ -122,13 +124,15 @@ integration:
     newRelicAPIKey: NEW_RELIC_API_KEY
     newRelicAccountID: NEW_RELIC_ACCOUNT_ID
 ```
+
 :::
 
-2. Install the `my-ocean-newrelic-integration` ArgoCD Application by creating the following `my-ocean-newrelic-integration.yaml` manifest:
-:::note
-Remember to replace the placeholders for `YOUR_PORT_CLIENT_ID` `YOUR_PORT_CLIENT_SECRET` and `YOUR_GIT_REPO_URL`.
+2.创建以下 "my-ocean-newrelic-integration.yaml "配置清单，安装 "my-ocean-newrelic-integration "ArgoCD应用程序: 
 
-Multiple sources ArgoCD documentation can be found [here](https://argo-cd.readthedocs.io/en/stable/user-guide/multiple_sources/#helm-value-files-from-external-git-repository).
+:::note 记住要替换 `YOUR_PORT_CLIENT_ID``YOUR_PORT_CLIENT_SECRET` 和 `YOUR_GIT_REPO_URL` 的占位符。
+
+多种来源的 ArgoCD 文档可在[here](https://argo-cd.readthedocs.io/en/stable/user-guide/multiple_sources/#helm-value-files-from-external-git-repository) 上找到。
+
 :::
 
 <details>
@@ -173,10 +177,12 @@ spec:
 </details>
 <br/>
 
-3. Apply your application manifest with `kubectl`:
+3.使用 `kubectl` 配置应用程序清单: 
+
 ```bash
 kubectl apply -f my-ocean-newrelic-integration.yaml
 ```
+
 </TabItem>
 </Tabs>
 
@@ -187,21 +193,21 @@ kubectl apply -f my-ocean-newrelic-integration.yaml
   <TabItem value="github" label="GitHub">
 This workflow will run the New Relic integration once and then exit, this is useful for **scheduled** ingestion of data.
 
-:::warning
-If you want the integration to update Port in real time you should use the [Real Time & Always On](?installation-methods=real-time-always-on#installation) installation option
+:::warning 如果希望集成能实时更新 Port，则应使用[Real Time & Always On](?installation-methods=real-time-always-on#installation) 安装选项
+
 :::
 
-Make sure to configure the following [Github Secrets](https://docs.github.com/en/actions/security-guides/using-secrets-in-github-actions):
+确保配置以下[Github Secrets](https://docs.github.com/en/actions/security-guides/using-secrets-in-github-actions) : 
 
 <DockerParameters />
 <br/>
 
-Here is an example for `newrelic-integration.yml` workflow file:
+下面是 `newrelic-integration.yml` 工作流程文件的示例: 
 
-:::note
-If you are using New Relic's EU region, add the following flag to the docker command:
+:::note 如果您正在使用 New Relic 的欧盟地区，请在 docker 命令中添加以下 flag: 
 
-`-e OCEAN__INTEGRATION__CONFIG__NEW_RELIC_URL=https://api.eu.newrelic.com/graphql`
+`-e OCEAN__INTEGRATION__CONFIG__NEW_RELIC_URL=https://api.eu.newrelic.com/graphql`。
+
 :::
 
 ```yaml showLineNumbers
@@ -241,24 +247,24 @@ jobs:
   <TabItem value="jenkins" label="Jenkins">
 This pipeline will run the New Relic integration once and then exit, this is useful for **scheduled** ingestion of data.
 
-:::tip
-Your Jenkins agent should be able to run docker commands.
+:::tip 你的 Jenkins 代理应该能够运行 docker 命令。
+
 :::
-:::warning
-If you want the integration to update Port in real time using webhooks you should use the [Real Time & Always On](?installation-methods=real-time-always-on#installation) installation option.
+:::warning 如果希望集成使用 webhooks 实时更新 Port，则应使用 安装选项。[Real Time & Always On](?installation-methods=real-time-always-on#installation) 
+
 :::
 
-Make sure to configure the following [Jenkins Credentials](https://www.jenkins.io/doc/book/using/using-credentials/) of `Secret Text` type:
+请确保配置以下[Jenkins Credentials](https://www.jenkins.io/doc/book/using/using-credentials/) 的 "Secret Text "类型: 
 
 <DockerParameters />
 <br/>
 
-Here is an example for `Jenkinsfile` groovy pipeline file:
+下面是 `Jenkinsfile` groovy Pipelines 文件的示例: 
 
-:::note
-If you are using New Relic's EU region, add the following flag to the docker command:
+:::note 如果您正在使用 New Relic 的欧盟地区，请在 docker 命令中添加以下 flag: 
 
-`-e OCEAN__INTEGRATION__CONFIG__NEW_RELIC_URL=https://api.eu.newrelic.com/graphql`
+`-e OCEAN__INTEGRATION__CONFIG__NEW_RELIC_URL=https://api.eu.newrelic.com/graphql`。
+
 :::
 
 ```yml showLineNumbers
@@ -300,7 +306,7 @@ pipeline {
 ```
 
   </TabItem>
-  
+
 <TabItem value="azure" label="Azure Devops">
 <AzurePremise name="New Relic" />
 
@@ -308,7 +314,7 @@ pipeline {
 
 <br/>
 
-Here is an example for `newrelic-integration.yml` pipeline file:
+下面是 `newrelic-integration.yml` Pipelines 文件的示例: 
 
 ```yaml showLineNumbers
 trigger:
@@ -319,7 +325,6 @@ pool:
 
 variables:
   - group: port-ocean-credentials
-
 
 steps:
 - script: |
@@ -340,7 +345,6 @@ steps:
 
     exit $?
   displayName: 'Ingest Data into Port'
-
 ```
 
   </TabItem>
@@ -350,17 +354,17 @@ steps:
 
 </Tabs>
 
-### Event listener
+### 事件监听器
 
-The integration uses polling to pull the configuration from Port every minute and check it for changes. If there is a change, a resync will occur.
+该集成使用轮询方式，每分钟从 Port 中提取一次配置，并检查配置是否有变化。 如果有变化，就会重新同步。
 
 <AdvancedConfig/>
 
 ## Ingesting Newrelic objects
 
-The Newrelic integration uses a YAML configuration to describe the process of loading data into the developer portal.
+Newrelic 集成使用 YAML 配置来描述将数据加载到开发者门户的过程。
 
-Here is an example snippet from the config which demonstrates the process for getting `Issue` data from Newrelic:
+下面是配置中的一个示例片段，演示了从 Newrelic 获取 "问题 "数据的过程: 
 
 ```yaml showLineNumbers
 resources:
@@ -385,21 +389,21 @@ resources:
             newRelicService: .__APPLICATION.entity_guids + .__SERVICE.entity_guids
 ```
 
-The integration makes use of the [JQ JSON processor](https://stedolan.github.io/jq/manual/) to select, modify, concatenate, transform and perform other operations on existing fields and values from Newrelic's API events.
+该集成利用[JQ JSON processor](https://stedolan.github.io/jq/manual/) 对来自 Newrelic API 事件的现有字段和 Values 进行选择、修改、连接、转换和其他操作。
 
-### Configuration structure
+### 配置结构
 
-The integration configuration determines which resources will be queried from Newrelic, and which entities and properties will be created in Port.
+集成配置决定了从 Newrelic 查询哪些资源，以及在 Port 中创建哪些实体和属性。
 
-:::tip Supported resources
-The following resources can be used to map data from Newrelic, it is possible to reference any field that appears in the API responses linked below for the mapping configuration.
+:::tip  支持的资源 以下资源可被引用来映射来自 Newrelic 的数据，可以引用下面链接的 API 响应中出现的任何字段来进行映射配置。
 
-- [`Entity`](https://docs.newrelic.com/docs/new-relic-solutions/new-relic-one/core-concepts/what-entity-new-relic/)
-- [`Issue`](https://docs.newrelic.com/docs/alerts-applied-intelligence/new-relic-alerts/get-started/alerts-ai-overview-page/#issues)
+* * [`Entity`](https://docs.newrelic.com/docs/new-relic-solutions/new-relic-one/core-concepts/what-entity-new-relic/)
+* [`Issue`](https://docs.newrelic.com/docs/alerts-applied-intelligence/new-relic-alerts/get-started/alerts-ai-overview-page/#issues)
 
 :::
 
-- The root key of the integration configuration is the `resources` key:
+* 集成配置的根密钥是 "资源 "密钥: 
+
 
   ```yaml showLineNumbers
   # highlight-next-line
@@ -409,7 +413,9 @@ The following resources can be used to map data from Newrelic, it is possible to
       ...
   ```
 
-- The `kind` key is a specifier for a Newrelic object:
+
+* 类型 "键是 Newrelic 对象的指定符: 
+
 
   ```yaml showLineNumbers
     resources:
@@ -419,7 +425,9 @@ The following resources can be used to map data from Newrelic, it is possible to
         ...
   ```
 
-- The `selector` key allows you to filter which objects of the specified `kind` will be ingested into your software catalog:
+
+* 通过 "选择器 "键，可以筛选出哪些指定 "类型 "的对象将被收录到软件目录中: 
+
 
   ```yaml showLineNumbers
   resources:
@@ -436,18 +444,19 @@ The following resources can be used to map data from Newrelic, it is possible to
           }
   ```
 
-  - **newRelicTypes** - An array of Newrelic entity types that will be fetched. The default value is ['SERVICE', 'APPLICATION']. This is related to the type field in the Newrelic entity.
-  - **calculateOpenIssueCount:**
-    - A boolean value that indicates if the integration should calculate the number of open issues for each entity. The default value is `false``.
-    - **NOTE** - This can cause a performance degradation as the integration will have to calculate the number of open issues for each entity, which unfortunately is not supported by the New Relic API.
-  - **entityQueryFilter:**
-    - A filter that will be applied to the New Relic API query. This will be placed inside the `query` field of the `entitySearch` query in the New Relic GraphQL API. For examples of query filters [click here](https://docs.newrelic.com/docs/apis/nerdgraph/examples/nerdgraph-entities-api-tutorial/#search-query).
-    - Not specifying this field will cause the integration to fetch all the entities and map them to the blueprint defined in the `kind`.
-    - Rule of thumb - Most of the time the `EntityQueryFilter` will be the same as the `NewRelicTypes`. For example, if we want to fetch all the services and applications we will set the `EntityQueryFilter` to `type in ('SERVICE','APPLICATION')` and the `NewRelicTypes` to `['SERVICE', 'APPLICATION']`.
-  - **entityExtraPropertiesQuery:**
-    - An optional property that allows defining extra properties to fetch for each Newrelic entity. This will be concatenated with the default query properties we are requesting under the `entities` section in the `entitySearch` query in the Newrelic GraphQL API. For examples of additional query properties [click here](https://docs.newrelic.com/docs/apis/nerdgraph/examples/nerdgraph-entities-api-tutorial/#apm-summary).
 
-- The `port`, `entity` and the `mappings` keys are used to map the Newrelic object fields to Port entities. To create multiple mappings of the same kind, you can add another item in the `resources` array;
+* **newRelicTypes** - 将被获取的 Newrelic 实体类型数组。默认值为['服务'、'应用程序']。这与 Newrelic 实体中的类型字段有关。
+* **calculateOpenIssueCount:**
+    - 布尔值，表示集成是否应计算每个实体的开放问题数量。默认值为 "false"。
+    - **注意** - 这可能会导致性能降级，因为集成必须计算每个实体的开放问题数，但不幸的是，New Relic API 并不支持这一点。
+* 实体查询过滤器: ** **
+    - 将应用于 New Relic API 查询的过滤器。它将放在 New Relic GraphQL API 中`entitySearch`查询的`query`字段内。查询过滤器示例[click here](https://docs.newrelic.com/docs/apis/nerdgraph/examples/nerdgraph-entities-api-tutorial/#search-query) 。
+    - 不指定此字段将导致集成获取所有实体并将它们映射到`kind`中定义的蓝图。
+    - 经验法则--大多数情况下，"EntityQueryFilter "与 "NewRelicTypes "相同。例如，如果我们想获取所有服务和应用程序，我们将把 `EntityQueryFilter` 设置为 `type in ('SERVICE','APPLICATION')` ，把 `NewRelicTypes` 设置为 `['SERVICE','APPLICATION']`。
+* **实体额外属性查询: **
+    - 这是一个可选属性，允许为每个 Newrelic 实体定义要获取的额外属性。这将与我们在 Newrelic GraphQL API 中的 "实体搜索 "查询中的 "实体 "部分下请求的默认查询属性连接起来。有关其他查询属性的示例，请访问[click here](https://docs.newrelic.com/docs/apis/nerdgraph/examples/nerdgraph-entities-api-tutorial/#apm-summary) 。
+* Port"、"实体 "和 "映射 "键被用来将 Newrelic 对象字段映射到Port实体。要创建多个同类映射，可在 `resources` 数组中添加另一项；
+
 
   ```yaml showLineNumbers
   resources:
@@ -480,13 +489,12 @@ The following resources can be used to map data from Newrelic, it is possible to
           mappings: ...
   ```
 
-  :::tip Blueprint key
-  Note the value of the `blueprint` key - if you want to use a hardcoded string, you need to encapsulate it in 2 sets of quotes, for example use a pair of single-quotes (`'`) and then another pair of double-quotes (`"`)
-  :::
 
-### Tags
+:::tip 蓝图键 注意 `blueprint` 键的值 - 如果要使用硬编码字符串，需要用 2 组引号封装，例如使用一对单引号 (`'`)，然后再用一对双引号 (`"`): ::: 
 
-Some Newrelic `entities` have a property named `tags` which contains potentially useful information such as machine information, hostname, agent name & version, and more. For example:
+### 标签
+
+一些 Newrelic "实体 "有一个名为 "标签 "的属性，其中包含机器信息、主机名、代理名称和版本等可能有用的信息。 例如: 
 
 ```json showLineNumbers
 "tags": [
@@ -505,28 +513,28 @@ Some Newrelic `entities` have a property named `tags` which contains potentially
 ]
 ```
 
-Before mapping, this integration performs a tranformation on each `tag`, after which the example above would look like this:
+在映射之前，该集成会对每个 "标签 "进行转换，转换之后，上面的示例就会变成这样: 
 
 ```json showLineNumbers
 tags = ["coreCount":"10","hostStatus":"running"]
 ```
 
-### Ingest data into Port
+#### 将数据输入Port
 
-To ingest Newrelic objects using the [integration configuration](#configuration-structure), you can follow the steps below:
+要使用[integration configuration](#configuration-structure) 引用 Newrelic 对象，可以按照以下步骤操作: 
 
-1. Go to the DevPortal Builder page.
-2. Select a blueprint you want to ingest using Newrelic.
-3. Choose the **Ingest Data** option from the menu.
-4. Select Newrelic under the APM & alerting category.
-5. Add the contents of your [integration configuration](#configuration-structure) to the editor.
-6. Click `Resync`.
+1. 转到 DevPortal Builder 页面。
+2. 选择要被 Newrelic 引用的蓝图。
+3. 从菜单中选择**采集数据**选项。
+4. 在 APM 和警报类别下选择 Newrelic。
+5. 将[integration configuration](#configuration-structure) 的内容添加到编辑器中。
+6. 单击 "Resync"。
 
-## Examples
+## 示例
 
-Examples of blueprints and the relevant integration configurations:
+蓝图和相关集成配置示例: 
 
-### Service (Entity)
+#### 服务(实体)
 
 <details>
 <summary>Service blueprint</summary>
@@ -654,7 +662,7 @@ Examples of blueprints and the relevant integration configurations:
 
 </details>
 
-### Issue
+### 问题
 
 <details>
 <summary>Issue blueprint</summary>

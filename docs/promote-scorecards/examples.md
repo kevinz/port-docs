@@ -1,21 +1,23 @@
 ---
+
 sidebar_position: 2
+
 ---
 
-# Examples
+# 示例
 
-### Ownership scorecard
+### 所有权记分卡
 
-The following example demonstrates an ownership scorecard.
+下面的示例展示了所有权记分卡。
 
-It has one filter defined:
+它定义了一个过滤器: 
 
-- Only evaluate entities that are related to production (indicated by checking that the `is_production` property is set to `true`).
+* 只评估与生产相关的实体(通过检查 `is_production` 属性是否设置为 `true`)。
 
-It has two rules:
+它有两条规则: 
 
-- Check that a defined on-call exists and that the number of `open_incidents` is lower than 5;
-- Check if a team exists.
+* 检查是否存在已定义的待命人员，以及 "open_incidents "的数量是否少于 5；
+* 检查是否存在团队。
 
 ```json showLineNumbers
 [
@@ -71,10 +73,9 @@ It has two rules:
 ]
 ```
 
-### Ensure relation existence
+#### 确保关系存在
 
-Say we have a `Service` blueprint that has a relation to another blueprint named `Domain`.  
-We can define a scorecard that checks that all of our services have a related domain. Services with empty `domain` relations will fail this check:
+假设我们有一个与另一个名为 "域 "的蓝图有关系的 "服务 "蓝图。 我们可以定义一个记分卡，检查我们的所有服务是否都有相关的域。 如果 "域 "关系为空，则检查失败: 
 
 ```json showLineNumbers
 {

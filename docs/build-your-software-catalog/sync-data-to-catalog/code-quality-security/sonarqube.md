@@ -1,42 +1,40 @@
 import Tabs from "@theme/Tabs"
 import TabItem from "@theme/TabItem"
-import HelmPrerequisites from "../templates/\_ocean_helm_prerequisites_block.mdx"
-import HelmParameters from "../templates/\_ocean-advanced-parameters-helm.mdx"
-import ResourceMapping from "../templates/\_resource-mapping.mdx"
-import DockerParameters from "./\_docker-parameters.mdx"
-import SupportedResources from "./\_supported-resources.mdx"
-import AdvancedConfig from '../../../generalTemplates/\_ocean_advanced_configuration_note.md'
-import SonarcloudAnalysisBlueprint from "/docs/build-your-software-catalog/sync-data-to-catalog/webhook/examples/resources/sonarqube/\_example_sonarcloud_analysis_blueprint.mdx";
-import SonarcloudAnalysisConfiguration from "/docs/build-your-software-catalog/sync-data-to-catalog/webhook/examples/resources/sonarqube/\_example_sonarcloud_analysis_configuration.mdx";
+import HelmPrerequisites from "../templates/_ocean_helm_prerequisites_block.mdx"
+import HelmParameters from "../templates/_ocean-advanced-parameters-helm.mdx"
+import ResourceMapping from "../templates/_resource-mapping.mdx"
+import DockerParameters from "./_docker-parameters.mdx"
+import SupportedResources from "./_supported-resources.mdx"
+import AdvancedConfig from '../../../generalTemplates/_ocean_advanced_configuration_note.md'
+import SonarcloudAnalysisBlueprint from "/docs/build-your-software-catalog/sync-data-to-catalog/webhook/examples/resources/sonarqube/_example_sonarcloud_analysis_blueprint.mdx";
+import SonarcloudAnalysisConfiguration from "/docs/build-your-software-catalog/sync-data-to-catalog/webhook/examples/resources/sonarqube/_example_sonarcloud_analysis_configuration.mdx";
 
 # SonarQube
 
-Our SonarQube integration (powered by [Ocean](https://ocean.getport.io)) allows you to import `projects`, `issues` and `analyses` from your SonarQube account into
-Port, according to your mapping and definitions.
+通过我们的 SonarQube 集成(由[Ocean](https://ocean.getport.io) 提供) ，您可以根据您的映射和定义，从 SonarQube 账户将 "项目"、"问题 "和 "分析 "导入 Port。
 
-## Common use cases
+## 常见被引用情况
 
-- Map `projects`, `issues` and `analyses` in your SonarQube organization environment.
-- Watch for object changes (create/update/delete) in real-time, and automatically apply the changes to your entities in
-  Port.
-- Create/delete SonarQube objects using self-service actions.
+* 映射 SonarQube 组织环境中的 "项目"、"问题 "和 "分析"。
+* 实时观察对象更改(创建/更新/删除)，并自动将更改应用到 Port 中的实体。
+* 使用自助操作创建/删除 SonarQube 对象。
 
-## Prerequisites
+## 先决条件
 
 <HelmPrerequisites />
 
-## Installation
+## 安装
 
-Choose one of the following installation methods:
+从以下安装方法中选择一种: 
 
 <Tabs groupId="installation-methods" queryString="installation-methods">
 
 <TabItem value="real-time-always-on" label="Real Time & Always On" default>
 
-Using this installation option means that the integration will be able to update Port in real time using webhooks.
+使用该安装选项意味着集成将能使用 webhook 实时更新 Port。
 
-This table summarizes the available parameters for the installation.
-Set them as you wish in the script below, then copy it and run it in your terminal:
+本表总结了安装时可用的参数，请在下面的脚本中按自己的需要进行设置，然后复制并在终端运行: 
+
 
 | Parameter                                | Description                                                                                                                                                                                  | Example                             | Required |
 | ---------------------------------------- | -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | ----------------------------------- | -------- |
@@ -46,6 +44,7 @@ Set them as you wish in the script below, then copy it and run it in your termin
 | `integration.config.sonarOrganizationId` | The SonarQube [organization Key](https://docs.sonarsource.com/sonarcloud/appendices/project-information/#project-and-organization-keys) (Not required when using on-prem sonarqube instance) | myOrganization                      | ✅       |
 | `integration.config.appHost`             | A URL bounded to the integration container that can be accessed by sonarqube. When used the integration will create webhooks on top of sonarqube to listen to any live changes in the data   | https://my-ocean-integration.com    | ❌       |
 | `integration.config.sonarUrl`            | Required if using **On-Prem**, Your SonarQube instance URL                                                                                                                                   | https://my-sonar-cloud-instance.com | ❌       |
+
 
 <HelmParameters />
 
@@ -58,25 +57,27 @@ To install the integration using Helm, run the following command:
 ```bash showLineNumbers
 helm repo add --force-update port-labs https://port-labs.github.io/helm-charts
 helm upgrade --install my-sonarqube-integration port-labs/port-ocean \
-	--set port.clientId="PORT_CLIENT_ID"  \
-	--set port.clientSecret="PORT_CLIENT_SECRET"  \
-	--set initializePortResources=true  \
-	--set scheduledResyncInterval=120  \
-	--set integration.identifier="my-sonarqube-integration"  \
-	--set integration.type="sonarqube"  \
-	--set integration.eventListener.type="POLLING"  \
-	--set integration.secrets.sonarApiToken="MY_API_TOKEN"  \
-	--set integration.config.sonarOrganizationId="MY_ORG_KEY"
+    --set port.clientId="PORT_CLIENT_ID"  \
+    --set port.clientSecret="PORT_CLIENT_SECRET"  \
+    --set initializePortResources=true  \
+    --set scheduledResyncInterval=120  \
+    --set integration.identifier="my-sonarqube-integration"  \
+    --set integration.type="sonarqube"  \
+    --set integration.eventListener.type="POLLING"  \
+    --set integration.secrets.sonarApiToken="MY_API_TOKEN"  \
+    --set integration.config.sonarOrganizationId="MY_ORG_KEY"
 ```
+
 </TabItem>
 <TabItem value="argocd" label="ArgoCD" default>
 To install the integration using ArgoCD, follow these steps:
 
-1. Create a `values.yaml` file in `argocd/my-ocean-sonarqube-integration` in your git repository with the content:
+1. 在你的 git 仓库的 `argocd/my-ocean-sonarqube-integration` 中创建一个 `values.yaml` 文件，内容如下: 
 
-:::note
-Remember to replace the placeholders for `MY_ORG_KEY` and `MY_API_TOKEN`.
+:::note 请记住替换 `MY_ORG_KEY` 和 `MY_API_TOKEN` 的占位符。
+
 :::
+
 ```yaml showLineNumbers
 initializePortResources: true
 scheduledResyncInterval: 120
@@ -92,13 +93,15 @@ integration:
   // highlight-next-line
     sonarApiToken: MY_API_TOKEN
 ```
+
 <br/>
 
-2. Install the `my-ocean-sonarqube-integration` ArgoCD Application by creating the following `my-ocean-sonarqube-integration.yaml` manifest:
-:::note
-Remember to replace the placeholders for `YOUR_PORT_CLIENT_ID` `YOUR_PORT_CLIENT_SECRET` and `YOUR_GIT_REPO_URL`.
+2.创建以下 "my-ocean-sonarqube-integration.yaml "配置清单，安装 "my-ocean-sonarqube-integration "ArgoCD应用程序: 
 
-Multiple sources ArgoCD documentation can be found [here](https://argo-cd.readthedocs.io/en/stable/user-guide/multiple_sources/#helm-value-files-from-external-git-repository).
+:::note 记住要替换 `YOUR_PORT_CLIENT_ID``YOUR_PORT_CLIENT_SECRET` 和 `YOUR_GIT_REPO_URL` 的占位符。
+
+多种来源的 ArgoCD 文档可在[here](https://argo-cd.readthedocs.io/en/stable/user-guide/multiple_sources/#helm-value-files-from-external-git-repository) 上找到。
+
 :::
 
 <details>
@@ -143,10 +146,12 @@ spec:
 </details>
 <br/>
 
-3. Apply your application manifest with `kubectl`:
+3.使用 `kubectl` 配置应用程序清单: 
+
 ```bash
 kubectl apply -f my-ocean-sonarqube-integration.yaml
 ```
+
 </TabItem>
 </Tabs>
 
@@ -158,19 +163,17 @@ kubectl apply -f my-ocean-sonarqube-integration.yaml
   <TabItem value="github" label="GitHub">
 This workflow will run the SonarQube integration once and then exit, this is useful for **scheduled** ingestion of data.
 
-:::warning
-If you want the integration to update Port in real time using webhooks you should use
-the [Real Time & Always On](?installation-methods=real-time-always-on#installation) installation option
+:::warning 如果希望集成使用 webhooks 实时更新 Port，则应使用[Real Time & Always On](?installation-methods=real-time-always-on#installation) 安装选项
+
 :::
 
-Make sure to configure the
-following [Github Secrets](https://docs.github.com/en/actions/security-guides/using-secrets-in-github-actions):
+确保配置以下[Github Secrets](https://docs.github.com/en/actions/security-guides/using-secrets-in-github-actions) : 
 
 <DockerParameters />
 
 <br/>
 
-Here is an example for `sonarqube-integration.yml` workflow file:
+下面是 `sonarqube-integration.yml` 工作流程文件的示例: 
 
 ```yaml showLineNumbers
 name: SonarQube Exporter Workflow
@@ -210,22 +213,20 @@ jobs:
   <TabItem value="jenkins" label="Jenkins">
 This pipeline will run the SonarQube integration once and then exit, this is useful for **scheduled** ingestion of data.
 
-:::tip
-Your Jenkins agent should be able to run docker commands.
+:::tip 你的 Jenkins 代理应该能够运行 docker 命令。
+
 :::
-:::warning
-If you want the integration to update Port in real time using webhooks you should use
-the [Real Time & Always On](?installation-methods=real-time-always-on#installation) installation option.
+:::warning 如果希望集成使用 webhooks 实时更新 Port，则应使用 安装选项。[Real Time & Always On](?installation-methods=real-time-always-on#installation) 
+
 :::
 
-Make sure to configure the following [Jenkins Credentials](https://www.jenkins.io/doc/book/using/using-credentials/)
-of `Secret Text` type:
+请确保配置以下[Jenkins Credentials](https://www.jenkins.io/doc/book/using/using-credentials/)的 "Secret Text "类型: 
 
 <DockerParameters />
 
 <br/>
 
-Here is an example for `Jenkinsfile` groovy pipeline file:
+下面是 `Jenkinsfile` groovy Pipelines 文件的示例: 
 
 ```text showLineNumbers
 pipeline {
@@ -270,21 +271,20 @@ pipeline {
   <TabItem value="azure" label="Azure Devops">
 This pipeline will run the SonarQube integration once and then exit, this is useful for **scheduled** ingestion of data.
 
-:::tip
-Your Azure Devops agent should be able to run docker commands.
+:::tip 你的 Azure Devops 代理应该能够运行 docker 命令。
+
 :::
-:::warning
-If you want the integration to update Port in real time using webhooks you should use
-the [Real Time & Always On](?installation-methods=real-time-always-on#installation) installation option.
+:::warning 如果希望集成使用 webhooks 实时更新 Port，则应使用 安装选项。[Real Time & Always On](?installation-methods=real-time-always-on#installation) 
+
 :::
 
-Make sure to configure the following variables using [Azure Devops variable groups](https://learn.microsoft.com/en-us/azure/devops/pipelines/library/variable-groups?view=azure-devops&tabs=yaml). Add them into in a variable group named `port-ocean-credentials`:
+确保使用[Azure Devops variable groups](https://learn.microsoft.com/en-us/azure/devops/pipelines/library/variable-groups?view=azure-devops&amp;tabs=yaml) 配置以下变量。将它们添加到名为 `port-ocean-credentials` 的变量组中: 
 
 <DockerParameters />
 
 <br/>
 
-Here is an example for `sonar-integration.yml` pipeline file:
+下面是 `sonar-integration.yml` Pipelines 文件的示例: 
 
 ```yaml showLineNumbers
 trigger:
@@ -295,7 +295,6 @@ pool:
 
 variables:
   - group: port-ocean-credentials
-
 
 steps:
 - script: |
@@ -318,7 +317,6 @@ steps:
 
     exit $?
   displayName: 'Ingest SonarQube Data into Port'
-
 ```
 
   </TabItem>
@@ -330,11 +328,11 @@ steps:
 
 <AdvancedConfig/>
 
-## Ingesting SonarQube objects
+## 接收 SonarQube 对象
 
-The SonarQube integration uses a YAML configuration to describe the process of loading data into the developer portal.
+SonarQube 集成使用 YAML 配置来描述将数据加载到开发者门户的过程。
 
-Here is an example snippet from the config which demonstrates the process for getting `project` data from SonarQube:
+下面是配置中的一个示例片段，演示了从 SonarQube 获取 "项目 "数据的过程: 
 
 ```yaml showLineNumbers
 resources:
@@ -362,10 +360,9 @@ resources:
             tags: .tags
 ```
 
-The integration makes use of the [JQ JSON processor](https://stedolan.github.io/jq/manual/) to select, modify,
-concatenate, transform and perform other operations on existing fields and values from SonarQube's API events.
+该集成利用[JQ JSON processor](https://stedolan.github.io/jq/manual/) 对 SonarQube 的 API 事件中的现有字段和 Values 进行选择、修改、连接、转换和其他操作。
 
-<ResourceMapping name="SonarQube" category="Code quality & security providers" components={{
+<ResourceMapping name="SonarQube" category="Code quality &amp; security providers" components={{
 SupportedResources: SupportedResources
 }}>
 
@@ -404,11 +401,11 @@ resources:
 
 </ ResourceMapping>
 
-## Examples
+## 示例
 
-Examples of blueprints and the relevant integration configurations:
+蓝图和相关集成配置示例: 
 
-### Project
+### 项目
 
 <details>
 <summary>Projects blueprint</summary>
@@ -514,7 +511,7 @@ resources:
 
 </details>
 
-### Issue
+### 问题
 
 <details>
 <summary>Issue blueprint</summary>
@@ -615,7 +612,7 @@ resources:
 
 </details>
 
-### Analysis
+#### 分析
 
 <details>
 <summary>Analysis blueprint</summary>
@@ -699,15 +696,13 @@ resources:
 
 </details>
 
-## Let's Test It
+## 让我们来测试一下
 
-This section includes a sample response data from SonarQube when a code repository is scanned for quality assurance. In
-addition, it includes the entity created from the resync event based on the Ocean configuration provided in the previous
-section.
+本节包括为保证质量而扫描代码库时 SonarQube 的响应数据示例。 此外，还包括根据上一节提供的 Ocean 配置从重新同步事件中创建的实体。
 
-### Payload
+### 有效载荷
 
-Here is an example of the payload structure from SonarQube:
+下面是 SonarQube 提供的有效载荷结构示例: 
 
 <details>
 <summary> Project response data</summary>
@@ -874,9 +869,9 @@ Here is an example of the payload structure from SonarQube:
 
 </details>
 
-### Mapping Result
+#### 映射结果
 
-The combination of the sample payload and the Ocean configuration generates the following Port entity:
+结合样本有效载荷和 Ocean 配置，可生成以下 Port 实体: 
 
 <details>
 <summary> Project entity in Port</summary>
@@ -959,19 +954,19 @@ The combination of the sample payload and the Ocean configuration generates the 
 
 </details>
 
-## Alternative installation via webhook
+## 通过 webhook 进行替代安装
 
-While the Ocean integration described above is the recommended installation method, you may prefer to use a webhook to ingest data from SonarQube. If so, use the following instructions:
+虽然上述海洋集成是推荐的安装方法，但您可能更喜欢使用 webhook 从 SonarQube 引用数据。 如果是这样，请使用以下说明: 
 
 <details>
 
 <summary><b>Webhook installation (click to expand)</b></summary>
 
-In this example you are going to create a webhook integration between [SonarQube's SonarCloud](https://www.sonarsource.com/products/sonarcloud/) and Port, which will ingest SonarQube code quality `analysis` entities.
+在本示例中，您将在[SonarQube's SonarCloud](https://www.sonarsource.com/products/sonarcloud/) 和 Port 之间创建一个 webhook 集成，用于接收 SonarQube 代码质量 "分析 "实体。
 
 <h2> Port configuration </h2>
 
-Create the following blueprint definition:
+创建以下蓝图定义: 
 
 <details>
 <summary>SonarQube analysis blueprint</summary>
@@ -980,57 +975,51 @@ Create the following blueprint definition:
 
 </details>
 
-Create the following webhook configuration [using Port's UI](/build-your-software-catalog/sync-data-to-catalog/webhook/?operation=ui#configuring-webhook-endpoints):
+创建以下 webhook 配置[using Port's UI](/build-your-software-catalog/sync-data-to-catalog/webhook/?operation=ui#configuring-webhook-endpoints) : 
 
 <details>
 <summary>SonarQube analysis webhook configuration</summary>
 
-1. **Basic details** tab - fill the following details:
-
-   1. Title : `SonarQube mapper`;
-   2. Identifier : `sonarqube_mapper`;
-   3. Description : `A webhook configuration to map SonarQube alerts to Port`;
-   4. Icon : `sonarqube`;
-
-2. **Integration configuration** tab - fill the following JQ mapping:
-
+1. **基本信息** 选项卡 - 填写以下详细信息: 
+    1.title: `SonarQube mapper`；
+    2.标识符 : `sonarqube_mapper`；
+    3.Description : `将 SonarQube 警报映射到 Port` 的 webhook 配置；
+    4.图标 : `sonarqube`；
+2. **集成配置**选项卡 - 填写以下JQ映射: 
    <SonarcloudAnalysisConfiguration/>
-
-3. Scroll down to **Advanced settings** and input the following details:
-
-   1. secret: `WEBHOOK_SECRET`;
-   2. Signature Header Name : `x-sonar-webhook-hmac-sha256`;
-   3. Signature Algorithm : Select `sha256` from dropdown option;
-   4. Click **Save** at the bottom of the page.
-
-   Remember to replace the `WEBHOOK_SECRET` with the real secret you specify when creating the webhook in SonarCloud.
+3.向下滚动到 **高级设置**，输入以下详细信息: 
+    1. secret: `WEBHOOK_SECRET`；
+    2.签名头名称:  `x-sonar-webhook-hmac-sha256`；
+    3.签名算法: 从下拉选项中选择 `sha256`；
+    4.点击页面底部的**保存**。
+    记住将 `WEBHOOK_SECRET` 替换为您在 SonarCloud 中创建 webhook 时指定的真实secret。
 
 </details>
 
 <h2> Create a webhook in SonarCloud </h2>
 
-1. Go to [SonarCloud](https://sonarcloud.io/projects) and select a project you want to configure a webhook for;
-2. Click on **Administration** at the bottom left of the page and select **Webhooks**;
-3. Click on **Create**
-4. Input the following details:
-   1. `Name` - use a meaningful name such as Port Webhook;
-   2. `URL` - enter the value of the `url` key you received after creating the webhook configuration;
-   3. `Secret` - enter the secret value you specified when creating the webhook;
-5. Click **Create** at the bottom of the page.
+1. 进入[SonarCloud](https://sonarcloud.io/projects) ，选择要配置 webhook 的项目；
+2. 点击页面左下角的**管理**，然后选择**Webhooks**；
+3. 点击**创建**
+4. 输入以下详细信息: 
+    1. `Name` - 被引用一个有意义的名称，如 Port Webhook；
+    2. `URL` - 输入您在创建 webhook 配置后收到的 `url` 密钥的值；
+    3. `Secret` - 输入您在创建 webhook 时指定的 secret 值；
+5.单击页面底部的**创建**。
 
-:::tip
-In order to view the different payloads and events available in SonarQube webhooks, [look here](https://docs.sonarqube.org/latest/project-administration/webhooks/)
+:::tip 为了查看 SonarQube webhook 中可用的不同有效载荷和事件、[look here](https://docs.sonarqube.org/latest/project-administration/webhooks/)
+
 :::
 
-Done! any new analysis you run (for example, on new PRs or changes to PRs) will trigger a webhook event that SonarCloud will send to the webhook URL provided by Port. Port will parse the events according to the mapping and update the catalog entities accordingly.
+完成！您运行的任何新分析(例如，对新 PR 或对 PR 的更改)都将触发 webhook 事件，SonarCloud 将把该事件发送到 Port 提供的 webhook URL。 Port 将根据映射解析事件，并相应地更新目录实体。
 
 <h2> Let's Test It </h2>
 
-This section includes a sample webhook event sent from SonarQube when a code repository is scanned for quality assurance. In addition, it includes the entity created from the event based on the webhook configuration provided in the previous section.
+本节包括当扫描代码库以保证质量时从 SonarQube 发送的 webhook 事件示例。 此外，还包括根据上一节提供的 webhook 配置从事件中创建的实体。
 
 <h3> Payload </h3>
 
-Here is an example of the payload structure sent to the webhook URL when a SonarQube repository is scanned:
+下面是扫描 SonarQube 资源库时发送到 webhook URL 的有效载荷结构示例: 
 
 <details>
 <summary> Webhook event payload</summary>
@@ -1102,7 +1091,7 @@ Here is an example of the payload structure sent to the webhook URL when a Sonar
 
 <h3> Mapping Result </h3>
 
-The combination of the sample payload and the webhook configuration generates the following Port entity:
+结合示例有效载荷和 webhook 配置可生成以下 Port 实体: 
 
 ```json showLineNumbers
 {
@@ -1159,4 +1148,5 @@ The combination of the sample payload and the webhook configuration generates th
   "relations": {}
 }
 ```
+
 </details>

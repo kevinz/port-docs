@@ -1,7 +1,7 @@
 import Tabs from "@theme/Tabs"
 import TabItem from "@theme/TabItem"
 
-Here is an example `port.yml` file:
+下面是一个 `port.yml` 文件示例: 
 
 ```yaml showLineNumbers
 identifier: myEntity
@@ -18,7 +18,7 @@ relations:
     - myTargetEntity2
 ```
 
-- The `identifier` key is used to specify the identifier of the entity that the app will create and keep up-to-date when changes occur:
+* 标识符 "键被用来指定应用程序将创建并在发生变化时保持更新的实体的标识符: 
 
 ```yaml showLineNumbers
 // highlight-next-line
@@ -27,7 +27,7 @@ title: My Entity
   ...
 ```
 
-- The `title` key is used to specify the title of the entity:
+* title "键被用来引用实体的 title: 
 
 ```yaml showLineNumbers
 identifier: myEntity
@@ -36,7 +36,7 @@ title: My Entity
   ...
 ```
 
-- The `blueprint` key is used to specify the identifier of the blueprint to create this entity from:
+* blueprint "键被引用来指定要创建此实体的蓝图的标识符: 
 
 ```yaml showLineNumbers
 ...
@@ -46,7 +46,7 @@ blueprint: myBlueprint
   ...
 ```
 
-- The `properties` key is used to map the values to the different properties of the entity:
+* `properties` 键被用来将值映射到实体的不同属性: 
 
 ```yaml showLineNumbers
 ...
@@ -61,7 +61,7 @@ properties:
   ...
 ```
 
-- The `relations` key is used to map target entities to the different relations of the entity:
+* 关系 "键被用来将目标实体映射到实体的不同关系上: 
 
 <Tabs>
 

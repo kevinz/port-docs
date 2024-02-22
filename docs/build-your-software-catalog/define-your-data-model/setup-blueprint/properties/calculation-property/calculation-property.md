@@ -1,36 +1,38 @@
 ---
+
 sidebar_position: 13
-description: Calculation property allows you to construct new data from existing properties of an entity
+description: 计算属性允许您从实体的现有属性中构建新数据
+
 ---
 
-import ApiRef from "../../../../../api-reference/\_learn_more_reference.mdx"
+import ApiRef from "../../../../../api-reference/_learn_more_reference.mdx"
 
 import Tabs from "@theme/Tabs"
 import TabItem from "@theme/TabItem"
 
-# ➕ Calculation Property
+# ➕ 计算属性
 
-Calculation properties allow you to use existing properties defined on blueprints, either directly or by using relations and mirror properties, in order to create new properties by using the [`jq`](https://github.com/stedolan/jq) processor for `JSON`.
+计算属性允许您直接或通过使用关系和镜像属性使用蓝图上定义的现有属性，以便通过使用[`jq`](https://github.com/stedolan/jq) 处理器为 `JSON` 创建新属性。
 
-- Filter/Select/Slice/Concatenate data from an existing property;
-- Create math equations or modifications. For example, calculate required disk storage by specifying page size, and number of pages needed.
-- Merge complex properties, including deep-merge and overriding.
+* 过滤/选择/切片/合并现有属性中的数据；
+* 创建数学公式或修改。例如，通过指定页面大小和所需页面数计算所需磁盘存储空间。
+* 合并复杂属性，包括深度合并和覆盖。
 
-## 💡 Common calculation usage
+## 💡 常用计算 Usage
 
-Calculation properties make it easier to define properties that are based on values from other properties, with the added ability to transform the data, for example:
+计算属性可以更方便地定义基于其他属性值的属性，并增加了转换数据等功能: 
 
-- Construct custom URLs based on templates - for example:
-  - `https://slack.com/ + {my_parameter}`;
-  - `https://datadog.com/ + {my_parameter}`;
-  - `https://launchdarkly.com/ + {my_parameter}`;
-- Merge service configurations templates to create a real service config;
-- Calculate the number of code owners;
-- etc.
+* 根据模板构建自定义 URL，例如
+    - `https://slack.com/ + {my_parameter}`；
+    - `https://datadog.com/ + {my_parameter}`；
+    - `https://launchdarkly.com/ + {my_parameter}`；
+* 合并服务配置模板，创建真正的服务配置；
+* 计算代码 Owners 的数量；
+* 等等。
 
-In this [live demo](https://demo.getport.io/service_catalog) example, we can see the `Slack Notifications` calculation property. 🎬
+在[live demo](https://demo.getport.io/service_catalog) 这个示例中，我们可以看到 "Slack Notifications "计算属性。
 
-## Definition
+## 定义
 
 <Tabs groupId="api-definition" defaultValue="api" values={[
 {label: "API", value: "api"},
@@ -40,9 +42,9 @@ In this [live demo](https://demo.getport.io/service_catalog) example, we can see
 
 <TabItem value="api">
 
-The `calculationProperties` key is a top-level key in the JSON of an entity (similar to `identifier`, `title`, `properties`, etc..)
+calculationProperties "键是实体 JSON 中的顶级键(类似于 "identifier"、"title"、"properties "等)。
 
-You can access properties as part of the calculation by using `.properties`
+您可以使用 `.properties` 作为计算的一部分访问属性
 
 ```json showLineNumbers
 {
@@ -174,16 +176,16 @@ exports.title = entity.title;
 package main
 
 import (
-	"github.com/port-labs/pulumi-port/sdk/go/port"
-	"github.com/pulumi/pulumi/sdk/v3/go/pulumi"
+    "github.com/port-labs/pulumi-port/sdk/go/port"
+    "github.com/pulumi/pulumi/sdk/v3/go/pulumi"
 )
 
 func main() {
-	pulumi.Run(func(ctx *pulumi.Context) error {
-		blueprint, err := port.NewBlueprint(ctx, "myBlueprint", &port.BlueprintArgs{
-			Identifier: pulumi.String("myBlueprint"),
-			Title:      pulumi.String("My Blueprint"),
-			// blueprint properties..
+    pulumi.Run(func(ctx *pulumi.Context) error {
+    	blueprint, err := port.NewBlueprint(ctx, "myBlueprint", &port.BlueprintArgs{
+    		Identifier: pulumi.String("myBlueprint"),
+    		Title:      pulumi.String("My Blueprint"),
+    		// blueprint properties..
       # highlight-start
             CalculationProperties: port.BlueprintCalculationPropertiesMap{
               "myCalculation": port.BlueprintCalculationPropertiesArgs{
@@ -193,15 +195,14 @@ func main() {
               }
             },
       # highlight-end
-		})
-		ctx.Export("blueprint", blueprint.Title)
-		if err != nil {
-			return err
-		}
-		return nil
-	})
+    	})
+    	ctx.Export("blueprint", blueprint.Title)
+    	if err != nil {
+    		return err
+    	}
+    	return nil
+    })
 }
-
 ```
 
 </TabItem>
@@ -212,16 +213,17 @@ func main() {
 
 </Tabs>
 
-## Supported Types
+## 支持的类型
 
 <Tabs groupId="calculation-definition" defaultValue="basic" values={[
 {label: "Basic", value: "basic"},
 {label: "Format", value: "format"},
 {label: "Spec", value: "spec"}
 ]}>
+
 <TabItem value="basic">
 
-Calculation properties support the following output types: `string`, `number`, `object`, `array`, and `boolean`. For example:
+计算属性支持以下输出类型: "字符串"、"数字"、"对象"、"数组 "和 "布尔"。 例如: 
 
 ```json showLineNumbers
 {
@@ -240,7 +242,7 @@ Calculation properties support the following output types: `string`, `number`, `
 
 <TabItem value = "format">
 
-Calculation properties support the following output formats: `yaml`, `team`, `user`, `ipv6`, and `url`. For example:
+计算属性支持以下输出格式: "yaml"、"team"、"user"、"ipv6 "和 "url"。 例如: 
 
 ```json showLineNumbers
 {
@@ -261,7 +263,7 @@ Calculation properties support the following output formats: `yaml`, `team`, `us
 
 <TabItem value = "spec">
 
-Calculation properties support the following output specs: `markdown`, `open-api` and `async-api`. For example:
+计算属性支持以下输出规格: "markdown"、"open-api "和 "async-api"。 例如: 
 
 ```json showLineNumbers
 {
@@ -284,13 +286,13 @@ Calculation properties support the following output specs: `markdown`, `open-api
 
 </Tabs>
 
-## Using `meta properties` in calculation properties
+## 在计算属性中被引用`元属性
 
-It is possible to use [meta properties](../meta-properties.md) as template values for calculation properties.
+可以将[meta properties](../meta-properties.md) 作为计算属性的模板值。
 
-For example, if you want to concatenate a template URL (for example `https://datadog.com`) with the `identifier` meta property:
+例如，如果要将模板 URL(如 `https://datadog.com`)与 `identifier` 元属性连接起来: 
 
-Given the following `notification-service` entity:
+给定以下 "通知服务 "实体: 
 
 ```json showLineNumbers
 {
@@ -302,7 +304,7 @@ Given the following `notification-service` entity:
 }
 ```
 
-And the following calculation property definition for the blueprint:
+蓝图的计算属性定义如下: 
 
 ```json showLineNumbers
 {
@@ -317,13 +319,13 @@ And the following calculation property definition for the blueprint:
 }
 ```
 
-The value of the property `monitorUrl` will be `https://datadog.com/notification-service`
+属性 `monitorUrl` 的值将是 `https://datadog.com/notification-service`
 
-## Using `mirror properties` in calculation properties
+## 在计算属性中被引用`镜像属性
 
-It is possible to use [mirror properties](../mirror-property/mirror-property.md) as template values for calculation properties.
+可以将[mirror properties](../mirror-property/mirror-property.md) 作为计算属性的模板值。
 
-For example, if an entity has a mirror property called `owningSquad`:
+例如，如果一个实体有一个名为 "owningSquad "的镜像属性: 
 
 ```json showLineNumbers
 "mirrorProperties": {
@@ -333,7 +335,7 @@ For example, if an entity has a mirror property called `owningSquad`:
 }
 ```
 
-A calculation property that links to the slack channel of the squad can be:
+与小队松弛频道链接的计算属性可以是
 
 ```json showLineNumbers
 "owning_squad_slack": {
@@ -342,11 +344,11 @@ A calculation property that links to the slack channel of the squad can be:
 }
 ```
 
-## Colorized calculation properties
+## 着色计算属性
 
-You can colorize calculation properties according to their value, by adding a `colorized` key with the value `true` to the calculation property object. You can also add a `colors` key to specify the colors of the different values, otherwise, the colors will be chosen automatically for you.
+通过在计算属性对象中添加一个值为 `true` 的 `colorized` 键，可以根据计算属性的值为其着色。 您还可以添加一个 `colors` 键来指定不同值的颜色，否则，颜色将自动为您选择。
 
-For example, if you want to colorize a calculation property called `status-calculation` with the values `OK`, `WARNING`, and `CRITICAL`:
+例如，如果要为名为 "status-calculation "的计算属性着色，使其具有 "OK"、"WARNING "和 "CRITICAL "三个 Values 值: 
 
 ```json showLineNumbers
 "properties":{
@@ -371,11 +373,9 @@ For example, if you want to colorize a calculation property called `status-calcu
 
 ---
 
-:::warning Parameters with special characters
-Parameter contains special characters (for example: `-`) or starts with a digit (for example: `@/#/$/1/2/3`), should be surrounded with single quotes.
+:::warning  包含特殊字符的参数 参数包含特殊字符(例如: `-`)或以数字开头(例如: `@/#/$/1/2/3`)时，应用单引号括起来。
 
 ```json showLineNumbers
-
 "properties":{
     "prop-with-special-char":{
         "type": "string"
@@ -392,6 +392,6 @@ Parameter contains special characters (for example: `-`) or starts with a digit 
 
 :::
 
-## Examples
+## 示例
 
-Refer to the calculation property [examples](./examples.md) page.
+请参阅计算属性[examples](./examples.md) 页面。

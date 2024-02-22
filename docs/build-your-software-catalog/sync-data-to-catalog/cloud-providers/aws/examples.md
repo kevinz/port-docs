@@ -1,26 +1,26 @@
 ---
+
 sidebar_position: 2
+
 ---
 
 import Image from "@theme/IdealImage";
 
-# Examples
+# 示例
 
-Use the index on the right side of the page to find an example for the resource/s you’re looking to export.
+请使用页面右侧的索引，查找您要导出的资源的示例。
 
-## ECS clusters and ECS services
+## ECS 集群和 ECS 服务
 
-In this step-by-step example, you will export your `ECS clusters` and `ECS services` to Port.
+在这个分步示例中，您将把 "ECS 集群 "和 "ECS 服务 "导出到 Port。
 
-1. Create the following Port blueprint:
-
-   - **ECS Cluster** - will represent ECS clusters from the AWS account.
-   - **ECS Service** - will represent ECS services from the AWS account.
-
-   You may use the following definitions:
-
-    <details>
+1. 创建以下 Port 蓝图: 
+    - **ECS 集群** - 将代表 AWS 账户中的 ECS 集群。
+    - **ECS 服务** - 将代表 AWS 账户中的 ECS 服务。
+    您可以被引用以下定义: 
+<details>
     <summary> ECS Cluster blueprint </summary>
+
 
    ```json showLineNumbers
    {
@@ -64,10 +64,13 @@ In this step-by-step example, you will export your `ECS clusters` and `ECS servi
    }
    ```
 
-    </details>
 
-    <details>
-    <summary> ECS Service blueprint </summary>
+</details>
+
+<details>
+<summary> ECS Service blueprint </summary>
+```
+
 
    ```json showLineNumbers
    {
@@ -137,12 +140,13 @@ In this step-by-step example, you will export your `ECS clusters` and `ECS servi
    }
    ```
 
-    </details>
 
-2. Upload the `config.json` file to the exporter's S3 bucket:
+</details>
 
+2.将 `config.json` 文件上传到出口程序的 S3 存储桶: 
    <details>
    <summary> Port AWS exporter config.json </summary>
+
 
    ```json showLineNumbers
    {
@@ -203,12 +207,13 @@ In this step-by-step example, you will export your `ECS clusters` and `ECS servi
    }
    ```
 
+
    </details>
 
-3. Update the exporter's `IAM policy`:
-
+3.更新出口方的 "IAM 策略": 
    <details>
    <summary> IAM Policy </summary>
+
 
    ```json showLineNumbers
    {
@@ -229,14 +234,14 @@ In this step-by-step example, you will export your `ECS clusters` and `ECS servi
    }
    ```
 
+
    </details>
 
-4. Optional: Create an event rule to trigger automatic syncing of changes in ECS clusters and ECS services.
-
-   You may use the following CloudFormation Template:
-
-   <details>
+4.可选: 创建一个事件规则，以触发 ECS 集群和 ECS 服务中更改的自动同步。
+    您可以使用以下 CloudFormation 模板: 
+<details>
    <summary> Event Rule CloudFormation Template </summary>
+
 
    ```yaml showLineNumbers
    AWSTemplateFormatVersion: 2010-09-09
@@ -329,22 +334,21 @@ In this step-by-step example, you will export your `ECS clusters` and `ECS servi
                  }
    ```
 
+
    </details>
 
-Done! soon, you will be able to see any `ECS clusters` and `ECS services`.
+完成！很快，您就能看到任何 `ECS 集群` 和 `ECS 服务`。
 
-## App Runner services
+## App Runner 服务
 
-In this step-by-step example, you will export your `App Runner services` to Port.
+在这个分步示例中，您将把 "App Runner 服务 "导出到 Port。
 
-1. Create the following Port blueprint:
-
-   - **App Runner** - will represent App Runner services from the AWS account.
-
-   You may use the following definition:
-
-   <details>
+1. 创建以下 Port 蓝图: 
+    - **App Runner** - 将代表 AWS 账户中的 App Runner 服务。
+    您可以被引用以下定义: 
+<details>
    <summary> App Runner blueprint </summary>
+
 
    ```json showLineNumbers
    {
@@ -439,12 +443,13 @@ In this step-by-step example, you will export your `App Runner services` to Port
    }
    ```
 
+
    </details>
 
-2. Upload the `config.json` file to the exporter's S3 bucket:
-
+2.将 `config.json` 文件上传到出口程序的 S3 存储桶: 
    <details>
    <summary> Port AWS exporter config.json </summary>
+
 
    ```json showLineNumbers
    {
@@ -483,12 +488,13 @@ In this step-by-step example, you will export your `App Runner services` to Port
    }
    ```
 
+
    </details>
 
-3. Update the exporter's `IAM policy`:
-
+3.更新出口方的 "IAM 策略": 
    <details>
    <summary> IAM Policy </summary>
+
 
    ```json showLineNumbers
    {
@@ -504,14 +510,14 @@ In this step-by-step example, you will export your `App Runner services` to Port
    }
    ```
 
+
    </details>
 
-4. Optional: Create an event rule to trigger automatic syncing of changes in App Runner services.
-
-   You may use the following CloudFormation Template:
-
-   <details>
+4.可选: 创建一个事件规则，以触发 App Runner 服务中更改的自动同步。
+    您可以被引用以下 CloudFormation 模板: 
+<details>
    <summary> Event Rule CloudFormation Template </summary>
+
 
    ```yaml showLineNumbers
    AWSTemplateFormatVersion: 2010-09-09
@@ -556,22 +562,22 @@ In this step-by-step example, you will export your `App Runner services` to Port
                  }
    ```
 
+
    </details>
 
-Done! soon, you will be able to see any `App Runner services`.
+完成！很快，你就能看到任何 "App Runner 服务"。
 
-## Lambda functions {#lambda}
+## Lambda 函数 {#lambda}
 
-In this step-by-step example, you will export your `Lambda functions` to Port.
+在这个分步示例中，您将把 "Lambda 函数 "导出到 Port。
 
-1. Create the following Port blueprint:
-
-   - **Lambda** - will represent Lambda functions from the AWS account.
-
-   You may use the following definition:
-
-   <details> 
+1. 创建以下 Port 蓝图: 
+    - **Lambda** - 将代表 AWS 账户中的 Lambda 函数。
+    您可以使用以下定义: 
+<details>
+ 
    <summary> Lambda blueprint </summary>
+
 
    ```json showLineNumbers
    {
@@ -650,12 +656,13 @@ In this step-by-step example, you will export your `Lambda functions` to Port.
    }
    ```
 
+
    </details>
 
-2. Upload the `config.json` file to the exporter's S3 bucket:
-
+2.将 `config.json` 文件上传到出口程序的 S3 存储桶: 
    <details>
    <summary> Port AWS exporter config.json </summary>
+
 
    ```json showLineNumbers
    {
@@ -693,12 +700,13 @@ In this step-by-step example, you will export your `Lambda functions` to Port.
    }
    ```
 
+
    </details>
 
-3. Update the exporter's `IAM policy`:
-
+3.更新出口方的 "IAM 策略": 
    <details>
    <summary> IAM Policy </summary>
+
 
    ```json showLineNumbers
    {
@@ -718,14 +726,14 @@ In this step-by-step example, you will export your `Lambda functions` to Port.
    }
    ```
 
+
    </details>
 
-4. Optional: Create an event rule to trigger automatic syncing of changes in Lambda functions.
-
-   You may use the following CloudFormation Template:
-
-   <details>
+4.可选: 创建一个事件规则，以触发 Lambda 函数中更改的自动同步。
+    您可以被引用以下 CloudFormation 模板: 
+<details>
    <summary> Event Rule CloudFormation Template </summary>
+
 
    ```yaml showLineNumbers
    AWSTemplateFormatVersion: "2010-09-09"
@@ -780,23 +788,22 @@ In this step-by-step example, you will export your `Lambda functions` to Port.
                  }
    ```
 
+
    </details>
 
-Done! soon, you will be able to see any `Lambda functions`.
+完成！很快，您就能看到任何 "Lambda 函数"。
 
-## SNS topics and SQS queues
+## SNS 主题和 SQS 队列
 
-In this step-by-step example, you will export your `SNS topics` and `SQS queues` to Port.
+在这个分步示例中，您将把 "SNS 主题 "和 "SQS 队列 "导出到 Port。
 
-1. Create the following Port blueprints:
-
-   - **SNS** - will represent SNS topics from the AWS account;
-   - **SQS** - will represent SQS queues from the AWS account.
-
-   You may use the following definitions:
-
-   <details>
+1. 创建以下 Port 蓝图: 
+    - **SNS** - 将代表 AWS 账户中的 SNS 主题；
+    - **SQS** - 将代表 AWS 账户中的 SQS 队列。
+    您可以被引用以下定义: 
+<details>
    <summary> SQS blueprint </summary>
+
 
    ```json showLineNumbers
    {
@@ -852,10 +859,12 @@ In this step-by-step example, you will export your `SNS topics` and `SQS queues`
    }
    ```
 
+
    </details>
 
    <details>
    <summary> SNS blueprint </summary>
+
 
    ```json showLineNumbers
    {
@@ -901,12 +910,13 @@ In this step-by-step example, you will export your `SNS topics` and `SQS queues`
    }
    ```
 
+
    </details>
 
-2. Upload the `config.json` file to the exporter's S3 bucket:
-
+2.将 `config.json` 文件上传到出口程序的 S3 存储桶: 
    <details>
    <summary> Port AWS exporter config.json </summary>
+
 
    ```json showLineNumbers
    {
@@ -964,12 +974,13 @@ In this step-by-step example, you will export your `SNS topics` and `SQS queues`
    }
    ```
 
+
    </details>
 
-3. Update the exporter's `IAM policy`:
-
+3.更新出口方的 "IAM 策略": 
    <details>
    <summary> IAM Policy </summary>
+
 
    ```json showLineNumbers
    {
@@ -994,14 +1005,14 @@ In this step-by-step example, you will export your `SNS topics` and `SQS queues`
    }
    ```
 
+
    </details>
 
-4. Optional: Create an event rule to trigger automatic syncing of changes in SNS topics and SNS queues.
-
-   You may use the following CloudFormation Template:
-
-   <details>
+4.可选: 创建一个事件规则，以触发 SNS 主题和 SNS 队列中更改的自动同步。
+    您可以被引用以下 CloudFormation 模板: 
+<details>
    <summary> Event Rule CloudFormation Template </summary>
+
 
    ```yaml showLineNumbers
    AWSTemplateFormatVersion: 2010-09-09
@@ -1096,22 +1107,21 @@ In this step-by-step example, you will export your `SNS topics` and `SQS queues`
                  }
    ```
 
+
    </details>
 
-Done! soon, you will be able to see any `SNS queue` and its `SQS queues` subscriptions.
+完成！很快，您就能看到任何`SNS 队列`及其`SQS 队列`的订阅。
 
-## S3 buckets
+## S3 存储桶
 
-In this step-by-step example, you will export your `S3 buckets` to Port.
+在这个分步示例中，您将把 "S3 存储桶 "导出到 Port。
 
-1.  Create the following Port blueprint:
+1. 创建以下 Port 蓝图: 
+    - **S3** - 将代表 AWS 账户中的 S3 存储桶。
+    您可以被引用以下定义: 
+<details>
+   <summary> S3 blueprint </summary>
 
-    - **S3** - will represent S3 buckets from the AWS account.
-
-    You may use the following definition:
-
-    <details>
-    <summary> S3 blueprint </summary>
 
     ```json showLineNumbers
     {
@@ -1164,12 +1174,13 @@ In this step-by-step example, you will export your `S3 buckets` to Port.
     }
     ```
 
-    </details>
 
-2.  Upload the `config.json` file to the exporter's S3 bucket:
+</details>
 
-    <details>
-    <summary> Port AWS exporter config.json </summary>
+2.将 `config.json` 文件上传到出口程序的 S3 存储桶: 
+   <details>
+   <summary> Port AWS exporter config.json </summary>
+
 
     ```json showLineNumbers
     {
@@ -1202,12 +1213,13 @@ In this step-by-step example, you will export your `S3 buckets` to Port.
     }
     ```
 
-    </details>
 
-3.  Update the exporter's `IAM policy`:
+</details>
 
-    <details>
-    <summary> IAM Policy </summary>
+3.更新出口方的 "IAM 策略": 
+   <details>
+   <summary> IAM Policy </summary>
+
 
     ```json showLineNumbers
     {
@@ -1243,14 +1255,14 @@ In this step-by-step example, you will export your `S3 buckets` to Port.
     }
     ```
 
-    </details>
 
-4.  Optional: Create an event rule to trigger automatic syncing of changes in S3 buckets.
+</details>
 
-    You may use the following CloudFormation Template:
+4.可选: 创建一个事件规则来触发自动同步 S3 存储桶中的更改。
+    您可以被引用以下 CloudFormation 模板: 
+<details>
+   <summary> Event Rule CloudFormation Template </summary>
 
-    <details>
-    <summary> Event Rule CloudFormation Template </summary>
 
     ```yaml showLineNumbers
     AWSTemplateFormatVersion: "2010-09-09"
@@ -1301,22 +1313,21 @@ In this step-by-step example, you will export your `S3 buckets` to Port.
                   }
     ```
 
-    </details>
 
-Done! soon, you will be able to see any `S3 buckets`.
+</details>
 
-## API Gateway APIs
+完成！很快，你就能看到任何 `S3 buckets` 了。
 
-In this step-by-step example, you will export your `API Gateway APIs` to Port.
+### API Gateway 应用程序接口
 
-1.  Create the following Port blueprint:
+在这个分步示例中，您将把 `API Gateway API` 导出到 Port。
 
-    - **API Gateway** - will represent API Gateway APIs from the AWS account.
+1. 创建以下 Port 蓝图: 
+    - **API Gateway** - 将代表 AWS 账户的 API Gateway API。
+    您可以被引用以下定义: 
+<details>
+   <summary> API Gateway blueprint </summary>
 
-    You may use the following definition:
-
-    <details>
-    <summary> API Gateway blueprint </summary>
 
     ```json showLineNumbers
     {
@@ -1382,12 +1393,13 @@ In this step-by-step example, you will export your `API Gateway APIs` to Port.
     }
     ```
 
-    </details>
 
-2.  Upload the `config.json` file to the exporter's S3 bucket:
+</details>
 
-    <details>
-    <summary> Port AWS exporter config.json </summary>
+2.将 `config.json` 文件上传到出口程序的 S3 存储桶: 
+   <details>
+   <summary> Port AWS exporter config.json </summary>
+
 
     ```json showLineNumbers
     {
@@ -1442,12 +1454,13 @@ In this step-by-step example, you will export your `API Gateway APIs` to Port.
     }
     ```
 
-    </details>
 
-3.  Update the exporter's `IAM policy`:
+</details>
 
-    <details>
-    <summary> IAM Policy </summary>
+3.更新出口方的 "IAM 策略": 
+   <details>
+   <summary> IAM Policy </summary>
+
 
     ```json showLineNumbers
     {
@@ -1463,14 +1476,14 @@ In this step-by-step example, you will export your `API Gateway APIs` to Port.
     }
     ```
 
-    </details>
 
-4.  Optional: Create an event rule to trigger automatic syncing of changes in API Gateway APIs.
+</details>
 
-    You may use the following CloudFormation Template:
+4.可选: 创建一个事件规则，以触发自动同步 API Gateway API 中的更改。
+    您可以被引用以下 CloudFormation 模板: 
+<details>
+   <summary> Event Rule CloudFormation Template </summary>
 
-    <details>
-    <summary> Event Rule CloudFormation Template </summary>
 
     ```yaml showLineNumbers
     AWSTemplateFormatVersion: "2010-09-09"
@@ -1562,34 +1575,32 @@ In this step-by-step example, you will export your `API Gateway APIs` to Port.
                   }
     ```
 
-    </details>
 
-Done! soon, you will be able to see any `API Gateway APIs`.
+</details>
 
-## Cloudfront distributions
+完成！很快，您就能看到任何 `API gateway API` 了。
 
-In this step-by-step example, you will export your `Cloudfront distributions` to Port.
+## Cloudfront 分发
 
-:::info Important
+在这个分步示例中，您将把 "Cloudfront 发行版 "导出到 Port。
 
-Cloudfront is a global (not regional) service in AWS, that its events are recorded by AWS CloudTrail in the `us-east-1` region.
-Therefore, in order to automatically sync changes in Cloudfront distributions with an event rule (step 4 of this example), you need to choose one of the following methods:
+:::info  重要
 
-1. Deploy the Port AWS exporter and the event rule in the `us-east-1` region.
-2. Create a trail that will capture global service events in the same region that you've deployed the Port AWS exporter.
+Cloudfront 是 AWS 中的全局(非区域)服务，其事件由 `us-east-1` 区域的 AWS CloudTrail 记录。 因此，为了将 Cloudfront 分发中的更改与事件规则自动同步(本例中的第 4 步)，您需要选择以下方法之一: 
 
-For more information, read [here](https://docs.aws.amazon.com/awscloudtrail/latest/userguide/cloudtrail-concepts.html#cloudtrail-concepts-global-service-events).
+1. 在 `us-east-1` 区域部署 Port AWS 输出程序和事件规则。
+2. 在部署了 Port AWS 输出程序的同一区域创建一个跟踪器，以捕获 global 服务事件。
+
+更多信息，请阅读[here](https://docs.aws.amazon.com/awscloudtrail/latest/userguide/cloudtrail-concepts.html#cloudtrail-concepts-global-service-events) 。
 
 :::
 
-1.  Create the following Port blueprint:
+1. 创建以下 Port 蓝图: 
+    - **Cloudfront** - 将代表 AWS 账户的 Cloudfront 分发。
+    您可以被引用以下定义: 
+<details>
+   <summary> Cloudfront blueprint </summary>
 
-    - **Cloudfront** - will represent Cloudfront distributions from the AWS account.
-
-    You may use the following definition:
-
-    <details>
-    <summary> Cloudfront blueprint </summary>
 
     ```json showLineNumbers
     {
@@ -1659,12 +1670,13 @@ For more information, read [here](https://docs.aws.amazon.com/awscloudtrail/late
     }
     ```
 
-    </details>
 
-2.  Upload the `config.json` file to the exporter's S3 bucket:
+</details>
 
-    <details>
-    <summary> Port AWS exporter config.json </summary>
+2.将 `config.json` 文件上传到出口程序的 S3 存储桶: 
+   <details>
+   <summary> Port AWS exporter config.json </summary>
+
 
     ```json showLineNumbers
     {
@@ -1701,12 +1713,13 @@ For more information, read [here](https://docs.aws.amazon.com/awscloudtrail/late
     }
     ```
 
-    </details>
 
-3.  Update the exporter's `IAM policy`:
+</details>
 
-    <details>
-    <summary> IAM Policy </summary>
+3.更新出口方的 "IAM 策略": 
+   <details>
+   <summary> IAM Policy </summary>
+
 
     ```json showLineNumbers
     {
@@ -1725,14 +1738,14 @@ For more information, read [here](https://docs.aws.amazon.com/awscloudtrail/late
     }
     ```
 
-    </details>
 
-4.  Optional: Create an event rule to trigger automatic syncing of changes in Cloudfront distributions.
+</details>
 
-    You may use the following CloudFormation Template:
+4.可选: 创建一个事件规则来触发 Cloudfront 分发中的自动同步更改。
+    您可以被引用以下 CloudFormation 模板: 
+<details>
+   <summary> Event Rule CloudFormation Template </summary>
 
-    <details>
-    <summary> Event Rule CloudFormation Template </summary>
 
     ```yaml showLineNumbers
     AWSTemplateFormatVersion: "2010-09-09"
@@ -1785,22 +1798,21 @@ For more information, read [here](https://docs.aws.amazon.com/awscloudtrail/late
                   }
     ```
 
-    </details>
 
-Done! soon, you will be able to see any `Cloudfront distributions`.
+</details>
 
-## DynamoDB tables
+完成！很快，您就能看到任何 `Cloudfront 发行版`。
 
-In this step-by-step example, you will export your `DynamoDB tables` to Port.
+## DynamoDB 表
 
-1. Create the following Port blueprint:
+在这个分步示例中，您将把 "DynamoDB 表 "导出到 Port。
 
-   - **DynamoDB** - will represent DynamoDB tables from the AWS account.
-
-   You may use the following definition:
-
-   <details>
+1. 创建以下 Port 蓝图: 
+    - **DynamoDB** - 将代表 AWS 账户中的 DynamoDB 表。
+    您可以被引用以下定义: 
+<details>
    <summary> DynamoDB blueprint </summary>
+
 
    ```json showLineNumbers
    {
@@ -1869,12 +1881,13 @@ In this step-by-step example, you will export your `DynamoDB tables` to Port.
    }
    ```
 
+
    </details>
 
-2. Upload the `config.json` file to the exporter's S3 bucket:
-
+2.将 `config.json` 文件上传到出口程序的 S3 存储桶: 
    <details>
    <summary> Port AWS exporter config.json </summary>
+
 
    ```json showLineNumbers
    {
@@ -1911,12 +1924,13 @@ In this step-by-step example, you will export your `DynamoDB tables` to Port.
    }
    ```
 
+
    </details>
 
-3. Update the exporter's `IAM policy`:
-
+3.更新出口方的 "IAM 策略": 
    <details>
    <summary> IAM Policy </summary>
+
 
    ```json showLineNumbers
    {
@@ -1939,14 +1953,14 @@ In this step-by-step example, you will export your `DynamoDB tables` to Port.
    }
    ```
 
+
    </details>
 
-4. Optional: Create an event rule to trigger automatic syncing of changes in DynamoDB tables.
-
-   You may use the following CloudFormation Template:
-
-   <details>
+4.可选: 创建一个事件规则来触发 DynamoDB 表中更改的自动同步。
+    您可以被引用以下 CloudFormation 模板: 
+<details>
    <summary> Event Rule CloudFormation Template </summary>
+
 
    ```yaml showLineNumbers
    AWSTemplateFormatVersion: "2010-09-09"
@@ -2002,22 +2016,21 @@ In this step-by-step example, you will export your `DynamoDB tables` to Port.
                  }
    ```
 
+
    </details>
 
-Done! soon, you will be able to see any `DynamoDB tables`.
+完成！很快，你就能看到任何 `DynamoDB 表`。
 
-## RDS instances
+## RDS 实例
 
-In this step-by-step example, you will export your `RDS instances` to Port.
+在这个分步示例中，您将把 "RDS 实例 "导出到 Port。
 
-1. Create the following Port blueprint:
-
-   - **RDS** - will represent RDS instances from the AWS account.
-
-   You may use the following definition:
-
-   <details>
+1. 创建以下 Port 蓝图: 
+    - **RDS** - 将代表 AWS 账户中的 RDS 实例。
+    您可以被引用以下定义: 
+<details>
    <summary> RDS blueprint </summary>
+
 
    ```json showLineNumbers
    {
@@ -2148,12 +2161,13 @@ In this step-by-step example, you will export your `RDS instances` to Port.
    }
    ```
 
+
    </details>
 
-2. Upload the `config.json` file to the exporter's S3 bucket:
-
+2.将 `config.json` 文件上传到出口程序的 S3 存储桶: 
    <details>
    <summary> Port AWS exporter config.json </summary>
+
 
    ```json showLineNumbers
    {
@@ -2205,12 +2219,13 @@ In this step-by-step example, you will export your `RDS instances` to Port.
    }
    ```
 
+
    </details>
 
-3. Update the exporter's `IAM policy`:
-
+3.更新出口方的 "IAM 策略": 
    <details>
    <summary> IAM Policy </summary>
+
 
    ```json showLineNumbers
    {
@@ -2235,14 +2250,14 @@ In this step-by-step example, you will export your `RDS instances` to Port.
    }
    ```
 
+
    </details>
 
-4. Optional: Create an event rule to trigger automatic syncing of changes in RDS instances.
-
-   You may use the following CloudFormation Template:
-
-   <details>
+4.可选: 创建一个事件规则，以触发 RDS 实例中更改的自动同步。
+    您可以被引用以下 CloudFormation 模板: 
+<details>
    <summary> Event Rule CloudFormation Template </summary>
+
 
    ```yaml showLineNumbers
    AWSTemplateFormatVersion: "2010-09-09"
@@ -2301,22 +2316,21 @@ In this step-by-step example, you will export your `RDS instances` to Port.
                  }
    ```
 
+
    </details>
 
-Done! soon, you will be able to see any `RDS instances`.
+完成！很快，您就能看到任何 "RDS 实例"。
 
-## Step Functions state machines
+## 步骤功能状态机
 
-In this step-by-step example, you will export your `Step Functions state machines` to Port.
+在这个分步示例中，您将把 "步骤功能状态机 "导出到 Port。
 
-1. Create the following Port blueprint:
-
-   - **Step Functions** - will represent Step Functions state machines from the AWS account.
-
-   You may use the following definition:
-
-   <details>
+1. 创建以下 Port 蓝图: 
+    - **步骤功能** - 将表示 AWS 账户中的步骤功能状态机。
+    您可以被引用以下定义: 
+<details>
    <summary> Step Functions blueprint </summary>
+
 
    ```json showLineNumbers
    {
@@ -2371,12 +2385,13 @@ In this step-by-step example, you will export your `Step Functions state machine
    }
    ```
 
+
    </details>
 
-2. Upload the `config.json` file to the exporter's S3 bucket:
-
+2.将 `config.json` 文件上传到出口程序的 S3 存储桶: 
    <details>
    <summary> Port AWS exporter config.json </summary>
+
 
    ```json showLineNumbers
    {
@@ -2409,12 +2424,13 @@ In this step-by-step example, you will export your `Step Functions state machine
    }
    ```
 
+
    </details>
 
-3. Update the exporter's `IAM policy`:
-
+3.更新出口方的 "IAM 策略": 
    <details>
    <summary> IAM Policy </summary>
+
 
    ```json showLineNumbers
    {
@@ -2434,14 +2450,14 @@ In this step-by-step example, you will export your `Step Functions state machine
    }
    ```
 
+
    </details>
 
-4. Optional: Create an event rule to trigger automatic syncing of changes in Step Functions state machines.
-
-   You may use the following CloudFormation Template:
-
-   <details>
+4.可选: 创建一个事件规则，以触发自动同步步骤功能状态机中的更改。
+    您可以使用以下 CloudFormation 模板: 
+<details>
    <summary> Event Rule CloudFormation Template </summary>
+
 
    ```yaml showLineNumbers
    AWSTemplateFormatVersion: "2010-09-09"
@@ -2496,23 +2512,22 @@ In this step-by-step example, you will export your `Step Functions state machine
                  }
    ```
 
+
    </details>
 
-Done! soon, you will be able to see any `Step Functions state machines`.
+完成！很快，你就能看到任何 `步骤功能状态机`。
 
-## Elastic Beanstalk applications and environments
+### Elastic Beanstalk 应用程序和环境
 
-In this step-by-step example, you will export your `Elastic Beanstalk applications and environments` to Port.
+在这个分步示例中，您将把 "Elastic Beanstalk 应用程序和环境 "导出到 Port。
 
-1. Create the following Port blueprint:
-
-   - **Beanstalk Application** - will represent Elastic Beanstalk applications from the AWS account.
-   - **Beanstalk Environment** - will represent Elastic Beanstalk environments from the AWS account.
-
-   You may use the following definitions:
-
-    <details>
+1. 创建以下 Port 蓝图: 
+    - **Beanstalk Application** - 将代表 AWS 账户中的 Elastic Beanstalk 应用程序。
+    - **Beanstalk Environment** - 将代表 AWS 账户中的 Elastic Beanstalk 环境。
+    您可以被引用以下定义: 
+<details>
     <summary> Beanstalk Application blueprint </summary>
+
 
    ```json showLineNumbers
    {
@@ -2543,10 +2558,13 @@ In this step-by-step example, you will export your `Elastic Beanstalk applicatio
    }
    ```
 
-    </details>
 
-    <details>
-    <summary> Beanstalk Environment blueprint </summary>
+</details>
+
+<details>
+<summary> Beanstalk Environment blueprint </summary>
+```
+
 
    ```json showLineNumbers
    {
@@ -2605,12 +2623,13 @@ In this step-by-step example, you will export your `Elastic Beanstalk applicatio
    }
    ```
 
-    </details>
 
-2. Upload the `config.json` file to the exporter's S3 bucket:
+</details>
 
+2.将 `config.json` 文件上传到出口程序的 S3 存储桶: 
    <details>
    <summary> Port AWS exporter config.json </summary>
+
 
    ```json showLineNumbers
    {
@@ -2665,12 +2684,13 @@ In this step-by-step example, you will export your `Elastic Beanstalk applicatio
    }
    ```
 
+
    </details>
 
-3. Update the exporter's `IAM policy`:
-
+3.更新出口方的 "IAM 策略": 
    <details>
    <summary> IAM Policy </summary>
+
 
    ```json showLineNumbers
    {
@@ -2691,14 +2711,14 @@ In this step-by-step example, you will export your `Elastic Beanstalk applicatio
    }
    ```
 
+
    </details>
 
-4. Optional: Create an event rule to trigger automatic syncing of changes in Elastic Beanstalk applications and environments.
-
-   You may use the following CloudFormation Template:
-
-   <details>
+4.可选: 创建一个事件规则来触发 Elastic Beanstalk 应用程序和环境中的自动同步更改。
+    您可以被引用以下 CloudFormation 模板: 
+<details>
    <summary> Event Rule CloudFormation Template </summary>
+
 
    ```yaml showLineNumbers
    AWSTemplateFormatVersion: "2010-09-09"
@@ -2778,22 +2798,22 @@ In this step-by-step example, you will export your `Elastic Beanstalk applicatio
                  }
    ```
 
+
    </details>
 
-Done! soon, you will be able to see any `Elastic Beanstalk applications and environments`.
+完成！很快，您就能看到任何 "Elastic Beanstalk 应用程序和环境"。
 
-## CloudFormation Stacks
+## CloudFormation 堆栈
 
-In this step-by-step example, you will export your `CloudFormation Stacks` to Port.
+在这个分步示例中，您将把 "CloudFormation Stacks "导出到 Port。
 
-1. Create the following Port blueprint:
-
-   - **CloudFormation Stack** - will represent CloudFormation Stacks from the AWS account.
-
-   You may use the following definition:
-
-   <details> 
+1. 创建以下 Port 蓝图: 
+    - **CloudFormation Stack** - 将代表 AWS 账户中的 CloudFormation Stack。
+    您可以使用以下定义: 
+<details>
+ 
    <summary>CloudFormationStack blueprint</summary>
+
 
    ```json showLineNumbers
    {
@@ -2878,12 +2898,13 @@ In this step-by-step example, you will export your `CloudFormation Stacks` to Po
    }
    ```
 
-    </details>
 
-2. Upload the `config.json` file to the exporter's S3 bucket:
+</details>
 
+2.将 `config.json` 文件上传到出口程序的 S3 存储桶: 
     <details>
     <summary> Port AWS exporter config.json </summary>
+
 
    ```json showLineNumbers
    {
@@ -2910,12 +2931,13 @@ In this step-by-step example, you will export your `CloudFormation Stacks` to Po
    }
    ```
 
-    </details>
 
-3. Update the exporter's `IAM policy`:
+</details>
 
+3.更新出口方的 "IAM 策略": 
     <details>
     <summary> IAM Policy </summary>
+
 
    ```json showLineNumbers
    {
@@ -2936,14 +2958,14 @@ In this step-by-step example, you will export your `CloudFormation Stacks` to Po
    }
    ```
 
-    </details>
 
-4. Optional: Create 2 event rules to trigger automatic syncing of changes in CloudFormation Stacks.
+</details>
 
-   You may use the following CloudFormation Template:
-
-    <details>
+4.可选: 创建 2 个事件规则，以触发 CloudFormation 堆栈中更改的自动同步。
+    您可以被引用以下 CloudFormation 模板: 
+<details>
     <summary> Event Rule CloudFormation Template </summary>
+
 
    ```yaml showLineNumbers
    EventRule0:
@@ -3011,19 +3033,20 @@ In this step-by-step example, you will export your `CloudFormation Stacks` to Po
                }
    ```
 
-    </details>
 
-:::important IMPORTANT
-The AWS CloudFormation API can retrieve up to 100 resources per CloudFormation Stack.
+</details>
 
-For more information about the CloudFormation API, see the [API Reference](https://docs.aws.amazon.com/cli/latest/reference/cloudformation/index.html).
+:::important  重要事项 AWS CloudFormation API 最多可为每个 CloudFormation 堆栈检索 100 个资源。
+
+有关 CloudFormation API 的更多信息，请参阅[API Reference](https://docs.aws.amazon.com/cli/latest/reference/cloudformation/index.html) 。
+
 :::
 
-### Relations between CloudFormation Stacks and AWS resources
+### CloudFormation 堆栈和 AWS 资源之间的关系
 
-In order to connect between CloudFormation Stacks and their affected resources, you'll need to update the blueprint and the exporter configuration.
+为了在 CloudFormation 堆栈及其受影响的资源之间建立连接，您需要更新蓝图和导出器配置。
 
-Here's an example showing how to connect CloudFormation Stacks and Lambda functions:
+下面的示例展示了如何连接 CloudFormation 堆栈和 Lambda 函数: 
 
 <details>
 <summary> Add relations to the blueprint </summary>
@@ -3060,22 +3083,20 @@ Here's an example showing how to connect CloudFormation Stacks and Lambda functi
 
    </details>
 
-Make sure your [Lambda function configuration](#lambda) appears before your CloudFormation defintion in the `config.json`.
+确保您的[Lambda function configuration](#lambda) 出现在 `config.json` 中 CloudFormation 定义之前。
 
-Done! soon, you will be able to see any `CloudFormation Stacks`.
+完成！很快，您就能看到任何 `CloudFormation Stacks`。
 
-## EC2 instances
+## EC2 实例
 
-In this step-by-step example, you will export your `EC2 instances` to Port.
+在这个分步示例中，您将把 `EC2 实例` 导出到 Port。
 
-1. Create the following Port blueprint:
-
-   - **EC2 Instance** - will represent EC2 instances from the AWS account.
-
-   You may use the following definitions:
-
-    <details>
+1. 创建以下 Port 蓝图: 
+    - **EC2 实例** - 将代表 AWS 账户中的 EC2 实例。
+    您可以被引用以下定义: 
+<details>
     <summary> EC2 instance blueprint </summary>
+
 
    ```json showLineNumbers
    {
@@ -3144,12 +3165,13 @@ In this step-by-step example, you will export your `EC2 instances` to Port.
    }
    ```
 
-    </details>
 
-2. Upload the `config.json` file to the exporter's S3 bucket:
+</details>
 
+2.将 `config.json` 文件上传到出口程序的 S3 存储桶: 
    <details>
    <summary> Port AWS exporter config.json </summary>
+
 
    ```json showLineNumbers
    {
@@ -3185,12 +3207,13 @@ In this step-by-step example, you will export your `EC2 instances` to Port.
    }
    ```
 
+
    </details>
 
-3. Update the exporter's `IAM policy`:
-
+3.更新出口方的 "IAM 策略": 
    <details>
    <summary> IAM policy </summary>
+
 
    ```json showLineNumbers
    {
@@ -3206,14 +3229,14 @@ In this step-by-step example, you will export your `EC2 instances` to Port.
    }
    ```
 
+
    </details>
 
-4. Optional: create an event rule to trigger automatic syncing of changes in EC2 instances.
-
-   You may use the following CloudFormation template:
-
-   <details>
+4.可选: 创建一个事件规则来触发 EC2 实例中的更改自动同步。
+    您可以被引用以下 CloudFormation 模板: 
+<details>
    <summary> Event rule CloudFormation template </summary>
+
 
    ```yaml showLineNumbers
    AWSTemplateFormatVersion: "2010-09-09"
@@ -3291,22 +3314,21 @@ In this step-by-step example, you will export your `EC2 instances` to Port.
                  }
    ```
 
+
    </details>
 
-Done! soon, you will be able to see any `EC2 instances`
+完成！很快，您就可以看到任何 "EC2实例
 
-## Elastic load balancers
+## 弹性负载平衡器
 
-In this step-by-step example, you will export your `Load balancers` to Port.
+在这个分步示例中，您将把 "负载平衡器 "导出到 Port。
 
-1. Create the following Port blueprint:
-
-   - **Load Balancer** - will represent load balancers from the AWS account.
-
-   You may use the following definitions:
-
-    <details>
+1. 创建以下 Port 蓝图: 
+    - **负载平衡器** - 将代表 AWS 账户中的负载平衡器。
+    您可以被引用以下定义: 
+<details>
     <summary> LoadBalancer blueprint </summary>
+
 
    ```json showLineNumbers
    {
@@ -3391,12 +3413,13 @@ In this step-by-step example, you will export your `Load balancers` to Port.
    }
    ```
 
-    </details>
 
-2. Upload the `config.json` file to the exporter's S3 bucket:
+</details>
 
+2.将 `config.json` 文件上传到出口程序的 S3 存储桶: 
    <details>
    <summary> Port AWS exporter config.json </summary>
+
 
    ```json showLineNumbers
    {
@@ -3436,12 +3459,13 @@ In this step-by-step example, you will export your `Load balancers` to Port.
    }
    ```
 
+
    </details>
 
-3. Update the exporter's `IAM policy`:
-
+3.更新出口方的 "IAM 策略": 
    <details>
    <summary> IAM policy </summary>
+
 
    ```json showLineNumbers
    {
@@ -3463,14 +3487,14 @@ In this step-by-step example, you will export your `Load balancers` to Port.
    }
    ```
 
+
    </details>
 
-4. Optional: create an event rule to trigger automatic syncing of changes in load balancers.
-
-   You may use the following CloudFormation template:
-
-   <details>
+4.可选: 创建一个事件规则，以触发负载平衡器中更改的自动同步。
+    您可以被引用以下 CloudFormation 模板: 
+<details>
    <summary> Event rule CloudFormation template </summary>
+
 
    ```yaml showLineNumbers
    AWSTemplateFormatVersion: "2010-09-09"
@@ -3655,22 +3679,20 @@ In this step-by-step example, you will export your `Load balancers` to Port.
                  }
    ```
 
+
    </details>
 
-Done! soon, you will be able to see any `Load balancers`
+完成！很快，您就可以看到任何 "负载平衡器
 
-## EKS clusters
+## EKS 集群
 
-In this step-by-step example, you will export your `EKS clusters` to Port.
+在这个分步示例中，您将把您的 `EKS 集群` 导出到 Port。
 
-1. Create the following Port blueprint:
+1. 创建以下 Port 蓝图: 
+    **EKS 集群** - 将代表 AWS 账户中的 EKS 集群。您可以引用以下定义:  
+<details>
+     <summary> EKS blueprint </summary>
 
-   **EKS Cluster** - will represent EKS clusters from the AWS account.
-
-   You may use the following definitions:
-
-     <details>
-     <summary> EKS  blueprint </summary>
 
    ```json showLineNumbers
    {
@@ -3712,12 +3734,13 @@ In this step-by-step example, you will export your `EKS clusters` to Port.
    }
    ```
 
-     </details>
 
-2. Upload the `config.json` file to the exporter's S3 bucket:
+</details>
 
+2.将 `config.json` 文件上传到出口程序的 S3 存储桶: 
    <details>
    <summary> Port AWS exporter config.json </summary>
+
 
    ```json showLineNumbers
    {
@@ -3750,12 +3773,13 @@ In this step-by-step example, you will export your `EKS clusters` to Port.
    }
    ```
 
+
    </details>
 
-3. Update the exporter's `IAM policy`:
-
+3.更新出口方的 "IAM 策略": 
    <details>
    <summary> IAM policy </summary>
+
 
    ```json showLineNumbers
    {
@@ -3771,14 +3795,14 @@ In this step-by-step example, you will export your `EKS clusters` to Port.
    }
    ```
 
+
    </details>
 
-4. Optional: create an event rule to trigger automatic syncing of changes in EKS clusters.
-
-   You may use the following CloudFormation template:
-
-    <details>
+4.可选: 创建一个事件规则来触发 EKS 集群中的更改自动同步。
+    您可以被引用以下 CloudFormation 模板: 
+<details>
     <summary> Event rule CloudFormation template </summary>
+
 
    ```yaml showLineNumbers
    AWSTemplateFormatVersion: "2010-09-09"
@@ -3829,22 +3853,20 @@ In this step-by-step example, you will export your `EKS clusters` to Port.
                  }
    ```
 
-    </details>
 
-Done! soon, you will be able to see any `EKS clusters`
+</details>
 
-## ECR repositories
+完成！很快，您就能看到任何 `EKS 集群
 
-In this step-by-step example, you will export your `ECR repositories` to Port.
+## ECR 资源库
 
-1. Create the following Port blueprint:
+在这个分步示例中，您将把 "ECR 资源库 "导出到 Port。
 
-   **ECR Repository** - will represent ECR repositories from the AWS account.
-
-   You may use the following definitions:
-
-     <details>
+1. 创建以下 Port 蓝图: 
+    **ECR Repository** - 将代表 AWS 账户中的 ECR 资源库。您可以被引用以下定义:  
+<details>
      <summary> ECR Repository blueprint </summary>
+
 
    ```json showLineNumbers
    {
@@ -3903,12 +3925,13 @@ In this step-by-step example, you will export your `ECR repositories` to Port.
    }
    ```
 
-     </details>
 
-2. Upload the `config.json` file to the exporter's S3 bucket:
+</details>
 
+2.将 `config.json` 文件上传到出口程序的 S3 存储桶: 
    <details>
    <summary> Port AWS exporter config.json </summary>
+
 
    ```json showLineNumbers
    {
@@ -3944,12 +3967,13 @@ In this step-by-step example, you will export your `ECR repositories` to Port.
    }
    ```
 
+
    </details>
 
-3. Update the exporter's `IAM policy`:
-
+3.更新出口方的 "IAM 策略": 
    <details>
    <summary> IAM policy </summary>
+
 
    ```json showLineNumbers
    {
@@ -3970,14 +3994,14 @@ In this step-by-step example, you will export your `ECR repositories` to Port.
    }
    ```
 
+
    </details>
 
-4. Optional: create an event rule to trigger automatic syncing of changes in ECR repositories.
-
-   You may use the following CloudFormation template:
-
-    <details>
+4.可选: 创建一个事件规则来触发 ECR 资源库中的更改自动同步。
+    您可以被引用以下 CloudFormation 模板: 
+<details>
     <summary> Event rule CloudFormation template </summary>
+
 
    ```yaml showLineNumbers
    AWSTemplateFormatVersion: "2010-09-09"
@@ -4063,25 +4087,24 @@ In this step-by-step example, you will export your `ECR repositories` to Port.
                  }
    ```
 
-    </details>
 
-Done! soon, you will be able to see any `ECR repositories`
+</details>
 
-### Using Python script
-Alternatively you can use a Python script to export your ECR repositories and images to Port. The script is available in the [example-ecr-images](https://github.com/port-labs/example-ecr-images) repository.
+完成！很快，您就可以看到任何 `ECR 资源库
 
-## Elasticache serverless cache
+### 使用 Python 脚本
 
-In this step-by-step example, you will export your `Serverless cache` to Port.
+您也可以使用 Python 脚本将 ECR 资源库和镜像导出到 Port。该脚本可在[example-ecr-images](https://github.com/port-labs/example-ecr-images) 资源库中找到。
 
-1. Create the following Port blueprint:
+## Elasticache 无服务器缓存
 
-   **Serverless cache** - will represent Serverless cache from the AWS account.
+在这个分步示例中，您将把 "无服务器缓存 "导出到 Port。
 
-   You may use the following definitions:
-
-     <details>
+1. 创建以下 Port 蓝图: 
+    **Serverless cache** - 将代表 AWS 账户中的 Serverless cache.您可以使用以下定义:  
+<details>
      <summary> Serverless cache blueprint </summary>
+
 
    ```json showLineNumbers
    {
@@ -4157,12 +4180,13 @@ In this step-by-step example, you will export your `Serverless cache` to Port.
    }
    ```
 
-     </details>
 
-2. Upload the `config.json` file to the exporter's S3 bucket:
+</details>
 
+2.将 `config.json` 文件上传到出口程序的 S3 存储桶: 
    <details>
    <summary> Port AWS exporter config.json </summary>
+
 
    ```json showLineNumbers
    {
@@ -4202,12 +4226,13 @@ In this step-by-step example, you will export your `Serverless cache` to Port.
    }
    ```
 
+
    </details>
 
-3. Update the exporter's `IAM policy`:
-
+3.更新出口方的 "IAM 策略": 
    <details>
    <summary> IAM policy </summary>
+
 
    ```json showLineNumbers
    {
@@ -4226,14 +4251,14 @@ In this step-by-step example, you will export your `Serverless cache` to Port.
    }
    ```
 
+
    </details>
 
-4. Optional: create an event rule to trigger automatic syncing of changes in Elasticache serveless caches.
-
-   You may use the following CloudFormation template:
-
-    <details>
+4.可选: 创建一个事件规则，以触发 Elasticache 无服务器缓存中更改的自动同步。
+    您可以被引用以下 CloudFormation 模板: 
+<details>
     <summary> Event rule CloudFormation template </summary>
+
 
    ```yaml showLineNumbers
    AWSTemplateFormatVersion: "2010-09-09"
@@ -4318,22 +4343,20 @@ In this step-by-step example, you will export your `Serverless cache` to Port.
                  }
    ```
 
-    </details>
 
-Done! soon, you will be able to see any `Serverless cache`
+</details>
 
-## Elasticache cluster
+完成！很快，您就可以看到任何 "无服务器缓存
 
-In this step-by-step example, you will export your `Cache clusters` to Port.
+## Elasticache 集群
 
-1. Create the following Port blueprint:
+在这个分步示例中，您将把 "缓存集群 "导出到 Port。
 
-   **Cache cluster** - will represent cache clusters from the AWS account.
-
-   You may use the following definitions:
-
-     <details>
+1. 创建以下 Port 蓝图: 
+    **Cache 集群** - 将代表 AWS 账户中的缓存集群。您可以引用以下定义:  
+<details>
      <summary>Cache cluster blueprint </summary>
+
 
    ```json showLineNumbers
    {
@@ -4418,12 +4441,13 @@ In this step-by-step example, you will export your `Cache clusters` to Port.
    }
    ```
 
-     </details>
 
-2. Upload the `config.json` file to the exporter's S3 bucket:
+</details>
 
+2.将 `config.json` 文件上传到出口程序的 S3 存储桶: 
    <details>
    <summary> Port AWS exporter config.json </summary>
+
 
    ```json showLineNumbers
    {
@@ -4465,12 +4489,13 @@ In this step-by-step example, you will export your `Cache clusters` to Port.
    }
    ```
 
+
    </details>
 
-3. Update the exporter's `IAM policy`:
-
+3.更新出口方的 "IAM 策略": 
    <details>
    <summary> IAM policy </summary>
+
 
    ```json showLineNumbers
    {
@@ -4489,14 +4514,14 @@ In this step-by-step example, you will export your `Cache clusters` to Port.
    }
    ```
 
+
    </details>
 
-4. Optional: create an event rule to trigger automatic syncing of changes in Elasticache clusters.
-
-   You may use the following CloudFormation template:
-
-    <details>
+4.可选: 创建一个事件规则来触发 Elasticache 集群中的自动同步更改。
+    您可以被引用以下 CloudFormation 模板: 
+<details>
     <summary> Event rule CloudFormation template </summary>
+
 
    ```yaml showLineNumbers
    AWSTemplateFormatVersion: "2010-09-09"
@@ -4581,22 +4606,20 @@ In this step-by-step example, you will export your `Cache clusters` to Port.
                  }
    ```
 
-    </details>
 
-Done! soon, you will be able to see any `Cache clusters`
+</details>
 
-## Auto scaling group
+完成！很快，您就能看到任何 `高速缓存集群
 
-In this step-by-step example, you will export your EC2 `Auto scaling groups` to Port.
+## 自动缩放组
 
-1. Create the following Port blueprint:
+在这个分步示例中，您将把 EC2 的 "自动扩展组 "导出到 Port。
 
-   **Auto scaling group** - will represent EC2 auto scaling group from the AWS account.
-
-   You may use the following definitions:
-
-     <details>
+1. 创建以下 Port 蓝图: 
+    **自动扩展组** - 将代表 AWS 账户中的 EC2 自动扩展组。您可以引用以下定义:  
+<details>
      <summary>Auto scaling group blueprint </summary>
+
 
    ```json showLineNumbers
     {
@@ -4654,12 +4677,13 @@ In this step-by-step example, you will export your EC2 `Auto scaling groups` to 
     }
    ```
 
-     </details>
 
-2. Upload the `config.json` file to the exporter's S3 bucket:
+</details>
 
+2.将 `config.json` 文件上传到出口程序的 S3 存储桶: 
    <details>
    <summary> Port AWS exporter config.json </summary>
+
 
    ```json showLineNumbers
    {
@@ -4693,12 +4717,13 @@ In this step-by-step example, you will export your EC2 `Auto scaling groups` to 
    }
    ```
 
+
    </details>
 
-3. Update the exporter's `IAM policy`:
-
+3.更新出口方的 "IAM 策略": 
    <details>
    <summary> IAM policy </summary>
+
 
    ```json showLineNumbers
    {
@@ -4716,14 +4741,14 @@ In this step-by-step example, you will export your EC2 `Auto scaling groups` to 
    }
    ```
 
+
    </details>
 
-4. Optional: create an event rule to trigger automatic syncing of changes in Auto scaling groups.
-
-   You may use the following CloudFormation template:
-
-    <details>
+4.可选: 创建一个事件规则来触发自动缩放组中更改的自动同步。
+    您可以被引用以下 CloudFormation 模板: 
+<details>
     <summary> Event rule CloudFormation template </summary>
+
 
    ```yaml showLineNumbers
    AWSTemplateFormatVersion: "2010-09-09"
@@ -4807,6 +4832,7 @@ In this step-by-step example, you will export your EC2 `Auto scaling groups` to 
                   "action": "\"upsert\""
                 }
    ```
+
     </details>
 
-Done! soon, you will be able to see any `Auto scaling groups`
+完成！很快，您就可以看到任何 "自动缩放组

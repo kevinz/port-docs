@@ -1,6 +1,8 @@
 ---
+
 sidebar_position: 2
-description: Istio quickstart
+description: Istio 快速入门
+
 ---
 
 import TemplateInstallation from "./_template_installation.mdx";
@@ -8,72 +10,64 @@ import TemplatePrerequisites from "./_template_prerequisites.mdx";
 
 # Istio
 
-[Istio](https://istio.io/latest/docs/setup/getting-started/) is an open-source service mesh that provides a uniform way
-to connect, manage, and secure microservices.
+[Istio](https://istio.io/latest/docs/setup/getting-started/) 是一种开源服务网格，它提供了一种连接、管理和保护微服务的统一方式。
 
-Using Port's Kubernetes Exporter, you can keep track of all Istio resources across your different clusters and export
-all the data to Port. You will use built in metadata from your kubernetes resources and CRDs to create Entities in
-Port and keep track of their state.
+使用 Port 的 Kubernetes Exporter，您可以跟踪不同集群中的所有 Istio 资源，并将所有数据导出到 Port。 您将使用来自 kubernetes 资源和 CRD 的内置元数据在 Port 中创建实体并跟踪其状态。
 
-:::tip
-Get to know the basics of our Kubernetes exporter [here!](/build-your-software-catalog/sync-data-to-catalog/kubernetes/kubernetes.md)
+:::tip 了解 Kubernetes 输出程序的基础知识[here!](/build-your-software-catalog/sync-data-to-catalog/kubernetes/kubernetes.md)
+
 :::
 
-## Prerequisites
+## 先决条件
 
 <TemplatePrerequisites />
 
-## Setting up blueprints & resource mapping
+## 设置蓝图和资源映射
 
-The following section will guide you through the process of setting up your blueprints and resource mapping using the
-installation script. You can read more about the installation script [here](#how-does-the-installation-script-work).
+下文将指导您使用安装脚本设置蓝图和资源映射。您可以阅读有关安装脚本的更多信息[here](#how-does-the-installation-script-work) 。
 
-### Creating blueprints
+### 创建蓝图
 
-The installation script provides a convenient way to create your blueprints. Using the `CUSTOM_BP_PATH` environment
-variable, you can fetch a pre-defined `blueprints.json` to create your blueprints. For this use-case, you will
-use [this file](https://github.com/port-labs/template-assets/blob/main/kubernetes/blueprints/istio-blueprints.json) to
-define your blueprints. Do this by running:
+安装脚本提供了一种创建蓝图的便捷方法。 使用 `CUSTOM_BP_PATH` 环境变量，您可以获取预定义的 `blueprints.json` 来创建蓝图。 在本例中，您将使用[this file](https://github.com/port-labs/template-assets/blob/main/kubernetes/blueprints/istio-blueprints.json) 来定义蓝图。请通过运行
 
 ```bash showLineNumbers
 export CUSTOM_BP_PATH="https://raw.githubusercontent.com/port-labs/template-assets/main/kubernetes/blueprints/istio-blueprints.json"
 ```
 
-This `blueprints.json` file defines the following blueprints:
+该 `blueprints.json` 文件定义了以下蓝图: 
 
-- Cluster;
-- Namespace;
-- Node;
-- Pod;
-- Workload \*;
-- Istio Gateway;
-- Istio VirtualService.
+* 集群；
+* namespace；
+* 节点
+* Pod
+* 工作负载 *；
+* Istio Gateway；
+* Istio 虚拟服务。
 
-:::note
+:::note 
 
-- `Workload` is an abstraction of Kubernetes objects which create and manage pods.
-  By creating this blueprint, you can avoid creating a dedicated blueprint per Workload type, all of which will likely
-  look pretty similar.
-  Here is the list of kubernetes objects `Workload` will represent:
-
-    - Deployment;
-    - ReplicaSet;
-    - StatefulSet;
-    - DaemonSet.
+* Workload "是创建和管理 pod 的 Kubernetes 对象的抽象。
+通过创建该蓝图，可以避免为每种工作负载类型创建专用蓝图，因为所有这些蓝图都可能
+看起来非常相似。
+以下是 "Workload "将代表的 kubernetes 对象列表: 
+    - 部署；
+    - 复制集
+    - StatefulSet；
+    - DaemonSet。
 
 :::
 
-### Exporting custom resource mapping
+### 导出自定义资源映射
 
-Using the `CONFIG_YAML_URL` parameter, you can define a custom resource mapping to use when installing the exporter.
+使用 `CONFIG_YAML_URL` 参数，可以定义自定义资源映射，以便在安装导出程序时使用。
 
-In this use-case you will be using the **[this configuration file](https://github.com/port-labs/template-assets/blob/main/kubernetes/templates/istio-kubernetes_v1_config.yaml)**. To achieve this, run:
+在本例中，您将被引用 ** [this configuration file](https://github.com/port-labs/template-assets/blob/main/kubernetes/templates/istio-kubernetes_v1_config.yaml)**。为此，请运行
 
 ```bash showLineNumbers
 export CONFIG_YAML_URL="https://raw.githubusercontent.com/port-labs/template-assets/main/kubernetes/templates/istio-kubernetes_v1_config.yaml"
 ```
 
-You can now run the installation script using the following code snippet:
+现在，您可以使用以下代码片段运行安装脚本: 
 
 ```bash showLineNumbers
 export CLUSTER_NAME="my-cluster"
@@ -82,9 +76,8 @@ export PORT_CLIENT_SECRET="my-port-client-secret"
 curl -s https://raw.githubusercontent.com/port-labs/template-assets/main/kubernetes/install.sh | bash
 ```
 
-You can now browse to your Port environment to see that your blueprints have been created, and your k8s and Istio
-resources are being reported to Port using the freshly installed k8s exporter.
+现在，您可以浏览 Port 环境，查看蓝图是否已创建，您的 k8s 和 Istio 资源是否已使用新安装的 k8s 导出器报告到 Port。
 
-## How does the installation script work?
+## 安装脚本如何工作？
 
 <TemplateInstallation />

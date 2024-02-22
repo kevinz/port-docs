@@ -1,54 +1,54 @@
 ---
+
 sidebar_position: 17
-description: Aggregation Property allows you to calculate metrics based on the relations in your catalog
+description: 聚合属性聚合属性允许你根据目录中的关系计算指标
+
 ---
 
-import ApiRef from "../../../../../api-reference/\_learn_more_reference.mdx"
+import ApiRef from "../../../../../api-reference/_learn_more_reference.mdx"
 
 import Tabs from "@theme/Tabs"
 import TabItem from "@theme/TabItem"
 
-# 🧬 Aggregation Property
+# 🧬 聚合特性
 
-Aggregation properties allow you to calculate metrics based on the [relations](/build-your-software-catalog/define-your-data-model/relate-blueprints/#what-is-a-relation) in your catalog.
+聚合属性可让您根据目录中的[relations](/build-your-software-catalog/define-your-data-model/relate-blueprints/#what-is-a-relation) 计算指标。
 
-Using the aggregation property enables you to see relevant metrics on related entities, without having to manually calculate them.
+使用聚合属性可以查看相关实体的相关指标，而无需手动计算。
 
-Aggregations can be performed on any blueprint that is related in any way to the current blueprint (directly, indirectly, upstream or downstream).
+聚合可在以任何方式(直接、间接、上游或下游)与当前蓝图相关的任何蓝图上执行。
 
-## When to use Aggregation Properties?
+## 何时使用聚合属性？
 
-Aggregation property ideally will be defined on blueprints which are in the **higher abstraction level** in your catalog.
+聚合属性最好定义在目录中抽象层**较高的蓝图上。
 
-Those blueprints are usually the ones that are **related to many other blueprints** in your catalog, and therefore, they are the ones that can benefit the most from aggregation properties.
+这些蓝图通常与目录中的许多其他蓝图**相关，因此最能从聚合属性中受益。
 
-## 💡 Common aggregation usage
+## 💡 常用聚合 Usage
 
-For example, if you have a microservice blueprint, you can define aggregation properties on it to calculate metrics based on related entities such as:
+例如，如果您有一个微服务蓝图，您可以对其定义聚合属性，以便根据相关实体计算指标，如
 
-- Number of open jira issues related to a microservice.
-- Number of CRITICAL and HIGH vulnerabilities that are not resolved related to a microservice.
-- Average deployment frequency in the last week.
-- Build success rate in the last month.
+* 与微服务相关的开放式 jira 问题数量。
+* 与微服务相关的未解决的 "危 "和 "高 "漏洞数量。
+* 上周的平均部署频率。
+* 上个月的构建成功率。
 
-The aggregation property enables you to specify scorecards and initiative rules based on metrics of related entities.
+聚合属性可让您根据相关实体的指标指定记分卡和倡议规则。
 
-:::tip
-For example - If you have a microservice blueprint, with related Alert blueprint, you can define a rule that will check if the number of open CRITICAL and HIGH alerts that are related to each microservice is greater than 0.
+:::tip 例如，如果您有一个微服务蓝图，并有相关的警报蓝图，您可以定义一条规则，检查与每个微服务相关的打开的 CRITICAL 和 HIGH 警报的数量是否大于 0。
+
 :::
 
-## Specification
+## 规格
 
-The `aggregationProperties` key is a top-level key in the JSON of an entity (similar to `identifier`, `title`, `properties`, etc..)
+aggregationProperties "键是实体 JSON 中的顶级键(类似于 "identifier"、"title"、"properties "等)。
 
-The aggregation property supports calculations by entities or by property.
+聚合属性支持按实体或按属性进行计算。
 
-- Calculations by **entities** are performed on the entities that match the query (e.g. count the number of entities that match the query).
+* 按**实体**计算是对符合查询条件的实体进行计算(例如，计算符合查询条件的实体数量)。
+* 按**属性**计算是对符合查询条件的实体的属性进行计算(例如，对符合查询条件的实体的属性值求和)。
 
-- Calculations by **property** are performed on the property of the entities that match the query (e.g. sum the value of the property of the entities that match the query).
-
-
-## Definitions
+## 定义
 
 <Tabs groupId="api-definition" queryString defaultValue="api" values={[
 {label: "API", value: "api"},
@@ -58,20 +58,20 @@ The aggregation property supports calculations by entities or by property.
 
 <TabItem value="api">
 
-### Calculate By Entities
+### 按实体计算
 
-Calculate by entities is used to calculate metrics based on the entities that match the query.
+被引用的实体计算用于根据与查询匹配的实体计算指标。
 
-Supported methods:
+支持的方法
 
-- `count` - Count the number of entities that match the query. For example, count the number of open Jira issues related to a microservice.
-- `average` - Calculate the average of entities per a defined time period. For example, calculate the average deployment frequency per week.
+* `count` - 计算与查询匹配的实体数量。例如，计算与微服务相关的打开 Jira 问题的数量。
+* `average` - 计算每个定义时间段内实体的平均值。例如，计算每周的平均部署频率。
 
 <Tabs groupId="CalculateByEntities" defaultValue="Entities Count">
 
 <TabItem value="Entities Count">
 
-In this example, we have a microservice blueprint and we want to calculate the number of open Jira issues related to each microservice.
+在这个示例中，我们有一个微服务蓝图，我们想计算与每个微服务相关的 Jira 开放问题的数量。
 
 ```json
 {
@@ -98,20 +98,20 @@ In this example, we have a microservice blueprint and we want to calculate the n
 }
 ```
 
-The `aggregationProperties` contains a key called `numberOfOpenJiraIssues` which is the identifier of the aggregation property we want to define.
+aggregationProperties "包含一个名为 "numberOfOpenJiraIssues "的键，它是我们要定义的聚合属性的标识符。
 
-- `title` - The title of the aggregation property.
-- `target` - The blueprint we want to aggregate data from.
-- `query` - **Optional** - The query that will be performed on the target blueprint. The query is based on the Filters to include or exclude specific data based on Port's [Search Rules](../../../../../search-and-query/search-and-query.md#rules)
-- `calculationSpec` - The calculation specification.
-  - `"calculationBy": "entities"` - The calculation will be performed on the **entities** that match the query.
-  - `"func": "count"` - is the function we want to use for the calculation.
+* `title` - 聚合属性的 title(标题)。
+* `target` - 我们要聚合数据的蓝图。
+* `query` - **可选** - 将在目标蓝图上执行的查询。该查询基于筛选器，可根据 Port 的 "数据 "属性包含或排除特定数据。[Search Rules](../../../../../search-and-query/search-and-query.md#rules)
+* `calculationSpec` - 计算规范。
+    - calculationBy": "entities"` - 计算将在与查询匹配的 ** 实体上进行。
+    - `"func": "count"` - 是我们要在计算中引用的函数。
 
 </TabItem>
 
 <TabItem value="Entities Average">
 
-In this example, we have a microservice blueprint, and we want to calculate the average deployment frequency for each of the microservices.
+在这个例子中，我们有一个微服务蓝图，我们想计算每个微服务的平均部署频率。
 
 ```json
 {
@@ -140,40 +140,40 @@ In this example, we have a microservice blueprint, and we want to calculate the 
 }
 ```
 
-The `aggregationProperties` contains a key called `averageDeploymentFrequency` which is the identifier of the aggregation property we want to define.
+aggregationProperties "包含一个名为 "averageDeploymentFrequency "的键，它是我们要定义的聚合属性的标识符。
 
-- `title` - The title of the aggregation property.
-- `target` - The blueprint we want to aggregate data from.
-- `query` - **Optional** - The query that will be performed on the target blueprint. The query is based on the Filters to include or exclude specific data based on Port's [Search Rules](../../../../../search-and-query/search-and-query.md#rules)
-- `calculationSpec` - The calculation specification.
-  - `"calculationBy": "entities"` - The calculation will be performed on the entities that match the query (e.g. count the number of entities that match the query).
-  - `"func": "average"` - is the function we want to use for the calculation.
-  - `"averageOf": "week"` - The time period we want to calculate the average for. In this example, we want to calculate the average deployment frequency for each week. Supported Options are: `hour, day ,week and month`
-  - `"measureTimeBy": "$createdAt"` - The time property we want to measure the average by. You can use any date property in the target blueprint by default, we add $createdAt and $updatedAt as [meta-properties](../meta-properties.md) to each entity.
+* `title` - 聚合属性的 title(标题)。
+* `target` - 我们要聚合数据的蓝图。
+* `query` - **可选** - 将在目标蓝图上执行的查询。该查询基于筛选器，可根据 Port 的 "数据 "属性包含或排除特定数据。[Search Rules](../../../../../search-and-query/search-and-query.md#rules)
+* `calculationSpec` - 计算规范。
+    - calculationBy": "entities"` - 将对符合查询条件的实体进行计算(例如，计算符合查询条件的实体数量)。
+    - `"func": "average"` - 是我们要用于计算的函数。
+    - `"averageOf": "week"` - 我们要计算平均值的时间段。在本例中，我们要计算每周的平均部署频率。支持的选项有小时、天、周和月
+    - `"measureTimeBy": "$createdAt"` - 我们要计算平均值的时间属性。默认情况下，您可以使用目标蓝图中的任何日期属性，我们会将 $createdAt 和 $updatedAt 作为[meta-properties](../meta-properties.md) 添加到每个实体中。
 
 </TabItem>
 
 </Tabs>
 
-### Calculate By Property
+#### 按属性计算
 
-Calculate by property is used to calculate metrics based on the property of the entities that match the query.
+Calculate by property(按属性计算)被用来根据与查询匹配的实体的属性计算指标。
 
-The property type must be a number.
+属性类型必须是数字。
 
-Supported methods:
+支持的方法
 
-- `sum` - Sum the value of the property of the entities that match the query. For example, sum the story points of open Jira issues related to a microservice.
-- `average` - Calculate the average of the property of the entities that match the query. For example, average cpu usage of a microservice.
-- `min` - Calculate the minimum value of the property of the entities that match the query. For example, lowest alert severity of a microservice in the last week.
-- `max` - Calculate the maximum value of the property of the entities that match the query. For example, highest alert severity of a microservice in the last week.
-- `median` - Calculate the median value of the property of the entities that match the query. For example, median cpu usage of a microservice in the last week.
+* `sum` - 将符合查询条件的实体的属性值相加。例如，与微服务相关的开放式 Jira 问题的故事点总和。
+* `average` - 计算与查询匹配的实体属性的平均值。例如，微服务的平均 CPU 使用率。
+* `min` - 计算与查询匹配的实体属性的最小值。例如，微服务上周的最低警报严重性。
+* `max` - 计算与查询匹配的实体属性的最大值。例如，上周微服务的最高警报严重性。
+* `median` - 计算与查询匹配的实体属性的中值。例如，微服务最近一周的 CPU 使用率中值。
 
 <Tabs groupId="CalculateByProperty" defaultValue="Sum">
 
 <TabItem value="Sum">
 
-In this example, we have a microservice blueprint, and we want to calculate the sum of the story points of open Jira issues related to each microservice.
+在这个示例中，我们有一个微服务蓝图，我们想计算与每个微服务相关的开放式 Jira 问题的故事点总和。
 
 ```json
 {
@@ -201,21 +201,21 @@ In this example, we have a microservice blueprint, and we want to calculate the 
 }
 ```
 
-The `aggregationProperties` contains a key called `sumOfStoryPoints` which is the identifier of the aggregation property we want to define.
+聚合属性 "包含一个名为 "sumOfStoryPoints "的键，它是我们要定义的聚合属性的标识符。
 
-- `title` - The title of the aggregation property.
-- `target` - The blueprint we want to aggregate data from.
-- `query` - **Optional** - The query that will be performed on the target blueprint. The query is based on the Filters to include or exclude specific data based on Port's [Search Rules](../../../../../search-and-query/search-and-query.md#rules)
-- `calculationSpec` - The calculation specification.
-  - `"calculationBy": "property"` - The calculation will be performed on the property of the entities that match the query (e.g. sum the value of the property of the entities that match the query).
-  - `"func": "sum"` is the function we want to use for the calculation.
-  - `"property": "storyPoints"` - The property we want to calculate the sum of. The property type must be a number.
+* `title` - 聚合属性的 title(标题)。
+* `target` - 我们要聚合数据的蓝图。
+* `query` - **可选** - 将在目标蓝图上执行的查询。该查询基于筛选器，可根据 Port 的 "数据 "属性包含或排除特定数据。[Search Rules](../../../../../search-and-query/search-and-query.md#rules)
+* `calculationSpec` - 计算规范。
+    - calculationBy": "property"` - 将对符合查询条件的实体的属性进行计算(例如，对符合查询条件的实体的属性值求和)。
+    - `"func": "sum"` 是我们要用于计算的函数。
+    - `"property": "storyPoints"` - 我们要计算总和的属性。属性类型必须是数字。
 
 </TabItem>
 
 <TabItem value="Average">
 
-In this example, we have a microservice blueprint, and we want to calculate the average cpu usage of each microservice.
+在这个例子中，我们有一个微服务蓝图，想计算每个微服务的平均 CPU 使用率。
 
 ```json
 {
@@ -245,23 +245,23 @@ In this example, we have a microservice blueprint, and we want to calculate the 
 }
 ```
 
-The `aggregationProperties` contains a key called `averageCpuUsage` which is the identifier of the aggregation property we want to define.
+`aggregationProperties` 包含一个名为 `averageCpuUsage` 的键，它是我们要定义的聚合属性的标识符。
 
-- `title` - The title of the aggregation property.
-- `target` - The blueprint we want to aggregate data from.
-- `query` - **Optional** - The query that will be performed on the target blueprint. The query is based on the Filters to include or exclude specific data based on Port's [Search Rules](../../../../../search-and-query/search-and-query.md#rules)
-- `calculationSpec` - The calculation specification.
-  - `calculationBy` - `property` The calculation will be performed on the property of the entities that match the query (e.g. average the value of the property of the entities that match the query).
-  - `"func": "average"` - is the function we want to use for the calculation.
-  - `"property": "cpuUsage"` - The property we want to calculate the average of. The property type must be a number.
-  - `"averageOf": "week"` - The time period we want to calculate the average for. In this example, we want to calculate the average deployment frequency for each week. Supported Options are: `hour, day ,week, month and total
-  - `"measureTimeBy": "$createdAt"` - The time property we want to measure the average by. You can use any date property in the target blueprint by default, we add $createdAt and $updatedAt as [meta-properties](../meta-properties.md) to each entity.
+* `title` - 聚合属性的 title(标题)。
+* `target` - 我们要聚合数据的蓝图。
+* `query` - **可选** - 将在目标蓝图上执行的查询。该查询基于筛选器，可根据 Port 的 "数据 "属性包含或排除特定数据。[Search Rules](../../../../../search-and-query/search-and-query.md#rules)
+* `calculationSpec` - 计算规范。
+    - `calculationBy` - `property` 将对符合查询的实体的属性进行计算(例如，平均符合查询的实体的属性值)。
+    - `"func": "average"` - 是我们要用于计算的函数。
+    - `"property": "cpuUsage"` - 我们要计算平均值的属性。属性类型必须是数字。
+    - `"averageOf": "week"` - 我们要计算平均值的时间段。在本例中，我们要计算每周的平均部署频率。支持的选项有小时、天、周、月和总计
+    - `"measureTimeBy": "$createdAt"` - 我们要测量平均值的时间属性。默认情况下，您可以使用目标蓝图中的任何日期属性，我们会将 $createdAt 和 $updatedAt 作为[meta-properties](../meta-properties.md) 添加到每个实体中。
 
 </TabItem>
 
 <TabItem value="Min">
 
-In this example, we have a microservice blueprint, and we want to calculate the minimum value of the alert severity of each microservice in the last week.
+在这个示例中，我们有一个微服务蓝图，想计算上周每个微服务的警报严重性最小值。
 
 ```json
 {
@@ -296,21 +296,21 @@ In this example, we have a microservice blueprint, and we want to calculate the 
 }
 ```
 
-The `aggregationProperties` contains a key called `minAlertSeverity` which is the identifier of the aggregation property we want to define.
+`aggregationProperties` 包含一个名为 `minAlertSeverity` 的键，它是我们要定义的聚合属性的标识符。
 
-- `title` - The title of the aggregation property.
-- `target` - The blueprint we want to aggregate data from.
-- `query` - **Optional** - The query that will be performed on the target blueprint. The query is based on the Filters to include or exclude specific data based on Port's [Search Rules](../../../../../search-and-query/search-and-query.md#rules)
-- `calculationSpec` - The calculation specification.
-  - `"calculationBy": "property"` The calculation will be performed on the property of the entities that match the query (e.g. minimum value of the property of the entities that match the query).
-  - `"func": "min"` - is the function we want to use for the calculation.
-  - `"property": "severity"` - The property we want to calculate the minimum of. The property type must be a number.
+* `title` - 聚合属性的 title(标题)。
+* `target` - 我们要聚合数据的蓝图。
+* `query` - **可选** - 将在目标蓝图上执行的查询。该查询基于筛选器，可根据 Port 的 "数据 "属性包含或排除特定数据。[Search Rules](../../../../../search-and-query/search-and-query.md#rules)
+* `calculationSpec` - 计算规范。
+    - `"calculationBy": "property"` 将对符合查询条件的实体的属性执行计算(例如，符合查询条件的实体的属性的最小值)。
+    - `"func": "min"` - 是我们要用于计算的函数。
+    - `"property": "severity"` - 我们要计算最小值的属性。属性类型必须是数字。
 
 </TabItem>
 
 <TabItem value="Max">
 
-In this example, we have a microservice blueprint, and we want to calculate the maximum value of the alert severity of each microservice in the last week.
+在这个示例中，我们有一个微服务蓝图，想计算上周每个微服务的警报严重性最大值。
 
 ```json
 {
@@ -345,21 +345,21 @@ In this example, we have a microservice blueprint, and we want to calculate the 
 }
 ```
 
-The `aggregationProperties` contains a key called `maxAlertSeverity` which is the identifier of the aggregation property we want to define.
+`aggregationProperties` 包含一个名为 `maxAlertSeverity` 的键，它是我们要定义的聚合属性的标识符。
 
-- `title` - The title of the aggregation property.
-- `target` - The blueprint we want to aggregate data from.
-- `query` - **Optional** - The query that will be performed on the target blueprint. The query is based on the Filters to include or exclude specific data based on Port's [Search Rules](../../../../../search-and-query/search-and-query.md#rules)
-- `calculationSpec` - The calculation specification.
-  - `"calculationBy": "property"` The calculation will be performed on the property of the entities that match the query (e.g. maximum value of the property of the entities that match the query).
-  - `"func": "max"` - is the function we want to use for the calculation.
-  - `"property": "severity"` - The property we want to calculate the maximum of. The property type must be a number.
+* `title` - 聚合属性的 title(标题)。
+* `target` - 我们要聚合数据的蓝图。
+* `query` - **可选** - 将在目标蓝图上执行的查询。该查询基于筛选器，可根据 Port 的 "数据 "属性包含或排除特定数据。[Search Rules](../../../../../search-and-query/search-and-query.md#rules)
+* `calculationSpec` - 计算规范。
+    - `"calculationBy": "property"` 将对符合查询条件的实体的属性执行计算(例如，符合查询条件的实体的属性的最大值)。
+    - `"func": "max"` - 是我们要用于计算的函数。
+    - `"property": "severity"` - 我们要计算最大值的属性。属性类型必须是数字。
 
 </TabItem>
 
 <TabItem value="Median">
 
-In this example, we have a microservice blueprint, and we want to calculate the median value of the cpu usage across all related pods of each microservice.
+在这个例子中，我们有一个微服务蓝图，我们想计算每个微服务的所有相关 pod 的 cpu 使用率中值。
 
 ```json
 {
@@ -394,15 +394,15 @@ In this example, we have a microservice blueprint, and we want to calculate the 
 }
 ```
 
-The `aggregationProperties` contains a key called `medianCpuUsage` which is the identifier of the aggregation property we want to define.
+`aggregationProperties` 包含一个名为 `medianCpuUsage` 的键，它是我们要定义的聚合属性的标识符。
 
-- `title` - The title of the aggregation property.
-- `target` - The blueprint we want to aggregate data from.
-- `query` - **Optional** - The query that will be performed on the target blueprint. The query is based on the Filters to include or exclude specific data based on Port's [Search Rules](../../../../../search-and-query/search-and-query.md#rules)
-- `calculationSpec` - The calculation specification.
-  - `"calculationBy": "property"` The calculation will be performed on the property of the entities that match the query (e.g. median value of the property of the entities that match the query).
-  - `"func": "median"` is the function we want to use for the calculation.
-  - `"property": "cpuUsage"` - The property we want to calculate the median of. The property type must be a number.
+* `title` - 聚合属性的 title(标题)。
+* `target` - 我们要聚合数据的蓝图。
+* `query` - **可选** - 将在目标蓝图上执行的查询。该查询基于筛选器，可根据 Port 的 "数据 "属性包含或排除特定数据。[Search Rules](../../../../../search-and-query/search-and-query.md#rules)
+* `calculationSpec` - 计算规范。
+    - `"calculationBy": "property"` 将对符合查询条件的实体的属性执行计算(例如，符合查询条件的实体的属性中值)。
+    - `"func": "median"` 是我们要用于计算的函数。
+    - `"property": "cpuUsage"` - 我们要计算中值的属性。属性类型必须是数字。
 
 </TabItem>
 
@@ -412,21 +412,20 @@ The `aggregationProperties` contains a key called `medianCpuUsage` which is the 
 
 <TabItem value="tf">
 
-### Calculate By Entities
+### 按实体计算
 
-Calculate by entities is used to calculate metrics based on the entities that match the query.
+被引用的实体计算用于根据与查询匹配的实体计算指标。
 
-Supported methods:
+支持的方法
 
-- `count_entities` - Count the number of entities that match the query. For example, count the number of open Jira issues related to a microservice.
-- `average_entities` - Calculate the average of entities per a defined time period. For example, calculate the average deployment frequency per week.
-
+* count_entities` - 计算与查询匹配的实体数量。例如，计算与微服务相关的打开 Jira 问题的数量。
+* `average_entities` - 计算每个定义时间段内实体的平均数。例如，计算每周的平均部署频率。
 
 <Tabs groupId="CalculateByEntities" queryString defaultValue="Entities Count">
 
 <TabItem value="Entities Count">
 
-In this example, we create a parent blueprint with a child blueprint and an aggregation property to count the parent kids:
+在这个示例中，我们创建了一个父蓝图和一个子蓝图，并创建了一个聚合属性来计算父蓝图中的子蓝图: 
 
 ```hcl
 resource "port_blueprint" "parent_blueprint" {
@@ -483,7 +482,7 @@ resource "port_aggregation_properties" "parent_aggregation_properties" {
 
 <TabItem value="Entities Average">
 
-In this example, we have a microservice blueprint, and we want to calculate the average deployment frequency for each of the microservices.
+在这个例子中，我们有一个微服务蓝图，我们想计算每个微服务的平均部署频率。
 
 ```hcl
 resource "port_blueprint" "microservice_blueprint" {
@@ -492,7 +491,6 @@ resource "port_blueprint" "microservice_blueprint" {
   identifier  = "microservice"
   description = ""
 }
-
 
 resource "port_blueprint" "deployment_blueprint" {
   title       = "Deployment Blueprint"
@@ -530,26 +528,24 @@ resource "port_aggregation_properties" "microservice_aggregation_properties" {
 
 </Tabs>
 
-### Calculate By Property
+#### 按属性计算
 
-Calculate by property is used to calculate metrics based on the property of the entities that match the query.
+Calculate by property(按属性计算)被用来根据与查询匹配的实体的属性计算指标。
 
-The property type must be a number.
+属性类型必须是数字。
 
-Supported methods:
+支持的方法
 
-- `average_by_property` - Calculate the average of the property of the entities that match the query. For example, average cpu usage of a microservice.
-- `aggregate_by_property` - Aggregate the value of the property of the entities that match the query, supported aggregation functions are: `sum, min, max, median`. For example, sum the story points of open Jira issues related to a microservice.
-
+* `average_by_property` - 计算与查询匹配的实体的平均属性。例如，微服务的平均 CPU Usage。
+* `aggregate_by_property` - 聚合与查询匹配的实体的属性值，支持的聚合函数有: sum、min、max、median`。例如，汇总与微服务相关的开放式 Jira 问题的故事点。
 
 <Tabs groupId="CalculateByProperty" queryString defaultValue="Sum">
 
 <TabItem value="Sum">
 
-In this example, we have a microservice blueprint, and we want to calculate the sum of the story points of open Jira issues related to each microservice.
+在这个示例中，我们有一个微服务蓝图，我们想计算与每个微服务相关的开放式 Jira 问题的故事点总和。
 
 ```hcl
-
 resource "port_blueprint" "microservice_blueprint" {
   title       = "Microservice Blueprint"
   icon        = "Terraform"
@@ -600,10 +596,9 @@ resource "port_aggregation_properties" "microservice_aggregation_properties" {
 
 <TabItem value="Average">
 
-In this example, we have a microservice blueprint, and we want to calculate the average cpu usage of each microservice.
+在这个例子中，我们有一个微服务蓝图，想计算每个微服务的平均 CPU 使用率。
 
 ```hcl
-
 resource "port_blueprint" "microservice_blueprint" {
   title       = "Microservice Blueprint"
   icon        = "Terraform"
@@ -655,10 +650,9 @@ resource "port_aggregation_properties" "microservice_aggregation_properties" {
 
 <TabItem value="Min">
 
-In this example, we have a microservice blueprint, and we want to calculate the minimum value of the alert severity of each microservice in the last week.
+在这个示例中，我们有一个微服务蓝图，想计算上周每个微服务的警报严重性最小值。
 
 ```hcl
-
 resource "port_blueprint" "microservice_blueprint" {
   title       = "Microservice Blueprint"
   icon        = "Terraform"
@@ -703,17 +697,15 @@ resource "port_aggregation_properties" "microservice_aggregation_properties" {
     }
   }
 }
-
 ```
 
 </TabItem>
 
 <TabItem value="Max">
 
-In this example, we have a microservice blueprint, and we want to calculate the maximum value of the alert severity of each microservice in the last week.
+在这个示例中，我们有一个微服务蓝图，想计算上周每个微服务的警报严重性最大值。
 
 ```hcl
-
 resource "port_blueprint" "microservice_blueprint" {
   title       = "Microservice Blueprint"
   icon        = "Terraform"
@@ -764,10 +756,9 @@ resource "port_aggregation_properties" "microservice_aggregation_properties" {
 
 <TabItem value="Median">
 
-In this example, we have a microservice blueprint, and we want to calculate the median value of the cpu usage across all related pods of each microservice.
+在这个例子中，我们有一个微服务蓝图，我们想计算每个微服务的所有相关 pod 的 cpu 使用率中值。
 
 ```hcl
-
 resource "port_blueprint" "microservice_blueprint" {
   title       = "Microservice Blueprint"
   icon        = "Terraform"
@@ -818,21 +809,19 @@ resource "port_aggregation_properties" "microservice_aggregation_properties" {
 
 </Tabs>
 
+#### 在聚合属性中使用查询
 
-### Using Query in Aggregation Property
+您可以使用查询来筛选要执行计算的实体。
 
-You can use the query to filter the entities you want to perform the calculation on.
+该查询以过滤器为基础，根据 Port 的[Search Rules](../../../../../search-and-query/search-and-query.md#rules)
 
-The query is based on the Filters to include or exclude specific data based on Port's [Search Rules](../../../../../search-and-query/search-and-query.md#rules)
+#### 查询示例
 
-#### Query Example
+创建一个版本库蓝图和一个拉取请求蓝图，并创建一个聚合属性来计算平均每月的修复拉取请求: 
 
-Create a repository blueprint and a pull request blueprint and an aggregation property to calculate the average of fix pull request per month:
-
-To do that we will add a query to the aggregation property to filter only pull requests with fixed title:
+为此，我们将在聚合属性中添加一个查询，以便只过滤具有固定 title 的拉取请求: 
 
 ```hcl
-
 resource "port_blueprint" "repository_blueprint" {
   title       = "Repository Blueprint"
   icon        = "Terraform"
@@ -889,22 +878,18 @@ resource "port_aggregation_properties" "repository_aggregation_properties" {
     }
   }
 }
-
 ```
-
 
 </TabItem>
 
 <TabItem value="pulumi">
 
-## Coming soon...
+## 即将推出...
 
 </TabItem>
 
-
 </Tabs>
 
+### 限制
 
-### Limitations
-
-The aggregation property result for all entities of a blueprint will be recalculated every 15 minutes.
+蓝图中所有实体的聚合属性结果将每 15 分钟重新计算一次。

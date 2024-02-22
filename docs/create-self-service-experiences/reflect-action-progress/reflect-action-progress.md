@@ -1,30 +1,30 @@
-# Reflect action progress
+# 反映行动进展
 
 import Tabs from "@theme/Tabs"
 import TabItem from "@theme/TabItem"
 
-Invoking a Port Self-Service Action creates an `actionRun` object inside Port.
+调用Port自助服务操作会在Port内创建一个 `actionRun` 对象。
 
-:::tip
-To learn more about configuring Self-Service Actions, refer to the [setup UI for actions](../setup-ui-for-action/setup-ui-for-action.md) page. After configuring a Self-Service Action, invoking it will generate an `actionRun` which you can learn more about in this tutorial.
+:::tip 要了解有关配置自助服务操作的更多信息，请参阅[setup UI for actions](../setup-ui-for-action/setup-ui-for-action.md) 页面。配置自助服务操作后，调用该操作将生成 "actionRun"，您可以在本教程中了解更多信息。
+
 :::
 
-You can find all existing action runs in one of the following methods:
+您可以通过以下方法之一查找所有现有的操作运行: 
 
-1. Select the Runs tab on the Audit Log page;
-2. Select the Runs tab of a specific Entity on its [specific entity page](../../customize-pages-dashboards-and-plugins/page/entity-page.md);
-3. When you invoke a Self-Service Action from the UI, a toast will appear on the page, with the link to the action run that corresponds to the run of the Self-Service Action.
+1. 在 "审计日志 "页面上选择 "运行 "选项卡；
+2. 在[specific entity page](../../customize-pages-dashboards-and-plugins/page/entity-page.md) 上选择特定实体的 "运行 "选项卡；
+3. 从用户界面调用自助服务操作时，页面上会出现祝酒词，其中包含与自助服务操作的运行相对应的操作运行链接。
 
-This tutorial will teach you how to use Port's API to obtain existing action runs, update them with additional metadata and information about the results of the invoked Self-Service Action, and mark them as completed or failed to keep a consistent history of invoked Self-Service Actions and their status.
+本教程将教您如何使用 Port 的 API 获取现有的操作运行，用附加元数据和有关所引用自助服务操作结果的信息更新它们，并将它们标记为已完成或失败，以保持所引用自助服务操作及其状态的历史记录一致。
 
-## Setup
+## 设置
 
-During this tutorial, you will interact with action runs that were created from a basic `create microservice` Self-Service Action that was added to a `microservice` Blueprint.
+在本教程中，您将与从添加到 "微服务 "蓝图的基本 "创建微服务 "自服务操作中创建的操作运行进行交互。
 
-The Blueprint definition and Self-Service Action we will use in this tutorial are detailed below:
+本教程中我们将被引用的蓝图定义和自助服务操作详见下文: 
 
-:::note
-The Blueprint and Self-Service Action are intentionally minimalistic since they are not the focus of this tutorial. If needed, they can easily be extended to include extra properties you require.
+:::note 由于蓝图和自助服务操作不是本教程的重点，因此有意将其简化。 如有需要，可以很容易地扩展它们，以包含所需的额外属性。
+
 :::
 
 <details>
@@ -115,11 +115,11 @@ The Blueprint and Self-Service Action are intentionally minimalistic since they 
 
 </details>
 
-## Action run structure
+## 行动运行结构
 
-### `CREATE` action trigger
+### `CREATE` 动作触发器
 
-Let's invoke a `CREATE` Self-Service Action with the following parameters:
+让我们使用以下参数调用一个 `CREATE` 自助服务操作: 
 
 ```json showLineNumbers
 {
@@ -128,7 +128,7 @@ Let's invoke a `CREATE` Self-Service Action with the following parameters:
 }
 ```
 
-By invoking the Self-Service Action, the following action invocation body is sent:
+通过调用自助服务操作，会发送以下操作调用正文: 
 
 ```json showLineNumbers
 {
@@ -185,15 +185,15 @@ By invoking the Self-Service Action, the following action invocation body is sen
 }
 ```
 
-Note that the `runId` of the invoked Self-Service Action is: `r_QOz6WoOB1Q2lmhZZ`.
+请注意，调用的自助服务操作的 `runId` 是:  `r_QOz6WoOB1Q2lmhZZ`。
 
-#### Interacting with runs
+#### 与运行互动
 
 <Tabs groupId="interact" queryString="interact">
 
 <TabItem value="info" label="Run info">
 
-By making a GET request to `https://api.getport.io/v1/actions/runs/{run_id}` where `run_id=r_QOz6WoOB1Q2lmhZZ`, you get the following response:
+向 `https://api.getport.io/v1/actions/runs/{run_id}` 提出 GET 请求，其中 `run_id=r_QOz6WoOB1Q2lmhZZ` 会得到以下响应: 
 
 ```json showLineNumbers
 {
@@ -222,11 +222,10 @@ By making a GET request to `https://api.getport.io/v1/actions/runs/{run_id}` whe
 }
 ```
 
-:::info
-In the action run object, pay attention to the following:
+:::info 在操作运行对象中，请注意以下几点: 
 
-- `status` - current status of the action. When a Self-Service Action is invoked, the value is automatically set to `IN_PROGRESS`, but you can alter it to `SUCCESS` or `FAILURE` according to the run's progress;
-- `endedAt` - shows `null` because the action run status is `IN_PROGRESS`, but it will automatically update when the status of the action run is changed to either `SUCCESS` or `FAILURE`.
+* `status` - 动作的当前状态。调用自助服务操作时，该值会自动设置为 `IN_PROGRESS`，但您可以根据运行进度将其更改为 `SUCCESS` 或 `FAILURE`；
+* endedAt` - 显示 "null"，因为操作运行状态是 "IN_PROGRESS"，但当操作运行状态变为 "SUCCESS "或 "FAILURE "时，它将自动更新。
 
 :::
 
@@ -234,7 +233,7 @@ In the action run object, pay attention to the following:
 
 <TabItem value="logs" label="Run logs">
 
-By making a GET request to `https://api.getport.io/v1/actions/runs/{run_id}/logs` where `run_id=r_QOz6WoOB1Q2lmhZZ`, you get the following response:
+向 `https://api.getport.io/v1/actions/runs/{run_id}/logging` 提出 GET 请求，其中 `run_id=r_QOz6WoOB1Q2lmhZZ` 会得到以下响应: 
 
 ```json showLineNumbers
 {
@@ -247,11 +246,11 @@ By making a GET request to `https://api.getport.io/v1/actions/runs/{run_id}/logs
 
 </Tabs>
 
-### `DAY-2` action trigger
+### `DAY-2` 行动触发器
 
-An action run of a `DAY-2` Self-Service Action is very similar to an action run of a `CREATE` Self-Service Action, the main difference being that the Entity the action was invoked for is also provided in the action run object.
+DAY-2 "自助服务操作的操作运行与 "创建 "自助服务操作的操作运行非常相似，主要区别在于操作运行对象中也提供了调用操作的实体。
 
-For example, after performing a simple invocation of the `DAY-2` Self-Service Action with the following parameters:
+例如，使用以下参数简单调用 "DAY-2 "自助服务操作后: 
 
 ```json showLineNumbers
 {
@@ -259,7 +258,7 @@ For example, after performing a simple invocation of the `DAY-2` Self-Service Ac
 }
 ```
 
-The following action invocation body is sent (existing Entity is highlighted):
+将发送以下操作调用正文(现有实体已突出显示): 
 
 ```json showLineNumbers
 {
@@ -338,15 +337,15 @@ The following action invocation body is sent (existing Entity is highlighted):
 }
 ```
 
-Note that the `runId` of the invoked Self-Service Action is: `r_z0nJYJv0wCm2ASTR`.
+请注意，调用的自助服务操作的 `runId` 是:  `r_z0nJYJv0wCm2ASTR`。
 
-#### Interacting with runs
+#### 与运行互动
 
 <Tabs groupId="interact" queryString="interact">
 
 <TabItem value="info" label="Run info">
 
-By making a `GET` request to `https://api.getport.io/v1/actions/runs/{run_id}` where `run_id=r_z0nJYJv0wCm2ASTR`, you receive the following response:
+向 `https://api.getport.io/v1/actions/runs/{run_id}` 提出 `GET` 请求，其中 `run_id=r_z0nJYJv0wCm2ASTR` 会收到以下响应: 
 
 ```json showLineNumbers
 {
@@ -382,7 +381,7 @@ By making a `GET` request to `https://api.getport.io/v1/actions/runs/{run_id}` w
 
 <TabItem value="logs" label="Run Logs">
 
-By making a `GET` request to `https://api.getport.io/v1/actions/runs/{run_id}/logs` where `run_id=r_z0nJYJv0wCm2ASTR`, you receive the following response:
+向`https://api.getport.io/v1/actions/runs/{run_id}/logging`(其中`run_id=r_z0nJYJv0wCm2ASTR`)发出`GET`请求，会收到以下响应: 
 
 ```json showLineNumbers
 {
@@ -395,32 +394,32 @@ By making a `GET` request to `https://api.getport.io/v1/actions/runs/{run_id}/lo
 
 </Tabs>
 
-## Updating an action run
+## 更新行动运行
 
-:::info Github backend
-When using a `Github workflow` as the action backend, a `Report workflow status` option will be available and set to `Yes` by default. When using this option, Port will automatically update the status of the action run to `SUCCESS` or `FAILURE` according to the result of the Github workflow, so no manual update is required.
+:::info  Github 后端 使用 "Github 工作流 "作为动作后端时，将提供 "报告工作流状态 "选项，默认设置为 "是"。 使用该选项时，Port 将根据 Github 工作流的结果自动将动作运行状态更新为 "SUCCESS "或 "FAILURE"，因此无需手动更新。
+
 :::
 
-Now let's take an action run and update it. The following updates can be performed:
+现在，让我们运行并更新一个操作。 可以执行以下更新: 
 
 <Tabs groupId="interact" queryString="interact">
 
 <TabItem value="info" label="Run info">
 
-By sending a `PATCH` request to the `https://api.getport.io/v1/actions/runs/{run_id}` endpoint, you can update the status, or list of links of a run.
+通过向 `https://api.getport.io/v1/actions/runs/{run_id}` 端点发送 `PATCH` 请求，可以更新运行的状态或链接列表。
 
-The different update options are:
+不同的更新选项包括
 
-- Set the action run status via the `status` key - `SUCCESS`, `FAILURE`;
-- Add links to an external log of the job runners via the `link` key - AWS Cloudwatch logs, Github Workflow job, Jenkins job, etc.
+* 通过`status`键设置作业运行状态--`SUCCESS`, `FAILURE`；
+* 通过 `link` 键添加作业运行的外部 logging 链接 - AWS Cloudwatch logs、Github Workflow 作业、Jenkins 作业等。
 
-:::tip
-You don't have to provide all of the different updates in one request, you can make a `PATCH` request to the endpoint as many times as you need until the action run has finished.
+:::tip 您不必在一个请求中提供所有不同的更新，您可以根据需要多次向端点发出 `PATCH` 请求，直到动作运行结束。
 
-Note that every patch request will override the previous information that was available for a given key. For example, when updating the `link` key multiple times, only the value provided in the latest update will be the one displayed on the action run object.
+请注意，每次补丁请求都会覆盖特定键之前的信息。 例如，当多次更新 `link` 键时，只有最新更新中提供的值才会显示在动作运行对象上。
+
 :::
 
-Let's update our action run with the following `PATCH` request body:
+让我们用下面的 `PATCH` 请求正文更新我们的操作运行: 
 
 ```json showLineNumbers
 {
@@ -435,7 +434,7 @@ Let's update our action run with the following `PATCH` request body:
 }
 ```
 
-The API returns the following response:
+API 返回以下响应: 
 
 ```json showLineNumbers
 {
@@ -474,13 +473,12 @@ The API returns the following response:
 }
 ```
 
-:::info
-Note how our action run has updated:
+:::info 请注意我们的行动运行是如何更新的: 
 
-- `status` - has been updated to `SUCCESS`;
-- `endedAt` - now correctly shows the time that the action run was updated;
-- `link` - now includes the links we provided, and those links will also appear in the page matching the action run in Port;
-- `message` - now includes the additional info we provided and it will also appear in the page matching the action run in Port.
+* `status` - 已更新为 `SUCCESS`；
+* `endedAt` - 现在能正确显示操作运行的更新时间；
+* `link` - 现在包括我们提供的链接，这些链接也将出现在与 Port 中的操作运行相匹配的页面中；
+* `message` - 现在包括我们提供的附加信息，这些信息也将显示在与 Port 中运行的操作相匹配的页面中。
 
 :::
 
@@ -488,14 +486,14 @@ Note how our action run has updated:
 
 <TabItem value="logs" label="Run logs">
 
-By sending a `POST` request to the `https://api.getport.io/v1/actions/runs/{run_id}/logs` endpoint, you can add a new log message to the run log.
+通过向 `https://api.getport.io/v1/actions/runs/{run_id}/logs` 端点发送 `POST` 请求，可以在运行日志中添加新的日志信息。
 
-The different update options are:
+不同的更新选项包括
 
-- Set the action run status via the `terminationStatus` key - `SUCCESS`, `FAILURE`;
-- Add an additional log entry to the run's log.
+* 通过 `terminationStatus` 键设置运行状态--`SUCCESS`, `FAILURE`；
+* 在运行日志中添加额外的日志条目。
 
-Let's update our action run log with the following `POST` request body:
+让我们用下面的 `POST` 请求体更新我们的操作运行日志: 
 
 ```json showLineNumbers
 {
@@ -503,7 +501,7 @@ Let's update our action run log with the following `POST` request body:
 }
 ```
 
-The API returns the following response:
+API 返回以下响应: 
 
 ```json showLineNumbers
 {
@@ -518,7 +516,7 @@ The API returns the following response:
 }
 ```
 
-And if we send a `GET` request to `https://api.getport.io/v1/actions/runs/{run_id}/logs` endpoint, the entire action run log will be returned:
+如果我们向 `https://api.getport.io/v1/actions/runs/{run_id}/logs` 端点发送 `GET` 请求，就会返回整个操作的运行日志: 
 
 ```json showLineNumbers
 {
@@ -535,7 +533,7 @@ And if we send a `GET` request to `https://api.getport.io/v1/actions/runs/{run_i
 }
 ```
 
-If we want to add a final log entry and also mark the action run as successful, we can use the following request body:
+如果我们想添加最后的 logging 条目，同时将操作运行标记为成功，可以使用下面的请求体: 
 
 ```json showLineNumbers
 {
@@ -544,21 +542,21 @@ If we want to add a final log entry and also mark the action run as successful, 
 }
 ```
 
-A log message with the `terminationStatus` key can only be sent once for an action run. After the `terminationStatus` is sent, the run status is marked accordingly and the run can no longer be modified.
+带有 `terminationStatus` 键的日志信息只能为一个操作运行发送一次。 `terminationStatus` 发送后，运行状态会被自标记，且不能再修改该运行。
 
 </TabItem>
 
 </Tabs>
 
-## Tying Entities to an action run
+## 将实体绑定到行动运行中
 
-You can also add additional context and metadata to an action run by attaching a `run_id` query parameter to every API route that creates or changes an Entity (i.e. `POST`, `PUT`, `PATCH` and `DELETE` requests to the `https://api.getport.io/v1/blueprints/{blueprint_id}/entities/{entity_id}` route). By adding the `run_id` parameter, you reflect the change made to the Entity as part of the set of steps the action run performed during its runtime.
+您还可以通过在每个创建或更改实体的 API 路由(即对 `https://api.getport.io/v1/blueprints/{blueprint_id}/entities/{entity_id}` 路由的 `POST`、`PUT`、`PATCH` 和 `DELETE` 请求)中附加 `run_id` 查询参数，为动作运行添加额外的上下文和元数据。通过添加 `run_id` 参数，您可以将对实体所做的更改反映为动作运行在其运行期间所执行的步骤集的一部分。
 
-:::tip
-Tying Entities to an action run is only possible when an action run is in the `IN_PROGRESS` status.
+:::tip 只有当行动运行处于 "IN_PROGRESS "状态时，才能将实体与行动运行绑定。
+
 :::
 
-For example, let's invoke another action run and use the following python snippet to create a new microservice Entity which matches our triggered Self-Service Action, and add the `run_id` query parameter to mark that the Self-Service Action was responsible for the creation of the new microservice:
+例如，让我们调用另一个动作运行，并使用下面的 python 代码段创建一个新的微服务实体，该实体与我们触发的自助服务动作相匹配，并添加 `run_id` 查询参数来标记自助服务动作负责创建新的微服务: 
 
 <details>
 <summary>Click here to see the Python code</summary>
@@ -578,12 +576,10 @@ RUN_ID = 'YOUR_RUN_ID'
 
 TARGET_BLUEPRINT_ID = 'microservice'
 
-
 def get_auth_token():
     credentials = {'clientId': CLIENT_ID, 'clientSecret': CLIENT_SECRET}
     token_response = requests.post(f'{API_URL}/auth/access_token', json=credentials)
     return token_response.json()['accessToken']
-
 
 def get_run_id(access_token, run_id):
     headers = {
@@ -592,7 +588,6 @@ def get_run_id(access_token, run_id):
 
     run_id_resp = requests.get(f'{API_URL}/actions/runs/{run_id}', headers=headers)
     return run_id_resp.json()['run']
-
 
 def create_entity(access_token, run_id, properties):
     headers = {
@@ -627,7 +622,6 @@ def add_action_run_log_entry(access_token, run_id, message):
 
     action_update_resp = requests.post(f'{API_URL}/actions/runs/{run_id}/logs', headers=headers, json=body)
 
-
 def mark_action_run_as_successful(access_token, run_id):
     headers = {
         'Authorization': f'Bearer {access_token}'
@@ -641,7 +635,6 @@ def mark_action_run_as_successful(access_token, run_id):
     action_update_resp = requests.patch(f'{API_URL}/actions/runs/{run_id}', headers=headers, json=body)
     pprint(action_update_resp.json()['run'])
 
-
 def main():
     access_token = get_auth_token()
 
@@ -652,18 +645,16 @@ def main():
     add_action_run_log_entry(access_token, RUN_ID, f'New entity created!')
     mark_action_run_as_successful(access_token, RUN_ID)
 
-
 if __name__ == '__main__':
     main()
-
 ```
 
 </details>
 
-Now when you look at the run log of the action run, you will see the information of the newly created Entity:
+现在，当你查看动作运行的 run logging 时，就会看到新创建实体的信息: 
 
 ![Developer portal action run log](../../../static/img/self-service-actions/action_run_log.png)
 
-:::tip
-In the example above we created just one Entity, but it is possible to create, update or delete multiple Entities as part of the steps taken by a single action run, and all of these changes will be reflected in the action run log.
+:::tip 在上面的示例中，我们只创建了一个实体，但作为单个操作运行步骤的一部分，可以创建、更新或删除多个实体，所有这些更改都将反映在操作运行日志中。
+
 :::

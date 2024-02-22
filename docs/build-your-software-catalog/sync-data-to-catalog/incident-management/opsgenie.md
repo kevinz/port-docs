@@ -1,41 +1,43 @@
 ---
+
 sidebar_position: 2
+
 ---
 
 import Tabs from "@theme/Tabs"
 import TabItem from "@theme/TabItem"
-import Prerequisites from "../templates/\_ocean_helm_prerequisites_block.mdx"
-import AzurePremise from "../templates/\_ocean_azure_premise.mdx"
-import DockerParameters from "./\_opsgenie_docker_params.mdx"
+import Prerequisites from "../templates/_ocean_helm_prerequisites_block.mdx"
+import AzurePremise from "../templates/_ocean_azure_premise.mdx"
+import DockerParameters from "./_opsgenie_docker_params.mdx"
 import AdvancedConfig from '../../../generalTemplates/_ocean_advanced_configuration_note.md'
-import OpsGenieAlertBlueprint from "../webhook/examples/resources/opsgenie/\_example_opsgenie_alert_blueprint.mdx";
-import OpsGenieAlertConfiguration from "../webhook/examples/resources/opsgenie/\_example_opsgenie_alert_configuration.mdx";
+import OpsGenieAlertBlueprint from "../webhook/examples/resources/opsgenie/_example_opsgenie_alert_blueprint.mdx";
+import OpsGenieAlertConfiguration from "../webhook/examples/resources/opsgenie/_example_opsgenie_alert_configuration.mdx";
 
 # Opsgenie
 
-Our Opsgenie integration allows you to import `alert`, `service` and `incident` from your Opsgenie account into Port, according to your mapping and definitions.
+我们的 Opsgenie 集成允许您根据映射和定义，将 Opsgenie 账户中的 "警报"、"服务 "和 "事件 "导入 Port。
 
-## Common use cases
+## 常见被引用情况
 
-- Map `alert`, `service` and `incident` in your Opsgenie account.
-- Watch for object changes (create/update/delete) in real-time, and automatically apply the changes to your entities in Port.
+* 在您的 Opsgenie 账户中映射 "警报"、"服务 "和 "事件"。
+* 实时观察对象更改(创建/更新/删除)，并自动将更改应用到您的 Port 实体中。
 
-## Prerequisites
+## 先决条件
 
 <Prerequisites />
 
-## Installation
+## 安装
 
-Choose one of the following installation methods:
+从以下安装方法中选择一种: 
 
 <Tabs groupId="installation-methods" queryString="installation-methods">
 
 <TabItem value="real-time-always-on" label="Real Time & Always On" default>
 
-Using this installation option means that the integration will be able to update Port in real time using webhooks.
+使用该安装选项意味着集成将能使用 webhook 实时更新 Port。
 
-This table summarizes the available parameters for the installation.
-Set them as you wish in the script below, then copy it and run it in your terminal:
+本表总结了安装时可用的参数，请在下面的脚本中按自己的需要进行设置，然后复制并在终端运行: 
+
 
 | Parameter                        | Description                                                                                                   | Required |
 | -------------------------------- | ------------------------------------------------------------------------------------------------------------- | -------- |
@@ -49,6 +51,7 @@ Set them as you wish in the script below, then copy it and run it in your termin
 | `integration.config.apiUrl`      | The Opsgenie API URL. If not specified, the default will be https://api.opsgenie.com                          | ✅       |
 | `scheduledResyncInterval`        | The number of minutes between each resync                                                                     | ❌       |
 | `initializePortResources`        | Default true, When set to true the integration will create default blueprints and the port App config Mapping | ❌       |
+
 
 <br/>
 <Tabs groupId="deploy" queryString="deploy">
@@ -68,16 +71,18 @@ helm upgrade --install my-opsgenie-integration port-labs/port-ocean \
   --set integration.secrets.apiToken="API_TOKEN"  \
   --set integration.config.apiUrl="https://api.opsgenie.com"
 ```
+
 </TabItem>
 
 <TabItem value="argocd" label="ArgoCD" default>
 To install the integration using ArgoCD, follow these steps:
 
-1. Create a `values.yaml` file in `argocd/my-ocean-opsgenie-integration` in your git repository with the content:
+1. 在 git 仓库的 `argocd/my-ocean-opsgenie-integration` 中创建一个内容为 `values.yaml` 的文件: 
 
-:::note
-Remember to replace the placeholders for `OPSGENIE_API_URL` and `OPSGENIE_API_TOKEN`.
+:::note 请记住替换 `OPSGENIE_API_URL` 和 `OPSGENIE_API_TOKEN` 的占位符。
+
 :::
+
 ```yaml showLineNumbers
 initializePortResources: true
 scheduledResyncInterval: 120
@@ -93,13 +98,15 @@ integration:
   // highlight-next-line
     apiToken: OPSGENIE_API_TOKEN
 ```
+
 <br/>
 
-2. Install the `my-ocean-opsgenie-integration` ArgoCD Application by creating the following `my-ocean-opsgenie-integration.yaml` manifest:
-:::note
-Remember to replace the placeholders for `YOUR_PORT_CLIENT_ID` `YOUR_PORT_CLIENT_SECRET` and `YOUR_GIT_REPO_URL`.
+2.创建以下 "my-ocean-opsgenie-integration.yaml "配置清单，安装 "my-ocean-opsgenie-integration "ArgoCD应用程序: 
 
-Multiple sources ArgoCD documentation can be found [here](https://argo-cd.readthedocs.io/en/stable/user-guide/multiple_sources/#helm-value-files-from-external-git-repository).
+:::note 记住要替换 `YOUR_PORT_CLIENT_ID``YOUR_PORT_CLIENT_SECRET` 和 `YOUR_GIT_REPO_URL` 的占位符。
+
+多种来源的 ArgoCD 文档可在[here](https://argo-cd.readthedocs.io/en/stable/user-guide/multiple_sources/#helm-value-files-from-external-git-repository) 上找到。
+
 :::
 
 <details>
@@ -144,10 +151,12 @@ spec:
 </details>
 <br/>
 
-3. Apply your application manifest with `kubectl`:
+3.使用 `kubectl` 配置应用程序清单: 
+
 ```bash
 kubectl apply -f my-ocean-opsgenie-integration.yaml
 ```
+
 </TabItem>
 </Tabs>
 
@@ -158,17 +167,17 @@ kubectl apply -f my-ocean-opsgenie-integration.yaml
   <TabItem value="github" label="GitHub">
 This workflow will run the Opsgenie integration once and then exit, this is useful for **scheduled** ingestion of data.
 
-:::warning
-If you want the integration to update Port in real time using webhooks you should use the [Real Time & Always On](?installation-methods=real-time-always-on#installation) installation option
+:::warning 如果希望集成使用 webhooks 实时更新 Port，则应使用[Real Time & Always On](?installation-methods=real-time-always-on#installation) 安装选项
+
 :::
 
-Make sure to configure the following [Github Secrets](https://docs.github.com/en/actions/security-guides/using-secrets-in-github-actions):
+确保配置以下[Github Secrets](https://docs.github.com/en/actions/security-guides/using-secrets-in-github-actions) : 
 
 <DockerParameters />
 
 <br/>
 
-Here is an example for `opsgenie-integration.yml` workflow file:
+以下是 `opsgenie-integration.yml` 工作流程文件的示例: 
 
 ```yaml showLineNumbers
 name: Opsgenie Exporter Workflow
@@ -207,22 +216,20 @@ jobs:
   <TabItem value="jenkins" label="Jenkins">
 This pipeline will run the Opsgenie integration once and then exit, this is useful for **scheduled** ingestion of data.
 
-:::tip
-Your Jenkins agent should be able to run docker commands.
+:::tip 你的 Jenkins 代理应该能够运行 docker 命令。
+
 :::
-:::warning
-If you want the integration to update Port in real time using webhooks you should use
-the [Real Time & Always On](?installation-methods=real-time-always-on#installation) installation option.
+:::warning 如果希望集成使用 webhooks 实时更新 Port，则应使用 安装选项。[Real Time & Always On](?installation-methods=real-time-always-on#installation) 
+
 :::
 
-Make sure to configure the following [Jenkins Credentials](https://www.jenkins.io/doc/book/using/using-credentials/)
-of `Secret Text` type:
+请确保配置以下[Jenkins Credentials](https://www.jenkins.io/doc/book/using/using-credentials/)的 "Secret Text "类型: 
 
 <DockerParameters />
 
 <br/>
 
-Here is an example for `Jenkinsfile` groovy pipeline file:
+下面是 `Jenkinsfile` groovy Pipelines 文件的示例: 
 
 ```text showLineNumbers
 pipeline {
@@ -271,7 +278,7 @@ pipeline {
 
 <br/>
 
-Here is an example for `opsgenie-integration.yml` pipeline file:
+下面是 `opsgenie-integration.yml` Pipelines 文件的示例: 
 
 ```yaml showLineNumbers
 trigger:
@@ -282,7 +289,6 @@ pool:
 
 variables:
   - group: port-ocean-credentials
-
 
 steps:
 - script: |
@@ -303,7 +309,6 @@ steps:
 
     exit $?
   displayName: 'Ingest Data into Port'
-
 ```
 
   </TabItem>
@@ -315,26 +320,26 @@ steps:
 
 <AdvancedConfig/>
 
-## Ingesting Opsgenie objects
+## 摄取 Opsgenie 对象
 
-The Opsgenie integration uses a YAML configuration to describe the process of loading data into the developer portal. See [examples](#examples) below.
+Opsgenie 集成使用 YAML 配置来描述将数据加载到开发人员门户的过程。 请参阅下面的[examples](#examples) 。
 
-The integration makes use of the [JQ JSON processor](https://stedolan.github.io/jq/manual/) to select, modify, concatenate, transform and perform other operations on existing fields and values from Opsgenie's API events.
+该集成利用[JQ JSON processor](https://stedolan.github.io/jq/manual/) 对来自 Opsgenie API 事件的现有字段和 Values 进行选择、修改、连接、转换和其他操作。
 
-### Configuration structure
+### 配置结构
 
-The integration configuration determines which resources will be queried from Opsgenie, and which entities and properties will be created in Port.
+集成配置决定了从 Opsgenie 查询哪些资源，以及在 Port 中创建哪些实体和属性。
 
-:::tip Supported resources
-The following resources can be used to map data from Opsgenie, it is possible to reference any field that appears in the API responses linked below for the mapping configuration.
+:::tip  支持的资源 以下资源可被引用来映射来自 Opsgenie 的数据，可以引用下面链接的 API 响应中出现的任何字段来进行映射配置。
 
-- [`Alert`](https://docs.opsgenie.com/docs/alert-api#list-alerts)
-- [`Service`](https://docs.opsgenie.com/docs/service-api#list-services)
-- [`Incident`](https://docs.opsgenie.com/docs/incident-api#list-incidents)
+* * [`Alert`](https://docs.opsgenie.com/docs/alert-api#list-alerts)
+* [`Service`](https://docs.opsgenie.com/docs/service-api#list-services)
+* [`Incident`](https://docs.opsgenie.com/docs/incident-api#list-incidents)
 
 :::
 
-- The root key of the integration configuration is the `resources` key:
+* 集成配置的根密钥是 "资源 "密钥: 
+
 
   ```yaml showLineNumbers
   # highlight-next-line
@@ -344,7 +349,9 @@ The following resources can be used to map data from Opsgenie, it is possible to
       ...
   ```
 
-- The `kind` key is a specifier for a Opsgenie object:
+
+* 类型 "键是 Opsgenie 对象的指定符: 
+
 
   ```yaml showLineNumbers
     resources:
@@ -354,7 +361,9 @@ The following resources can be used to map data from Opsgenie, it is possible to
         ...
   ```
 
-- The `selector` and the `query` keys allow you to filter which objects of the specified `kind` will be ingested into your software catalog:
+
+* 通过 "选择器 "和 "查询 "键，您可以过滤哪些指定 "类型 "的对象将被录入软件目录: 
+
 
   ```yaml showLineNumbers
   resources:
@@ -366,7 +375,9 @@ The following resources can be used to map data from Opsgenie, it is possible to
       port:
   ```
 
-- The `port`, `entity` and the `mappings` keys are used to map the Opsgenie object fields to Port entities. To create multiple mappings of the same kind, you can add another item in the `resources` array;
+
+* Port"、"实体 "和 "映射 "键被用来将 Opsgenie 对象字段映射到Port实体。要创建多个同类映射，可在 `resources` 数组中添加另一项；
+
 
   ```yaml showLineNumbers
   resources:
@@ -391,58 +402,58 @@ The following resources can be used to map data from Opsgenie, it is possible to
           mappings: ...
   ```
 
-  :::tip Blueprint key
-  Note the value of the `blueprint` key - if you want to use a hardcoded string, you need to encapsulate it in 2 sets of quotes, for example use a pair of single-quotes (`'`) and then another pair of double-quotes (`"`)
-  :::
 
-## Configuring real-time updates
+:::tip 蓝图键 注意 `blueprint` 键的值 - 如果要使用硬编码字符串，需要用 2 组引号封装，例如使用一对单引号 (`'`)，然后再用一对双引号 (`"`) 
+::: 
 
-Currently, the OpsGenie API lacks support for programmatic webhook creation. To set up a webhook configuration in OpsGenie for sending alert notifications to the Ocean integration, follow these steps:
+## 配置实时更新
 
-### Prerequisite
+目前，OpsGenie API 不支持编程式 webhook 创建。 要在 OpsGenie 中设置 webhook 配置，以便向 Ocean 集成发送警报通知，请按照以下步骤操作: 
 
-Prepare a webhook `URL` using this format: `{app_host}/integration/webhook`. The `app_host` parameter should match the ingress or external load balancer where the integration will be deployed. For example, if your ingress or load balancer exposes the OpsGenie Ocean integration at `https://myservice.domain.com`, your webhook `URL` should be `https://myservice.domain.com/integration/webhook`.
+### 前提条件
 
-### Create a webhook in OpsGenie
+使用以下格式准备 webhook `URL`: `{app_host}/integration/webhook`。 `app_host` 参数应与部署集成的 ingress 或外部负载平衡器匹配。例如，如果您的 ingress 或负载平衡器在 `https://myservice.domain.com` 公开 OpsGenie Ocean 集成，则您的 webhook `URL` 应为 `https://myservice.domain.com/integration/webhook`。
 
-1. Go to OpsGenie;
-2. Select **Settings**;
-3. Click on **Integrations** under the **Integrations** section of the sidebar;
-4. Click on **Add integration**;
-5. In the search box, type _Webhook_ and select the webhook option;
-6. Input the following details:
-   1. `Name` - use a meaningful name such as Port Ocean Webhook;
-   2. Be sure to keep the "Enabled" checkbox checked;
-   3. Check the "Add Alert Description to Payload" checkbox;
-   4. Check the "Add Alert Details to Payload" checkbox;
-   5. Add the following action triggers to the webhook by clicking on **Add new action**:
-      1. If _alert is snoozed_ in Opsgenie, _post to url_ in Webhook;
-      2. If _alert's description is updated_ in Opsgenie, _post to url_ in Webhook;
-      3. If _alert's message is updated_ in Opsgenie, _post to url_ in Webhook;
-      4. If _alert's priority is updated_ in Opsgenie, _post to url_ in Webhook;
-      5. If _a responder is added to the alert_ in Opsgenie, _post to url_ in Webhook;
-      6. if _a user executes "Assign Ownership_ in Opsgenie, _post to url_ in Webhook;
-      7. if _a tag is added to the alert_ in Opsgenie, _post to url_ in Webhook;
-      8. .if _a tag is removed from the alert_ in Opsgenie, _post to url_ in Webhook;
-   6. `Webhook URL` - enter the value of the `URL` you created above.
-7. Click **Save integration**
+#### 在 OpsGenie 中创建 webhook
 
-### Ingest data into Port
+1. 转到 OpsGenie；
+2. 选择 **设置**；
+3. 点击侧边栏**综合**部分下的**综合**；
+4. 点击**添加集成**；
+5. 在搜索框中输入 _Webhook_ 并选择 webhook 选项；
+6. 输入以下详细信息: 
+    1. 名称"--请被引用一个有意义的名称，如 Port Ocean Webhook；
+    2.确保选中 "已启用 "复选框；
+    3.选中 "向有效负载添加警报描述 "复选框；
+    4.选中 "在有效载荷中添加警报详细信息 "复选框；
+    5.点击**添加新操作**，将以下操作触发器添加到 webhook: 
+        1.如果在 Opsgenie 中_警报被忽略_，则在 Webhook 中_发布到 url_；
+        2.如果 _alert 的 description 在 Opsgenie 中被更新_, _post to url_ 在 Webhook 中；
+        3.如果在 Opsgenie 中更新了_警报的信息_，则在 Webhook 中_发布到 url_；
+        4.如果在 Opsgenie 中更新了_警报的优先级_，则在 Webhook 中_发布到 url_；
+        5.如果_在 Opsgenie 中为警报添加了应答器_，_在 Webhook 中发布到 url_；
+        6. 如果_一个用户在 Opsgenie 中执行 "分配所有权_，_发布到 Webhook 中的 url_；
+        7. 如果_在 Opsgenie 中为警报添加了标签_，_在 Webhook 中发布到 url_；
+        8. .如果在 Opsgenie 中从警报中删除_标签，则在 Webhook 中_发布到 url_；
+    6.Webhook URL` - 输入上文创建的 `URL` 的值。
+7.点击 **保存集成**
 
-To ingest Opsgenie objects using the [integration configuration](#configuration-structure), you can follow the steps below:
+#### 将数据输入Port
 
-1. Go to the DevPortal Builder page.
-2. Select a blueprint you want to ingest using Opsgenie.
-3. Choose the **Ingest Data** option from the menu.
-4. Select Opsgenie under the Incident management category.
-5. Modify the [configuration](#configuration-structure) according to your needs.
-6. Click `Resync`.
+要使用[integration configuration](#configuration-structure) 引用 Opsgenie 对象，可以按照以下步骤操作: 
 
-## Examples
+1. 转到 DevPortal Builder 页面。
+2. 选择要被 Opsgenie 引用的蓝图。
+3. 从菜单中选择**采集数据**选项。
+4. 在事件管理类别下选择 Opsgenie。
+5. 根据需要修改[configuration](#configuration-structure) 。
+6. 单击 "Resync"。
 
-Examples of blueprints and the relevant integration configurations:
+## 示例
 
-### Service
+蓝图和相关集成配置示例: 
+
+### 服务
 
 <details>
 <summary>Service blueprint</summary>
@@ -550,7 +561,7 @@ resources:
 
 </details>
 
-### Incident
+###事件
 
 <details>
 <summary>Incident blueprint</summary>
@@ -656,7 +667,7 @@ resources:
 
 </details>
 
-### Alert
+#### 警报
 
 <details>
 <summary>Alert blueprint</summary>
@@ -783,13 +794,13 @@ resources:
 
 </details>
 
-## Let's Test It
+## 让我们来测试一下
 
-This section includes a sample response data from Opsgenie. In addition, it includes the entity created from the resync event based on the Ocean configuration provided in the previous section.
+本节包括来自 Opsgenie 的响应数据示例。 此外，还包括根据上一节提供的 Ocean 配置从重新同步事件中创建的实体。
 
-### Payload
+### 有效载荷
 
-Here is an example of the payload structure from Opsgenie:
+下面是 Opsgenie 提供的有效载荷结构示例: 
 
 <details>
 <summary> Service response data</summary>
@@ -1059,9 +1070,9 @@ Here is an example of the payload structure from Opsgenie:
 
 </details>
 
-### Mapping Result
+#### 映射结果
 
-The combination of the sample payload and the Ocean configuration generates the following Port entity:
+结合样本有效载荷和 Ocean 配置，可生成以下 Port 实体: 
 
 <details>
 <summary> Service entity in Port</summary>
@@ -1162,18 +1173,19 @@ The combination of the sample payload and the Ocean configuration generates the 
 
 </details>
 
-## Alternative installation via webhook
-While the Ocean integration described above is the recommended installation method, you may prefer to use a webhook to ingest data from Opsgenie. If so, use the following instructions:
+## 通过 webhook 进行替代安装
+
+虽然上述 Ocean 集成是推荐的安装方法，但您可能更喜欢使用 webhook 从 Opsgenie 引用数据。 如果是这样，请使用以下说明: 
 
 <details>
 
 <summary><b>Webhook installation (click to expand)</b></summary>
 
-In this example you are going to create a webhook integration between [OpsGenie](https://www.atlassian.com/software/opsgenie) and Port, which will ingest alert entities.
+在本示例中，您将在[OpsGenie](https://www.atlassian.com/software/opsgenie) 和 Port 之间创建一个 webhook 集成，用于接收警报实体。
 
-### Port configuration
+###Port配置
 
-Create the following blueprint definition:
+创建以下蓝图定义: 
 
 <details>
 <summary>OpsGenie alert blueprint</summary>
@@ -1182,60 +1194,59 @@ Create the following blueprint definition:
 
 </details>
 
-Create the following webhook configuration [using Port UI](../../?operation=ui#configuring-webhook-endpoints):
+创建以下 webhook 配置[using Port UI](../../?operation=ui#configuring-webhook-endpoints) : 
 
 <details>
 <summary>OpsGenie alert webhook configuration</summary>
 
-1. **Basic details** tab - fill the following details:
-   1. Title : `OpsGenie mapper`;
-   2. Identifier : `opsgenie_mapper`;
-   3. Description : `A webhook configuration to map OpsGenie alerts to Port`;
-   4. Icon : `OpsGenie`;
-2. **Integration configuration** tab - fill the following JQ mapping:
+1. **基本信息** 选项卡 - 填写以下详细信息: 
+    1.title: `OpsGenie mapper`；
+    2.标识符 : `opsgenie_mapper`；
+    3.Description : `将 OpsGenie 警报映射到 Port` 的 webhook 配置；
+    4.图标 : `OpsGenie`；
+2. **集成配置**选项卡 - 填写以下 JQ 映射: 
    <OpsGenieAlertConfiguration/>
-
-3. Click **Save** at the bottom of the page.
+3.单击页面底部的**保存**。
 
 </details>
 
 <h2>Create a webhook in OpsGenie</h2>
 
-1. Go to OpsGenie;
-2. Select **Settings**;
-3. Click on **Integrations** under the **Integrations** section of the sidebar;
-4. Click on **Add integration**;
-5. In the search box, type _Webhook_ and select the webhook option;
-6. Input the following details:
-   1. `Name` - use a meaningful name such as Port Webhook;
-   2. Be sure to keep the "Enabled" checkbox checked;
-   3. Check the "Add Alert Description to Payload" checkbox;
-   4. Check the "Add Alert Details to Payload" checkbox;
-   5. Add the following action triggers to the webhook by clicking on **Add new action**:
-      1. If _alert is snoozed_ in Opsgenie, _post to url_ in Webhook;
-      2. If _alert's description is updated_ in Opsgenie, _post to url_ in Webhook;
-      3. If _alert's message is updated_ in Opsgenie, _post to url_ in Webhook;
-      4. If _alert's priority is updated_ in Opsgenie, _post to url_ in Webhook;
-      5. If _a responder is added to the alert_ in Opsgenie, _post to url_ in Webhook;
-      6. if _a user executes "Assign Ownership_ in Opsgenie, _post to url_ in Webhook;
-      7. if _a tag is added to the alert_ in Opsgenie, _post to url_ in Webhook;
-      8. .if _a tag is removed from the alert_ in Opsgenie, _post to url_ in Webhook;
-   6. `Webhook URL` - enter the value of the `url` key you received after creating the webhook configuration;
-7. Click **Save integration**
+1. 转到 OpsGenie；
+2. 选择 **设置**；
+3. 点击侧边栏**综合**部分下的**综合**；
+4. 点击**添加集成**；
+5. 在搜索框中输入 _Webhook_ 并选择 webhook 选项；
+6. 输入以下详细信息: 
+    1. 名称"- 请被引用一个有意义的名称，如 Port Webhook；
+    2.确保选中 "已启用 "复选框；
+    3.选中 "向有效负载添加警报描述 "复选框；
+    4.选中 "在有效载荷中添加警报详细信息 "复选框；
+    5.点击**添加新操作**，将以下操作触发器添加到 webhook: 
+        1.如果在 Opsgenie 中_警报被忽略_，则在 Webhook 中_发布到 url_；
+        2.如果 _alert 的 description 在 Opsgenie 中被更新_, _post to url_ 在 Webhook 中；
+        3.如果在 Opsgenie 中更新了_警报的信息_，则在 Webhook 中_发布到 url_；
+        4.如果在 Opsgenie 中更新了_警报的优先级_，则在 Webhook 中_发布到 url_；
+        5.如果_在 Opsgenie 中为警报添加了应答器_，_在 Webhook 中发布到 url_；
+        6. 如果_一个用户在 Opsgenie 中执行 "分配所有权_，_发布到 Webhook 中的 url_；
+        7. 如果_在 Opsgenie 中为警报添加了标签_，_在 Webhook 中发布到 url_；
+        8. .如果在 Opsgenie 中从警报中删除_标签，则在 Webhook 中_发布到 url_；
+    6.Webhook URL` - 输入创建 Webhook 配置后收到的 `url` 键值；
+7.点击**保存集成**
 
-:::tip
-In order to view the different payloads and events available in Opsgenie webhooks, [look here](https://support.atlassian.com/opsgenie/docs/opsgenie-edge-connector-alert-action-data/)
+:::tip 为了查看 Opsgenie webhooks 中可用的不同有效载荷和事件、[look here](https://support.atlassian.com/opsgenie/docs/opsgenie-edge-connector-alert-action-data/)
+
 :::
 
-Done! any change that happens to an OpsGenie alert (created, acknowledged, etc.) will trigger a webhook event that OpsGenie will send to the webhook URL provided by Port. Port will parse the events according to the mapping and update the catalog entities accordingly.
+完成！OpsGenie 警报发生的任何变化(创建、确认等)都会触发 webhook 事件，OpsGenie 会将该事件发送到 Provider 提供的 webhook URL。 Port 会根据映射解析事件并相应地更新目录实体。
 
 <h2>Let's Test It</h2>
 
-This section includes a sample webhook event sent from OpsGenie when an alert is created. In addition, it includes the entity created from the event based on the webhook configuration provided in the previous section.
+本节包括创建警报时从 OpsGenie 发送的 webhook 事件示例。 此外，还包括根据上一节提供的 webhook 配置从事件中创建的实体。
 
 <h3>Payload</h3>
 
-Here is an example of the payload structure sent to the webhook URL when an OpsGenie alert is created:
+下面是创建 OpsGenie 警报时发送到 webhook URL 的有效载荷结构示例: 
 
 <details>
 <summary> Webhook event payload</summary>
@@ -1273,7 +1284,7 @@ Here is an example of the payload structure sent to the webhook URL when an OpsG
 
 <h3>Mapping Result</h3>
 
-The combination of the sample payload and the webhook configuration generates the following Port entity:
+结合示例有效载荷和 webhook 配置可生成以下 Port 实体: 
 
 ```json showLineNumbers
 {
@@ -1296,9 +1307,9 @@ The combination of the sample payload and the webhook configuration generates th
 
 <h2>Ingest who is on-call</h2>
 
-In this example we will create a blueprint for `service` entities with an `on-call` property that will be ingested directly from OpsGenie.
-The examples below pull data from the OpsGenie REST Api, in a defined scheduled period using GitLab Pipelines or GitHub Workflows, and report the data to Port as a property to the `service` blueprint.
+在本示例中，我们将为具有 "on-call "属性的 "service "实体创建一个蓝图，该蓝图将直接从 OpsGenie 采集数据。 下面的示例将使用 GitLab Pipelines 或 GitHub Workflows 在定义的计划时间内从 OpsGenie REST Api 提取数据，并将数据作为 "service "蓝图的一个属性报告给 Port。
 
-- [Github Workflow](https://github.com/port-labs/opsgenie-oncall-example)
-- [GitLab CI Pipeline](https://gitlab.com/getport-labs/opsgenie-oncall-example)
+* * [Github Workflow](https://github.com/port-labs/opsgenie-oncall-example)
+* [GitLab CI Pipeline](https://gitlab.com/getport-labs/opsgenie-oncall-example)
+
 </details>

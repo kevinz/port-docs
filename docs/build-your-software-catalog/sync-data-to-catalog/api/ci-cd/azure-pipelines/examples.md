@@ -1,17 +1,17 @@
-import ExampleImageBlueprint from "../\_ci_example_image_blueprint.mdx";
-import ExampleCiJobBlueprint from "../\_ci_example_ci_job_blueprint.mdx";
+import ExampleImageBlueprint from "../_ci_example_image_blueprint.mdx";
+import ExampleCiJobBlueprint from "../_ci_example_ci_job_blueprint.mdx";
 
-# Examples
+# 示例
 
-## Basic create/update example
+## 基本创建/更新示例
 
-In this example you will create blueprints for `ciJob` and `image` entities, and a relation between them. Then you will add some Python code to create new entities in Port every time the Azure Pipeline is triggered:
+在此示例中，您将为 "ciJob "和 "镜像 "实体以及它们之间的关系创建蓝图。 然后，您将添加一些 Python 代码，以便在每次触发 Azure Pipeline 时在 Port 中创建新实体: 
 
 <ExampleImageBlueprint />
 
 <ExampleCiJobBlueprint />
 
-After creating the blueprints, you can add a Python script for creating/updating a Port entity:
+创建蓝图后，您可以添加一个 Python 脚本，用于创建/更新 Port 实体: 
 
 ```python showLineNumber
 import os
@@ -34,7 +34,7 @@ token_response = requests.post(f"{API_URL}/auth/access_token", json=credentials)
 # highlight-start
 access_token = token_response.json()['accessToken']
 headers = {
-	'Authorization': f'Bearer {access_token}'
+    'Authorization': f'Bearer {access_token}'
 }
 # highlight-end
 
@@ -54,12 +54,11 @@ entity_json = {
 create_response = requests.post(f'{API_URL}/blueprints/{blueprint_id}/entities?upsert=true&create_missing_related_entities=true', json=entity_json, headers=headers)
 ```
 
-:::note
-Please notice that you have also created the `image` relation, and added a related image entity called `example-image`. This is the artifact of the ciJob, and you will update it later.
-The creation was done using the `create_missing_related_entities=true` flag in the API url, allowing the relation to be created even though the `example-image` entity doesn't exist yet.
+:::note 请注意，您还创建了 `image` 关系，并添加了名为 `example-image` 的相关镜像实体。 这是 ciJob 的工件，您稍后会更新它。 创建时使用了 API url 中的 `create_missing_related_entities=true` flag，这样即使 `example-image` 实体还不存在，也能创建关系。
+
 :::
 
-After adding your new Python script to your repository, add the following code to your Azure pipeline `yml` file to call your script and update/create a new `ciJob` entity:
+将新的 Python 脚本添加到存储库后，在 Azure 管道 `yml` 文件中添加以下代码，以调用脚本并更新/创建新的 `ciJob` 实体: 
 
 ```yaml showLineNumbers
 steps:
@@ -79,11 +78,11 @@ steps:
       scriptPath: "main.py"
 ```
 
-## Basic get example
+## 基本获取示例
 
-The following example gets the `new-cijob-run` entity from the previous example, this can be useful if your CI process creates a build artifact and then references some of its data (for example, the run link of the latest `ciJob`).
+下面的示例从上一个示例中获取了 `new-cijob-run` 实体，如果您的 CI 流程创建了一个构建工件，然后引用了其中的某些数据(例如，最新的 `ciJob` 的运行链接)，这可能会很有用。
 
-Add the following snippet to your Python code:
+在 Python 代码中添加以下代码段: 
 
 ```python showLineNumbers
 entity_id = "new-cijob-run"
@@ -93,14 +92,13 @@ get_response = requests.get(f"{API_URL}/blueprints/{blueprint_id}/entities/{enti
                         headers=headers)
 entity = get_response.json()['entity']
 print(f"Image tag is: {entity['properties']['runLink']}")
-
 ```
 
-## Relation example
+## 关系示例
 
-In the following example you will update the `example-image` entity that was automatically created when creating the `ciJob` entity shown in the previous example.
+在下面的示例中，您将更新在创建上一个示例中显示的 `ciJob` 实体时自动创建的 `example-image` 实体。
 
-Add the following snippet to your Python code:
+在 Python 代码中添加以下代码段: 
 
 ```python showLineNumbers
 image_entity_json = {
@@ -120,7 +118,6 @@ image_entity_json = {
 }
 
 create_image_response = requests.post(f'{API_URL}/blueprints/image/entities?upsert=true', json=image_entity_json, headers=headers)
-
 ```
 
-That's it! The entity is created or updated and is visible in the UI.
+就是这样！实体已创建或更新，并在用户界面中可见。

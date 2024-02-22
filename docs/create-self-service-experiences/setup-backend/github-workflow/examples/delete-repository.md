@@ -1,28 +1,30 @@
 ---
+
 sidebar_position: 4
+
 ---
 
 import PortTooltip from "/src/components/tooltip/tooltip.jsx";
 
-# Delete GitHub Repository
+# 删除 GitHub 仓库
 
-In the following guide, you are going to create a self-service action in Port that executes a GitHub workflow to [delete a GitHub repository](https://docs.github.com/en/rest/repos/repos#delete-a-repository).
+在以下指南中，您将在 Port 中创建一个自助服务操作，执行 GitHub 工作流，[delete a GitHub repository](https://docs.github.com/en/rest/repos/repos#delete-a-repository) 。
 
-## Prerequisites
-1. Install Port's GitHub app by clicking [here](https://github.com/apps/getport-io/installations/new).
-2. This guide assumes the presence of a blueprint representing your repositories. If you haven't done so yet, initiate the setup of your GitHub data model by referring to this [guide](/build-your-software-catalog/sync-data-to-catalog/git/github/examples#mapping-repositories-file-contents-and-pull-requests) first.
-3. A repository to contain your action resources i.e. the github workflow file.
+## 先决条件
 
+1. 点击[here](https://github.com/apps/getport-io/installations/new) 安装 Port 的 GitHub 应用程序。
+2. 本指南假定存在代表您的版本库的蓝图。如果您还没有这样做，请先参考[guide](/build-your-software-catalog/sync-data-to-catalog/git/github/examples#mapping-repositories-file-contents-and-pull-requests) 开始 GitHub 数据模型的设置。
+3. 包含行动资源(即 Github 工作流文件)的资源库。
 
 ## Guide
 
-Follow these steps to get started:
+请按照以下步骤开始操作: 
 
-1. Create the following GitHub Action secrets:
-    - Create the following Port credentials:
-        - `PORT_CLIENT_ID` - Port Client ID [learn more](/build-your-software-catalog/sync-data-to-catalog/api/#get-api-token).
-        - `PORT_CLIENT_SECRET` - Port Client Secret [learn more](/build-your-software-catalog/sync-data-to-catalog/api/#get-api-token).
-    - `GH_TOKEN` - a [Classic Personal Access Token](https://github.com/settings/tokens) with the following scopes: `repo` and `delete_repo`
+1. 创建以下 GitHub 操作secret: 
+    - 创建以下 Port 凭据: 
+        + `PORT_CLIENT_ID` - Port客户端 ID[learn more](/build-your-software-catalog/sync-data-to-catalog/api/#get-api-token).
+        + `PORT_CLIENT_SECRET` - Port客户端secret[learn more](/build-your-software-catalog/sync-data-to-catalog/api/#get-api-token) 。
+    - `GH_TOKEN` - 具有以下作用域的[Classic Personal Access Token](https://github.com/settings/tokens) : `repo` 和 `delete_repo
 
 <br />
 2. Create a Port action in the [self-service page](https://app.getport.io/self-serve) or with the following JSON definition:
@@ -33,8 +35,8 @@ Follow these steps to get started:
    :::tip
 - `<GITHUB-ORG>` - your GitHub organization or user name.
 - `<GITHUB-REPO-NAME>` - your GitHub repository name.
-:::
 
+:::
 
 ```json showLineNumbers
 [
@@ -82,7 +84,7 @@ Follow these steps to get started:
 </details>
 <br />
 
-3. Create a workflow file under `.github/workflows/delete-repo.yml` with the following content:
+3.在`.github/workflows/delete-repo.yml`下创建一个工作流程文件，内容如下: 
 
 <details>
 
@@ -152,7 +154,7 @@ jobs:
           delete_dependents: ${{ inputs.delete_dependents }}
           identifier: ${{ fromJson(inputs.port_payload).context.entity }}
           blueprint: ${{ fromJson(inputs.port_payload).context.blueprint }}
-      
+
       - name: Inform completion of deletion
         uses: port-labs/port-github-action@v1
         with:
@@ -162,7 +164,6 @@ jobs:
           runId: ${{ fromJson(inputs.port_payload).context.runId }}
           logMessage: |
             GitHub repository deleted! ✅
-
 ```
 
 </details>

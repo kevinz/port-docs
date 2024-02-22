@@ -1,27 +1,29 @@
 ---
+
 sidebar_position: 4
+
 ---
 
 import Tabs from "@theme/Tabs"
 import TabItem from "@theme/TabItem"
 
-# Software Templates
+# 软件模板
 
-A software template allows you to generate a customized skeleton of a new resource (e.g. service), usually based on community best practices.
+软件模板允许您生成新资源(如服务)的定制骨架，通常以社区最佳实践为基础。
 
-There are a few open source projects out there that enable you to create a project from a software template, such as [Cookiecutter](https://github.com/cookiecutter/cookiecutter).
+有一些开源项目可以让你根据软件模板创建项目，如[Cookiecutter](https://github.com/cookiecutter/cookiecutter) 。
 
-In the next section we are going to present an example.
+下一节我们将举例说明。
 
-:::tip
-All relevant files and resources for this guide are available [**Here for GitHub**](https://github.com/port-labs/port-cookiecutter-example), and [**Here for GitLab**](https://github.com/port-labs/port-cookiecutter-gitlab-example).
+:::tip 本指南的所有相关文件和资源可查阅[**Here for GitHub**](https://github.com/port-labs/port-cookiecutter-example) ，以及[**Here for GitLab**](https://github.com/port-labs/port-cookiecutter-gitlab-example) 。
+
 :::
 
-## Example - create a new service repository
+## 示例 - 创建新的服务存储库
 
-The following example utilizes Port [webhook-actions](../webhook.md) to create a new service repository from a software template.
+下面的示例利用 Port[webhook-actions](../webhook.md) 从软件模板创建新的服务资源库。
 
-First, you need to create a simple `Service` blueprint.
+首先，您需要创建一个简单的 `Service` 蓝图。
 
 <details>
 <summary>Service blueprint JSON</summary>
@@ -51,11 +53,11 @@ First, you need to create a simple `Service` blueprint.
 
 </details>
 
-Then, add `Create` Self-Service Actions to the blueprint, in order to support the creation of multiple services from different frameworks.
+然后，在蓝图中添加 "创建 "自助服务操作，以支持从不同框架创建多个服务。
 
-In this case, we add actions to provision [Django](https://github.com/cookiecutter/cookiecutter-django), [C++](https://github.com/DerThorsten/cpp_cookiecutter) and [Go](https://github.com/lacion/cookiecutter-golang) services.
+在本例中，我们添加了提供[Django](https://github.com/cookiecutter/cookiecutter-django) 、[C++](https://github.com/DerThorsten/cpp_cookiecutter) 和[Go](https://github.com/lacion/cookiecutter-golang) 服务的操作。
 
-The action will receive the following user inputs:
+该操作将接收以下用户输入: 
 
 <Tabs groupId="actions" defaultValue="github" values={[
 {label: "GitHub", value: "github"},
@@ -64,13 +66,13 @@ The action will receive the following user inputs:
 
 <TabItem value="github">
 
-- GitHub organization and repository to host the created service project;
-- Template specific parameters, such as `project_name` and `description`.
+* 托管已创建服务项目的 GitHub 组织和存储库；
+* 模板特定参数，如 `project_name` 和 `description`。
 
-:::note
-In the following JSON, you need to replace the `<WEBHOOK_URL>` placeholders with your URL.
+:::note 在下面的 JSON 中，您需要用您的 URL 替换 `<WEBHOOK_URL>` 占位符。
 
-For local setup, look at this [example](../local-debugging-webhook.md#creating-the-vm-create-action).
+有关本地设置，请参阅[example](../local-debugging-webhook.md#creating-the-vm-create-action) 。
+
 :::
 
 <details>
@@ -171,13 +173,13 @@ For local setup, look at this [example](../local-debugging-webhook.md#creating-t
 
 <TabItem value="gitlab">
 
-- Repository to host the created service project;
-- Template specific parameters, such as `project_name` and `description`.
+* 用于托管已创建服务项目的存储库；
+* 模板特定参数，如 `project_name` 和 `description`。
 
-:::note
-In the following JSON, you need to replace the `<WEBHOOK_URL>` placeholders with your URL.
+:::note 在下面的 JSON 中，您需要用您的 URL 替换 `<WEBHOOK_URL>` 占位符。
 
-For local setup, look at this [example](../local-debugging-webhook.md#creating-the-vm-create-action).
+有关本地设置，请参阅[example](../local-debugging-webhook.md#creating-the-vm-create-action) 。
+
 :::
 
 <details>
@@ -269,24 +271,24 @@ For local setup, look at this [example](../local-debugging-webhook.md#creating-t
 
 </Tabs>
 
-Next, in order to listen to the webhook events, you need to set up a simple backend.
+接下来，为了监听 webhook 事件，需要设置一个简单的后端。
 
-Within the backend, you are going to generate the project from the Cookiecutter template (with the provided user parameters), and push it to the GitHub repository you specified.
+在后端，您将根据 Cookiecutter 模板(使用提供的用户参数)生成项目，并将其推送到您指定的 GitHub 仓库。
 
-A full example with a backend, can be found [here for GitHub](https://github.com/port-labs/port-cookiecutter-example) or [here for GitLab](https://github.com/port-labs/port-cookiecutter-gitlab-example).
+完整的后端示例可在[here for GitHub](https://github.com/port-labs/port-cookiecutter-example) 或[here for GitLab](https://github.com/port-labs/port-cookiecutter-gitlab-example) 上找到。
 
-:::info
-The above example also creates a new Service entity in Port, and updates the action run details.
+:::info 上述示例还在 Port 中创建了一个新的服务实体，并更新了操作运行详情。
 
-These steps are highly recommended to keep track over time, of the action run, its logs the resulting resources.
+强烈建议采取这些步骤，以便长期跟踪运行的操作、其日志和产生的资源。
+
 :::
 
-That's it! You can now use the provisioned actions, as shown here:
+就这样！现在就可以使用被引用的操作了，如图所示: 
 
 ![create-service.png](../../../../../static/img/complete-use-cases/software-templates/create-service.png)
 
-## Summary
+## 摘要
 
-Software templates are extremely useful, in order to keep a high velocity of development while maintaining high quality.
+为了在保证高质量的同时保持开发的高速度，软件模板是非常有用的。
 
-Using Port Self-Service Actions, you can conveniently create and record new projects from public or private templates.
+使用 Port 自助操作，您可以方便地从公共或私人模板中创建和记录新项目。

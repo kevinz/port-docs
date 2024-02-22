@@ -1,36 +1,35 @@
-# Authentication
+# 验证
 
-With this feature, you can embed another website that's protected by SSO authentication.
-To do this, you'll need the required parameters to create a JWT token.
+使用此功能，您可以嵌入另一个受 SSO 身份验证保护的网站。 为此，您需要创建 JWT 令牌所需的参数。
 
-## Authentication code flow + PKCE
+## 验证码流程 + PKCE
 
-The following diagram outlines the login scheme used to authenticate with your SSO and gain access to the private resource:
+下图概述了用于验证 SSO 和访问私有资源的登录方案: 
 
 ![AuthorizationCodeFlow.png](/img/software-catalog/widgets/embedded-url/AuthorizationCodeFlow.png)
 
-Here is an explanation of the login flow:
+下面是登录流程的说明: 
 
-1. The widget will generate a PKCE `code_verifier` & `code_challange`;
-2. The widget URL is set to the `authorizationUrl` along with the `clientId` and the generated `code_challange`;
-3. The widget will then be redirected to the SSO sign-in page;
-4. The user will sign in using the SSO (If the user is already signed in to the SSO, this step will happen automatically);
-5. The SSO sign-in page will redirect the widget back to https://app.getport.io with the authorization `code` as a URL hash parameter;
-6. The widget will send the `code`, `clientId` and the `code_verifier` to the `tokenURL`;
-7. The SSO will validate the PKCE code;
-8. A response will come back with an access token;
-9. The widget will pass the access token as a query parameter `auth_token={accessToken}` to the URL specified in the property value;
-10. Your page should be displayed now!
+1. Widget 将生成 PKCE `code_verifier` 和 `code_challange`；
+2. 小工具的 URL 将设置为 `authorizationUrl` 以及 `clientId` 和生成的 `code_challange`；
+3. 然后，widget 将被重定向到 SSO 登录页面；
+4. 用户将使用 SSO 登录(如果用户已登录 SSO，该步骤将自动进行)；
+5. SSO 登录页面会将 widget 重定向回 https://app.getport.io，并将授权 "code "作为 URL 哈希参数；
+6. 小工具将把 `code`、`clientId`和 `code_verifier `发送到 `tokenURL`；
+7. SSO 将验证 PKCE 代码；
+8. 响应将返回访问令牌；
+9. 小工具将把访问令牌作为查询参数 `auth_token={accessToken}`传递到属性值中指定的 URL；
+10. 现在应该可以显示页面了！
 
-## Required Parameters
+## 必要参数
 
-To set up the authentication, you'll need the following parameters:
+要设置身份验证，您需要以下参数: 
 
-- `clientId`
-- `authorizationUrl`
-- `tokenUrl`
+* 客户 ID
+* 授权Url
+* `tokenUrl`
 
-Here's an example of how to apply these parameters in your Blueprint:
+下面举例说明如何在蓝图中应用这些参数: 
 
 ```json showLineNumbers
 {
@@ -48,31 +47,28 @@ Here's an example of how to apply these parameters in your Blueprint:
 }
 ```
 
-## Examples
+## 示例
 
 ### Okta
 
 <details>
 <summary>Setup</summary>
 
-**Steps:**
+**步骤: **
 
-1. Follow the steps in [Okta's documentation](https://developer.okta.com/docs/guides/implement-grant-type/authcodepkce/main/) to create an Application in your Okta Organization;
-2. Make sure the Port host is in the `Redirect Uris`:
-   1. Go to Applications -> The application you just created -> Login;
-   2. Add `https://app.getport.io` as a Sign-in redirect URI.
-3. Enable IFrame for Sign-In Page:
-   1. Go to Customizations -> Other;
-   2. Scroll to "IFrame Embedding" and enable it.
+1. 请按照[Okta's documentation](https://developer.okta.com/docs/guides/implement-grant-type/authcodepkce/main/) 中的步骤在您的 Okta 组织中创建应用程序；
+2. 确保Port主机位于 "Redirect Uris "中: 
+    1.转到应用程序 -> 您刚创建的应用程序 -> 登录；
+    2.添加 `https://app.getport.io` 作为登录重定向 URI。
+3.为登录页面启用 IFrame: 
+    1.转到自定义 -> 其他；
+    2.滚动到 "IFrame 嵌入 "并启用。
 
 <br />
 
-**Configure Grafana with OAuth & Port embedding**
-:::note
-The following example is just for illustration purposes and may not reflect the actual URLs and client IDs used in
-your Okta setup.
+**Configure Grafana with OAuth &amp; Port embedding** :::note 以下示例仅供参考，可能无法反映您的 Okta 设置中实际使用的 URL 和客户端 ID。
 
-Based on Grafana docs for [JWT Configuration](https://grafana.com/docs/grafana/latest/setup-grafana/configure-security/configure-authentication/jwt/) & [OAuth Configuration](https://grafana.com/docs/grafana/latest/setup-grafana/configure-security/configure-authentication/generic-oauth/)
+基于[JWT Configuration](https://grafana.com/docs/grafana/latest/setup-grafana/configure-security/configure-authentication/jwt/) &amp; 的 Grafana 文档[OAuth Configuration](https://grafana.com/docs/grafana/latest/setup-grafana/configure-security/configure-authentication/generic-oauth/)
 
 :::
 
@@ -99,17 +95,17 @@ use_pkce = true
 ...
 ```
 
-**Troubleshooting**
+**故障排除**
 
-- "_Okta 400 Bad Request_"
-  - Check that you used the correct authorizationUrl & clientId;
-  - Check that your application is activated.
-- "_Okta 400 Bad Request displayed. Your request resulted in an error. The 'redirect_uri' parameter must be a Login redirect URI in the client app settings_".
-  - Make sure you entered https://app.getport.io as a Sign-in redirect URI for your application as mentioned in the steps above.
-- "_refused to connect._"
-  - Make sure you enabled "IFrame Embedding" as mentioned in the steps above.
-- "_Could not fetch your auth token._"
-  - Make sure your tokenUrl is the correct url.
+* "_Okta 400 坏请求_"
+    - 检查是否使用了正确的 authorizationUrl 和 clientId；
+    - 检查应用程序是否已激活。
+* 显示"_Okta 400 Bad Request"。您的请求导致错误。redirect_uri'参数必须是客户端应用程序设置中的登录重定向 URI_"。
+    - 请确保按照上述步骤为您的应用程序输入 https://app.getport.io 作为登录重定向 URI。
+* "拒绝连接_"。
+    - 请确保按照上述步骤启用了 "IFrame Embedding"。
+* "_无法获取您的授权令牌。_"
+    - 请确保 tokenUrl 是正确的 URL。
 
 </details>
 
@@ -118,21 +114,18 @@ use_pkce = true
 <details>
 <summary>Setup</summary>
 
-**Steps:**
+**步骤: **
 
-1. Follow steps 1 & 2 in [Onelogin's documentation](https://onelogin.service-now.com/support?id=kb_article&sys_id=143e6c13dbfd0450ca1c400e0b9619d6#add) to add an OpenId Connect (OIDC) application in your Onelogin organization;
-2. Make sure the Port host is in the `Redirect URIs`:
-   1. Go to Applications -> The application you just added -> Configuration;
-   2. Add `https://app.getport.io` as a Redirect URI.
+1. 按照[Onelogin's documentation](https://onelogin.service-now.com/support?id=kb_article&amp;sys_id=143e6c13dbfd0450ca1c400e0b9619d6#add) 中的步骤 1 和 2，在 Onelogin 组织中添加 OpenId Connect (OIDC) 应用程序；
+2. 确保Port主机位于 "重定向 URIs "中: 
+    1.转到应用程序 -> 刚添加的应用程序 -> 配置；
+    2.添加 `https://app.getport.io` 作为重定向 URI。
 
 <br />
 
-**Configure Grafana with OAuth & Port embedding**
-:::note
-The following example is just for illustration purposes and may not reflect the actual URLs and client IDs used in
-your Onelogin setup.
+**Configure Grafana with OAuth &amp; Port embedding** :::note 以下示例仅供参考，可能无法反映您的 Onelogin 设置中实际使用的 URL 和客户端 ID。
 
-Based on Grafana docs for [JWT Configuration](https://grafana.com/docs/grafana/latest/setup-grafana/configure-security/configure-authentication/jwt/) & [OAuth Configuration](https://grafana.com/docs/grafana/latest/setup-grafana/configure-security/configure-authentication/generic-oauth/)
+基于[JWT Configuration](https://grafana.com/docs/grafana/latest/setup-grafana/configure-security/configure-authentication/jwt/) &amp; 的 Grafana 文档[OAuth Configuration](https://grafana.com/docs/grafana/latest/setup-grafana/configure-security/configure-authentication/generic-oauth/)
 
 :::
 
@@ -159,37 +152,36 @@ use_pkce = true
 ...
 ```
 
-**Troubleshoot**
+**故障排除**
 
-- "_unrecognized route or not allowed method_"
-  - Check that you used the correct authorizationUrl.
-- "_client is invalid_"
-  - Check that you used the correct clientId.
-- "_redirect_uri did not match any client's registered redirect_uris_".
-  - Make sure you entered https://app.getport.io as a Redirect URI for your application as mentioned in the steps above.
-- "_Could not fetch your auth token._"
-  - Make sure your tokenUrl is the correct URL.
+* "_未识别路由或不允许的方法_"
+    - 检查您是否被引用了正确的 authorizationUrl。
+* "客户端无效_"
+    - 检查是否使用了正确的 clientId。
+* "_redirect_uri 与任何客户端注册的 redirect_uris 不匹配_"。
+    - 请确保您按照上述步骤为应用程序输入了 https://app.getport.io 作为重定向 URI。
+* "_Could not fetch your auth token._"(无法获取您的授权令牌)。
+    - 请确保 tokenUrl 是正确的 URL。
 
 </details>
 
-### Azure AD
+#### Azure AD
 
 <details>
 <summary>Setup</summary>
 
-**Steps:**
+**步骤: **
 
-1. Follow the [Register an application](https://learn.microsoft.com/en-us/azure/active-directory/develop/quickstart-register-app#register-an-application) steps in Azure Documentation to add an application in your Azure subscription;
-2. Follow the [Add a redirect URI](https://learn.microsoft.com/en-us/azure/active-directory/develop/quickstart-register-app#add-a-redirect-uri) steps in Azure documentation to add `https://app.getport.io` as a Redirect URI;
-3. Follow the [Configure platform settings](https://learn.microsoft.com/en-us/azure/active-directory/develop/quickstart-register-app#configure-platform-settings) to configure your application as `Single-page application`;
-4. Add a custom scope to your new application:
+1. 请按照 Azure 文档中的[Register an application](https://learn.microsoft.com/en-us/azure/active-directory/develop/quickstart-register-app#register-an-application) 步骤在 Azure 订阅中添加应用程序；
+2. 按照 Azure 文档中的[Add a redirect URI](https://learn.microsoft.com/en-us/azure/active-directory/develop/quickstart-register-app#add-a-redirect-uri) 步骤将 `https://app.getport.io` 添加为重定向 URI；
+3. 按照[Configure platform settings](https://learn.microsoft.com/en-us/azure/active-directory/develop/quickstart-register-app#configure-platform-settings) 中的步骤将应用程序配置为 "单页应用程序"；
+4. 为新应用程序添加自定义作用域: 
+    1.在您的应用程序中点击左侧边栏的 Expose an API(公开 API)按钮；
+    2.点击 "添加作用域 "按钮，添加一个允许管理员和用户同意 "读取用户 "的作用域；
+    ![Azure AD Scope](/img/software-catalog/widgets/embedded-url/AzureAdScope.png)
+    3.在 Port 内蓝图的属性中的 `Authorization Scope` 字段下添加您刚刚创建的作用域。
 
-   1. In your application click on the Expose an API button on the left sidebar;
 
-   2. Click on the `Add a scope` button to add a scope that will allow Admins and users to consent `Read User`;
-      ![Azure AD Scope](/img/software-catalog/widgets/embedded-url/AzureAdScope.png)
-
-   3. Add the scope you just created under the `Authorization Scope` field in the property in your blueprint inside Port.
       ```json showLineNumbers
       ...
       "schema": {
@@ -215,14 +207,12 @@ use_pkce = true
       ...
       ```
 
+
 <br />
 
-**Configure Grafana with OAuth & Port embedding**
-:::note
-The following example is just for illustration purposes and may not reflect the actual URLs and client IDs used in
-your Azure AD setup.
+**Configure Grafana with OAuth &amp; Port embedding** :::note 以下示例仅供参考，可能无法反映 Azure AD 设置中实际使用的 URL 和客户端 ID。
 
-Based on Grafana docs for [JWT Configuration](https://grafana.com/docs/grafana/latest/setup-grafana/configure-security/configure-authentication/jwt/) & [Azure AD Configuration](https://grafana.com/docs/grafana/latest/setup-grafana/configure-security/configure-authentication/azuread/)
+基于[JWT Configuration](https://grafana.com/docs/grafana/latest/setup-grafana/configure-security/configure-authentication/jwt/) &amp; 的 Grafana 文档[Azure AD Configuration](https://grafana.com/docs/grafana/latest/setup-grafana/configure-security/configure-authentication/azuread/)
 
 :::
 
@@ -250,9 +240,9 @@ use_pkce = true
 ...
 ```
 
-**Troubleshoot**
+**故障排除**
 
-- "_Could not fetch your auth token._"
-  - Make sure your tokenUrl is the correct URL.
+* "_无法获取您的授权令牌。_"
+    - 确保 tokenUrl 是正确的 URL。
 
 </details>

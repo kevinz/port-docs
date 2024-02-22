@@ -1,42 +1,42 @@
 import Tabs from "@theme/Tabs"
 import TabItem from "@theme/TabItem"
-import Prerequisites from "../templates/\_ocean_helm_prerequisites_block.mdx"
-import AzurePremise from "../templates/\_ocean_azure_premise.mdx"
-import DockerParameters from "./\_sentry-docker-parameters.mdx"
-import AdvancedConfig from '../../../generalTemplates/\_ocean_advanced_configuration_note.md'
-import SentryCommentsBlueprint from "../webhook/examples/resources/sentry/\_example_sentry_comments_blueprint.mdx";
-import SentryCommentsConfiguration from "../webhook/examples/resources/sentry/\_example_sentry_comment_webhook_configuration.mdx"
-import SentryIssuesBluePrint from "../webhook/examples/resources/sentry/\_example_sentry_issue_event_blueprint.mdx"
-import SentryIssuesConfiguration from "../webhook/examples/resources/sentry/\_example_sentry_issue_event_webhook_configuration.mdx"
+import Prerequisites from "../templates/_ocean_helm_prerequisites_block.mdx"
+import AzurePremise from "../templates/_ocean_azure_premise.mdx"
+import DockerParameters from "./_sentry-docker-parameters.mdx"
+import AdvancedConfig from '../../../generalTemplates/_ocean_advanced_configuration_note.md'
+import SentryCommentsBlueprint from "../webhook/examples/resources/sentry/_example_sentry_comments_blueprint.mdx";
+import SentryCommentsConfiguration from "../webhook/examples/resources/sentry/_example_sentry_comment_webhook_configuration.mdx"
+import SentryIssuesBluePrint from "../webhook/examples/resources/sentry/_example_sentry_issue_event_blueprint.mdx"
+import SentryIssuesConfiguration from "../webhook/examples/resources/sentry/_example_sentry_issue_event_webhook_configuration.mdx"
 
-# Sentry
+# 哨兵
 
-Our Sentry integration allows you to import `projects` and `issues` from your Sentry cloud account into Port, according to your mapping and definition.
+通过我们的 Sentry 集成，您可以根据您的映射和定义，将 Sentry 云账户中的 "项目 "和 "问题 "导入 Port。
 
-A `Project` is essentially a container for all the data and information related to a specific application or service that you want to monitor.
+项目 "本质上是一个容器，可容纳与要监控的特定应用程序或服务相关的所有数据和信息。
 
-An `Issue` is a group of incidents that describe the underlying problem of your symptoms.
+问题 "是一组描述您症状相应问题的事件。
 
-## Common use cases
+## 常见被引用情况
 
-- Map your monitored projects and issues into Port.
+* 将您监控的项目和问题映射到 Port 中。
 
-## Prerequisites
+## 先决条件
 
 <Prerequisites />
 
-## Installation
+## 安装
 
-Choose one of the following installation methods:
+从以下安装方法中选择一种: 
 
 <Tabs groupId="installation-methods" queryString="installation-methods">
 
 <TabItem value="real-time-always-on" label="Real Time & Always On" default>
 
-Using this installation option means that the integration will be able to update Port in real time using webhooks.
+使用该安装选项意味着集成将能使用 webhook 实时更新 Port。
 
-This table summarizes the available parameters for the installation.
-Set them as you wish in the script below, then copy it and run it in your terminal:
+本表总结了安装时可用的参数，请在下面的脚本中按自己的需要进行设置，然后复制并在终端运行: 
+
 
 | Parameter                               | Description                                                                                                   | Required |
 | --------------------------------------- | ------------------------------------------------------------------------------------------------------------- | -------- |
@@ -52,6 +52,7 @@ Set them as you wish in the script below, then copy it and run it in your termin
 | `scheduledResyncInterval`               | The number of minutes between each resync                                                                     | ❌       |
 | `initializePortResources`               | Default true, When set to true the integration will create default blueprints and the port App config Mapping | ❌       |
 
+
 <br/>
 
 <Tabs groupId="deploy" queryString="deploy">
@@ -62,26 +63,28 @@ To install the integration using Helm, run the following command:
 ```bash showLineNumbers
 helm repo add --force-update port-labs https://port-labs.github.io/helm-charts
 helm upgrade --install my-sentry-integration port-labs/port-ocean \
-	--set port.clientId="PORT_CLIENT_ID"  \
-	--set port.clientSecret="PORT_CLIENT_SECRET"  \
-	--set port.baseUrl="https://api.getport.io"  \
-	--set initializePortResources=true  \
-	--set integration.identifier="my-sentry-integration"  \
-	--set integration.type="sentry"  \
-	--set integration.eventListener.type="POLLING"  \
-	--set integration.config.sentryHost="https://sentry.io"  \
-	--set integration.secrets.sentryToken="string"  \
-	--set integration.config.sentryOrganization="string"
+    --set port.clientId="PORT_CLIENT_ID"  \
+    --set port.clientSecret="PORT_CLIENT_SECRET"  \
+    --set port.baseUrl="https://api.getport.io"  \
+    --set initializePortResources=true  \
+    --set integration.identifier="my-sentry-integration"  \
+    --set integration.type="sentry"  \
+    --set integration.eventListener.type="POLLING"  \
+    --set integration.config.sentryHost="https://sentry.io"  \
+    --set integration.secrets.sentryToken="string"  \
+    --set integration.config.sentryOrganization="string"
 ```
+
 </TabItem>
 <TabItem value="argocd" label="ArgoCD" default>
 To install the integration using ArgoCD, follow these steps:
 
-1. Create a `values.yaml` file in `argocd/my-ocean-sentry-integration` in your git repository with the content:
+1. 在你的 git 仓库的 `argocd/my-ocean-sentry-integration` 中创建一个 `values.yaml` 文件，内容如下: 
 
-:::note
-Remember to replace the placeholders for `SENTRY_HOST` `SENTRY_ORGANIZATION` and `SENTRY_TOKEN`.
+:::note 记住替换 `SENTRY_HOST``SENTRY_ORGANIZATION` 和 `SENTRY_TOKEN` 的占位符。
+
 :::
+
 ```yaml showLineNumbers
 initializePortResources: true
 scheduledResyncInterval: 120
@@ -99,13 +102,15 @@ integration:
   // highlight-next-line
     sentryToken: SENTRY_TOKEN
 ```
+
 <br/>
 
-2. Install the `my-ocean-sentry-integration` ArgoCD Application by creating the following `my-ocean-sentry-integration.yaml` manifest:
-:::note
-Remember to replace the placeholders for `YOUR_PORT_CLIENT_ID` `YOUR_PORT_CLIENT_SECRET` and `YOUR_GIT_REPO_URL`.
+2.创建以下 "my-ocean-sentry-integration.yaml "配置清单，安装 "my-ocean-sentry-integration "ArgoCD应用程序: 
 
-Multiple sources ArgoCD documentation can be found [here](https://argo-cd.readthedocs.io/en/stable/user-guide/multiple_sources/#helm-value-files-from-external-git-repository).
+:::note 记住要替换 `YOUR_PORT_CLIENT_ID``YOUR_PORT_CLIENT_SECRET` 和 `YOUR_GIT_REPO_URL` 的占位符。
+
+多种来源的 ArgoCD 文档可在[here](https://argo-cd.readthedocs.io/en/stable/user-guide/multiple_sources/#helm-value-files-from-external-git-repository) 上找到。
+
 :::
 
 <details>
@@ -150,10 +155,12 @@ spec:
 </details>
 <br/>
 
-3. Apply your application manifest with `kubectl`:
+3.使用 `kubectl` 配置应用程序清单: 
+
 ```bash
 kubectl apply -f my-ocean-sentry-integration.yaml
 ```
+
 </TabItem>
 </Tabs>
 
@@ -164,17 +171,17 @@ kubectl apply -f my-ocean-sentry-integration.yaml
   <TabItem value="github" label="GitHub">
 This workflow will run the Sentry integration once and then exit, this is useful for **scheduled** ingestion of data.
 
-:::warning
-If you want the integration to update Port in real time you should use the [Real Time & Always On](?installation-methods=real-time-always-on#installation) installation option
+:::warning 如果希望集成能实时更新 Port，则应使用[Real Time & Always On](?installation-methods=real-time-always-on#installation) 安装选项
+
 :::
 
-Make sure to configure the following [Github Secrets](https://docs.github.com/en/actions/security-guides/using-secrets-in-github-actions):
+确保配置以下[Github Secrets](https://docs.github.com/en/actions/security-guides/using-secrets-in-github-actions) : 
 
 <DockerParameters />
 
 <br/>
 
-Here is an example for `sentry-integration.yml` workflow file:
+下面是 `sentry-integration.yml` 工作流程文件的示例: 
 
 ```yaml showLineNumbers
 name: Sentry Exporter Workflow
@@ -214,20 +221,20 @@ jobs:
   <TabItem value="jenkins" label="Jenkins">
 This pipeline will run the Sentry integration once and then exit, this is useful for **scheduled** ingestion of data.
 
-:::tip
-Your Jenkins agent should be able to run docker commands.
+:::tip 你的 Jenkins 代理应该能够运行 docker 命令。
+
 :::
-:::warning
-If you want the integration to update Port in real time using webhooks you should use the [Real Time & Always On](?installation-methods=real-time-always-on#installation) installation option.
+:::warning 如果希望集成使用 webhooks 实时更新 Port，则应使用 安装选项。[Real Time & Always On](?installation-methods=real-time-always-on#installation) 
+
 :::
 
-Make sure to configure the following [Jenkins Credentials](https://www.jenkins.io/doc/book/using/using-credentials/) of `Secret Text` type:
+请确保配置以下[Jenkins Credentials](https://www.jenkins.io/doc/book/using/using-credentials/) 的 "Secret Text "类型: 
 
 <DockerParameters />
 
 <br/>
 
-Here is an example for `Jenkinsfile` groovy pipeline file:
+下面是 `Jenkinsfile` groovy Pipelines 文件的示例: 
 
 ```yml showLineNumbers
 pipeline {
@@ -272,14 +279,14 @@ pipeline {
   </TabItem>
 
   <TabItem value="azure" label="Azure Devops">
-  
+
   <AzurePremise name="Sentry" />
 
-<DockerParameters /> 
+<DockerParameters />
 
 <br/>
 
-Here is an example for `sentry-integration.yml` pipeline file:
+下面是 `sentry-integration.yml` Pipelines 文件的示例: 
 
 ```yaml showLineNumbers
 trigger:
@@ -290,7 +297,6 @@ pool:
 
 variables:
   - group: port-ocean-credentials
-
 
 steps:
 - script: |
@@ -312,7 +318,6 @@ steps:
 
     exit $?
   displayName: 'Ingest Data into Port'
-
 ```
 
   </TabItem>
@@ -322,17 +327,17 @@ steps:
 
 </Tabs>
 
-### Event listener
+### 事件监听器
 
-The integration uses polling to pull the configuration from Port every minute and check it for changes. If there is a change, a resync will occur.
+该集成使用轮询方式，每分钟从 Port 中提取一次配置，并检查配置是否有变化。 如果有变化，就会重新同步。
 
 <AdvancedConfig/>
 
-## Ingesting Sentry objects
+## 接收哨兵对象
 
-The Sentry integration uses a YAML configuration to describe the process of loading data into the developer portal.
+Sentry 集成使用 YAML 配置来描述将数据加载到开发者门户的过程。
 
-Here is an example snippet from the config which demonstrates the process for getting `Issue` data from Sentry:
+下面是配置中的一个示例片段，演示了从 Sentry 获取 "Issue "数据的过程: 
 
 ```yaml showLineNumbers
 resources:
@@ -353,21 +358,21 @@ resources:
             project: ".project.slug"
 ```
 
-The integration makes use of the [JQ JSON processor](https://stedolan.github.io/jq/manual/) to select, modify, concatenate, transform and perform other operations on existing fields and values from Sentry's API events.
+该集成利用[JQ JSON processor](https://stedolan.github.io/jq/manual/) 对来自 Sentry API 事件的现有字段和值进行选择、修改、连接、转换和其他操作。
 
-### Configuration structure
+### 配置结构
 
-The integration configuration determines which resources will be queried from Sentry, and which entities and properties will be created in Port.
+集成配置决定了将从 Sentry 查询哪些资源，以及将在 Port 中创建哪些实体和属性。
 
-:::tip Supported resources
-The following resources can be used to map data from Sentry, it is possible to reference any field that appears in the API responses linked below for the mapping configuration.
+:::tip  支持的资源 下列资源可被引用来映射来自 Sentry 的数据，可以引用下面链接的 API 响应中出现的任何字段来进行映射配置。
 
-- [`Project`](https://docs.sentry.io/api/projects/list-your-projects/)
-- [`Issue`](https://docs.sentry.io/api/events/list-a-projects-issues/)
+* * [`Project`](https://docs.sentry.io/api/projects/list-your-projects/)
+* [`Issue`](https://docs.sentry.io/api/events/list-a-projects-issues/)
 
 :::
 
-- The root key of the integration configuration is the `resources` key:
+* 集成配置的根密钥是 "资源 "密钥: 
+
 
   ```yaml showLineNumbers
   # highlight-next-line
@@ -377,7 +382,9 @@ The following resources can be used to map data from Sentry, it is possible to r
       ...
   ```
 
-- The `kind` key is a specifier for a Sentry object:
+
+* 类型 "键是哨兵对象的指定符: 
+
 
   ```yaml showLineNumbers
     resources:
@@ -387,7 +394,9 @@ The following resources can be used to map data from Sentry, it is possible to r
         ...
   ```
 
-- The `port`, `entity` and the `mappings` keys are used to map the Sentry object fields to Port entities. To create multiple mappings of the same kind, you can add another item in the `resources` array;
+
+* Port"、"实体 "和 "映射 "键被用来将 Sentry 对象字段映射到Port实体。要创建多个同类映射，可在 `resources` 数组中添加另一项；
+
 
   ```yaml showLineNumbers
   resources:
@@ -409,26 +418,27 @@ The following resources can be used to map data from Sentry, it is possible to r
           # highlight-end
   ```
 
-:::tip Blueprint key
-Note the value of the `blueprint` key - if you want to use a hardcoded string, you need to encapsulate it in 2 sets of quotes, for example use a pair of single-quotes (`'`) and then another pair of double-quotes (`"`)
+
+:::tip  Blueprint key 注意 `blueprint` 键的值 - 如果要使用硬编码字符串，则需要用 2 组引号封装，例如使用一对单引号 (`'`)，然后再使用一对双引号 (`"`)。
+
 :::
 
-### Ingest data into Port
+#### 将数据输入Port
 
-To ingest Sentry objects using the [integration configuration](#configuration-structure), you can follow the steps below:
+要使用[integration configuration](#configuration-structure) 引用 Sentry 对象，可以按照以下步骤操作: 
 
-1. Go to the DevPortal Builder page.
-2. Select a blueprint you want to ingest using Sentry.
-3. Choose the **Ingest Data** option from the menu.
-4. Select Sentry under the APM & alerting category.
-5. Add the contents of your [integration configuration](#configuration-structure) to the editor.
-6. Click `Resync`.
+1. 转到 DevPortal Builder 页面。
+2. 选择要使用 Sentry 进行引用的蓝图。
+3. 从菜单中选择**采集数据**选项。
+4. 在 APM 和警报类别下选择 Sentry。
+5. 将[integration configuration](#configuration-structure) 的内容添加到编辑器中。
+6. 单击 "Resync"。
 
-## Examples
+## 示例
 
-Examples of blueprints and the relevant integration configurations:
+蓝图和相关集成配置示例: 
 
-### Project
+### 项目
 
 <details>
 <summary>Project blueprint</summary>
@@ -498,7 +508,7 @@ resources:
 
 </details>
 
-### Issue
+### 问题
 
 <details>
 <summary>Issue blueprint</summary>
@@ -565,13 +575,13 @@ resources:
 
 </details>
 
-## Let's Test It
+## 让我们来测试一下
 
-This section includes a sample response data from Sentry. In addition, it includes the entity created from the resync event based on the Ocean configuration provided in the previous section.
+本节包括来自 Sentry 的响应数据示例。 此外，还包括根据上一节提供的 Ocean 配置从重新同步事件中创建的实体。
 
-### Payload
+### 有效载荷
 
-Here is an example of the payload structure from Sentry:
+以下是 Sentry 有效载荷结构的示例: 
 
 <details>
 <summary> Project response data</summary>
@@ -712,9 +722,9 @@ Here is an example of the payload structure from Sentry:
 
 </details>
 
-### Mapping Result
+#### 映射结果
 
-The combination of the sample payload and the Ocean configuration generates the following Port entity:
+结合样本有效载荷和 Ocean 配置，可生成以下 Port 实体: 
 
 <details>
 <summary> Project entity in Port</summary>
@@ -769,19 +779,19 @@ The combination of the sample payload and the Ocean configuration generates the 
 
 </details>
 
-## Alternative installation via webhook
+## 通过 webhook 进行替代安装
 
-While the Ocean integration described above is the recommended installation method, you may prefer to use a webhook to ingest data from Sentry. If so, use the following instructions:
+虽然上述 Ocean 集成是推荐的安装方法，但您可能更喜欢使用 webhook 从 Sentry 引用数据。 如果是这样，请使用以下说明: 
 
 <details>
 
 <summary><b>Webhook installation (click to expand)</b></summary>
 
-In this example you are going to create a webhook integration between [Sentry](https://sentry.io) and Port, which will ingest issues entities.
+在本例中，您将在[Sentry](https://sentry.io) 和 Port 之间创建一个 webhook 集成，该集成将摄取问题实体。
 
 <h2>Port configuration</h2>
 
-Create the following blueprint definition:
+创建以下蓝图定义: 
 
 <details>
 
@@ -790,56 +800,52 @@ Create the following blueprint definition:
 
 </details>
 
-Create the following webhook configuration [using Port UI](/build-your-software-catalog/sync-data-to-catalog/webhook/?operation=ui#configuring-webhook-endpoints):
+创建以下 webhook 配置[using Port UI](/build-your-software-catalog/sync-data-to-catalog/webhook/?operation=ui#configuring-webhook-endpoints) : 
 
 <details>
 
 <summary>Sentry issue webhook configuration</summary>
 
-1. **Basic details** tab - fill the following details:
-   1. Title : `Sentry issue mapper`;
-   2. Identifier : `sentry_issue_mapper`;
-   3. Description : `A webhook configuration to map Sentry Issues to Port`;
-   4. Icon : `Sentry`;
-2. **Integration configuration** tab - fill the following JQ mapping:
-
+1. **基本信息** 选项卡 - 填写以下详细信息: 
+    1.title: "Sentry 问题映射器"；
+    2.标识符: `sentry_issue_mapper`；
+    3.Description : `将 Sentry 问题映射到 Port` 的 webhook 配置；
+    4.图标 : `Sentry`；
+2. **集成配置**选项卡 - 填写以下 JQ 映射: 
    <SentryIssuesConfiguration/>
-
-3. Scroll down to **Advanced settings** and input the following details:
-   1. Signature Header Name : `sentry-hook-signature`;
-   2. Signature Algorithm : Select `sha256` from dropdown option;
-   3. Click **Save** at the bottom of the page.
+3.向下滚动到**高级设置**，输入以下详细信息: 
+    1.签名头名称: `sentry-hooks-signature`；
+    2.签名算法: 从下拉选项中选择 `sha256`；
+    3.点击页面底部的**保存**。
 
 </details>
 
-:::tip
-We have left out the `secret` field from the security object in the webhook configuration because the secret value is generated by Sentry when creating the webhook.
-So when following this example, please first create the webhook configuration in Port. Use the webhook URL from the response and create the webhook in Sentry.
-After getting the secret from Sentry, you can go back to Port and update the [webhook configuration](/build-your-software-catalog/sync-data-to-catalog/webhook/?operation=ui#configuring-webhook-endpoints) with the secret.
+:::tip 我们省略了 webhook 配置中安全对象的 "secret "字段，因为secret值是由 Sentry 在创建 webhook 时生成的。 因此，在遵循此示例时，请先在 Port 中创建 webhook 配置。 使用响应中的 webhook URL 并在 Sentry 中创建 webhook。 从 Sentry 获取secret后，您可以返回 Port 并使用secret更新[webhook configuration](/build-your-software-catalog/sync-data-to-catalog/webhook/?operation=ui#configuring-webhook-endpoints) 。
+
 :::
 
 <h2>Create a webhook in Sentry</h2>
 
-1. Log in to Sentry with your organization's credentials;
-2. Click the gear icon (Setting) at the left sidebar of the page;
-3. Choose **Developer Settings**;
-4. At the upper corner of this page, click on **Create New Integration**;
-5. Sentry provides two types of integrations: Internal and Public. For the purpose of this guide, choose **Internal Integration** and click on the **Next** button;
-6. Input the following details:
-   1. `Name` - use a meaningful name such as Port Webhook;
-   2. `Webhook URL` - enter the value of the `url` key you received after creating the webhook configuration;
-   3. `Overview` - enter a description for the webhook;
-   4. `Permissions` - Grant your webhook **Read** permissions for the **Issue & Event** category;
-   5. `Webhooks` - Under this section, enable the issues checkbox to allow Sentry to report issue events to Port;
-7. Click **Save Changes** at the bottom of the page.
+1. 使用贵组织的凭据登录 Sentry；
+2. 单击页面左侧边栏的齿轮图标(设置)；
+3. 选择 **开发设置**；
+4. 在页面上角，点击**创建新集成**；
+5. Sentry 提供两种类型的集成: 内部集成和公共集成。在本指南中，请选择**内部集成**，然后点击**下一步**按钮；
+6. 输入以下详细信息: 
+    1. `Name` - 被引用一个有意义的名称，如 Port Webhook；
+    2. Webhook URL` - 输入创建 Webhook 配置后收到的 `url` 键的值；
+    3. `Overview` - 输入 webhook 的描述；
+    4. 权限"- 授予 webhook 在**问题和事件**类别的**读取**权限；
+    5.Webhooks` - 在该部分下，启用问题复选框，允许 Sentry 向 Port 报告问题事件；
+7.单击页面底部的**保存更改**。
 
-:::tip
-Now that the webhook is created, you can take the secret value generated by Sentry and use it to update the `security` object in your Port webhook configuration
+:::tip 网络钩子已创建，您可以引用 Sentry 生成的secret值，并用它更新 Port 网络钩子配置中的 `security` 对象
+
 :::
 
 <h2>Relate comments to Issues</h2>
 
-The following example adds a `sentryComment` blueprint, in addition to the `sentryIssue` blueprint shown in the previous example. In addition, it also adds a `sentryIssue` relation. The webhook will create or update the relation between the 2 existing entities, allowing you to map which issue a comment is made on:
+下面的示例除了上一个示例中的 "sentryIssue "蓝图外，还添加了一个 "sentryComment "蓝图。 此外，它还添加了一个 "sentryIssue "关系。 webhook 将创建或更新这两个现有实体之间的关系，使您可以映射评论是针对哪个问题提出的: 
 
 <details>
 
@@ -848,41 +854,39 @@ The following example adds a `sentryComment` blueprint, in addition to the `sent
 
 </details>
 
-Create the following webhook configuration [using Port UI](/build-your-software-catalog/sync-data-to-catalog/webhook/?operation=ui#configuring-webhook-endpoints):
+创建以下 webhook 配置[using Port UI](/build-your-software-catalog/sync-data-to-catalog/webhook/?operation=ui#configuring-webhook-endpoints) : 
 
 <details>
 
 <summary>Sentry comments webhook configuration</summary>
 
-1. **Basic details** tab - fill the following details:
-   1. Title : `Sentry comment mapper`;
-   2. Identifier : `sentry_comment_mapper`;
-   3. Description : `A webhook configuration to map Sentry Comments to Port`;
-   4. Icon : `Sentry`;
-2. **Integration configuration** tab - fill the following JQ mapping:
-
+1. **基本信息** 选项卡 - 填写以下详细信息: 
+    1.title: "条目注释映射器"；
+    2.标识符: `sentry_comment_mapper`；
+    3.Description : `将 Sentry 注释映射到 Port` 的 webhook 配置；
+    4.图标 : `Sentry`；
+2. **集成配置**选项卡 - 填写以下 JQ 映射: 
    <SentryCommentsConfiguration/>
-
-3. Scroll down to **Advanced settings** and input the following details:
-   1. Signature Header Name : `sentry-hook-signature`;
-   2. Signature Algorithm : Select `sha256` from dropdown option;
-   3. Click **Save** at the bottom of the page.
+3.向下滚动到**高级设置**，输入以下详细信息: 
+    1.签名头名称: `sentry-hooks-signature`；
+    2.签名算法: 从下拉选项中选择 `sha256`；
+    3.点击页面底部的**保存**。
 
 </details>
 
-:::tip
-In order to view the different payloads and events available in Sentry webhooks, [click here](https://docs.sentry.io/product/integrations/integration-platform/webhooks/)
+:::tip 要查看 Sentry webhooks 中的不同有效载荷和事件、[click here](https://docs.sentry.io/product/integrations/integration-platform/webhooks/)
+
 :::
 
-Done! any issue and comment in Sentry will trigger a webhook event. Port will parse the events according to the mapping and update the catalog entities accordingly.
+完成！Sentry 中的任何问题和评论都将触发 webhook 事件。 Port 将根据映射解析事件，并相应地更新目录实体。
 
 <h2>Let's Test It</h2>
 
-This section includes a sample webhook event sent from Sentry when an issue or comment is created. In addition, it includes the entity created from the event based on the webhook configuration provided in the previous section.
+本节包括创建问题或评论时 Sentry 发送的 webhook 事件示例。 此外，本节还包括根据上一节提供的 webhook 配置从事件中创建的实体。
 
 <h3>Payload</h3>
 
-Here is an example of the payload structure sent to the webhook URL when a Sentry issue or comment is created:
+下面是创建 Sentry 问题或评论时发送到 webhook URL 的有效载荷结构示例: 
 
 <details>
 <summary> Sentry issue webhook event payload</summary>
@@ -976,7 +980,7 @@ Here is an example of the payload structure sent to the webhook URL when a Sentr
 
 <h3>Mapping Result</h3>
 
-The combination of the sample payload and the webhook configuration generates the following Port `sentryIssue` entity:
+结合示例有效载荷和 webhook 配置可生成以下 Port `sentryIssue` 实体: 
 
 ```json showLineNumbers
 {
@@ -994,7 +998,7 @@ The combination of the sample payload and the webhook configuration generates th
 }
 ```
 
-In addition, the following Port `sentryComment` entity will be generated:
+此外，还将生成以下 Port `sentryComment` 实体: 
 
 ```json showLineNumbers
 {
@@ -1013,4 +1017,5 @@ In addition, the following Port `sentryComment` entity will be generated:
   }
 }
 ```
+
 </details>

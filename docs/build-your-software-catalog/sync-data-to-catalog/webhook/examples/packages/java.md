@@ -1,21 +1,23 @@
 ---
+
 sidebar_position: 4
-description: Ingest Maven Dependencies into your catalog
+description: 将 Maven 依赖项纳入目录
+
 ---
 
-import MavenBlueprint from "./resources/java/\_example_maven_blueprint.mdx";
-import MavenConfiguration from "./resources/java/\_example_maven_webhook_configuration.mdx"
-import MavenShell from "./resources/java/\_example_maven_bash.mdx"
+import MavenBlueprint from "./resources/java/_example_maven_blueprint.mdx";
+import MavenConfiguration from "./resources/java/_example_maven_webhook_configuration.mdx"
+import MavenShell from "./resources/java/_example_maven_bash.mdx"
 
 # Java
 
-In this example you are going to create a `mavenDependencies` blueprint that ingests Maven packages using a combination of Port's [API](../../../api/api.md) and [webhook functionality](../../webhook.md).
+在本示例中，您将创建一个 `mavenDependencies` 蓝图，该蓝图将通过 Port's[API](../../../api/api.md) 和[webhook functionality](../../webhook.md) 的组合来引用 Maven 软件包。
 
-To ingest the Maven dependencies to Port, a script that sends information about packages according to the webhook configuration is used.
+要将 Maven 依赖包引用到 Port，需要使用一个脚本，该脚本会根据 webhook 配置发送有关软件包的信息。
 
-## Prerequisites
+## 先决条件
 
-Create the following blueprint definitions and webhook configuration:
+创建以下蓝图定义和 webhook 配置: 
 
 <details>
 <summary>Maven dependency blueprint</summary>
@@ -32,23 +34,27 @@ Create the following blueprint definitions and webhook configuration:
 <MavenShell/>
 </details>
 
-## Parsing `pom.xml` file and sending dependency data to Port
+## 解析 `pom.xml` 文件并向 Port 发送依赖关系数据
 
-The following section outlines how to use the mapper script to send data from the `pom.xml` file to Port.
+下文将概述如何使用映射器脚本将数据从 `pom.xml` 文件发送到 Port。
 
-### Script Usage
+#### 脚本 Usage
 
-1. Copy the script into a file in the root of your Java project. Make sure your `pom.xml` file is also located in the root of the project;
-2. Make the script executable. For instance, if you named the script `parse_and_send.sh`, you would use the following command:
+1. 将脚本复制到 Java 项目根目录下的文件中。确保您的 `pom.xml` 文件也位于项目根目录下；
+2. 使脚本可执行。例如，如果将脚本命名为 `parse_and_send.sh`，则应使用以下命令: 
+
 
    ```bash showLineNumbers
    chmod +x parse_and_send.sh
    ```
 
-3. Run the script:
+
+3.运行脚本: 
+
 
    ```bash showLineNumbers
    ./parse_and_send.sh
    ```
 
-Done! After the script has run, it will automatically injest Maven dependencies into Port via HTTP Requests
+
+完成！脚本运行后，将自动通过 HTTP 请求将 Maven 依赖项注入 Port

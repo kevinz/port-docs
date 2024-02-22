@@ -1,5 +1,7 @@
 ---
+
 sidebar_position: 1
+
 ---
 
 import Tabs from "@theme/Tabs"
@@ -7,25 +9,24 @@ import TabItem from "@theme/TabItem"
 
 # Azure Pipelines
 
-Using Azure Pipelines, you can easily create/update and query entities in Port.
+使用 Azure Pipelines，可以轻松创建/更新和查询 Port 中的实体。
 
 <br></br>
 <br></br>
 
 ![Github Illustration](/img/build-your-software-catalog/sync-data-to-catalog/azure-pipelines/azure-pipelines-illustration.jpg)
 
-## 💡 Common Azure Pipelines usage
+## 💡 常见的 Azure Pipelines Usage
 
-Port's API allows for easy integration between Port and your Azure Pipeline jobs, for example:
+例如，Port 的应用程序接口(API)可轻松实现 Port 与 Azure Pipelines 作业的集成: 
 
-- Report the status of a running **CI job**;
-- Update the software catalog about a new **build version** for a **microservice**;
-- Get existing **entities**.
+* 报告正在运行的**CI任务**的状态；
+* 更新软件目录中有关**微服务**新**构建版本的信息；
+* 获取现有**实体**。
 
-## Setup
+## 设置
 
-To interact with Port using Azure Pipelines, you will first need to [define your Port credentials](https://learn.microsoft.com/en-us/azure/devops/pipelines/process/set-secret-variables?view=azure-devops&tabs=yaml%2Cbash#secret-variable-in-the-ui) as variables for your pipeline.
-Then, pass the defined variables to your pipeline script, for example, `Python`:
+要使用 Azure Pipelines 与 Port 交互，首先需要将[define your Port credentials](https://learn.microsoft.com/en-us/azure/devops/pipelines/process/set-secret-variables?view=azure-devops&amp;tabs=yaml%2Cbash#secret-variable-in-the-ui) 作为管道的变量。然后，将定义的变量传递给管道脚本，例如 `Python`: 
 
 ```yaml showLineNumbers
 - task: PythonScript@0
@@ -37,13 +38,13 @@ Then, pass the defined variables to your pipeline script, for example, `Python`:
     scriptPath: "main.py"
 ```
 
-Make sure you have an existing [Blueprint](/build-your-software-catalog/define-your-data-model/setup-blueprint/setup-blueprint.md) in your Port installation to create/update entities.
+请确保您的 Port 安装中已有[Blueprint](/build-your-software-catalog/define-your-data-model/setup-blueprint/setup-blueprint.md) ，以便创建/更新实体。
 
-## Working with Port's API
+## 使用 Port 的 API
 
-Here is an example snippet showing how to integrate a job that uses Port's API with your existing Azure pipelines using Python:
+下面是一个示例片段，展示了如何使用 Python 将被引用 Port API 的作业与现有的 Azure 管道集成: 
 
-Add the following task to your Azure pipeline:
+在 Azure Pipelines 中添加以下任务: 
 
 <details>
   <summary> Azure pipeline YAML </summary>
@@ -64,8 +65,7 @@ Add the following task to your Azure pipeline:
 
 <br></br>
 
-:::note
-In the following example, we use Python modules which need to be installed. You can use the following `requirements.txt`:
+:::note 在下面的示例中，我们使用了需要安装的 Python 模块。 你可以引用下面的 `requirements.txt`: 
 
 <details>
   <summary> port_requirements.txt </summary>
@@ -85,7 +85,7 @@ requests>=2.28.2
 
 <TabItem value="upsert">
 
-Create the following Python script in your repository to create or update Port entities as part of your pipeline:
+在版本库中创建以下 Python 脚本，以创建或更新 Port 实体，作为管道的一部分: 
 
 ```python showLineNumbers
 import os
@@ -104,7 +104,7 @@ token_response = requests.post(f"{API_URL}/auth/access_token", json=credentials)
 access_token = token_response.json()['accessToken']
 
 headers = {
-	'Authorization': f'Bearer {access_token}'
+    'Authorization': f'Bearer {access_token}'
 }
 
 entity_json = {
@@ -126,7 +126,7 @@ print(json.dumps(get_response.json(), indent=4))
 </TabItem>
 <TabItem value="get">
 
-Create the following Python script in your repository to get Port entities as part of your pipeline:
+在版本库中创建以下 Python 脚本，以获取 Port 实体作为管道的一部分: 
 
 ```python showLineNumbers
 import os
@@ -145,7 +145,7 @@ token_response = requests.post(f"{API_URL}/auth/access_token", json=credentials)
 access_token = token_response.json()['accessToken']
 
 headers = {
-	'Authorization': f'Bearer {access_token}'
+    'Authorization': f'Bearer {access_token}'
 }
 
 # request url : {API_URL}/blueprints/<blueprint_id>/entities/<entity_id>
@@ -156,6 +156,6 @@ print(json.dumps(get_response.json(), indent=4))
 </TabItem>
 </Tabs>
 
-## Examples
+## 示例
 
-Refer to the [examples](./examples.md) page for practical examples of working with Port using Azure Pipelines.
+有关使用 Azure Pipelines 处理 Port 的实用示例，请引用[examples](./examples.md) 页面。

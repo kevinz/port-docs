@@ -1,1 +1,1 @@
-The `delete_dependents` query parameter is used to enable the deletion of dependent Port entities. This is useful when you have two blueprints with a required relation, and the target entity in the relation should be deleted. In this scenario, the delete operation will fail if this flag is set to `false`, if the flag is set to `true`, the source entity will be deleted as well.
+delete_dependents "查询参数用于启用删除依赖的 Port 实体。 当您有两个具有必填关系的蓝图，而关系中的目标实体应被删除时，这个功能就很有用。 在这种情况下，如果该标志设置为 "false"，删除操作将失败；如果该标志设置为 "true"，源实体也将被删除。

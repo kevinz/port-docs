@@ -1,29 +1,31 @@
 ---
+
 sidebar_position: 1
+
 ---
 
 import Tabs from "@theme/Tabs"
 import TabItem from "@theme/TabItem"
 
-# Examples
+# 示例
 
-In this section we'll show you a few examples of ways to use self-service action permissions in your organization, and how to apply them.
+在本节中，我们将举例说明在企业中使用自助操作权限的方法，以及如何应用这些方法。
 
-## Use cases 💡
+## 用例 💡
 
-The following configurations, among others, are available when using self-service action permissions management:
+在使用自助操作权限管理时，除其他外，还可进行以下配置: 
 
-1. Self-service actions can be enabled only for specific users;
-2. Allow specific users/roles to only execute specific self-service actions;
-3. Specify users that are allowed to approve self-service action requests;
+1. 自助服务操作只能为特定用户启用；
+2. 只允许特定用户/角色执行特定的自助服务操作；
+3. 指定允许批准自助服务操作请求的用户；
 
-## Setting blueprint permissions
+## 设置蓝图权限
 
-To set permissions for a self-service action, click on the permissions button of the blueprint with the desired self-service action in the DevPortal Builder page. This will open a modal that contains the permissions JSON and allows you to control every operation that can be performed on the blueprint or its entities.
+要为自助服务操作设置权限，请单击 DevPortal 生成器页面中带有所需自助服务操作的蓝图的权限按钮。 这将打开一个包含权限 JSON 的模式窗，允许您控制可在蓝图或其实体上执行的所有操作。
 
-## Setting action permissions
+## 设置行动权限
 
-### Role examples
+### 角色示例
 
 <Tabs groupId="action-permissions" defaultValue="action-only-admin-moderator" values={[
 {label: "Only let admins/moderators run action", value: "action-only-admin-moderator"}
@@ -31,7 +33,7 @@ To set permissions for a self-service action, click on the permissions button of
 
 <TabItem value="action-only-admin-moderator">
 
-By default, **Member** users can execute every action defined on a blueprint. In this example, we allow only **Moderators** (and **Admins**) to only execute the action `clone_env` (and disabling Member's permission to execute it):
+默认情况下，**Member** 用户可以执行蓝图上定义的所有操作。 在本例中，我们只允许**Moderators**(和**Admins**)执行 "clone_env "操作(同时禁用 Member 的执行权限): 
 
 ```json showLineNumbers
 {
@@ -53,19 +55,19 @@ By default, **Member** users can execute every action defined on a blueprint. In
 
 </Tabs>
 
-## Setting up a Slack notification
+## 设置 Slack 通知
 
-To enable Slack notifications, you need to create a Slack app and install it in your workspace by following steps 1-3 outlined in the [Slack API Documentation](https://api.slack.com/messaging/webhooks).
+要启用 Slack 通知，您需要创建一个 Slack 应用程序，并按照[Slack API Documentation](https://api.slack.com/messaging/webhooks) 中概述的步骤 1-3 将其安装到工作区中。
 
-Once you have completed the installation process, you will obtain a webhook URL that looks like this:
+完成安装过程后，您将获得如下所示的 webhook URL: 
 
 ```text
 https://hooks.slack.com/services/T00000000/B00000000/XXXXXXXXXXXXXXXXXXXXXXXX
 ```
 
-Now, you can use your webhook URL to send the manual approval notification to the Slack channel tied to the webhook URL.
+现在，您可以使用 webhook URL 将手动审批通知发送到与 webhook URL 绑定的 Slack 频道。
 
-To do this, modify the `approvalNotification` field in your action configuration as shown below:
+为此，请修改操作配置中的 "approvalNotification "字段，如下所示: 
 
 ```json showLineNumbers
 {

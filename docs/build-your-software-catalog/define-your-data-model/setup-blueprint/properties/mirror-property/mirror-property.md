@@ -1,42 +1,43 @@
 ---
+
 sidebar_position: 15
-description: Mirror Property allows you to map data from related entities to your entity
+description: 镜像属性镜像属性允许您将相关实体的数据映射到您的实体中
+
 ---
 
-import ApiRef from "../../../../../api-reference/\_learn_more_reference.mdx"
+import ApiRef from "../../../../../api-reference/_learn_more_reference.mdx"
 
 import Tabs from "@theme/Tabs"
 import TabItem from "@theme/TabItem"
 
-# 🪞 Mirror Property
+# 🪞 镜子属性
 
-Mirror property allows you to map data from related entities to your entity.
-Mirror property can be used for blueprints that have [relations defined](../../../relate-blueprints/relate-blueprints.md).
+镜像属性允许您将相关实体的数据映射到您的实体中。 镜像属性可被引用到具有[relations defined](../../../relate-blueprints/relate-blueprints.md) 的蓝图中。
 
-When two blueprints are connected via a relation, a new set of properties becomes available to entities in the `source` blueprint.
+当两个蓝图通过关系连接时，"源 "蓝图中的实体就可以使用一组新的属性。
 
-Those new properties are called `mirrorProperties`.
+这些新属性被称为 `mirrorProperties` 。
 
-Mirror properties will appear on the `source` blueprint as an additional key called `mirrorProperties`. It represents additional properties queried from the `target` blueprint (or from other entities further down the connection graph).
+镜像属性将作为一个名为 "mirrorProperties "的附加键出现在 "源 "蓝图上。 它代表从 "目标 "蓝图(或从连接图下方的其他实体)中查询到的附加属性。
 
-Mirror properties allow you to map property values from related entities, to `keys` in the `source` blueprint, thus giving you more context and data when viewing an Entity, while not cluttering the output with unnecessary fields.
+镜像属性可让您将相关实体的属性值映射到 "源 "蓝图中的 "键"，从而在查看实体时为您提供更多上下文和数据，同时不会在 Output 中加入不必要的字段。
 
-Mirror properties support both [user-defined](../properties.md#available-properties) properties, and [meta-properties](../meta-properties.md) by using similar syntax.
+镜像属性同时支持[user-defined](../properties.md#available-properties) 属性和[meta-properties](../meta-properties.md) ，使用类似的语法。
 
-## 💡 Common mirror usage
+## 💡 常用镜像 Usage
 
-Mirror properties make it possible to enrich the data visible on an entity by mapping additional data and properties from other related entities in the catalog, for example:
+镜像属性可以通过映射目录中其他相关实体的附加数据和属性，丰富实体的可见数据: 
 
-- Show the chart version of a running service;
-- Show the environment type of a running service;
-- Show the cloud provider of a K8s cluster;
-- etc.
+* 显示运行服务的图表版本；
+* 显示运行中服务的环境类型；
+* 显示 k8s 集群的云 Provider；
+* 等等。
 
-In this [live demo](https://demo.getport.io/k8s-clusters) example, we can see the `Cloud Provider` Property which is a mirror property of the related `Cloud Account` blueprint 🎬
+在[live demo](https://demo.getport.io/k8s-clusters) 这个示例中，我们可以看到 `Cloud Provider` 属性，它是相关的 `Cloud Account` 蓝图的镜像属性 🎬
 
-## API definition
+## 应用程序接口定义
 
-The `mirrorProperties` key is a top-level key in the JSON of an entity (similar to `identifier`, `title`, `properties`, etc..)
+`mirrorProperties` 键是实体 JSON 中的顶级键(类似于 `identifier`, `title`, `properties` 等)。
 
 <Tabs groupId="api-definition" defaultValue="basic" values={[
 {label: "Basic", value: "basic"}
@@ -60,11 +61,11 @@ The `mirrorProperties` key is a top-level key in the JSON of an entity (similar 
 
 <ApiRef />
 
-:::info
-The `path` key receives a path of chained relations, which lead up to a blueprint property or [meta-property](#meta-property-as-a-mirror-property)
+:::info 路径 "键接收链式关系的路径，这些链式关系导致蓝图属性或[meta-property](#meta-property-as-a-mirror-property)
+
 :::
 
-## Terraform definition
+## Terraform 定义
 
 <Tabs groupId="tf-definition" defaultValue="basic" values={[
 {label: "Basic", value: "basic"}
@@ -89,7 +90,7 @@ resource "port_blueprint" "myBlueprint" {
 </TabItem>
 </Tabs>
 
-## Pulumi definition
+## Pulumi 的定义
 
 <Tabs groupId="pulumi-definition-mirror-basic" defaultValue="python" values={[
 {label: "Python", value: "python"},
@@ -183,44 +184,43 @@ exports.title = entity.title;
 package main
 
 import (
-	"github.com/port-labs/pulumi-port/sdk/go/port"
-	"github.com/pulumi/pulumi/sdk/v3/go/pulumi"
+    "github.com/port-labs/pulumi-port/sdk/go/port"
+    "github.com/pulumi/pulumi/sdk/v3/go/pulumi"
 )
 
 func main() {
-	pulumi.Run(func(ctx *pulumi.Context) error {
-		blueprint, err := port.NewBlueprint(ctx, "myBlueprint", &port.BlueprintArgs{
-			Identifier: pulumi.String("myBlueprint"),
-			Title:      pulumi.String("My Blueprint"),
-			// blueprint properties..
+    pulumi.Run(func(ctx *pulumi.Context) error {
+    	blueprint, err := port.NewBlueprint(ctx, "myBlueprint", &port.BlueprintArgs{
+    		Identifier: pulumi.String("myBlueprint"),
+    		Title:      pulumi.String("My Blueprint"),
+    		// blueprint properties..
       # highlight-start
-			MirrorProperties: port.BlueprintMirrorPropertiesMap{
+    		MirrorProperties: port.BlueprintMirrorPropertiesMap{
               "myMirrorProp": port.BlueprintMirrorPropertiesArgs{
                     Title: pulumi.String("My mirror property"),
                     Path:  pulumi.String("myRelation.myProperty"),
-			  },
-			},
+    		  },
+    		},
       # highlight-end
-		})
-		ctx.Export("blueprint", blueprint.Title)
-		if err != nil {
-			return err
-		}
-		return nil
-	})
+    	})
+    	ctx.Export("blueprint", blueprint.Title)
+    	if err != nil {
+    		return err
+    	}
+    	return nil
+    })
 }
-
 ```
 
 </TabItem>
 
 </Tabs>
 
-## `Meta-property` as a mirror property
+##`Meta-property` 作为镜像属性
 
-This is a mirror property created from one of Port's [meta-properties](../meta-properties.md) on the `target` blueprint.
+这是一个镜像属性，由 Port 的[meta-properties](../meta-properties.md) 在`目标`蓝图上创建。
 
-In the following example, we create a mirror property called `microserviceName` which is mapped to the `title` meta-property in the `target` blueprint (in this example the name of the relation is `deployment-to-microservice`). Note how the `title` field is referenced using `$title` because it is a meta-property:
+在下面的示例中，我们创建了一个名为 `microserviceName` 的镜像属性，它被映射到 `target` 蓝图中的 `title` 元属性(在这个示例中，关系的名称是 `deployment-to-microservice`)。 请注意 `title` 字段是如何被 `$title` 引用的，因为它是一个元属性: 
 
 ```json showLineNumbers
 "microserviceName": {
@@ -229,22 +229,22 @@ In the following example, we create a mirror property called `microserviceName` 
 }
 ```
 
-## Nested relation as a mirror property
+## 作为镜像属性的嵌套关系
 
-It is possible to use mirror properties to map properties from blueprints that are not direct descendants of our `source` blueprint.
+可以使用镜像属性来映射非 "源 "蓝图直系子蓝图的属性。
 
-For example, let's assume we have the following Relation chain: `Microservice -> System -> Domain`.
+例如，假设我们有以下关系链: "Microservice -> System -> Domain"。
 
-We want to map the members of the domain that owns the microservice directly to the `Microservice` entities.
+我们希望将拥有微服务的域成员直接映射到 "Microservice "实体。
 
-The members of the domain are listed in an [array property](../array.md) under the user-defined property `domain_members`.
+域成员列于[array property](../array.md) 的用户自定义属性 `domain_members` 下。
 
-The names of the relations are:
+这些关系的名称是
 
-- `Microservice -> System`: `system`
-- `System -> Domain`: `domain`
+* `Microservice -> System`: `system`.
+* 系统 -> 域":  `domain
 
-Let's map the squad members using a mirror property called `owningDomainMembers`:
+让我们使用名为 `owningDomainMembers` 的镜像属性来映射小队成员: 
 
 ```json showLineNumbers
 "owningDomainMembers": {

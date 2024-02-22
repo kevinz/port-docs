@@ -1,25 +1,27 @@
 ---
+
 sidebar_position: 13
-description: Proto is a data type used to save proto definitions in Port
+description: Proto 是一种数据类型，被引用来保存 Port 中的 proto 定义。
+
 ---
 
-import ApiRef from "../../../../api-reference/\_learn_more_reference.mdx"
+import ApiRef from "../../../../api-reference/_learn_more_reference.mdx"
 
 import Tabs from "@theme/Tabs"
 import TabItem from "@theme/TabItem"
 
-# Proto
+# 原型
 
-Proto is a data type used to save .proto definitions in Port
+Proto 是一种数据类型，被引用用于在 Port 中保存 .proto 定义。
 
-## 💡 Common proto usage
+## 💡 常见原语 Usage
 
-The proto property type can be used to store types defined in .proto files, for example:
+例如，proto 属性类型可用于存储在 .proto 文件中定义的类型: 
 
-- Messages between microservices;
-- Microservices APIs;
+* 微服务之间的信息；
+* 微服务应用程序接口；
 
-## API definition
+## 应用程序接口定义
 
 <Tabs groupId="api-definition" queryString defaultValue="basic" values={[
 {label: "Basic", value: "basic"},
@@ -67,7 +69,7 @@ The proto property type can be used to store types defined in .proto files, for 
 
 <ApiRef />
 
-## Terraform definition
+## Terraform 定义
 
 <Tabs groupId="tf-definition" queryString defaultValue="basic" values={[
 {label: "Basic", value: "basic"},
@@ -119,7 +121,7 @@ resource "port_blueprint" "myBlueprint" {
 </TabItem>
 </Tabs>
 
-## Pulumi definition
+## Pulumi 的定义
 
 <Tabs groupId="pulumi-definition" queryString defaultValue="basic" values={[
 {label: "Basic", value: "basic"},
@@ -223,31 +225,31 @@ exports.title = entity.title;
 package main
 
 import (
-	"github.com/port-labs/pulumi-port/sdk/go/port"
-	"github.com/pulumi/pulumi/sdk/v3/go/pulumi"
+    "github.com/port-labs/pulumi-port/sdk/go/port"
+    "github.com/pulumi/pulumi/sdk/v3/go/pulumi"
 )
 
 func main() {
-	pulumi.Run(func(ctx *pulumi.Context) error {
-		blueprint, err := port.NewBlueprint(ctx, "myBlueprint", &port.BlueprintArgs{
-			Identifier: pulumi.String("myBlueprint"),
-			Title:      pulumi.String("My Blueprint"),
+    pulumi.Run(func(ctx *pulumi.Context) error {
+    	blueprint, err := port.NewBlueprint(ctx, "myBlueprint", &port.BlueprintArgs{
+    		Identifier: pulumi.String("myBlueprint"),
+    		Title:      pulumi.String("My Blueprint"),
       // highlight-start
-			Properties: port.BlueprintPropertiesArgs{
-				"myProtoProp": port.BlueprintPropertiesStringPropsArgs{
-					Title:    pulumi.String("My proto"),
-					Required: pulumi.Bool(false),
-					Format:   pulumi.String("proto"),
-				},
-			},
+    		Properties: port.BlueprintPropertiesArgs{
+    			"myProtoProp": port.BlueprintPropertiesStringPropsArgs{
+    				Title:    pulumi.String("My proto"),
+    				Required: pulumi.Bool(false),
+    				Format:   pulumi.String("proto"),
+    			},
+    		},
       // highlight-end
-		})
-		ctx.Export("blueprint", blueprint.Title)
-		if err != nil {
-			return err
-		}
-		return nil
-	})
+    	})
+    	ctx.Export("blueprint", blueprint.Title)
+    	if err != nil {
+    		return err
+    	}
+    	return nil
+    })
 }
 ```
 

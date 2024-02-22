@@ -1,24 +1,26 @@
 ---
+
 sidebar_position: 2
-sidebar_label: Send Slack messages
+sidebar_label: 发送 Slack 消息
+
 ---
 
-# Send Slack messages
+# 发送 Slack 消息
 
-Your developer portal contains valuable data about your entities, including their compliance with your standards (using scorecards or initiatives). For example, you can easily determine the production readiness (scorecard) of a microservice (an entity).
+您的开发人员门户包含有关实体的宝贵数据，包括它们是否符合您的标准(使用记分卡或倡议)。 例如，您可以轻松确定微服务(实体)的生产就绪状态(记分卡)。
 
-The [Port message sender](https://github.com/marketplace/actions/port-sender) allows you to send reports and reminders via Slack to relevant personas, letting managers and developers know what standards need to be met that are relevant to them.
+[Port message sender](https://github.com/marketplace/actions/port-sender) 可以通过 Slack 向相关角色发送报告和提醒，让管理人员和开发人员知道需要达到哪些与他们相关的标准。
 
-:::tip Gitlab Support
-The example on this page uses a Github worfklow, to achieve this using Gitlab, see [this](/docs/guides-and-tutorials/setup-slack-reminders.md?git-provider=gitlab) guide.
+:::tip  Gitlab 支持 本页面上的示例引用了 Github 的工作流，要使用 Gitlab 实现此功能，请参阅[this](/docs/guides-and-tutorials/setup-slack-reminders.md?git-provider=gitlab) 指南。
+
 :::
 
-Head to the Port sender [Slack section](https://github.com/marketplace/actions/port-sender#slack) to learn more about the integration and how to use it.
+请前往 Port 发送器[Slack section](https://github.com/marketplace/actions/port-sender#slack) 了解更多集成信息和使用方法。
 
-## Slack Scorecard Report Example
+### Slack 记分卡报告示例
 
 ![Slack Scorecard Report](/img/scorecards/slack/scorecard-report.png)
 
-## Slack Scorecard Reminder Example
+### Slack 记分卡提醒示例
 
 ![Slack Scorecard Reminder](/img/scorecards/slack/scorecard-reminder.png)

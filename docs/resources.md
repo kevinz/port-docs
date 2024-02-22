@@ -1,21 +1,20 @@
 ---
+
 sidebar_position: 15
-title: Resources
-sidebar_label: 📚 Resources
+title: 资源
+sidebar_label: 📚 资源
+
 ---
 
-# 📚 Resources
+# 资源
 
-Here you will find more Port-related content that can help you get the most out of your developer portal.
+在这里，您可以找到更多与 Port 相关的内容，帮助您充分利用开发者门户。
 
-Feel free to reach out with any questions or requests 🚀
+如有任何问题或要求，请随时联系我们 🚀
 
-- [Webinars](https://www.getport.io/webinars)
-
-- [Blog posts](https://www.getport.io/blog)
-
-- [Resource center](https://www.getport.io/resource-center)
-
-- [Newsroom](https://www.getport.io/newsroom)
+* * [Webinars](https://www.getport.io/webinars)
+* [Blog posts](https://www.getport.io/blog)
+* [Resource center](https://www.getport.io/resource-center)
+* [Newsroom](https://www.getport.io/newsroom)
 
 ---

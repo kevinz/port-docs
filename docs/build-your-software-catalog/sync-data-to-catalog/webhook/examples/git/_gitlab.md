@@ -1,18 +1,20 @@
 ---
+
 sidebar_position: 2
-description: Keep merge requests up to date using webhooks
+description: 使用 webhook 保持合并请求的最新状态
+
 ---
 
-import MergeRequestBlueprint from '../resources/gitlab/\_example_gitlab_mr_blueprint.mdx'
-import MergeRequestWebhookConfig from '../resources/gitlab/\_example_gitlab_mr_configuration.mdx'
+import MergeRequestBlueprint from '../resources/gitlab/_example_gitlab_mr_blueprint.mdx'
+import MergeRequestWebhookConfig from '../resources/gitlab/_example_gitlab_mr_configuration.mdx'
 
 # GitLab
 
-In this example you are going to create a webhook integration between [GitLab](https://about.gitlab.com/) and Port, which will ingest merge request entities.
+在本示例中，您将在[GitLab](https://about.gitlab.com/) 和 Port 之间创建一个 webhook 集成，用于接收合并请求实体。
 
-## Port configuration
+## Port 配置
 
-Create the following blueprint definition:
+创建以下蓝图定义: 
 
 <details>
 <summary>Merge request blueprint</summary>
@@ -21,54 +23,51 @@ Create the following blueprint definition:
 
 </details>
 
-Create the following webhook configuration [using Port's UI](/build-your-software-catalog/sync-data-to-catalog/webhook/?operation=ui#configuring-webhook-endpoints):
+创建以下 webhook 配置[using Port's UI](/build-your-software-catalog/sync-data-to-catalog/webhook/?operation=ui#configuring-webhook-endpoints) : 
 
 <details>
 <summary>Pull request webhook configuration</summary>
 
-1. **Basic details** tab - fill the following details:
-
-   1. Title : `Gitlab mapper`;
-   2. Identifier : `gitlab_mapper`;
-   3. Description : `A webhook configuration to map Gitlab merge requests to Port`;
-   4. Icon : `Gitlab`;
-
-2. **Integration configuration** tab - fill the following JQ mapping:
+1. **基本信息** 选项卡 - 填写以下详细信息: 
+    1.title: `Gitlab mapper`；
+    2.标识符 : `gitlab_mapper`；
+    3.Description : `将 Gitlab 合并请求映射到 Port` 的 webhook 配置；
+    4.图标 : `Gitlab`；
+2. **集成配置**选项卡 - 填写以下 JQ 映射: 
    <MergeRequestWebhookConfig/>
-
-3. Scroll down to **Advanced settings** and input the following details:
-   1. Request Identifier Path : `.headers.X-Gitlab-Event-Uuid`;
-   2. Click **Save** at the bottom of the page.
+3.向下滚动到**高级设置**，输入以下详细信息: 
+    1.请求标识符路径: `.headers.X-Gitlab-Event-Uuid`；
+    2.点击页面底部的**保存**。
 
 </details>
 
-## Create a webhook in GitLab
+## 在 GitLab 中创建 webhook
 
-:::tip
-Webhooks can be created at the group level and at the project level, this example focuses on project-level webhooks
+:::tip 可以在组级和项目级创建网络钩子，本例重点介绍项目级网络钩子
+
 :::
 
-1. Go to your desired project in GitLab;
-2. At the sidebar on the left side of the page select **Settings** and click on **Webhooks**;
-3. Input the following details:
-   1. `URL` - enter the value of the `url` key you received after creating the webhook configuration;
-   2. `Trigger` - choose **Merge request events**;
-   3. Be sure to keep the "Enable SSL verification" checkbox checked.
-4. Click on **Add webhook**
+1. 在 GitLab 中转入所需的项目；
+2. 在页面左侧的侧边栏选择**设置**，然后点击**Webhooks**；
+3. 输入以下详细信息: 
+    1. `URL` - 输入创建 webhook 配置后收到的 `url` 键值；
+    2. 触发器"- 选择 "合并请求事件"；
+    3.确保选中 "启用 SSL 验证 "复选框。
+4.点击 ** 添加 webhook**
 
-:::tip
-In order to view the different payloads and events available in GitLab webhooks, [look here](https://docs.gitlab.com/ee/user/project/integrations/webhook_events.html)
+:::tip 为了查看 GitLab webhooks 中的不同有效载荷和事件，请使用以下命令、[look here](https://docs.gitlab.com/ee/user/project/integrations/webhook_events.html)
+
 :::
 
-Done! any change you make to a merge request (open, close, edit, etc.) will trigger a webhook event that GitLab will send to the webhook URL provided by Port. Port will parse the events according to the mapping and update the catalog entities accordingly.
+完成！您对合并请求所做的任何更改(打开、关闭、编辑等)都会触发 webhook 事件，GitLab 会将该事件发送到 Port 提供的 webhook URL。 Port 会根据映射解析事件，并相应地更新目录实体。
 
-## Let's Test It
+## 让我们来测试一下
 
-This section includes a sample webhook event sent from GitLab when a merge request is created. In addition, it includes the entity created from the event based on the webhook configuration provided in the previous section.
+本节包括创建合并请求时 GitLab 发送的 webhook 事件示例，还包括根据上一节提供的 webhook 配置从事件中创建的实体。
 
-### Payload
+### 有效载荷
 
-Here is an example of the payload structure sent to the webhook URL when a GitLab merge request is created:
+下面是创建 GitLab 合并请求时发送到 webhook URL 的有效载荷结构示例: 
 
 <details>
 <summary> Webhook event payload</summary>
@@ -179,9 +178,9 @@ Here is an example of the payload structure sent to the webhook URL when a GitLa
 
 </details>
 
-### Mapping Result
+#### 映射结果
 
-The combination of the sample payload and the webhook configuration generates the following Port entity:
+结合示例有效载荷和 webhook 配置可生成以下 Port 实体: 
 
 ```json showLineNumbers
 {

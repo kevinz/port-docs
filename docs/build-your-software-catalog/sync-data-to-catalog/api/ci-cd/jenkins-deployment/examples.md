@@ -1,30 +1,27 @@
-import ExampleImageBlueprint from "../\_ci_example_image_blueprint.mdx";
-import ExampleCiJobBlueprint from "../\_ci_example_ci_job_blueprint.mdx";
+import ExampleImageBlueprint from "../_ci_example_image_blueprint.mdx";
+import ExampleCiJobBlueprint from "../_ci_example_ci_job_blueprint.mdx";
 
-# Examples
+# 示例
 
-## Basic create/update example
+## 基本创建/更新示例
 
-:::note
-For this example, the following plugin is a dependency:
+:::note 在本例中，以下插件是一个依赖项: 
 
-- build user vars plugin (>=v1.9)
+* 构建用户变量插件(>=v1.9)
 
 :::
 
-In this example you will create blueprints for `ciJob` and `image` entities, and a relation between them. Then you will add some Groovy code to create new entities in Port every time the Jenkins pipeline is triggered:
+在本例中，您将为 `ciJob` 和 `镜像` 实体创建蓝图，并在它们之间建立关系。 然后，您将添加一些 Groovy 代码，以便在每次触发 Jenkins 管道时在 Port 中创建新实体: 
 
 <ExampleImageBlueprint />
 
 <ExampleCiJobBlueprint />
 
-:::note
-The variables `token` and `API_URL` are used in the following examples.
-Click [here](./jenkins-deployment.md#fetching-your-api-token) to see how they were defined.
+:::note 以下示例中使用了变量 `token` 和 `API_URL`。点击[here](./jenkins-deployment.md#fetching-your-api-token) 查看它们是如何定义的。
 
 :::
 
-After creating the blueprint, you can add the following snippet to your Jenkins build to create the new build entity:
+创建蓝图后，可将以下代码段添加到 Jenkins 构建中，以创建新的构建实体: 
 
 ```js showLineNumbers
 // Use the `build users` plugin to fetch the triggering user's ID
@@ -53,19 +50,18 @@ wrap([$class: 'BuildUser']) {
             ]
 ```
 
-:::note
-Please notice that you have also created the `image` relation, and added a related image entity called `example-image`. This is the artifact of the ciJob, and you will update it later.
-The creation was done using the `create_missing_related_entities=true` flag in the API url, allowing the relation to be created even though the `example-image` entity doesn't exist yet.
+:::note 请注意，您还创建了 `image` 关系，并添加了名为 `example-image` 的相关镜像实体。 这是 ciJob 的工件，您稍后会更新它。 创建时使用了 API url 中的 `create_missing_related_entities=true` flag，这样即使 `example-image` 实体还不存在，也能创建关系。
+
 :::
 
-## Basic get example
+## 基本获取示例
 
-The following example gets the `new-cijob-run` entity from the previous example, this can be useful if your CI process creates a build artifact and then references some of its data (for example, the run link of the latest `ciJob`).
+下面的示例从上一个示例中获取了 `new-cijob-run` 实体，如果您的 CI 流程创建了一个构建工件，然后引用了其中的某些数据(例如，最新的 `ciJob` 的运行链接)，这可能会很有用。
 
-Add the following code to your Jenkins build:
+在 Jenkins 构建中添加以下代码: 
 
 ```js showLineNumbers
-    response = httpRequest contentType: "APPLICATION_JSON", httpMode: "GET",
+response = httpRequest contentType: "APPLICATION_JSON", httpMode: "GET",
             url: "${API_URL}/v1/blueprints/ciJob/entities/new-cijob-run",
             customHeaders: [
                 [name: "Authorization", value: "Bearer ${token}"],
@@ -73,11 +69,11 @@ Add the following code to your Jenkins build:
     println(response.content)
 ```
 
-## Relation example
+## 关系示例
 
-In the following example you will update the `example-image` entity that was automatically created when creating the `ciJob` entity shown in the previous example.
+在下面的示例中，您将更新在创建上一个示例中显示的 `ciJob` 实体时自动创建的 `example-image` 实体。
 
-Add the following snippet to your Jenkins Pipeline:
+在 Jenkins Pipeline 中添加以下代码段: 
 
 ```js showLineNumbers
 def body = """
@@ -104,4 +100,4 @@ url: "${API_URL}/v1/blueprints/image/entities?upsert=true&merge=true",
     ]
 ```
 
-That's it! The entity is created or updated and is visible in the UI.
+就是这样！实体已创建或更新，并在用户界面中可见。

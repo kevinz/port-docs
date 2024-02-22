@@ -1,22 +1,24 @@
 ---
+
 sidebar_position: 7
-description: Email is an input used to save Email addresses
+description: 电子邮件是用于保存电子邮件地址的输入法
+
 ---
 
-import ApiRef from "../../../api-reference/\_learn_more_reference.mdx"
+import ApiRef from "../../../api-reference/_learn_more_reference.mdx"
 
 import Tabs from "@theme/Tabs"
 import TabItem from "@theme/TabItem"
 
-# Email
+# 电子邮件
 
-Email is an input used to save Email addresses.
+电子邮件是用于保存电子邮件地址的输入。
 
-## 💡 Common email usage
+## 💡 常用电子邮件 Usage
 
-The Email input type can be used to store any legal email address.
+电子邮件输入类型可被用来存储任何合法的电子邮件地址。
 
-## API definition
+## 应用程序接口定义
 
 <Tabs groupId="api-definition" queryString defaultValue="basic" values={[
 {label: "Basic", value: "basic"},
@@ -83,7 +85,7 @@ The Email input type can be used to store any legal email address.
 
 <ApiRef />
 
-## Terraform definition
+## Terraform 定义
 
 <Tabs groupId="tf-definition" queryString defaultValue="basic" values={[
 {label: "Basic", value: "basic"},

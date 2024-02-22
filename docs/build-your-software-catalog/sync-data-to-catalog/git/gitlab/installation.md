@@ -1,42 +1,44 @@
 ---
+
 sidebar_position: 1
+
 ---
 
 import Tabs from "@theme/Tabs"
 import TabItem from "@theme/TabItem"
-import HelmParameters from "../../templates/\_ocean-advanced-parameters-helm.mdx"
-import DockerParameters from "./\_gitlab_one_time_docker_parameters.mdx"
+import HelmParameters from "../../templates/_ocean-advanced-parameters-helm.mdx"
+import DockerParameters from "./_gitlab_one_time_docker_parameters.mdx"
 import AdvancedConfig from '../../../../generalTemplates/_ocean_advanced_configuration_note.md'
 
-# Installation
+# 安装
 
-This page will help you install Port's GitLab integration (powered by the Ocean framework).
+本页面将帮助您安装 Port 的 GitLab 集成(由 Ocean 框架提供支持)。
 
-This page outlines the following steps:
+本页概述了以下步骤: 
 
-- How to [create](#creating-a-gitlab-group-access-token) a GitLab group access token to give the integration permissions to query your GitLab account.
-- How to [configure](#configuring-the-gitlab-integration) and customize the integration before deploying it.
-- How to [deploy](#deploying-the-gitlab-integration) the integration in the configuration that fits your use case.
+* 如何[create](#creating-a-gitlab-group-access-token) GitLab 组访问令牌，赋予集成查询 GitLab 账户的权限。
+* 如何[configure](#configuring-the-gitlab-integration) 并在部署前自定义集成。
+* 如何[deploy](#deploying-the-gitlab-integration) 整合的配置，使其适合你的用例。
 
-:::note Prerequisites
+:::note  先决条件
 
-- A gitlab account with admin privileges.
-- A gitlab group account with the `api` scope.
-- If you choose the real time & always on installation method - a kubernetes cluster to install the integration on.
-- Your Port user role is set to `Admin`.
+* 具有管理员权限的 gitlab 账户。
+* 一个权限为 `api` 的 gitlab group 账户。
+* 如果选择实时和始终开启安装方式，则需要一个用于安装集成的 kubernetes 集群。
+* Port 用户角色设置为 `Admin`。
 
 :::
 
-## Creating a GitLab group access token
+## 创建 GitLab 组访问令牌
 
-A group access token can be used for the group it was generated at, as well as for all sub-groups underneath it.
+组访问令牌可被引用到其生成的组，以及其下的所有子组。
 
-The GitLab integration is able to query multiple GitLab root groups. To do so, it will require multiple group access tokens, each at the correct root group.
+GitLab 集成能够查询多个 GitLab 根组，为此需要多个组访问令牌，每个令牌都位于正确的根组。
 
 <details>
 <summary>GitLab group access tokens example</summary>
 
-For example, let's assume the following GitLab account structure:
+例如，假设 GitLab 账户结构如下: 
 
 ```
 GitLab account
@@ -49,131 +51,119 @@ GitLab account
 │   └── graphql-api-group
 ```
 
-In this example:
+在这个例子中
 
-- To map **only** the `microservices-group`, we require one group access token - one for the `microservices-group`.
-- To map the `microservices-group` **and** all of its subgroups, we require only one group access token - one for the `microservices-group`.
-- To map the `microservices-group`, **the** `apis-group` **and** all of their subgroups, we require only two group access tokens - one for the `microservices-group` and one for the `apis-group`.
-- To map the `microservice1-group`, we have 2 options:
-  - Create a group access token for the `microservices-group` and use the [token mapping](#tokenmapping) to select just the `microservice1-group`.
-  - Create a group access token for the `microservice1-group` directly.
+* 若要***只映射 "microservices-group"，我们需要一个组访问令牌--"microservices-group "的一个。
+* 要映射 `microservices-group` 及其所有子组，我们只需要一个组访问令牌 - `microservices-group` 的一个。
+* 要映射`microservices-group`、**the**`apis-group`**及其所有子组，我们只需要两个组访问令牌--一个用于`microservices-group`，另一个用于`apis-group`。
+* 要映射 "microservice1-group"，我们有两个选择: 
+    - 为 "microservices-group "创建一个组访问令牌，然后使用[token mapping](#tokenmapping) 只选择 "microservice1-group"。
+    - 直接为 "microservice1-group "创建组访问令牌。
 
 </details>
 
-See the [token mapping](#tokenmapping) section for more information.
+更多信息，请参阅[token mapping](#tokenmapping) 部分。
 
-The following steps will guide you how to create a GitLab group access token.
+下面的步骤将指导你如何创建 GitLab 组访问令牌。
 
-1. Sign in to GitLab and go to your desired group's settings page:
+1. 登录 GitLab，进入所需组的设置页面: 
+    ![GitLab group settings](/img/integrations/gitlab/GitLabGroupSettings.png)
+2.在 "访问令牌 "部分，需要提供令牌的详细信息，包括名称和可选的到期日期。此外，选择 api 范围，然后点击 "创建访问令牌 "按钮。
+    ![GitLab group access tokens](/img/integrations/gitlab/GitLabGroupAccessTokens.png)
+3.点击 "创建组访问令牌"。
+4.复制生成的令牌，并在以下步骤部署集成时使用。
 
-   ![GitLab group settings](/img/integrations/gitlab/GitLabGroupSettings.png)
+## 配置 GitLab 集成
 
-2. In the "Access Tokens" section, you need to provide the token details, including the name and an optional expiration date. Additionally, select the api scope, and then proceed to click on the "Create access token" button.
+###令牌映射
 
-   ![GitLab group access tokens](/img/integrations/gitlab/GitLabGroupAccessTokens.png)
+GitLab 集成支持获取与 GitLab 组中特定路径相关的数据。 通过提供额外的组令牌，集成还能从不同的 GitLab 父组中获取数据。 为此，您需要将所需路径映射到相关访问令牌。`tokenMapping`参数支持指定集成将搜索文件和信息的路径，使用[globPatterns](https://www.malikbrowne.com/blog/a-beginners-guide-glob-patterns) 。
 
-3. Click "Create group access token".
-4. Copy the generated token and use it when deploying the integration in the following steps.
-
-## Configuring the GitLab integration
-
-### tokenMapping
-
-The GitLab integration support fetching data related to specific paths in your GitLab groups. The integration is also able to fetch data from different GitLab parent groups by providing additional group tokens. In order to do so, you need to map the desired paths to the relevant access tokens.
-The `tokenMapping` parameter supports specifying the paths that the integration will search for files and information in, using [globPatterns](https://www.malikbrowne.com/blog/a-beginners-guide-glob-patterns).
-
-Mapping format:
+映射格式: 
 
 ```text showLineNumbers
 {"MY_FIRST_GITLAB_PROJECT_GROUP_TOKEN": ["**/MyFirstGitLabProject/**","**/MySecondGitLabProject/*"]}
 ```
 
-Example:
+例如
 
 ```text showLineNumbers
 {"glpat-QXbeg-Ev9xtu5_5FsaAQ": ["**/DevopsTeam/*Service", "**/RnDTeam/*Service"]}
 ```
 
-Multiple GitLab group access tokens example:
+多个 GitLab 组访问令牌示例: 
 
 ```text showLineNumbers
 {"glpat-QXbeg-Ev9xtu5_5FsaAQ": ["**/DevopsTeam/*Service", "**/RnDTeam/*Service"],"glpat-xF7Ae-vXu5ts5_QbEgAQ9": ["**/MarketingTeam/*Service"]}
 ```
 
-### `appHost` & listening to hooks
+###`appHost` &amp; listening to hooks
 
-:::tip
-The `appHost` parameter is used specifically to enable the real-time functionality of the integration.
+:::tip appHost "参数被专门引用来启用集成的实时功能。
 
-If it is not provided, the integration will continue to function correctly. In such a configuration, to retrieve the latest information from the target system, the [`scheduledResyncInterval`](https://ocean.getport.io/develop-an-integration/integration-configuration/#scheduledresyncinterval---run-scheduled-resync) parameter has to be set, or a manual resync will need to be triggered through Port's UI.
+如果不提供，集成将继续正常运行。在这种配置下，要从目标系统获取最新信息，必须设置[`scheduledResyncInterval`](https://ocean.getport.io/develop-an-integration/integration-configuration/#scheduledresyncinterval---run-scheduled-resync) 参数，或者通过 Port 的用户界面手动触发重新同步。
+
 :::
 
-In order for the GitLab integration to update the data in Port on every change in the GitLab repository, you need to specify the `appHost` parameter.
-The `appHost` parameter should be set to the `url` of your GitLab integration instance. In addition, your GitLab instance (whether it is GitLab SaaS or a self-hosted version of GitLab) needs to have the option to send webhook requests to the GitLab integration instance, so please configure your network accordingly.
+为了让 GitLab 整合能根据 GitLab 仓库中的每次更改更新 Port 中的数据，您需要指定 `appHost` 参数。 appHost` 参数应设置为 GitLab 整合实例的 `url` 。 此外，您的 GitLab 实例(无论是 GitLab SaaS 还是 GitLab 的自托管版本)需要有向 GitLab 整合实例发送 webhook 请求的选项，因此请相应配置您的网络。
 
 #### Hooks
 
-The GitLab integration supports listening to GitLab webhooks and updating the relevant entities in Port accordingly.
+GitLab 集成支持监听 GitLab webhooks 并相应更新 Port 中的相关实体。
 
-Supported webhooks are [Group webhooks](https://docs.gitlab.com/ee/user/project/integrations/webhooks.html#group-webhooks) and [System hooks](https://docs.gitlab.com/ee/administration/system_hooks.html).
+支持的 webhook 是[Group webhooks](https://docs.gitlab.com/ee/user/project/integrations/webhooks.html#group-webhooks) 和[System hooks](https://docs.gitlab.com/ee/administration/system_hooks.html) 。
 
-As part of the installation process, the integration will create a webhook in your GitLab instance, and will use it to listen to the relevant events.
+作为安装过程的一部分，集成会在 GitLab 实例中创建一个 webhook，并用它来监听相关事件。
 
-**_There are a few points to consider before deciding on which webhook to choose_**:
+*在决定选择哪种 webhook 之前，有几点需要考虑_***: 
 
-- If you choose group webhooks, the integration will create a webhook for each group in your GitLab instance. If you choose system hooks, the integration will create a single webhook for the entire GitLab instance.
-- The system hooks has much less event types than the group webhooks.
+* 如果选择组网络钩子，集成将为 GitLab 实例中的每个组创建一个网络钩子。如果选择系统钩子，集成将为整个 GitLab 实例创建一个 webhook。
+* 系统钩子的事件类型比组网络钩子少得多。
+    - 组网络钩子支持的事件类型: 
+        +`push
+        + 问题
+        + `jobs
+        + `合并请求
+        + `管道
+    - System Hooks 支持的事件类型: 
+        +`push
+        + `合并请求
+        这意味着如果您选择系统钩子，集成将无法在 `issues` 或 `pipelines` 等事件上更新 Port 中的相关实体。
+* 创建系统钩子需要 GitLab 的管理员权限。鉴于此，集成支持手动创建系统钩子，集成将用它来监听相关事件。
 
-  - Group Webhooks supported event types:
+##### 配置集成以使用 Hooks
 
-    - `push`
-    - `issues`
-    - `jobs`
-    - `merge_requests`
-    - `pipeline`
+默认情况下，如果提供了 `appHost`，集成将为 GitLab 实例中的每个组创建组 webhook。
 
-  - System Hooks supported event types:
+创建系统钩子有两个选项: 
 
-    - `push`
-    - `merge_request`
+:::note 在这两个选项中，你都需要 Provider `useSystemHook` 参数的值为 `true`。
 
-    This means that if you choose system hooks, the integration will not be able to update the relevant entities in Port on events such as `issues` or `pipeline`.
-
-- Creating a system hook requires admin privileges in GitLab. Due to this, the integration supports that the system hook will be created manually, and the integration will use it to listen to the relevant events.
-
-##### Configuring the integration to use hooks
-
-By default, if `appHost` is provided, the integration will create group webhooks for each group in your GitLab instance.
-
-To create a system hook there are two options:
-
-:::note
-In both options you'll need to provide the `useSystemHook` parameter with the value `true`.
 :::
 
-1. Provide a token with admin privileges in GitLab using the `tokenMapping` parameter.
-   - When choosing this option, the integration will create the system hook in your GitLab account automatically.
-2. Create the system hook manually
-   - Follow the instructions for creating a system hook in GitLab [here](https://docs.gitlab.com/ee/administration/system_hooks.html#create-a-system-hook).
-   - In the `URL` field, provide the `appHost` parameter value with the path `/integration/system/hook`. e.g. `https://my-gitlab-integration.com/integration/system/hook`.
-   - From the `Triggers` section, the GitLab integration currently supports the following events:
-      - `push`
-      - `merge_request`
+1. 使用 `tokenMapping` 参数在 GitLab 中被引用一个具有管理权限的令牌。
+    - 选择该选项时，集成将自动在 GitLab 账户中创建系统钩子。
+2.手动创建系统钩子
+    - 请按照在 GitLab[here](https://docs.gitlab.com/ee/administration/system_hooks.html#create-a-system-hook) 中创建系统钩子的说明操作。
+    - 在 `URL` 字段，Provider `appHost` 参数值，路径为 `/integration/system/hooks`。例如 `https://my-gitlab-integration.com/integration/system/hook`。
+    - 在 "触发器 "部分，GitLab 集成目前支持以下事件: 
+        + `push
+        + 合并请求
 
 ![GitLab System Hook](/img/integrations/gitlab/GitLabSystemHook.png)
 
-## Deploying the GitLab integration
+## 部署 GitLab 集成
 
-Choose one of the following installation methods:
+从以下安装方法中选择一种: 
 
 <Tabs groupId="installation-methods" queryString="installation-methods">
 
 <TabItem value="real-time-always-on" label="Real Time & Always On" default>
 
-Using this installation option means that the integration will be able to update Port in real time using webhooks.
+使用该安装选项意味着集成将能使用 webhook 实时更新 Port。
 
-This table summarizes the available parameters for the installation.
-Set them as you wish in the script below, then copy it and run it in your terminal:
+本表总结了安装时可用的参数，请在下面的脚本中按自己的需要进行设置，然后复制并在终端运行: 
+
 
 | Parameter                          | Description                                                                                                                         | Example                          | Required |
 | ---------------------------------- | ----------------------------------------------------------------------------------------------------------------------------------- | -------------------------------- | -------- |
@@ -182,6 +172,7 @@ Set them as you wish in the script below, then copy it and run it in your termin
 | `integration.secrets.tokenMapping` | The [token mapping](#tokenmapping) configuration used to query GitLab                                                               |                                  | ✅       |
 | `integration.config.appHost`       | The host of the Port Ocean app. Used to set up the integration endpoint as the target for webhooks created in GitLab                | https://my-ocean-integration.com | ❌       |
 | `integration.config.gitlabHost`    | (for self-hosted GitLab) the URL of your GitLab instance                                                                            | https://my-gitlab.com            | ❌       |
+
 
 <HelmParameters/>
 
@@ -194,42 +185,38 @@ To install the integration using Helm, run the following command:
 ```bash showLineNumbers
 helm repo add --force-update port-labs https://port-labs.github.io/helm-charts
 helm upgrade --install my-gitlab-integration port-labs/port-ocean \
-	--set port.clientId="PORT_CLIENT_ID"  \
-	--set port.clientSecret="PORT_CLIENT_SECRET"  \
-	--set port.baseUrl="https://api.getport.io"  \
-	--set initializePortResources=true  \
-	--set scheduledResyncInterval=120 \
-	--set integration.identifier="my-gitlab-integration"  \
-	--set integration.type="gitlab"  \
-	--set integration.eventListener.type="POLLING"  \
-	--set integration.secrets.tokenMapping="\{\"TOKEN\": [\"GROUP_NAME/**\"]\}"
+    --set port.clientId="PORT_CLIENT_ID"  \
+    --set port.clientSecret="PORT_CLIENT_SECRET"  \
+    --set port.baseUrl="https://api.getport.io"  \
+    --set initializePortResources=true  \
+    --set scheduledResyncInterval=120 \
+    --set integration.identifier="my-gitlab-integration"  \
+    --set integration.type="gitlab"  \
+    --set integration.eventListener.type="POLLING"  \
+    --set integration.secrets.tokenMapping="\{\"TOKEN\": [\"GROUP_NAME/**\"]\}"
 ```
 
-It is also possible to get Port's UI to generate your installation command for you, Port will inject values such as your Port client ID and client secret directly into the command, making it easier to get started.
+也可以让 Port 的用户界面为您生成安装命令，Port 会将您的 Port 客户端 ID 和客户端 secrets 等值直接注入命令，让您更容易上手。
 
-Follow these steps to setup the integration through Port's UI:
+请按照以下步骤通过 Port 的用户界面设置集成: 
 
-1. Click the ingest button in Port Builder Page for the blueprint you want to ingest using GitLab:
-
-   ![DevPortal Builder ingest button](/img/integrations/gitlab/DevPortalBuilderIngestButton.png)
-
-2. Select GitLab under the Git providers category:
-
-   ![DevPortal Builder GitLab option](/img/integrations/gitlab/DevPortalBuilderGitLabOption.png)
-
-3. Copy the helm installation command and set the [required configuration](#configuring-the-gitlab-integration);
-
-4. Run the helm command with the updated parameters to install the integration in your Kubernetes cluster.
+1. 在 "Port生成器页面 "中点击要使用 GitLab 引用的蓝图的 "引用 "按钮: 
+    ![DevPortal Builder ingest button](/img/integrations/gitlab/DevPortalBuilderIngestButton.png)
+2.在 Git Provider 类别下选择 GitLab: 
+    ![DevPortal Builder GitLab option](/img/integrations/gitlab/DevPortalBuilderGitLabOption.png)
+3.复制 helm 安装命令并设置[required configuration](#configuring-the-gitlab-integration) ；
+4.使用更新后的参数运行 helm 命令，在 Kubernetes 集群中安装集成。
 
 </TabItem>
 <TabItem value="argocd" label="ArgoCD" default>
 To install the integration using ArgoCD, follow these steps:
 
-1. Create a `values.yaml` file in `argocd/my-ocean-gitlab-integration` in your git repository with the content:
+1. 在你的 git 仓库的 `argocd/my-ocean-gitlab-integration` 中创建一个 `values.yaml` 文件，内容如下: 
 
-:::note
-Remember to replace the placeholders for `GITLAB_TOKEN_MAPPING`.
+:::note 请记住替换 `GITLAB_TOKEN_MAPPING` 的占位符。
+
 :::
+
 ```yaml showLineNumbers
 initializePortResources: true
 scheduledResyncInterval: 120
@@ -242,13 +229,15 @@ integration:
   // highlight-next-line
     tokenMapping: GITLAB_TOKEN_MAPPING
 ```
+
 <br/>
 
-2. Install the `my-ocean-gitlab-integration` ArgoCD Application by creating the following `my-ocean-gitlab-integration.yaml` manifest:
-:::note
-Remember to replace the placeholders for `YOUR_PORT_CLIENT_ID` `YOUR_PORT_CLIENT_SECRET` and `YOUR_GIT_REPO_URL`.
+2.创建下面的 "my-ocean-gitlab-integration.yaml "配置清单，安装 "my-ocean-gitlab-integration "ArgoCD应用程序: 
 
-Multiple sources ArgoCD documentation can be found [here](https://argo-cd.readthedocs.io/en/stable/user-guide/multiple_sources/#helm-value-files-from-external-git-repository).
+:::note 记住要替换 `YOUR_PORT_CLIENT_ID``YOUR_PORT_CLIENT_SECRET` 和 `YOUR_GIT_REPO_URL` 的占位符。
+
+多种来源的 ArgoCD 文档可在[here](https://argo-cd.readthedocs.io/en/stable/user-guide/multiple_sources/#helm-value-files-from-external-git-repository) 上找到。
+
 :::
 
 <details>
@@ -293,10 +282,12 @@ spec:
 </details>
 <br/>
 
-3. Apply your application manifest with `kubectl`:
+3.使用 `kubectl` 配置应用程序清单: 
+
 ```bash
 kubectl apply -f my-ocean-gitlab-integration.yaml
 ```
+
 </TabItem>
 </Tabs>
 
@@ -307,19 +298,19 @@ kubectl apply -f my-ocean-gitlab-integration.yaml
 <Tabs groupId="cicd-method" queryString="cicd-method">
 <TabItem value="gitlab" label="GitLab">
 
-This workflow will run the GitLab integration once and then exit, this is useful for **scheduled** ingestion of data.
+此工作流将运行一次 GitLab 集成，然后退出，这对 ** 计划**数据引用非常有用。
 
-:::warning
-If you want the integration to update Port in real time using webhooks you should use the [Real Time & Always On](?installation-methods=real-time-always-on#installation) installation option.
+:::warning 如果希望集成使用 webhooks 实时更新 Port，则应使用[Real Time & Always On](?installation-methods=real-time-always-on#installation) 安装选项。
+
 :::
 
-Make sure to configure the following [GitLab Variables](https://docs.gitlab.com/ee/ci/variables/):
+确保配置以下[GitLab Variables](https://docs.gitlab.com/ee/ci/variables/) : 
 
 <DockerParameters/>
 
 <br/>
 
-Here is an example for `.gitlab-ci.yml` workflow file:
+下面是 `.gitlab-ci.yml` 工作流程文件的示例: 
 
 ```yaml showLineNumbers
 stages:
@@ -354,39 +345,39 @@ deploy_gitlab:
     - main
 ```
 
-:::note
-When saving the `OCEAN__INTEGRATION__CONFIG__TOKEN_MAPPING` variable, be sure to save it **as-is**, for example given the following token mapping:
+:::note 保存 "OCEAN__INTEGRATION__CONFIG__TOKEN_MAPPING "变量时，请务必**原样**保存，例如下面的标记映射: 
 
 ```text showLineNumbers
 {"glpat-QXbeg-Ev9xtu5_5FsaAQ": ["**/DevopsTeam/*Service", "**/RnDTeam/*Service"]}
 ```
 
-(Note that this is a one-liner)
+(注意，这只是一句话)
 
-Save it as a GitLab variable without any changes (there is no need to wrap it in single-quotes (`'`) or double-quotes (`"`).
+将其保存为 GitLab 变量，不做任何修改(无需用单引号 (`'`) 或双引号 (`"`) 包起来)。
 
-Also make sure to keep the double-quotes (`"`) when passing the `OCEAN__INTEGRATION__CONFIG__TOKEN_MAPPING` parameter to the Docker CLI (see the pipeline example above).
+另外，在向 Docker CLI 传递 `OCEAN__INTEGRATION__CONFIG__TOKEN_MAPPING` 参数时，请确保保留双引号 (`"`)(请参阅上面的管道示例)。
+
 :::
 
 </TabItem>
 <TabItem value="jenkins" label="Jenkins">
-  
-This pipeline will run the GitLab integration once and then exit, this is useful for **scheduled** ingestion of data.
 
-:::tip
-Your Jenkins agent should be able to run docker commands.
+该 Pipelines 会运行一次 GitLab 集成，然后退出，这对 ** 计划**数据引用非常有用。
+
+:::tip 你的 Jenkins 代理应该能够运行 docker 命令。
+
 :::
-:::warning
-If you want the integration to update Port in real time using webhooks you should use the [Real Time & Always On](?installation-methods=real-time-always-on#installation) installation option.
+:::warning 如果希望集成使用 webhooks 实时更新 Port，则应使用 安装选项。[Real Time & Always On](?installation-methods=real-time-always-on#installation) 
+
 :::
 
-Make sure to configure the following [Jenkins Credentials](https://www.jenkins.io/doc/book/using/using-credentials/) of `Secret Text` type:
+请确保配置以下[Jenkins Credentials](https://www.jenkins.io/doc/book/using/using-credentials/) 的 "Secret Text "类型: 
 
 <DockerParameters/>
 
 <br/>
 
-Here is an example for `Jenkinsfile` groovy pipeline file:
+下面是 `Jenkinsfile` groovy Pipelines 文件的示例: 
 
 ```yml showLineNumbers
 pipeline {

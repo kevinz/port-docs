@@ -1,23 +1,25 @@
 ---
+
 sidebar_position: 3
-description: Ingest Golang packages into your catalog
+description: 将 Golang 软件包收录到你的目录中
+
 ---
 
 import Tabs from "@theme/Tabs"
 import TabItem from "@theme/TabItem"
-import PackageBlueprint from './resources/golang/\_example_package_blueprint.mdx'
-import PackageWebhookConfig from './resources/golang/\_example_package_webhook_config.mdx'
-import ServiceBlueprint from './resources/service/\_example_global_service_blueprint.mdx'
+import PackageBlueprint from './resources/golang/_example_package_blueprint.mdx'
+import PackageWebhookConfig from './resources/golang/_example_package_webhook_config.mdx'
+import ServiceBlueprint from './resources/service/_example_global_service_blueprint.mdx'
 
 # Golang
 
-In this example you are going to create a `package` blueprint that ingests Go modules, versions and dependencies using a combination of Port's [API](../../../api/api.md) and [webhook functionality](../../webhook.md). You will then relate this blueprint to a `service` blueprint, allowing you to map all the packages used by a service.
+在本例中，您将创建一个 "包 "蓝图，使用 Port's[API](../../../api/api.md) 和[webhook functionality](../../webhook.md) 的组合来引用 Go 模块、版本和依赖关系。然后，您将把该蓝图与 "服务 "蓝图关联起来，以便映射服务所引用的所有包。
 
-To ingest the packages to Port, a script that sends information about packages according to the webhook configuration is used.
+为了将软件包引用到 Port，需要使用一个脚本，根据 webhook 配置发送软件包信息。
 
-## Prerequisites
+## 先决条件
 
-Create the following blueprint definition and webhook configuration:
+创建以下蓝图定义和 webhook 配置: 
 
 <details>
 <summary>Service blueprint</summary>
@@ -36,9 +38,9 @@ Create the following blueprint definition and webhook configuration:
 
 </details>
 
-## Working with Port's API and Bash script
+## 使用 Port 的 API 和 Bash 脚本
 
-Here is an example snippet showing how to integrate Port's API and Webhook with your existing pipelines using Python and Bash:
+下面的示例片段展示了如何使用 Python 和 Bash 将 Port 的 API 和 Webhook 与现有管道集成: 
 
 <Tabs groupId="usage" defaultValue="python" values={[
 {label: "Python", value: "python"},
@@ -47,7 +49,7 @@ Here is an example snippet showing how to integrate Port's API and Webhook with 
 
 <TabItem value="bash">
 
-Create the following Bash script in your repository to create or update Port entities as part of your pipeline:
+在版本库中创建以下 Bash 脚本，以创建或更新作为 Pipelines 一部分的 Port 实体: 
 
 <details>
 
@@ -122,11 +124,10 @@ for require in "${requires[@]}"; do
 done
 ```
 
-:::note
+:::note 
 
-- The script utilizes the `mapfile` command, which is a built-in command in the Bash shell, to read lines from the `go.mod` file and store them in an array. Please note that this command may not be available in all shells by default. If you are using a different shell such as Dash or Zsh, you may need to switch to Bash or modify the script to achieve a similar functionality.
-
-- The script relies on the `jq` command for manipulating JSON data. It is used to create JSON objects based on the package details extracted from the `go.mod` file and append these objects to an output JSON file. It is important to note that `jq` is a powerful JSON processor for the command-line, but it is not typically included in many systems by default. You may need to install it separately to use it.
+* 该脚本利用 Bash shell 中的内置命令 `mapfile` 来读取 `go.mod` 文件中的行并将其存储到数组中。请注意，并非所有 shell 默认都支持该命令。如果你被引用了不同的 shell，如 Dash 或 Zsh，你可能需要切换到 Bash 或修改脚本来实现类似的功能。
+* 脚本依赖于 `jq` 命令来操作 JSON 数据。它被用来根据从 `go.mod` 文件中提取的 package 详细信息创建 JSON 对象，并将这些对象追加到输出 JSON 文件中。值得注意的是，"jq "是一个功能强大的命令行 JSON 处理器，但许多系统默认情况下并不包含它。您可能需要单独安装才能使用它。
 
 :::
 
@@ -135,7 +136,7 @@ done
 
 <TabItem value="python">
 
-Create the following Python script in your repository to create or update Port entities as part of your pipeline:
+在版本库中创建以下 Python 脚本，以创建或更新 Port 实体，作为管道的一部分: 
 
 <details>
 
@@ -212,7 +213,6 @@ for requires in require_blocks:
         # Send data to the webhook
         response = requests.post(webhook_url, headers=headers, data=json.dumps(package_dict))
         print(response.status_code)
-
 ```
 
 </details>

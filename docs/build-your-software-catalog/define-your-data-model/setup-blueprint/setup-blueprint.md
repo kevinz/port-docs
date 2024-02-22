@@ -1,15 +1,17 @@
 ---
+
 sidebar_position: 1
-title: Setup Blueprints
-sidebar_label: Setup Blueprints
+title: 设置蓝图
+sidebar_label: 设置蓝图
+
 ---
 
-import ApiRef from "../../../api-reference/\_learn_more_reference.mdx";
+import ApiRef from "../../../api-reference/_learn_more_reference.mdx";
 
 import Tabs from "@theme/Tabs"
 import TabItem from "@theme/TabItem"
 
-# Setup Blueprints
+# 设置蓝图
 
 <center>
 
@@ -17,36 +19,36 @@ import TabItem from "@theme/TabItem"
 
 </center>
 
-Define blueprint schemas to begin building your software catalog.
+定义蓝图模式，开始构建软件目录。
 
-## What is a blueprint?
+## 什么是蓝图？
 
-A Blueprint is the generic building block in Port. It represents assets that can be managed in Port, such as `Microservice`, `Environments`, `Packages`, `Clusters`, `Databases`, and many more.
+蓝图(Blueprint)是 Port 中的通用构建模块，表示可在 Port 中管理的资产，如 "微服务"(Microservice)、"环境"(Environments)、"包"(Packages)、"集群"(Clusters)、"数据库"(Databases)等。
 
-Blueprints are completely customizable, and they support any number of properties the user chooses, all of which can be modified as you go.
+蓝图完全可以定制，支持用户选择的任意数量的属性，所有属性都可以随心所欲地修改。
 
-## 💡 Common blueprints
+## 💡 通用蓝图
 
-Blueprints can be used to represent any asset in your software catalog, for example:
+例如，蓝图可被引用来表示软件目录中的任何资产: 
 
-- Microservices;
-- Packages;
-- Package versions;
-- CI jobs;
-- K8s Clusters;
-- Cloud accounts;
-- Cloud environments;
-- Developer environments;
-- Service deployment;
-- Pods;
-- VMs;
-- etc.
+* 微服务；
+* 软件包；
+* 软件包版本；
+* CI 工作；
+* k8s 集群；
+* 云账户；
+* 云环境；
+* 开发人员环境；
+* 服务部署；
+* Pods
+* 虚拟机；
+* 等等。
 
-In this [live demo](https://demo.getport.io/dev-portal) example, we can see the DevPortal Builder page with all of the blueprints. 🎬
+在[live demo](https://demo.getport.io/dev-portal) 示例中，我们可以看到包含所有蓝图的 DevPortal 生成器页面。
 
-## Blueprint structure
+## 蓝图结构
 
-Each blueprint is represented by a [Json schema](https://json-schema.org/), as shown in the following section:
+每个蓝图由[Json schema](https://json-schema.org/) 表示，如下节所示: 
 
 ```json showLineNumbers
 {
@@ -72,7 +74,8 @@ Each blueprint is represented by a [Json schema](https://json-schema.org/), as s
 }
 ```
 
-### Structure table
+#### 结构表
+
 
 | Field                   | Description                                                                                                               | Notes                                                                                                                   |
 | ----------------------- | ------------------------------------------------------------------------------------------------------------------------- | ----------------------------------------------------------------------------------------------------------------------- |
@@ -84,11 +87,12 @@ Each blueprint is represented by a [Json schema](https://json-schema.org/), as s
 | `mirrorProperties`      | Contains the properties defined using [mirror properties](./properties/mirror-property/mirror-property.md)                |                                                                                                                         |
 | `schema`                | An object containing two nested fields: `properties` and `required`.                                                      | **Required**. See the schema structure [here](#schema-object)                                                           |
 
-:::tip Available properties
-All available properties are listed in the [properties](./properties/properties.md) page
+
+:::tip  可用房源[properties](./properties/properties.md) 页面列出了所有可用房源
+
 :::
 
-### Schema object
+### 模式对象
 
 ```json showLineNumbers
 "schema": {
@@ -97,12 +101,14 @@ All available properties are listed in the [properties](./properties/properties.
 }
 ```
 
+
 | Schema field | Description                                                                                                                           |
 | ------------ | ------------------------------------------------------------------------------------------------------------------------------------- |
 | `properties` | See the [`properties`](./properties/properties.md) section for more details.                                                          |
 | `required`   | A list of the **required** properties, out of the `properties` object list. <br /> These are mandatory fields to fill in the UI form. |
 
-## Configure blueprints in Port
+
+## 在 Port 中配置蓝图
 
 <Tabs groupId="definition" queryString defaultValue="api" values={[
 {label: "API", value: "api"},
@@ -155,8 +161,8 @@ resource "port_blueprint" "myBlueprint" {
 }
 ```
 
-:::tip TIP
-For full example, check the [Terraform-Managed Blueprint Example](../Iac/terraform-managed-blueprint.md) page.
+:::tip  提示 有关完整示例，请查看[Terraform-Managed Blueprint Example](../Iac/terraform-managed-blueprint.md) 页面。
+
 :::
 
 </TabItem>
@@ -271,57 +277,56 @@ exports.title = entity.title;
 package main
 
 import (
-	"github.com/port-labs/pulumi-port/sdk/go/port"
-	"github.com/pulumi/pulumi/sdk/v3/go/pulumi"
+    "github.com/port-labs/pulumi-port/sdk/go/port"
+    "github.com/pulumi/pulumi/sdk/v3/go/pulumi"
 )
 
 func main() {
-	pulumi.Run(func(ctx *pulumi.Context) error {
-		blueprint, err := port.NewBlueprint(ctx, "myBlueprint", &port.BlueprintArgs{
-			Identifier: pulumi.String("myBlueprint"),
-			Title:      pulumi.String("My Blueprint"),
-			Icon:       pulumi.String("My icon"),
-			Description: pulumi.String("My description"),
-			Properties: port.BlueprintPropertiesArgs{
-				StringProps: port.BlueprintPropertiesStringPropsMap{
-					"myStringProp": port.BlueprintPropertiesStringPropsArgs{
-						Title:    pulumi.String("My string"),
-						Required: pulumi.Bool(false),
-					},
-				},
-			},
-		})
-		ctx.Export("blueprint", blueprint.Title)
-		if err != nil {
-			return err
-		}
-		return nil
-	})
+    pulumi.Run(func(ctx *pulumi.Context) error {
+    	blueprint, err := port.NewBlueprint(ctx, "myBlueprint", &port.BlueprintArgs{
+    		Identifier: pulumi.String("myBlueprint"),
+    		Title:      pulumi.String("My Blueprint"),
+    		Icon:       pulumi.String("My icon"),
+    		Description: pulumi.String("My description"),
+    		Properties: port.BlueprintPropertiesArgs{
+    			StringProps: port.BlueprintPropertiesStringPropsMap{
+    				"myStringProp": port.BlueprintPropertiesStringPropsArgs{
+    					Title:    pulumi.String("My string"),
+    					Required: pulumi.Bool(false),
+    				},
+    			},
+    		},
+    	})
+    	ctx.Export("blueprint", blueprint.Title)
+    	if err != nil {
+    		return err
+    	}
+    	return nil
+    })
 }
-
 ```
 
 </TabItem>
 
 </Tabs>
 
-:::tip TIP
-For a full example, check the [Pulumi-Managed Blueprint Example](../Iac/pulumi-managed-blueprint.md) page.
+:::tip  提示 如需完整示例，请查看[Pulumi-Managed Blueprint Example](../Iac/pulumi-managed-blueprint.md) 页面。
+
 :::
 
 </TabItem>
 
 <TabItem value="ui">
 
-1. Go to the [DevPortal Builder page](https://app.getport.io/dev-portal);
-2. Click on **Add blueprint** at the top right hand corner;
-3. Configure your blueprint using the from:
+1. 请访问[DevPortal Builder page](https://app.getport.io/dev-portal) ；
+2. 点击右上角的**添加蓝图**；
+3. 使用 "从 "配置您的蓝图: 
 
 ![Create New Blueprint](../../../../static/img/quickstart/newBlueprintButton.png)
 
 </TabItem>
 </Tabs>
 
-## Full icon list
+## 完整图标列表
 
 `API, Airflow, AmazonEKS, Ansible, ApiDoc, Aqua, Argo, ArgoRollouts, Aws, Azure, BitBucket, Bucket, Buddy, CPU, CPlusPlus, CSharp, Clickup, Cloud, Cluster, Codefresh, Confluence, Coralogix, Crossplane, Datadog, Day2Operation, DeployedAt, Deployment, DevopsTool, EC2, EU, Environment, Falcosidekick, Fluxcd, GKE, GPU, Git, GitLab, GitVersion, Github, GithubActions, Go, Google, GoogleCloud, GoogleCloudPlatform, GoogleComputeEngine, Grafana, Graphql, HashiCorp, Infinity, Istio, Jenkins, Jira, Kafka, Kiali, Kotlin, Lambda, Launchdarkly, Link, Lock, LucidCharts, Matlab, Microservice, MongoDb, Moon, NewRelic, Node, NodeJS, Notion, Okta, Package, Pearl, PostgreSQL, Prometheus, Pulumi, Python, R, React, RestApi, Ruby, S3, SDK, SQL, Scala, Sentry, Server, Service, Slack, Swagger, Swift, TS, Terraform, TwoUsers, Youtrack, Zipkin, checkmarx, css3, html5, java, js, kibana, logz, pagerduty, php, port, sonarqube, spinnaker`

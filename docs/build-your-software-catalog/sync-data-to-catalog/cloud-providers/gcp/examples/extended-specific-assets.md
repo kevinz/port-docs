@@ -1,14 +1,16 @@
 ---
+
 sidebar_position: 2
-title: Resource Metadata for Specific Asset
-description: Bring assets with specific resource metadata using terraform
+title: 特定资产的资源元数据
+description: 使用 terraform 为资产引用特定资源元数据
+
 ---
 
-# Resource Metadata for Specific Asset
+# 特定资产的资源元数据
 
-In this example you are going to learn how to export GCP organization's specific assets, with extended metadata for the matching asset type.
+在本例中，您将学习如何导出 GCP 组织的特定资产，以及与之匹配的资产类型的扩展元数据。
 
-Here is the complete `main.tf` file:
+下面是完整的 `main.tf` 文件: 
 
 <details>
 <summary>Complete Terraform definition file</summary>
@@ -131,7 +133,6 @@ data "google_container_cluster" "my_container_clusters" {
   project = reverse(split("/", each.value.project_id))[0]
 }
 
-
 resource "port-labs_blueprint" "gcp_org_blueprint" {
   title      = "Organization"
   icon       = "GCP"
@@ -190,7 +191,6 @@ resource "port_blueprint" "gcp_folder_blueprint" {
   }
 }
 
-
 resource "port-labs_entity" "gcp_folder_entity" {
   for_each   = { for idx, folder in data.google_folder.my_folders : idx => folder }
   identifier = each.value.folder_id
@@ -208,7 +208,6 @@ resource "port-labs_entity" "gcp_folder_entity" {
       }
     }
 }
-
 
 resource "port-labs_blueprint" "gcp_project_blueprint" {
   title      = "Project"
@@ -250,7 +249,6 @@ resource "port-labs_blueprint" "gcp_project_blueprint" {
     }
   }
 }
-
 
 resource "port-labs_entity" "gcp_project_entity" {
   depends_on = [port-labs_entity.gcp_org_entity, port-labs_entity.gcp_folder_entity]
@@ -331,7 +329,6 @@ resource "port-labs_blueprint" "gcp_bucket_blueprint" {
   }
 }
 
-
 resource "port-labs_entity" "gcp_bucket_entity" {
   depends_on = [port-labs_entity.gcp_project_entity]
   for_each   = data.google_storage_bucket.my_buckets
@@ -367,8 +364,6 @@ resource "port-labs_entity" "gcp_bucket_entity" {
   }
 }
 
-
-
 resource "port-labs_blueprint" "gcp_service_account_blueprint" {
   title      = "Service Account"
   icon       = "Lock"
@@ -395,7 +390,6 @@ resource "port-labs_blueprint" "gcp_service_account_blueprint" {
   }
 }
 
-
 resource "port-labs_entity" "gcp_service_account_entity" {
   for_each   = data.google_service_account.my_accounts
   identifier = each.value.account_id
@@ -414,7 +408,6 @@ resource "port-labs_entity" "gcp_service_account_entity" {
   }
   depends_on = [port-labs_entity.gcp_project_entity]
 }
-
 
 resource "port-labs_blueprint" "gcp_disk_blueprint" {
   title      = "Disk"
@@ -467,7 +460,6 @@ resource "port-labs_blueprint" "gcp_disk_blueprint" {
   }
 }
 
-
 resource "port-labs_entity" "gcp_disk_entity" {
   for_each   = data.google_compute_disk.my_disks
   identifier = "${each.value.project}_${each.value.zone}_${each.value.name}"
@@ -500,7 +492,6 @@ resource "port-labs_entity" "gcp_disk_entity" {
     depends_on = [port-labs_entity.gcp_project_entity]
   }
 }
-
 
 resource "port-labs_blueprint" "gcp_memorystore_blueprint" {
   title      = "Memorystore"
@@ -571,7 +562,6 @@ resource "port-labs_blueprint" "gcp_memorystore_blueprint" {
   }
 }
 
-
 resource "port-labs_entity" "gcp_memorystore_entity" {
   for_each   = data.google_redis_instance.my_memorystores
   identifier = "${each.value.project}_${each.value.location_id}_${each.value.name}"
@@ -605,7 +595,6 @@ resource "port-labs_entity" "gcp_memorystore_entity" {
   }
   depends_on = [port-labs_entity.gcp_project_entity]
 }
-
 
 resource "port-labs_blueprint" "gcp_compute_instance_blueprint" {
   title      = "Compute Instance"
@@ -662,7 +651,6 @@ resource "port-labs_blueprint" "gcp_compute_instance_blueprint" {
   }
 }
 
-
 resource "port-labs_entity" "gcp_compute_instance_entity" {
   for_each   = data.google_compute_instance.my_compute_instances
   identifier = "${each.value.project}_${each.value.zone}_${each.value.name}"
@@ -690,7 +678,6 @@ resource "port-labs_entity" "gcp_compute_instance_entity" {
   }
   depends_on = [port-labs_entity.gcp_project_entity]
 }
-
 
 resource "port-labs_blueprint" "gcp_run_service_blueprint" {
   title      = "Run Service"
@@ -736,7 +723,6 @@ resource "port-labs_blueprint" "gcp_run_service_blueprint" {
   }
 }
 
-
 resource "port-labs_entity" "gcp_run_service_entity" {
   for_each   = data.google_cloud_run_service.my_run_services
   identifier = "${each.value.project}_${each.value.location}_${each.value.name}"
@@ -763,7 +749,6 @@ resource "port-labs_entity" "gcp_run_service_entity" {
   }
   depends_on = [port-labs_entity.gcp_project_entity]
 }
-
 
 resource "port-labs_blueprint" "gcp_container_cluster_blueprint" {
   title      = "Container Cluster"
@@ -814,7 +799,6 @@ resource "port-labs_blueprint" "gcp_container_cluster_blueprint" {
   }
 }
 
-
 resource "port-labs_entity" "gcp_container_cluster_entity" {
   for_each   = data.google_container_cluster.my_container_clusters
   identifier = "${each.value.project}_${each.value.location}_${each.value.name}"
@@ -845,12 +829,11 @@ resource "port-labs_entity" "gcp_container_cluster_entity" {
   }
   depends_on = [port-labs_entity.gcp_project_entity]
 }
-
 ```
 
 </details>
 
-To use this example yourself, simply replace the placeholders for `domain`, `client_id`, `secret` and `credentials` and then run the following commands to setup your new backend, create the new infrastructure and update the software catalog:
+要自己使用这个示例，只需替换 `domain`、`client_id`、`secret` 和 `credentials` 的占位符，然后运行以下命令设置新的后端、创建新的基础架构并更新软件目录: 
 
 ```shell showLineNumbers
 # install modules and create an initial state
@@ -861,8 +844,7 @@ terraform plan
 terraform apply
 ```
 
-:::note GCP permissions
-To be able to read the all the types of assets in this example, you need to use an organization's GCP IAM role with at least the following permissions:
+:::note  GCP 权限 要读取本示例中的所有类型资产，需要使用至少具有以下权限的组织 GCP IAM 角色: 
 
 ```text showLineNumbers
 cloudasset.assets.searchAllResources
@@ -883,11 +865,11 @@ storage.buckets.get
 
 :::
 
-Let's break down the definition file and understand the different parts:
+让我们来分解定义文件，了解其中的各个部分: 
 
-## Module imports
+## 模块导入
 
-This part includes importing and setting up the required Terraform providers and modules:
+这部分包括导入和设置所需的 Terraform Provider 和模块: 
 
 ```hcl showLineNumbers
 terraform {
@@ -917,9 +899,9 @@ provider "google-beta" {
 }
 ```
 
-## Extracting the organization, folders, projects and specific assets
+## 提取组织、文件夹、项目和特定资产
 
-This part includes defining the datasource for the organization, folders, projects and specific assets (`buckets`, `service accounts`, `disks`, `memorystores`, `compute instances`, `run services`, `container clusters`):
+这部分包括为组织、文件夹、项目和特定资产("buckets"、"service accounts"、"disks"、"memorystores"、"compute instances"、"run services"、"container cluster")定义数据源: 
 
 ```hcl showLineNumbers
 data "google_organization" "my_org" {
@@ -1014,9 +996,9 @@ data "google_container_cluster" "my_container_clusters" {
 }
 ```
 
-## Creating the Organization blueprint and the entity matching the organization
+## 创建组织蓝图和与组织匹配的实体
 
-This part includes configuring the `organization` blueprint and creating an entity for the organization:
+这部分包括配置 "组织 "蓝图和为组织创建实体: 
 
 ```hcl showLineNumbers
 resource "port_blueprint" "gcp_org_blueprint" {
@@ -1050,9 +1032,9 @@ resource "port_entity" "gcp_org_entity" {
 }
 ```
 
-## Creating the Folder blueprint and the entities matching the folders
+## 创建文件夹蓝图和与文件夹匹配的实体
 
-This part includes configuring the `folder` blueprint and creating an entities for the folders:
+这部分包括配置 "文件夹 "蓝图和为文件夹创建实体: 
 
 ```hcl showLineNumbers
 resource "port_blueprint" "gcp_folder_blueprint" {
@@ -1100,9 +1082,9 @@ resource "port_entity" "gcp_folder_entity" {
 }
 ```
 
-## Creating the Project blueprint and the entities matching the projects
+## 创建项目蓝图和与项目匹配的实体
 
-This part includes configuring the `project` blueprint and creating an entities for the projects:
+这部分包括配置 "项目 "蓝图和为项目创建实体: 
 
 ```hcl showLineNumbers
 resource "port_blueprint" "gcp_project_blueprint" {
@@ -1170,9 +1152,9 @@ resource "port_entity" "gcp_project_entity" {
 }
 ```
 
-## Creating the Storage Bucket blueprint and the entities matching the buckets
+## 创建存储桶蓝图和与存储桶匹配的实体
 
-This part includes configuring the `storageBucket` blueprint and creating the entities for the buckets:
+这部分包括配置 `storageBucket` 蓝图和为存储桶创建实体: 
 
 ```hcl showLineNumbers
 resource "port-labs_blueprint" "gcp_bucket_blueprint" {
@@ -1230,7 +1212,6 @@ resource "port-labs_blueprint" "gcp_bucket_blueprint" {
   }
 }
 
-
 resource "port-labs_entity" "gcp_bucket_entity" {
   depends_on = [port-labs_entity.gcp_project_entity]
   for_each   = data.google_storage_bucket.my_buckets
@@ -1265,9 +1246,9 @@ resource "port-labs_entity" "gcp_bucket_entity" {
 }
 ```
 
-## Creating the Service Account blueprint and the entities matching the service accounts
+## 创建服务账户蓝图和与服务账户匹配的实体
 
-This part includes configuring the `serviceAccount` blueprint and creating the entities for the service accounts:
+这部分包括配置 `serviceAccount` 蓝图和创建服务账户实体: 
 
 ```hcl showLineNumbers
 resource "port-labs_blueprint" "gcp_service_account_blueprint" {
@@ -1296,7 +1277,6 @@ resource "port-labs_blueprint" "gcp_service_account_blueprint" {
   }
 }
 
-
 resource "port-labs_entity" "gcp_service_account_entity" {
   for_each   = data.google_service_account.my_accounts
   identifier = each.value.account_id
@@ -1315,12 +1295,11 @@ resource "port-labs_entity" "gcp_service_account_entity" {
   }
   depends_on = [port-labs_entity.gcp_project_entity]
 }
-
 ```
 
-## Creating the Disk blueprint and the entities matching the disks
+## 创建磁盘蓝图和与磁盘匹配的实体
 
-This part includes configuring the `disk` blueprint and creating the entities for the disks:
+这部分包括配置 "磁盘 "蓝图和创建磁盘实体: 
 
 ```hcl showLineNumbers
 resource "port-labs_blueprint" "gcp_disk_blueprint" {
@@ -1374,7 +1353,6 @@ resource "port-labs_blueprint" "gcp_disk_blueprint" {
   }
 }
 
-
 resource "port-labs_entity" "gcp_disk_entity" {
   for_each   = data.google_compute_disk.my_disks
   identifier = "${each.value.project}_${each.value.zone}_${each.value.name}"
@@ -1409,9 +1387,9 @@ resource "port-labs_entity" "gcp_disk_entity" {
 }
 ```
 
-## Creating the Memorystore blueprint and the entities matching the memorystores
+## 创建内存库蓝图和与内存库匹配的实体
 
-This part includes configuring the `memorystore` blueprint and creating the entities for the memorystores:
+这部分包括配置 "memorystore "蓝图和创建内存存储实体: 
 
 ```hcl showLineNumbers
 resource "port-labs_blueprint" "gcp_memorystore_blueprint" {
@@ -1483,7 +1461,6 @@ resource "port-labs_blueprint" "gcp_memorystore_blueprint" {
   }
 }
 
-
 resource "port-labs_entity" "gcp_memorystore_entity" {
   for_each   = data.google_redis_instance.my_memorystores
   identifier = "${each.value.project}_${each.value.location_id}_${each.value.name}"
@@ -1519,9 +1496,9 @@ resource "port-labs_entity" "gcp_memorystore_entity" {
 }
 ```
 
-## Creating the Compute Instance blueprint and the entities matching the compute-instances
+## 创建计算实例蓝图和与计算实例匹配的实体
 
-This part includes configuring the `computeInstance` blueprint and creating the entities for the compute-instances:
+这部分包括配置 "计算实例 "蓝图和为计算实例创建实体: 
 
 ```hcl showLineNumbers
 resource "port-labs_blueprint" "gcp_compute_instance_blueprint" {
@@ -1579,7 +1556,6 @@ resource "port-labs_blueprint" "gcp_compute_instance_blueprint" {
   }
 }
 
-
 resource "port-labs_entity" "gcp_compute_instance_entity" {
   for_each   = data.google_compute_instance.my_compute_instances
   identifier = "${each.value.project}_${each.value.zone}_${each.value.name}"
@@ -1609,9 +1585,9 @@ resource "port-labs_entity" "gcp_compute_instance_entity" {
 }
 ```
 
-## Creating the Run Service blueprint and the entities matching the run services
+## 创建运行服务蓝图和与运行服务匹配的实体
 
-This part includes configuring the `runService` blueprint and creating the entities for the run services:
+这部分包括配置 `runService` 蓝图和创建运行服务的实体: 
 
 ```hcl showLineNumbers
 resource "port-labs_blueprint" "gcp_run_service_blueprint" {
@@ -1658,7 +1634,6 @@ resource "port-labs_blueprint" "gcp_run_service_blueprint" {
   }
 }
 
-
 resource "port-labs_entity" "gcp_run_service_entity" {
   for_each   = data.google_cloud_run_service.my_run_services
   identifier = "${each.value.project}_${each.value.location}_${each.value.name}"
@@ -1687,9 +1662,9 @@ resource "port-labs_entity" "gcp_run_service_entity" {
 }
 ```
 
-## Creating the Container Cluster blueprint and the entities matching the container clusters
+## 创建容器集群蓝图和与容器集群相匹配的实体
 
-This part includes configuring the `containerCluster` blueprint and creating the entities for the container clusters:
+这部分包括配置 `containerCluster` 蓝图和创建容器集群的实体: 
 
 ```hcl showLineNumbers
 resource "port-labs_blueprint" "gcp_container_cluster_blueprint" {
@@ -1741,7 +1716,6 @@ resource "port-labs_blueprint" "gcp_container_cluster_blueprint" {
   }
 }
 
-
 resource "port-labs_entity" "gcp_container_cluster_entity" {
   for_each   = data.google_container_cluster.my_container_clusters
   identifier = "${each.value.project}_${each.value.location}_${each.value.name}"
@@ -1774,6 +1748,6 @@ resource "port-labs_entity" "gcp_container_cluster_entity" {
 }
 ```
 
-## Result
+## 结果
 
-After running `terraform apply` you will see the `organization`, `folder`, `project`, `storageBucket`, `serviceAccount`, `disk`, `memorystore`, `computeInstance`, `runService`, `containerCluster` entities in Port.
+运行 `terraform apply` 后，您将在 Port 中看到 `organization`, `folder`, `project`, `storageBucket`, `serviceAccount`, `disk`, `memorystore`, `computeInstance`, `runService`, `containerCluster` 实体。

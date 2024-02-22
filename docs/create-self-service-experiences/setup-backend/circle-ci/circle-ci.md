@@ -1,35 +1,30 @@
-# Circle CI Actions
+# 圈 CI 行动
 
-Port's Circle CI Action can trigger
-a [new pipeline](https://circleci.com/docs/api/v2/index.html?utm_source=google&utm_medium=sem&utm_campaign=sem-google-dg--emea-en-dsa-tCPA-auth-nb&utm_term=g_-_c__dsa_&utm_content=&gclid=Cj0KCQiAmNeqBhD4ARIsADsYfTeWb6EyzetX9OD0cFdfR--Tt8oOEf8CXnhyoRT46HMCGgbbVytPWG0aAloJEALw_wcB#operation/triggerPipeline)
-using a customer provided input
-and [`port_payload`](../../self-service-actions-deep-dive/self-service-actions-deep-dive.md#action-message-structure).
+Port's Circle CI Action 可以使用客户提供的输入和[`port_payload`](../../self-service-actions-deep-dive/self-service-actions-deep-dive.md#action-message-structure) ，触发[new pipeline](https://circleci.com/docs/api/v2/index.html?utm_source=google&amp;utm_medium=sem&amp;utm_campaign=sem-google-dg--emea-en-dsa-tCPA-auth-nb&amp;utm_term=g_-_c__dsa_&amp;utm_content=&amp;gclid=Cj0KCQiAmNeqBhD4ARIsADsYfTeWb6EyzetX9OD0cFdfR--Tt8oOEf8CXnhyoRT46HMCGgbbVytPWG0aAloJEALw_wcB#operation/triggerPipeline)。
 
 ![Port Kafka Architecture](../../../../static/img/self-service-actions/setup-backend/circleci/circle-ci-agent-architecture.png)
 
-The steps shown in the image above are as follows:
+上图所示步骤如下: 
 
-1. Port publishes an invoked `Action` message containing the pipeline details to a topic;
-2. A secure topic (`ORG_ID.runs`) holds all the action invocations;
-3. Port's execution agent pulls the new trigger event from your Kafka topic, and triggers your Circle CI pipeline.
+1. Port 向主题发布调用的包含管道详细信息的 "Action "消息；
+2. 安全主题("ORG_ID.runs")保存所有的操作调用；
+3. Port 的执行代理从 Kafka 主题中提取新的触发事件，并触发 Circle CI 管道。
 
-## Prerequisites
+## 先决条件
 
-- [Helm](https://helm.sh) must be installed to use the chart. Please refer to
-  Helm's [documentation](https://helm.sh/docs) for further details on the installation;
-- The connection credentials to Kafka are provided to you by Port;
-- If you want to trigger a Circle CI pipeline, you need to have a Circle
-  CI [personal API token](https://app.circleci.com/settings/user/tokens).
+* [Helm](https://helm.sh) 必须安装才能使用海图。有关安装的更多详情，请参阅 Helm 的[documentation](https://helm.sh/docs) ；
+* 与 Kafka 的连接凭证由 Port 提供给您；
+* 如果要触发 Circle CI 管道，需要有一个 Circle CI[personal API token](https://app.circleci.com/settings/user/tokens) 。
 
-## Further steps
+## 进一步的步骤
 
-- See the [Triggering example](#Triggering-example) for Circle CI.
-- Contact us through Intercom to set up a Kafka topic for your organization.
-- [Install the Port execution agent to trigger the Circle CI pipeline](#Installation).
+* 请参阅[Triggering example](#Triggering-example) Circle CI。
+* 通过 Intercom 联系我们，为您的组织设置 Kafka 主题。
+* [Install the Port execution agent to trigger the Circle CI pipeline](#Installation).
 
-## Triggering example
+## 触发示例
 
-Create the following blueprint, action and mapping to trigger a Circle CI pipeline.
+创建以下蓝图、操作和映射，以触发 Circle CI 管道。
 
 <details>
 <summary>Blueprint</summary>
@@ -88,9 +83,8 @@ Create the following blueprint, action and mapping to trigger a Circle CI pipeli
 <details>
 <summary>Mapping - (Should be saved as a file named `invocations.json`)</summary>
 
-:::info
-To read more about the `controlThePayload` configuration, please refer to
-the [Control the payload](/create-self-service-experiences/setup-backend/webhook/port-execution-agent/control-the-payload.md) documentation.
+:::info 要了解有关 `controlThePayload` 配置的更多信息，请参阅[Control the payload](/create-self-service-experiences/setup-backend/webhook/port-execution-agent/control-the-payload.md) 文档。
+
 :::
 
 ```json
@@ -111,22 +105,20 @@ the [Control the payload](/create-self-service-experiences/setup-backend/webhook
 
 </details>
 
-## Installation
+## 安装
 
-1. Add Port's Helm repo by using the following command:
+1. 使用以下命令添加 Port 的 Helm 软件源: 
 
 ```sh showLineNumbers
 helm repo add port-labs https://port-labs.github.io/helm-charts
 ```
 
-:::note
-If you already added this repo earlier, run `helm repo update` to retrieve
-the latest versions of the charts. You can then run `helm search repo port-labs` to see the charts.
+:::note 如果之前已经添加了此 repo，请运行 `helm repo update` 获取最新版本的图表。 然后运行 `helm search repo port-labs` 查看图表。
+
 :::
 
-2. Create a JSON file named `invocations.json` with the mapping above.
-
-3. Install the `port-agent` chart by using the following command after filling in the required values:
+2.用上述映射创建一个名为 `invocations.json` 的 JSON 文件。
+3.填写所需数值后，使用以下命令安装 `port-agent` 图表: 
 
 ```sh showLineNumbers
 helm install my-port-agent port-labs/port-agent \

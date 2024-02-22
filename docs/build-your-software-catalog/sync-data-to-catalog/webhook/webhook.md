@@ -4,9 +4,9 @@ import Tabs from "@theme/Tabs"
 import TabItem from "@theme/TabItem"
 import Image from "@theme/IdealImage";
 import WebhookArchitecture from '../../../../static/img/build-your-software-catalog/sync-data-to-catalog/webhook/webhook-architecture.png';
-import ExampleGithubPRWebhook from './examples/resources/github/\_example_github_pr_configuration.mdx';
+import ExampleGithubPRWebhook from './examples/resources/github/_example_github_pr_configuration.mdx';
 
-By using Port's generic webhook integration you can ingest data into the software catalog from any source or service that provides outgoing webhooks, even if Port doesn't provide a native integration for that source.
+通过使用 Port 的通用 webhook 集成，您可以将数据从任何提供外发 webhook 的源或服务摄入软件目录，即使 Port 没有为该源提供本地集成。
 
 <center>
 
@@ -14,47 +14,47 @@ By using Port's generic webhook integration you can ingest data into the softwar
 
 </center>
 
-## 💡 Webhook common use cases
+## 💡 Webhook 常见用例
 
-Our generic webhook makes it easy to fill the software catalog with live data directly from your 3rd-party services, for example:
+例如，我们的通用 webhook 可让您直接从第三方服务中获取实时数据，从而轻松填充软件目录: 
 
-- Map all of your **Snyk vulnerabilities**, **Jira issues**, **SonarQube reports** and other data sources;
-- Make single property updates - update the current on-call of a service based on an event from **Pager Duty** or **OpsGenie**;
-- Make event-based real-time updates to the software catalog;
-- Create a single view for all of the data provided by the 3rd-party services you use;
-- etc.
+* 映射所有**Snyk 漏洞**、**Jira 问题**、**SonarQube 报告**和其他数据源；
+* 进行单一属性更新--根据来自 **Pager Duty** 或 **OpsGenie** 的事件更新服务的当前待命状态；
+* 对软件目录进行基于事件的实时更新；
+* 为您使用的第三方服务所提供的所有数据创建单一视图；
+* 等等。
 
-## How it works
+## 工作原理
 
-Port provides you with custom webhook endpoints, which you can use as the target for custom integrations provided by services you use (for example [GitHub](https://docs.github.com/en/webhooks-and-events/webhooks/about-webhooks), [Sentry](https://docs.sentry.io/product/integrations/integration-platform/webhooks/), etc.)
+Port 可为您提供自定义 webhook 端点，您可以将其用作您所引用服务(如[GitHub](https://docs.github.com/en/webhooks-and-events/webhooks/about-webhooks) 、[Sentry](https://docs.sentry.io/product/integrations/integration-platform/webhooks/) 等)提供的自定义集成的目标。
 
-Each webhook endpoint can receive a [custom mapping](#mapping-configuration), making it easy to turn the payload of events from your 3rd-party services into entities inside your software catalog.
+每个 webhook 端点都能接收[custom mapping](#mapping-configuration) ，这样就能轻松地将来自第三方服务的事件有效载荷转化为软件目录中的实体。
 
-The custom mapping makes use of the [JQ JSON processor](https://stedolan.github.io/jq/manual/) to select, modify, concatenate, transform and perform other operations on existing fields and values from the webhook payload.
+自定义映射利用[JQ JSON processor](https://stedolan.github.io/jq/manual/) 对来自 webhook 有效负载的现有字段和值进行选择、修改、连接、转换和其他操作。
 
-:::tip
-By using the webhook mapping you can create/update a complete entity, or choose to update just a single property on an entity.
+:::tip 通过被引用 webhook 映射，你可以创建/更新一个完整的实体，也可以选择只更新实体上的一个属性。
+
 :::
 
-## Webhook configuration
+## Webhook 配置
 
-The webhook configuration is how you specify:
+webhook 配置就是你指定的方式: 
 
-- The basic [metadata](#metadata-configuration) of the custom webhook integration;
-- The [mapping configuration](#mapping-configuration) controlling which entities are created from the payload;
-- The [security configuration](#security-configuration) used to make sure that payloads that arrive to Port were really sent by a 3rd party you authorized.
+* 自定义 webhook 集成的基本[metadata](#metadata-configuration) ；
+* 控制从有效负载创建实体的[mapping configuration](#mapping-configuration) ；
+* 用于确保到达 Port 的有效负载确实是由您授权的第三方发送的[security configuration](#security-configuration) 。
 
-Here is an example webhook configuration:
+下面是一个 webhook 配置示例: 
 
 <ExampleGithubPRWebhook/>
 
-## Configuration structure
+## 配置结构
 
-### Metadata configuration
+### 元数据配置
 
-The metadata configuration of the webhook includes all properties related to the visibility and displaying of the webhook inside Port's UI, in addition to controlling whether the webhook is active or not.
+网络钩子的元数据配置除了控制网络钩子是否处于活动状态外，还包括与网络钩子在 Port 用户界面中的可见性和显示有关的所有属性。
 
-Here is an example metadata configuration:
+下面是一个元数据配置示例: 
 
 <Tabs groupId="definition" queryString defaultValue="api" values={[
 {label: "API", value: "api"},
@@ -86,7 +86,7 @@ Here is an example metadata configuration:
 <TabItem value="tf">
 
 ```hcl showLineNumbers
-  resource "port_webhook" "myWebhook" {
+resource "port_webhook" "myWebhook" {
     // highlight-start
     identifier = "pullRequestMapper"
     title = "Pull Request Mapper"
@@ -101,13 +101,13 @@ Here is an example metadata configuration:
       ...
     }
   }
-
 ```
 
 </TabItem>
 </Tabs>
 
-#### Structure table
+#### 结构表
+
 
 | Field         | Description           | Notes                                                                                                    |
 | ------------- | --------------------- | -------------------------------------------------------------------------------------------------------- |
@@ -117,13 +117,14 @@ Here is an example metadata configuration:
 | `icon`        | Icon for the webhook  | See the [full icon list](../../define-your-data-model/setup-blueprint/setup-blueprint.md#full-icon-list) |
 | `enabled`     | Is the webhook active | If the integration id disabled (`"enabled": false`) then any incoming event will be dropped              |
 
-### Mapping configuration
 
-The mapping configuration of the webhook defines how the webhook event payload is mapped to one (or more) Port entities.
+### 映射配置
 
-The mapping configuration makes use of the [JQ JSON processor](https://stedolan.github.io/jq/manual/) to extract information from the event payload into Port entity properties.
+webhook 的映射配置定义了如何将 webhook 事件有效负载映射到一个(或多个)Port实体。
 
-Here is an example mapping configuration:
+映射配置利用[JQ JSON processor](https://stedolan.github.io/jq/manual/) ，将事件有效载荷中的信息提取到 Port 实体属性中。
+
+下面是一个映射配置示例: 
 
 <Tabs groupId="definition" queryString defaultValue="api" values={[
 {label: "API", value: "api"},
@@ -165,7 +166,7 @@ Here is an example mapping configuration:
 <TabItem value="tf">
 
 ```hcl showLineNumbers
-  resource "port_webhook" "myWebhook" {
+resource "port_webhook" "myWebhook" {
     identifier = "pullRequestMapper"
     title = "Pull Request Mapper"
     enabled = true
@@ -190,16 +191,15 @@ Here is an example mapping configuration:
       ...
     }
   }
-
 ```
 
 </TabItem>
 
 </Tabs>
 
-#### Structure
+#### 结构
 
-- The root key of the mapping configuration is the `mappings` key:
+* 映射配置的根键是 `mappings` 键: 
 
 ```json showLineNumbers
 {
@@ -214,11 +214,11 @@ Here is an example mapping configuration:
 }
 ```
 
-The mappings key stores an **array** of mappings, making it possible to create/update multiple entities in multiple blueprints from the same payload.
+映射键存储映射的***数组，这样就可以通过同一有效载荷在多个蓝图中创建/更新多个实体。
 
-Now let's explore the structure of a single mapping object:
+现在，让我们来探讨一下单个映射对象的结构: 
 
-- The `blueprint` key is used to specify the identifier of the blueprint to create/update an entity of based on the webhook payload:
+* 蓝图 "键被用来引用蓝图的标识符，以便根据 webhook 有效负载创建/更新实体: 
 
 ```json showLineNumbers
 {
@@ -235,7 +235,7 @@ Now let's explore the structure of a single mapping object:
 }
 ```
 
-- The `filter` key lets you filter exactly which payloads sent to the webhook are processed:
+* 通过 `filter` 键，您可以准确过滤哪些发送到 webhook 的有效负载会被处理: 
 
 ```json showLineNumbers
 {
@@ -252,7 +252,7 @@ Now let's explore the structure of a single mapping object:
 }
 ```
 
-- The `itemsToParse` key makes it possible to create multiple entities from a single webhook event:
+* 通过`itemsToParse`键，可以从一个 webhook 事件中创建多个实体: 
 
 ```json showLineNumbers
 {
@@ -280,14 +280,14 @@ Now let's explore the structure of a single mapping object:
 }
 ```
 
-:::note
+:::note 
 
-- Any JQ expression can be used here, as long as it evaluates to an array of items.
-- `item` will be added to the JQ context as a key containing a reference to items in the array specified in `itemsToParse`. Keys from the object in the array can be accessed using the `.item.KEY_NAME` syntax, see the example JSON for more information.
+* 任何 JQ 表达式都可以在此被引用，只要它的 evaluated 指向一个项目数组。
+* 项目 "将作为一个键添加到 JQ 上下文中，该键包含对 "itemsToParse "中指定的数组中的项目的引用。可以使用 `.item.KEY_NAME`语法访问数组中对象的键，更多信息请参阅示例 JSON。
 
 :::
 
-- The `entity` key is used to map information from the webhook payload to Port entity properties using JQ:
+* 实体 "键被用来通过 JQ 将 Webhook 有效负载中的信息映射到 Port 实体属性: 
 
 ```json showLineNumbers
 {
@@ -312,17 +312,17 @@ Now let's explore the structure of a single mapping object:
 }
 ```
 
-### Security configuration
+#### 安全配置
 
-When 3rd party services send payload to a specified webhook URL, they will usually also include a header containing a signed signature of the payload, or some agreed upon string for verification of the sender.
+当第三方服务向指定的 webhook URL 发送有效负载时，通常也会包含一个包含有效负载签名的标头，或一些约定的字符串，用于验证发送方。
 
-The signature might be generated by running a SHA-X (for example SHA-1 or SHA-256) hashing function on the payload, combined with a secret value specified by the user or provided by the 3rd party service at the time of webhook creation.
+签名可以通过在有效负载上运行 SHA-X(例如 SHA-1 或 SHA-256)散列函数，结合用户指定的或第三方服务在创建 webhook 时提供的secret值生成。
 
-Since some 3rd party service do not offer sending the payload signature, and instead only offer sending an agreed upon string directly - the security option `plain` is available for use. With this option, the signature is compared to the secret value without any modification. It allows users to directly compare the signature to the provided secret value. This can be useful in scenarios where a simpler security mechanism is desired.
+由于某些第三方服务不提供发送有效载荷签名的服务，而只提供直接发送约定字符串的服务，因此可使用安全选项 "plain"。 使用该选项时，签名将不加任何修改地与secret值进行比较。 它允许用户直接将签名与 Provider 提供的secret值进行比较。 这在需要更简单的安全机制的情况下非常有用。
 
-The security configuration of the webhook is used to tell Port how to verify the hashed signature sent with the request from the 3rd party.
+webhook 的安全配置用于告诉 Port 如何验证与第三方请求一起发送的哈希签名。
 
-Here is an example security configuration:
+下面是一个安全配置示例: 
 
 <Tabs groupId="definition" queryString defaultValue="api" values={[
 {label: "API", value: "api"},
@@ -355,7 +355,6 @@ Here is an example security configuration:
 <TabItem value="tf">
 
 ```hcl showLineNumbers
-
 resource "port_webhook" "myWebhook" {
     identifier = "pullRequestMapper"
     ...
@@ -372,22 +371,21 @@ resource "port_webhook" "myWebhook" {
     }
     // highlight-end
 }
-
 ```
 
 </TabItem>
 
 </Tabs>
 
-:::tip
-The security configuration is not mandatory, but it does provide an additional layer of security, making sure that Port only processes payloads that were actually sent from one of your 3rd party webhooks.
+:::tip 安全配置不是强制性的，但它确实提供了额外的安全保障，确保 Provider 只处理真正由第三方 webhooks 发送的有效负载。
 
-If you do not want to supply a security configuration with your webhook configuration, simply pass an empty object: `"security": {}` with your webhook configuration.
+如果不想在配置 webhook 时提供安全配置，只需在配置 webhook 时传递一个空对象: `"security": {}`。
+
 :::
 
-#### Structure
+#### 结构
 
-- The root of the security configuration is the `security` key:
+* 安全配置的根是 `security` 密钥: 
 
 ```json showLineNumbers
 {
@@ -404,11 +402,11 @@ If you do not want to supply a security configuration with your webhook configur
 }
 ```
 
-- The `secret` key is used to specify the secret value used to validate the hashed signature of the received payload:
-  - Depending on the service, the secret value might be autogenerated by the 3rd party or manually provided to the 3rd party by you.
+* secret "密钥用于指定用于验证接收到的有效负载的哈希签名的secret值: 
+    - 根据服务的不同，secret值可能由第三方自动生成，也可能由您手动提供给第三方。
 
 ```json showLineNumbers
-  ...
+...
   "security": {
     // highlight-next-line
     "secret": "WEBHOOK_SECRET",
@@ -421,11 +419,11 @@ If you do not want to supply a security configuration with your webhook configur
 }
 ```
 
-- The `signatureHeaderName` key is used to specify the name of the header that stores the hashed signature of the payload:
-  - When a webhook endpoint receives a new payload, it will compare the value of this header with the hashed signature it will calculate from the received payload.
+* signatureHeaderName "键被用来引用存储有效负载哈希签名的头的名称: 
+    - 当 webhook 端点接收到新的有效负载时，它会将此标头的值与它将从接收到的有效负载中计算出的散列签名进行比较。
 
 ```json showLineNumbers
-  ...
+...
   "security": {
     "secret": "WEBHOOK_SECRET",
     // highlight-next-line
@@ -438,12 +436,12 @@ If you do not want to supply a security configuration with your webhook configur
 }
 ```
 
-- The `signatureAlgorithm` key is used to specify the hashing algorithm used to create the payloads' hashed signature:
-  - **Available values:** `sha1`, `sha256`, `plain`;
-  - When a webhook endpoint receives a new payload, it will use the specified algorithm to calculate the hashed signature of the received payload.
+* 签名算法 "键被用来引用哈希算法，以创建有效载荷的哈希签名: 
+    - **可用 Values: ** `sha1`、`sha256`、`plain`；
+    - 当 webhook 端点接收到新的有效负载时，它将使用指定的算法来计算接收到的有效负载的散列签名。
 
 ```json showLineNumbers
-  ...
+...
   "security": {
     "secret": "WEBHOOK_SECRET",
     "signatureHeaderName": "X-Hub-Signature-256",
@@ -456,15 +454,15 @@ If you do not want to supply a security configuration with your webhook configur
 }
 ```
 
-:::info
-When using the `plain` algorithm, no hashing will be performed and the value of the secret saved in the Port webhook configuration will be compared to the value in the specified header without any modification.
+:::info 使用 "plain "算法时，将不执行散列，保存在 Port webhook 配置中的secret值将与指定标头中的值进行比较，不做任何修改。
+
 :::
 
-- The `signaturePrefix` key is used to specify a static prefix string that appears before the hashedSignature in the `signatureHeaderName` key:
-  - For example, in GitHub webhooks, the header containing the hashed signature always starts with `sha256=`, so the webhook should be configured with: `"signaturePrefix": "sha256="`;
+* signaturePrefix "键用于指定一个静态前缀字符串，出现在 "signatureHeaderName "键中的 hashedSignature 之前: 
+    - 例如，在 GitHub webhook 中，包含散列签名的头总是以 `sha256=` 开头，因此 webhook 应配置为签名前缀"sha256="`；
 
 ```json showLineNumbers
-  ...
+...
   "security": {
     "secret": "WEBHOOK_SECRET",
     "signatureHeaderName": "X-Hub-Signature-256",
@@ -477,12 +475,12 @@ When using the `plain` algorithm, no hashing will be performed and the value of 
 }
 ```
 
-- The `requestIdentifierPath` key is used to specify a JQ pattern resulting in a unique identifier of the webhook payload:
-  - This key is used to prevent Port from processing an event more than once;
-  - For example, in GitHub webhooks, the `X-GitHub-Delivery` header contains a GUID used to identify the delivery. So the webhook should be configured with: `"requestIdentifierPath": ".headers.\"X-GitHub-Delivery\""`;
+* requestIdentifierPath "键被用来引用 JQ 模式，该模式会产生 webhook 有效负载的唯一标识符: 
+    - 该键用于防止 Port 对一个事件进行多次处理；
+    - 例如，在 GitHub webhook 中，`X-GitHub-Delivery` 标头包含一个用于标识交付的 GUID。因此，webhook 应配置为`"requestIdentifierPath": ".headers.\"X-GitHub-Delivery/""`；
 
 ```json showLineNumbers
-  ...
+...
   "security": {
     "secret": "WEBHOOK_SECRET",
     "signatureHeaderName": "X-Hub-Signature-256",
@@ -495,35 +493,35 @@ When using the `plain` algorithm, no hashing will be performed and the value of 
 }
 ```
 
-## Configuring webhook endpoints
+## 配置 webhook 端点
 
 <Tabs queryString="operation">
 <TabItem label="Using API" value="api">
 <Tabs>
 <TabItem label="Create webhook" value="create">
 
-To create a new webhook, make an HTTP POST request to `https://api.getport.io/v1/webhooks` with your [webhook configuration](#configuration-structure) in the request body.
+要创建新的 webhook，请向 `https://api.getport.io/v1/webhooks` 发送 HTTP POST 请求，并在请求正文中输入您的[webhook configuration](#configuration-structure) 。
 
-The API response will include the complete configuration of the webhook, including the following important fields:
+API 响应将包括 webhook 的完整配置，包括以下重要字段: 
 
-- `webhookKey` - this is the unique identifier used for the new generic webhook route you created;
-- `url` - this is the complete URL you need to pass to your 3rd party webhook configuration. Event payloads matching the webhook configuration you created should be sent to this URL;
-  - The `url` will be of the format: `https://ingest.getport.io/{webhookKey}`;
-  - **Note:** The `https://ingest.getport.io` is constant, only the `webhookKey` will change between webhooks configurations.
+* `webhookKey` - 这是您创建的新通用 webhook 路由被引用的唯一标识符；
+* `url` - 这是您需要传递给第三方网络钩子配置的完整 URL。与您创建的 webhook 配置相匹配的事件有效载荷应发送到此 URL；
+    - url "的格式为https://ingest.getport.io/{webhookKey}`；
+    - **注意: ** `https://ingest.getport.io`是不变的，只有`webhookKey`会在不同的网络钩子配置之间发生变化。
 
 </TabItem>
 <TabItem label="Update webhook" value="update">
 
-To update an existing webhook, make an HTTP PATCH request to `https://api.getport.io/v1/webhooks/{WEBHOOK_IDENTIFIER}` with your updated [webhook configuration](#configuration-structure) in the request body.
+要更新现有的 webhook，请向 "https://api.getport.io/v1/webhooks/{WEBHOOK_IDENTIFIER}"发出 HTTP PATCH 请求，并在请求正文中包含更新后的[webhook configuration](#configuration-structure) 。
 
-When updating the webhook configuration, partial updates are supported, meaning you can pass only keys that need to be updated in the request body. Any key you do not specify will remain unchanged.
+在更新 webhook 配置时，支持部分更新，也就是说，你可以只在请求正文中传递需要更新的密钥。 任何你没有指定的密钥都将保持不变。
 
-The API response will include the updated configuration of the webhook.
+API 响应将包括 webhook 的更新配置。
 
 </TabItem>
 <TabItem label="Delete webhook" value="delete">
 
-To delete an existing webhook, make an HTTP DELETE request to `https://api.getport.io/v1/webhooks/{WEBHOOK_IDENTIFIER}`.
+要删除现有的 webhook，请向 `https://api.getport.io/v1/webhooks/{WEBHOOK_IDENTIFIER}` 发送 HTTP DELETE 请求。
 
 </TabItem>
 </Tabs>
@@ -532,78 +530,78 @@ To delete an existing webhook, make an HTTP DELETE request to `https://api.getpo
 <Tabs>
 <TabItem label="Create webhook" value="create-ui">
 
-Here's the breakdown of the steps to create a new webhook using the Port UI:
+以下是使用 Port UI 创建新 webhook 的详细步骤: 
 
-1. Login to your [Port account](https://app.getport.io)
-2. From the top menu, select **Builder**
-3. Choose your existing [blueprint](/docs/quickstart.md#define-a-blueprint)
-4. Click on the blueprint **expand** button
-5. Click on the `...` icon and select **Ingest data**.
-6. Scroll down to the "Custom Integrations" section.
-7. Select **Custom Integration**;
-   - Provide a **Title** for your webhook;
-   - Choose whether to use the **Identifier Autogenerate** option or specify your own identifier;
-   - Provide a description for your webhook;
-   - Select an icon from the dropdown menu to represent your webhook;
-   - Click **Next**
-8. Scroll down to the **JQ Mapping** section;
-   - This section displays the properties created when the blueprint was set up;
-   - Review the mapping and modify it if necessary;
-9. Finally, click **Create** to create the new webhook.
+1. 登录您的[Port account](https://app.getport.io)
+2. 从顶部菜单中选择**生成器**
+3. 选择您现有的[blueprint](/docs/quickstart.md#define-a-blueprint)
+4. 点击蓝图**展开**按钮
+5. 点击"... "图标，选择**最原始数据**。
+6. 向下滚动到 "自定义集成 "部分。
+7. 选择**自定义集成**；
+    - 为您的 webhook 提供**标题**；
+    - 选择是使用**标识符自动生成**选项还是指定您自己的标识符；
+    - 为您的 webhook 提供描述；
+    - 从下拉菜单中选择一个图标来代表你的 webhook；
+    - 点击**下一步**
+8.向下滚动到**JQ 映射**部分；
+    - 该部分显示设置蓝图时创建的属性；
+    - 查看映射，必要时进行修改；
+9.最后，点击**创建**创建新的 webhook。
 
-Please note that this breakdown captures the steps involved in creating a webhook using the Port UI based on the provided narrative.
+请注意，本明细表根据 Provider 提供的叙述，记录了使用 Port 用户界面创建 webhook 所涉及的步骤。
 
 </TabItem>
 <TabItem label="Update webhook" value="update-ui">
 
-Here's the breakdown of the steps to update a webhook using the Port UI:
+以下是使用 Port UI 更新 webhook 的详细步骤: 
 
-1. Login to your [Port account](https://app.getport.io)
-2. From the top menu, select **Builder**
-3. Choose your existing [blueprint](/docs/quickstart.md#define-a-blueprint)
-4. Click on the blueprint **expand** button
-5. Click on the `...` icon and select **Ingest data**
-6. Scroll down to the **Custom Integration** section
-7. Select the desired webhook that you want to modify
-8. Make the necessary changes to the webhook configuration
-9. Click **Save** to save your changes
+1. 登录您的[Port account](https://app.getport.io)
+2. 从顶部菜单中选择**生成器**
+3. 选择您现有的[blueprint](/docs/quickstart.md#define-a-blueprint)
+4. 点击蓝图**展开**按钮
+5. 点击"... "图标并选择**最原始数据**
+6. 向下滚动到**自定义集成**部分
+7. 选择要修改的 webhook
+8. 对 webhook 配置进行必要的更改
+9. 单击**保存**保存更改
 
-By following these steps, you'll be able to update a webhook using the Port UI based on the provided narrative.
+按照以下步骤，您就能根据 Providers 提供的叙述使用 Port UI 更新 webhook。
 
 </TabItem>
 
 <TabItem label="Delete webhook" value="delete-ui">
 
-Here's the breakdown of the steps to delete a webhook using the Port UI:
+以下是使用 Port UI 删除 webhook 的详细步骤: 
 
-1. Login to your [Port account](https://app.getport.io)
-2. From the top menu, select **Builder**
-3. Choose your existing [blueprint](/docs/quickstart.md#define-a-blueprint)
-4. Click on the blueprint **expand** button
-5. Click on the `...` icon and select **Ingest data**
-6. Scroll down to the **Custom Integration** section
-7. Hover over the desired webhook that you want to delete
-8. A **Delete** icon will appear
-9. Click on the **Delete** icon to remove the webhook
+1. 登录您的[Port account](https://app.getport.io)
+2. 从顶部菜单中选择**生成器**
+3. 选择您现有的[blueprint](/docs/quickstart.md#define-a-blueprint)
+4. 点击蓝图**展开**按钮
+5. 点击"... "图标并选择**最原始数据**
+6. 向下滚动到**自定义集成**部分
+7. 将鼠标悬停在要删除的 webhook 上
+8. 将出现一个**删除**图标
+9. 点击**删除**图标删除网络钩子
 
-By following these steps, you'll be able to delete a webhook using the Port UI based on the provided narrative.
+按照以下步骤，您就可以根据 Providers 提供的叙述，使用 Port UI 删除 webhook。
 
 </TabItem>
 </Tabs>
 </TabItem>
 </Tabs>
 
-## Using the custom webhook
+## 使用自定义 webhook
 
-After creating and configuring your custom webhook, go to your 3rd party provider (i.e. GitHub, Sentry, Jira, etc.) and follow these steps to complete the webhook setup:
+创建并配置好自定义 webhook 后，请转到第三方 Provider(如 GitHub、Sentry、Jira 等)，按照以下步骤完成 webhook 设置: 
 
-- Go to the new webhook setup menu in your 3rd party provider
-  - For example in GitHub: go to your desired organization/repository -> Settings -> Webhooks -> Add webhook.
-- Paste the webhook URL you received from Port (`https://ingest.getport.io/{webhookKey}`) in the field specifying the webhook target URL;
-  - For example in GitHub: paste the webhook URL in the `Payload URL` field.
-- For content type, select `application/json` (if applicable);
-- In case the `secret` value is generated by your 3rd party, be sure to go back and [update](?operation=update#configuring-webhook-endpoints) your [security configuration](#security-configuration) with the secret value.
+* 进入第三方 Providers 的新 webhook 设置菜单
+    - 例如在 GitHub: 转到所需的组织/资源库 -> 设置 -> Webhooks -> 添加 webhook。
+* 将从 Port 收到的 webhook URL (`https://ingest.getport.io/{webhookKey}`)粘贴到指定 webhook 目标 URL 的字段中；
+    - 例如在 GitHub 中: 将 webhook URL 粘贴到 `Payload URL` 字段中。
+* 内容类型请选择 `application/json`(如适用)；
+* 如果 "secret "值是由第三方生成的，请务必返回[update](?operation=update#configuring-webhook-endpoints) ，并在[security configuration](#security-configuration) 中添加secret值。
 
-## Examples
+## 示例
 
-Refer to the [examples](./examples/examples.md) page for practical configurations and their corresponding blueprint definitions.
+有关实用配置及其相应的蓝图定义，请参阅[examples](./examples/examples.md) 页面。

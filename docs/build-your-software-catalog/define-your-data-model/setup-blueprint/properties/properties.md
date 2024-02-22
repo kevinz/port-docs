@@ -1,14 +1,16 @@
 ---
+
 sidebar_position: 1
+
 ---
 
 import DocCardList from '@theme/DocCardList';
 
-# Properties
+# 属性
 
-Each blueprint has a `properties` section under its `schema`. In this section, you can define all of the unique properties that describe your asset.
+每个蓝图的 "模式 "下都有一个 "属性 "部分。 在这一部分，您可以定义描述资产的所有独特属性。
 
-## Structure
+## 结构
 
 ```json showLineNumbers
 {
@@ -21,7 +23,8 @@ Each blueprint has a `properties` section under its `schema`. In this section, y
 }
 ```
 
-The different components that make up a basic property definition are listed in the following table:
+下表列出了构成基本属性定义的不同组成部分: 
+
 
 | Field         | Description                                                                                                                                                                        |
 | ------------- | ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
@@ -31,19 +34,20 @@ The different components that make up a basic property definition are listed in 
 | `description` | Description of the property.<br /> This value is visible to users when hovering on the info icon in the UI. It provides detailed information about the use of a specific property. |
 | `default`     | Default value for this property in case an entity is created without explicitly providing a value.                                                                                 |
 
-:::tip
-The name of the property is the key of the property object. For example, in the code block above, the name of the property is `myProp`
+
+:::tip 属性名称是属性对象的键。 例如，在上面的代码块中，属性名称是`myProp`。
+
 :::
 
-## Supported properties
+## 支持的属性
 
 <DocCardList />
 
-## Miscellaneous
+## 杂项
 
-### Available enum colors
+### 可用的枚举颜色
 
-Properties defined using [enum](./string.md?api-definition=enum#api-definition) can also include specific colors for the different values available in the property definition, the available enum colors are:
+使用[enum](./string.md?api-definition=enum#api-definition) 定义的属性还可以为属性定义中可用的不同值包含特定的颜色，可用的枚举颜色有
 
 ```showLineNumbers text
 blue

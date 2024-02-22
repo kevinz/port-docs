@@ -1,36 +1,37 @@
 ---
+
 sidebar_position: 1
+
 ---
 
-# Installation
+# 安装
 
-The azure exporter is deployed using Terraform on Azure Container App.
-It uses our Terraform [Ocean](https://ocean.getport.io) Integration Factory [module](https://registry.terraform.io/modules/port-labs/integration-factory/ocean/latest) to deploy the exporter.
+使用 Terraform 在 Azure Container App 上部署了 azure 输出程序。它引用了我们的 Terraform[Ocean](https://ocean.getport.io) Integration Factory[module](https://registry.terraform.io/modules/port-labs/integration-factory/ocean/latest) 来部署输出程序。
 
-:::tip
-Multiple ways to deploy the Azure exporter could be found in the Azure Integration example [README](https://registry.terraform.io/modules/port-labs/integration-factory/ocean/latest/examples/azure_container_app_azure_integration)
+:::tip 在 Azure 集成示例中可以找到部署 Azure 输出程序的多种方法[README](https://registry.terraform.io/modules/port-labs/integration-factory/ocean/latest/examples/azure_container_app_azure_integration)
+
 :::
 
-## Azure infrastructure used by the Azure exporter
+##被 Azure 输出程序引用的 Azure 基础设施
 
-The Azure exporter uses the following Azure infrastructure:
+Azure 输出程序被引用以下 Azure 基础设施: 
 
-- Azure Container App;
-- Azure Event Grid (Used for real-time data sync to Port):
-  - Azure Event Grid System Topic of type `Microsoft.Resources.Subscriptions`;
-  - Azure Event Grid Subscription;
+* Azure 容器应用程序；
+* Azure 事件网格(被引用到 Port 的实时数据同步): 
+    - Azure Event Grid System Topic of type `Microsoft.Resources.Subscriptions`；
+    - Azure 事件网格订阅；
 
-:::warning
-Due to a limitation in Azure **only one** Event Grid system topic of type `Microsoft.Resources.Subscriptions` can be created per subscription, so if you already have one you'll need to pass it to the integration using `event_grid_system_topic_name=<your-event-grid-system-topic-name>`.
+:::warning 由于 Azure 的限制，每个订阅只能创建一个**类型为 "Microsoft.Resources.Subscriptions "的事件网格系统主题，因此如果您已经有一个主题，则需要使用 `event_grid_system_topic_name=<your-event-grid-system-topic-name>`将其传递给集成。
 
-In case a system topic already exists and is not provided to the deployment of the integration, the integration will due to not being able to create a new one.
+如果系统主题已经存在，但未提供给集成部署，集成将无法创建新主题。
+
 :::
 
-## Prerequisites
+## 先决条件
 
-- [Terraform](https://www.terraform.io/downloads.html) >= 0.15.0
-- [Azure CLI](https://docs.microsoft.com/en-us/cli/azure/install-azure-cli) >= 2.26.0
-- [Permissions](#permissions)
+* [Terraform](https://www.terraform.io/downloads.html) >= 0.15.0
+* [Azure CLI](https://docs.microsoft.com/en-us/cli/azure/install-azure-cli) >= 2.26.0
+* [Permissions](#permissions)
 
 ## Permissions
 
@@ -111,37 +112,28 @@ In order to successfully deploy the Azure exporter, it's crucial to ensure that 
     - The `ContainerApp Reader` role.
     - The `EventGrid EventSubscription Contributor` role.
 
-## Installation
+## 安装
 
-1. Login to [Port](https://app.getport.io) and browse to the [builder page](https://app.getport.io/dev-portal)
-2. Open the ingest modal by expanding one of the blueprints and clicking the ingest button on the blueprints.
+1. 登录[Port](https://app.getport.io) 并浏览到[builder page](https://app.getport.io/dev-portal)
+2. 展开其中一个蓝图并单击蓝图上的摄取按钮，打开摄取模态。
+    ![Dev Portal Builder Ingest Button](/img/integrations/azure-exporter/DevPortalBuilderIngestButton.png)
+3.单击云 Provider 部分下的 Azure Exporter 选项: 
+    ![Dev Portal Builder Azure Exporter Option](/img/integrations/azure-exporter/DevPortalIngestCloudProvider.png)
+4.编辑并复制安装命令。
+提示
+安装命令包含占位符，允许您自定义集成的配置。例如，您可以更新命令并指定 `event_grid_system_topic_name` 参数(如果已经有)。
+    - 如果订阅中已有类型为 "Microsoft.Resources.Subscriptions "的 Event Grid 系统主题，请指定 "event_grid_system_topic_name "参数；
+    - 如果要监听更多事件，请指定 `event_grid_event_filter_list` 参数；
+    - 如果您希望集成拥有更多权限，请指定 `action_permissions_list` 参数。
+    :::![Dev Portal Builder Azure Exporter Installation](/img/integrations/azure-exporter/DevPortalIngestAzureInstallation.png)
+5.在终端中运行命令部署 Azure 输出程序。
 
-   ![Dev Portal Builder Ingest Button](/img/integrations/azure-exporter/DevPortalBuilderIngestButton.png)
+## 映射配置
 
-3. Click on the Azure Exporter option under the Cloud Providers section:
-
-   ![Dev Portal Builder Azure Exporter Option](/img/integrations/azure-exporter/DevPortalIngestCloudProvider.png)
-
-4. Edit and copy the installation command.
-   :::tip
-   The installation command includes placeholders that allow you to customize the integration's configuration. For example, you can update the command and specify the `event_grid_system_topic_name` parameter if you already have one.
-
-   - Specify the `event_grid_system_topic_name` parameter if you already have an Event Grid system topic of type `Microsoft.Resources.Subscriptions` in your subscription;
-   - Specify the `event_grid_event_filter_list` parameter if you want to listen to more events;
-   - Specify the `action_permissions_list` parameter if you want the integration to have more permissions.
-
-   :::
-
-   ![Dev Portal Builder Azure Exporter Installation](/img/integrations/azure-exporter/DevPortalIngestAzureInstallation.png)
-
-5. Run the command in your terminal to deploy the Azure exporter.
-
-## Mapping configuration
-
-You can update the exporter's configuration in the integration page, you can use the configuration to add or remove Azure resources that will be ingested from your subscription.
+您可以在集成页面中更新导出器的配置，您可以使用配置来添加或删除将从订阅中被引用的 Azure 资源。
 
 ![Dev Portal Ingest Azure Mapping Configuration](/img/integrations/azure-exporter/DevPortalIngestAzureMappingConfiguration.png)
 
-## Further information
+## 更多信息
 
-- Refer to the [examples](./examples.md) page for practical configurations and their corresponding blueprint definitions.
+* 有关实用配置及其相应的蓝图定义，请参阅[examples](./examples.md) 页面。

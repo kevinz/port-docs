@@ -1,18 +1,22 @@
 ---
+
 sidebar_position: 9
 title: Meta 💲
+
 ---
 
-# 💲 Meta-Properties
+# 💲 元属性
 
-A meta-property is a property that exists on every entity in Port by default.
+元属性是默认存在于 Port 中每个实体上的属性。
 
-Meta-properties are always referenced using a dollar sign (`$`) before them, this makes it easier to tell if a property is user-defined or a meta-property.
+元属性总是在其前面使用美元符号 (`$`)来引用，这样可以更容易地分辨一个属性是用户定义的还是元属性。
 
-The following table lists all of the available meta-properties: 
+下表列出了所有可用的元属性: 
+
 
 | Meta-property | Description | Notes |
 | ------------- | ----------- | ----- |
+
 | `$identifier` | **Unique** Entity identifier, used for API calls, programmatic access and distinguishing between different entities | 
 | `$title` | A human-readable name for the entity | |
 | `$team`       | The team this entity belongs to| |
@@ -22,4 +26,3 @@ The following table lists all of the available meta-properties:
 | `$createdBy`  | The user who created the entity |  Value is set upon creation and never changes |
 | `$updatedBy`  | The user who last updated the entity |   Value is updated automatically |
 | `$blueprint`  | The entity's blueprint | |
-

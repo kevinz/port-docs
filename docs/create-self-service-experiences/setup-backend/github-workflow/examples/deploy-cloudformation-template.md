@@ -1,29 +1,28 @@
 ---
+
 sidebar_position: 2
+
 ---
 
 import Tabs from "@theme/Tabs"
 import TabItem from "@theme/TabItem"
 
-# Deploy AWS resources using AWS CloudFormation
+# 使用 AWS CloudFormation 部署 AWS 资源
 
-This example demonstrates how to deploy an AWS resource using an [AWS CloudFormation](https://docs.aws.amazon.com/AWSCloudFormation/latest/UserGuide/Welcome.html) template, via Port Actions.
+此示例演示了如何使用[AWS CloudFormation](https://docs.aws.amazon.com/AWSCloudFormation/latest/UserGuide/Welcome.html) 模板，通过 Port Actions 部署 AWS 资源。
 
-We will use an AWS managed GitHub Action called [aws-actions/aws-cloudformation-github-deploy](https://github.com/aws-actions/aws-cloudformation-github-deploy).
+我们将使用一个名为[aws-actions/aws-cloudformation-github-deploy](https://github.com/aws-actions/aws-cloudformation-github-deploy) 的 AWS 管理的 GitHub Action。
 
-## Steps 
+## 步骤
 
-1. Create the following GitHub action secrets:
-
-   1. `PORT_CLIENT_ID` - Port Client ID [learn more](../../../../build-your-software-catalog/sync-data-to-catalog/api/#get-api-token).
-   2. `PORT_CLIENT_SECRET` - Port Client Secret [learn more](../../../../build-your-software-catalog/sync-data-to-catalog/api/#get-api-token).
-   3. `AWS_ACCESS_KEY_ID` - AWS credentials.
-   4. `AWS_SECRET_ACCESS_KEY` - AWS credentials.
-   5. `AWS_REGION` - AWS region name to deploy your resources to.
-
-2. Install Port's GitHub app by clicking [here](https://github.com/apps/getport-io/installations/new).
-
-3. Create a Port blueprint with the following JSON definition (choose your desired resource):
+1. 创建以下 GitHub 操作secret: 
+    1. `PORT_CLIENT_ID` - Port 客户端 ID[learn more](../../../../build-your-software-catalog/sync-data-to-catalog/api/#get-api-token).
+    2. `PORT_CLIENT_SECRET` - Port客户端secret[learn more](../../../../build-your-software-catalog/sync-data-to-catalog/api/#get-api-token).
+    3. `AWS_ACCESS_KEY_ID` - AWS 凭据。
+    4. `AWS_SECRET_ACCESS_KEY` - AWS 凭据。
+    5.`AWS_REGION` - 要将资源部署到的 AWS 区域名称。
+2.点击[here](https://github.com/apps/getport-io/installations/new) 安装 Port 的 GitHub 应用程序。
+3.使用以下 JSON 定义创建 Port 蓝图(选择所需资源): 
 
 <Tabs groupId="awsResource" queryString>
 <TabItem value="ec2" label="EC2 Instance">
@@ -183,11 +182,12 @@ We will use an AWS managed GitHub Action called [aws-actions/aws-cloudformation-
 </Tabs>
 <br/>
 
-1. Create Port Action using the following JSON definition:
+1. 使用以下 JSON 定义创建 Port Action: 
 
-:::note
-Please make sure to modify GITHUB_ORG, GITHUB_REPO and GITHUB_WORKFLOW_FILE placeholders to match your environment.
+:::note 请确保修改 GITHUB_ORG、GITHUB_REPO 和 GITHUB_WORKFLOW_FILE 占位符，使其与您的环境相匹配。
+
 :::
+
 <Tabs groupId="awsResource" queryString>
 <TabItem value="ec2" label="EC2 Instance">
 
@@ -412,7 +412,8 @@ Please make sure to modify GITHUB_ORG, GITHUB_REPO and GITHUB_WORKFLOW_FILE plac
 </Tabs>
 <br/>
 
-5. Create a CloudFormation template file in your GitHub repository:
+5.在 GitHub 仓库中创建 CloudFormation 模板文件: 
+
 <Tabs groupId="awsResource" queryString>
 <TabItem value="ec2" label="EC2 Instance">
   <details>
@@ -610,10 +611,12 @@ Outputs:
 </Tabs>
 <br/>
 
-6. Create a workflow file under `.github/workflows/deploy-cloudformation-template.yml` with the following content:
-:::note
-Please make sure to modify CF_TEMPLATE_FILE placeholder to match the CloudFormation template file path.
+6.在`.github/workflows/deploy-cloudformation-template.yml`下创建一个工作流文件，内容如下: 
+
+:::note 请确保修改 CF_TEMPLATE_FILE 占位符以匹配 CloudFormation 模板文件路径。
+
 :::
+
 <Tabs groupId="awsResource" queryString>
 <TabItem value="ec2" label="EC2 Instance">
   <details>
@@ -703,7 +706,7 @@ jobs:
 
   </details>
   </TabItem>
-  
+
   <TabItem value="s3" label="S3 Bucket">
   <details>
   <summary>GitHub workflow</summary>
@@ -914,11 +917,10 @@ print(f"::set-output name=decrypted_value::{decrypted_property_value}")
 
 <br/>
 
-7. Trigger the action from the [Self-service](https://app.getport.io/self-serve) tab of your Port application.
+7.从 Port 应用程序的[Self-service](https://app.getport.io/self-serve) 标签触发操作。
 
-## What's next?
+#What's next?
 
-- [Connect Port's AWS exporter](../../../../build-your-software-catalog/sync-data-to-catalog/cloud-providers/aws/aws.md)
-  to make sure all of the properties and entities are automatically ingested from AWS.
-  - You can learn how to setup Port's AWS exporter [here](../../../../build-your-software-catalog/sync-data-to-catalog/cloud-providers/aws/Installation.md).
-  - You can see example configurations and use cases [here](../../../../build-your-software-catalog/sync-data-to-catalog/cloud-providers/aws/examples.md).
+* [Connect Port's AWS exporter](../../../../build-your-software-catalog/sync-data-to-catalog/cloud-providers/aws/aws.md) 以确保从 AWS 自动摄取所有属性和实体。
+    - 您可以了解如何设置 Port 的 AWS 输出程序[here](../../../../build-your-software-catalog/sync-data-to-catalog/cloud-providers/aws/Installation.md) 。
+    - 您可以查看示例配置和用例[here](../../../../build-your-software-catalog/sync-data-to-catalog/cloud-providers/aws/examples.md) 。

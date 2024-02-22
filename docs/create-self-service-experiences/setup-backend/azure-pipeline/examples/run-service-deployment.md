@@ -1,18 +1,18 @@
-# Run a deployment for a service
+# 为服务运行部署
 
-In the following guide, you are going to build a self-service action in Port that executes an Azure pipeline behind the scenes.
+在下面的指南中，您将在 Port 中构建一个自助操作，在幕后执行 Azure 管道。
 
-### Prerequisites
+### 先决条件
 
-- You will need your [Port credentials](../../../../build-your-software-catalog/sync-data-to-catalog/api/api.md#find-your-port-credentials) to create the action.
-- You will need your Azure DevOps organization.
-- You will need the name of the webhook that you configured in your Azure pipelines yaml.
+* 您需要[Port credentials](../../../../build-your-software-catalog/sync-data-to-catalog/api/api.md#find-your-port-credentials) 来创建操作。
+* 您需要您的 Azure DevOps 组织。
+* 您需要在 Azure Pipelines yaml 中配置的 webhook 名称。
 
-### Create an Azure pipeline
+#### 创建一个 Azure Pipeline
 
-First, we need to set up an Azure pipeline that implements our business logic to create a new deployment.
+首先，我们需要设置一个 Azure Pipelines，实现我们的业务逻辑，以创建新的部署。
 
-Here is a skeleton for the workflow - `deploy.yml` (including a placeholder for deployment logic):
+下面是工作流程的骨架--`deploy.yml`(包括部署逻辑的占位符): 
 
 <details>
 <summary>Deployment Azure pipeline</summary>
@@ -30,9 +30,9 @@ stages:
 
 </details>
 
-## Create a deployment Blueprint
+## 创建部署蓝图
 
-Let’s configure a `Deployment` Blueprint. Its base structure is:
+让我们配置一个 "部署 "蓝图，它的基本结构是
 
 ```json showLineNumbers
 {
@@ -67,11 +67,11 @@ Let’s configure a `Deployment` Blueprint. Its base structure is:
 }
 ```
 
-## Create a Port action
+## 创建 Port 操作
 
-Now let’s configure a self-service action. Add a `CREATE` action that will be triggered every time a developer wants to initiate a new deployment for a service.
+现在让我们配置一个自助服务操作。 添加一个 `CREATE` 操作，开发人员每次要为服务启动新的部署时都会触发该操作。
 
-Here is the JSON of the action:
+以下是该操作的 JSON 文件: 
 
 ```json showLineNumbers
 {
@@ -103,13 +103,13 @@ Here is the JSON of the action:
 }
 ```
 
-:::note
-Don't forget to replace the placeholders for `AZURE-DEVOPS-ORG` and `AZURE-DEVOPS-WEBHOOK-NAME`.
+:::note 不要忘记替换 `AZURE-DEVOPS-ORG` 和 `AZURE-DEVOPS-WEBHOOK-NAME` 的占位符。
+
 :::
 
-To learn how to generate an API token to interact with Port, look [here](../../../../build-your-software-catalog/sync-data-to-catalog/api/#generate-an-api-token).
+要了解如何生成与 Port 交互的 API 令牌，请访问[here](../../../../build-your-software-catalog/sync-data-to-catalog/api/#generate-an-api-token) 。
 
-To update the status of the action in Port, use the following API call in your Azure pipeline:
+要更新 Port 中的操作状态，请在 Azure 管道中被引用以下 API 调用: 
 
 ```bash
 curl -X PATCH \
@@ -119,6 +119,6 @@ curl -X PATCH \
  https://api.getport.io/v1/actions/runs/YOUR_RUN_ID
 ```
 
-## Summary
+## 摘要
 
-In this example, you were introduced to the concept of self-service actions and how to create a simple action that triggers an Azure pipeline. You can use this example as a starting point for your own self-service actions.
+在这个示例中，我们向你介绍了自助服务操作的概念，以及如何创建一个触发 Azure Pipelines 的简单操作。 你可以将这个示例作为你自己的自助服务操作的一个起点。

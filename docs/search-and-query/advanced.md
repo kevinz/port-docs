@@ -1,24 +1,28 @@
 ---
+
 sidebar_position: 3
+
 ---
 
 import Tabs from "@theme/Tabs"
 import TabItem from "@theme/TabItem"
 
-# Advanced
+# 高级
 
-### Search route query parameters
+### 搜索路径查询参数
 
-The search route also supports several query parameters that affect the returned output:
+搜索路径还支持几个影响返回输出的查询参数: 
+
 
 | Parameter                       | Description                                                                                                                                                                                                                                                                                                                             | Available values | Default value |
 | ------------------------------- | --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | ---------------- | ------------- |
 | `attach_title_to_relation`      | `true`: Both the identifier and the title of the related Entity will appear under the Relation key <br></br><br></br> `false`: Only the identifier of the related Entity will appear under the Relation key                                                                                                                             | `true`/`false`   | `false`       |
 | `exclude_calculated_properties` | Should [mirror properties](../build-your-software-catalog/define-your-data-model/setup-blueprint/properties/mirror-property/mirror-property.md) and [calculation properties](../build-your-software-catalog/define-your-data-model/setup-blueprint/properties/calculation-property/calculation-property.md) be returned with the result | `true`/`false`   | `false`       |
 
-#### `attach_title_to_relation` example
 
-Here are examples outputs based on the value of the `attach_title_to_relation` parameter:
+#### `attach_title_to_relation`示例
+
+下面是根据参数 `attach_title_to_relation` 的值输出的示例: 
 
 <Tabs groupId="attach-title" defaultValue="true" values={[
 {label: "True", value: "true"},
@@ -27,7 +31,7 @@ Here are examples outputs based on the value of the `attach_title_to_relation` p
 
 <TabItem value="true">
 
-Here is a search response with `attach_title_to_relation=true`:
+下面是使用 `attach_title_to_relation=true`时的搜索响应: 
 
 ```json showLineNumbers
 {
@@ -75,7 +79,7 @@ Here is a search response with `attach_title_to_relation=true`:
 
 <TabItem value="false">
 
-Here is the same search response with `attach_title_to_relation=false`:
+以下是使用 `attach_title_to_relation=false` 时的相同搜索响应: 
 
 ```json showLineNumbers
 {

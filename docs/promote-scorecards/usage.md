@@ -1,32 +1,34 @@
 ---
+
 sidebar_position: 1
 sidebar_label: Usage
+
 ---
 
 import Tabs from "@theme/Tabs"
 import TabItem from "@theme/TabItem"
 
-# How to use scorecards
+# 如何被引用记分卡
 
-## Create Scorecards
+## 创建记分卡
 
-Scorecards can be created by three methods:
+记分卡可以通过三种方法创建: 
 
-- UI
-- API
-- Terraform
+* 用户界面
+* 应用程序接口
+* Terraform
 
 <!-- TODO: fix this back to some actual blueprint -->
 
-:::info
-A Scorecard is created upon blueprint. So if you haven't created the `microservice` blueprint in the [Quickstart](../quickstart.md#service-blueprint), please make sure to do so to follow along.
+:::info 记分卡是根据蓝图创建的。因此，如果您还没有在[Quickstart](../quickstart.md#service-blueprint) 中创建 "microservice "蓝图，请务必先创建该蓝图。
+
 :::
 
-### From the UI
+#### 从用户界面
 
-To create a scorecard from the UI, go to the DevPortal Builder page and click the 3 dots icon on the `microservice` Blueprint.
+要从用户界面创建记分卡，请转到 DevPortal 创建器页面，然后单击 "microservice "蓝图上的 3 个圆点图标。
 
-An editor window will open with the current JSON array of the defined Scorecards. Since there is no Scorecard configured on the Blueprint at the moment, the `scorecard` arrays will be empty. Paste the following content inside the editor to create the scorecards of this example:
+将打开一个编辑器窗口，其中包含已定义记分卡的当前 JSON 数组。 由于蓝图上目前未配置记分卡，因此 "记分卡 "数组将为空。 在编辑器中粘贴以下内容，即可创建本例中的记分卡: 
 
 ```json showLineNumbers
 [
@@ -67,15 +69,15 @@ An editor window will open with the current JSON array of the defined Scorecards
 ]
 ```
 
-### From the API
+### 从应用程序接口
 
-:::note
-Remember that an access token is necessary in order to make API requests. If you need to generate a new token, refer to [Getting an API token](../build-your-software-catalog/sync-data-to-catalog/api/api.md#get-api-token).
+:::note 请记住，必须有访问令牌才能进行 API 请求。 如果需要生成新令牌，请参阅[Getting an API token](../build-your-software-catalog/sync-data-to-catalog/api/api.md#get-api-token) 。
+
 :::
 
-In order to create a scorecard from the API, you will make a PUT request to the URL `https://api.getport.io/v1/blueprints/{blueprint_identifier}/scorecards`.
+要通过 API 创建记分卡，您需要向 URL `https://api.getport.io/v1/blueprints/{blueprint_identifier}/scorecards` 发送 PUT 请求。
 
-Here are some request examples that will create the Scorecard of Ownership on the `microservice` Blueprint:
+下面是一些将在 "微服务 "蓝图上创建 "所有权记分卡 "的请求示例: 
 
 <Tabs groupId="code-examples" defaultValue="python" values={[
 {label: "Python", value: "python"},
@@ -128,7 +130,6 @@ headers = {
 }
 
 response = requests.put(f'{API_URL}/blueprints/{blueprint_name}/scorecards', json=scorecards, headers=headers)
-
 ```
 
 </TabItem>
@@ -201,9 +202,9 @@ const response = await axios.put(
 
 </Tabs>
 
-After creating the Scorecards, you will see a new tab in the profile Entity page of each of your Blueprint's Entities, showing the various scorecards levels.
+创建记分卡后，您将在每个蓝图实体的 "概况实体 "页面中看到一个新标签，显示各种记分卡级别。
 
-For example, we can [create the entity below](../build-your-software-catalog/sync-data-to-catalog/sync-data-to-catalog.md#creating-entities)
+例如，我们可以[create the entity below](../build-your-software-catalog/sync-data-to-catalog/sync-data-to-catalog.md#creating-entities)
 
 ```json showLineNumbers
 {
@@ -218,19 +219,19 @@ For example, we can [create the entity below](../build-your-software-catalog/syn
 }
 ```
 
-And then look at the [specific page](https://app.getport.io/MicroserviceEntity?identifier=cart-service&activeTab=3) of this entity, on the scorecards tab
+然后在记分卡选项卡上查看该实体的[specific page](https://app.getport.io/MicroserviceEntity?identifier=cart-service&amp;activeTab=3) 
 
 ![Developer Portal Scorecards Tab](../../static/img/software-catalog/scorecard/tutorial/ScorecardsTab.png)
 
-We can see that the `hasSlackChannel` rule passed because we provided one to that entity, while the `hasTeam` failed because we didn't provide any team.
+我们可以看到，"hasSlackChannel "规则通过了，因为我们为该实体提供了一个，而 "hasTeam "规则失败了，因为我们没有提供任何团队。
 
-Therefore the level of the entity is `Bronze` because it passed all the rules in the `Bronze` level (hasSlackChannel)
+因此，该实体的级别为 "青铜"，因为它通过了 "青铜 "级别的所有规则(具有松弛通道)
 
-### From Terraform
+### 来自 Terraform
 
-In order to create a scorecard from the [Terraform provider](../../build-your-software-catalog/sync-data-to-catalog/iac/terraform/) , you will need to use the `port_scorecard` resource.
+要从[Terraform provider](../../build-your-software-catalog/sync-data-to-catalog/iac/terraform/) 创建记分卡，需要使用 `port_scorecard` 资源。
 
-Here is an example of how to create an Ownership scorecard with the Terraform provider:
+下面是如何使用 Terraform Provider 创建 "所有权记分卡 "的示例: 
 
 ```hcl showLineNumbers
 resource "port_scorecard" "ownership" {
@@ -270,52 +271,52 @@ resource "port_scorecard" "ownership" {
 }
 ```
 
-## Update Scorecards
+## 更新记分卡
 
-To update Scorecards, we can use the same URL and payload we have used before with the `id` that the backend generated for that scorecard.
+要更新记分卡，我们可以使用之前用过的 URL 和有效载荷，并加上后端为该记分卡生成的 `id` 。
 
-And just as we have shown earlier in the tutorial, you can update a Scorecard from the UI or from the API.
+正如我们在教程前面所展示的，你可以通过用户界面或应用程序接口更新记分卡。
 
-### From the UI
+#### 从用户界面
 
-In order to update a Scorecard from the UI, go to the DevPortal Builder page, expand the desired blue print, and switch to the Scorecards tab.
+要从用户界面更新记分卡，请转到 DevPortal 创建器页面，展开所需的蓝图，然后切换到记分卡选项卡。
 
-An editor window will open with the current scorecards of the Blueprint. In order to update the Scorecard, change the wanted scorecard within the scorecards array, click on `save` at the bottom right corner of the editor and view the updated Scorecards.
+编辑器窗口将打开，显示蓝图的当前记分卡。 要更新记分卡，只需在记分卡数组中更改想要的记分卡，点击编辑器右下角的 "保存"，即可查看更新后的记分卡。
 
-### From the API
+### 从应用程序接口
 
-To update a scorecard you can use 2 different URLs:
+要更新记分卡，可以使用 2 个不同的 URL: 
 
-1. Update a single Scorecard using the URL `https://api.getport.io/v1/blueprints/{blueprint_identifier}/scorecards/{scorecard_identifier}`. The request body will be the full Scorecard + the wanted changed values
-2. Make a PUT request to the URL `https://api.getport.io/v1/blueprints/{blueprint_identifier}/scorecards`. to multiple scorecards at once
+1. 使用 URL `https://api.getport.io/v1/blueprints/{blueprint_identifier}/scorecards/{scorecard_identifier}` 更新单张记分卡。请求正文将是完整的记分卡和希望更改的 Values
+2. 向 URL `https://api.getport.io/v1/blueprints/{blueprint_identifier}/scorecards` 发送 PUT 请求。同时更新多个记分卡
 
-The request body will include the existing body of the Scorecard, after the desired updates to the existing Scorecard have been applied.
+在对现有记分卡应用所需的更新后，请求正文将包括现有的记分卡正文。
 
-### From Terraform
+### 来自 Terraform
 
-In order to update a scorecard with the Terraform provider, you will need to run the `terraform apply -target=port_scorecard.<resourceId>` command with the updated scorecard resource.
+要使用 Terraform Provider 更新记分卡，需要使用更新后的记分卡资源运行 `terraform apply -target=port_scorecard.<resourceId>` 命令。
 
-## Delete Scorecards
+## 删除记分卡
 
-:::danger
-A Scorecard cannot be restored after deletion!
+:::danger 记分卡删除后无法恢复！
+
 :::
 
-You can delete Scorecards through the UI or the API:
+您可以通过用户界面或应用程序接口删除记分卡: 
 
-### From the UI
+#### 从用户界面
 
-To delete a Scorecard through the UI, go to the Builder page, expand the Blueprint and switch to the Scorecards tab. Hover the desired Scorecard and select "Delete Scorecard" from the three dot menu.
+要通过用户界面删除记分卡，请转到 "创建器 "页面，展开蓝图并切换到 "记分卡 "选项卡。 将所需的记分卡悬停，然后从三点菜单中选择 "删除记分卡"。
 
-### From the API
+### 从应用程序接口
 
-- Make an HTTP PUT request and remove it from the array of the scorecards via the URL `https://api.getport.io/v1/blueprints/{blueprint_identifier}/scorecards`
-- Make an HTTP DELETE request to the URL `https://api.getport.io/v1/blueprints/{blueprint_identifier}/scorecards/{scorecard_identifier}` the `scorecard_identifier` is the identifier of the scorecard we want to delete
+* 发送 HTTP PUT 请求，并通过 URL `https://api.getport.io/v1/blueprints/{blueprint_identifier}/scorecards` 从记分卡数组中删除它
+* 向 URL `https://api.getport.io/v1/blueprints/{blueprint_identifier}/{scorecard_identifier}` 发送 HTTP DELETE 请求，其中 `scorecard_identifier` 是我们要删除的记分卡的标识符
 
-:::note
-When using the multiple update Scorecards `https://api.getport.io/v1/blueprints/{blueprint_identifier}/scorecards` PUT request, keep in mind that you will see a new `id` property. This is used via Port to identify the Scorecard in order to be able to update its properties
+:::note 在使用多重更新记分卡 `https://api.getport.io/v1/blueprints/{blueprint_identifier}/scorecards` PUT 请求时，请注意您将看到一个新的 `id` 属性。该属性通过 Port 用于识别记分卡，以便更新其属性。
+
 :::
 
-### From Terraform
+### 来自 Terraform
 
-In order to delete a scorecard using the Terraform provider, use the `terraform destroy -target=port_scorecard.<resourceId>` command with the scorecard resource you want to delete. (remember that it is also possible to remove the definition of the `port_scorecard` resource from the `.tf` file and run `terraform apply`)
+要使用 Terraform Provider 删除记分卡，请使用 `terraform destroy -target=port_scorecard.<resourceId>` 命令并输入要删除的记分卡资源。(请记住，也可以从 `.tf` 文件中删除 `port_scorecard` 资源的定义并运行 `terraform apply`)

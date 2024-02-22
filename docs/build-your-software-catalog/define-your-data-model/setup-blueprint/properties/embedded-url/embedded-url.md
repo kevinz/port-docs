@@ -2,30 +2,28 @@ import Tabs from "@theme/Tabs"
 import TabItem from "@theme/TabItem"
 import PortTooltip from "/src/components/tooltip/tooltip.jsx"
 
-# Embedded URL
+# 嵌入式 URL
 
-The `embedded URL` property is used to embed and display a webpage within an <PortTooltip id="entity">entity</PortTooltip> in Port.  
-Using this property will automatically create an additional tab in each [entity page](/customize-pages-dashboards-and-plugins/page/entity-page.md), displaying the embedded content.
+嵌入的 URL "属性用于在 Port<PortTooltip id="entity">实体</PortTooltip>中嵌入和显示网页。使用该属性将自动在每个[entity page](/customize-pages-dashboards-and-plugins/page/entity-page.md) 中创建一个额外的选项卡，显示嵌入的内容。
 
-In the following example, we see the `Shipping` entity page, which is an instance on the `Domain` blueprint.  
-The blueprint has an `embedded URL` property named `Architecture`, which is automatically displayed in a dedicated tab:
+在下面的示例中，我们看到的是 "发货 "实体页面，它是 "域 "蓝图上的一个实例。 该蓝图有一个名为 "架构 "的 "嵌入式 URL "属性，它会自动显示在专用标签页中: 
 
 <img src='/img/software-catalog/blueprint/embeddedUrlExample.png' width='85%' />
 
-## URL type
+## URL 类型
 
-Port supports the following URL types:
+Port 支持以下 URL 类型: 
 
-- **Public link** - A link to a public webpage, which does not require authentication.
-- **Private link** - A link to a webpage that is protected by SSO authentication. To use this type, you'll need to provide the required parameters, see the [authentication](./authentication) section for more information and examples.
+* **公共链接** - 指向公共网页的链接，不需要身份验证。
+* **私人链接** -指向受 SSO 身份验证保护的网页的链接。要使用这种类型，您需要提供所需的参数，更多信息和示例请参阅[authentication](./authentication) 部分。
 
-## 💡 Common embedded URL usage
+## 💡 常见嵌入式 URL Usage
 
-- Display a service's architecture
-- Display & track a service's Datadog dashboard
-- Display charts and diagrams from external tools
+* 显示服务的架构
+* 显示和跟踪服务的 Datadog 仪表板
+* 显示来自外部工具的图表
 
-## Schema definition
+## 模式定义
 
 <Tabs groupId="definition" defaultValue="api" values={[
 {label: "API", value: "api"},
@@ -82,13 +80,13 @@ resource "port_blueprint" "myBlueprint" {
 
 </Tabs>
 
-## Examples
+## 示例
 
-### Datadog dashboard
+### Datadog 仪表板
 
-In this example we are embedding a [Datadog](https://docs.datadoghq.com/dashboards/sharing/) dashboard in order to get application metrics directly inside Port.
+在本例中，我们嵌入了[Datadog](https://docs.datadoghq.com/dashboards/sharing/) 仪表板，以便直接在 Port 中获取应用程序指标。
 
-Add the `embedded-URL` property to a Blueprint:
+在蓝图中添加 `embedded-URL` 属性: 
 
 <details>
 <summary>Blueprint property definition</summary>
@@ -106,19 +104,19 @@ Add the `embedded-URL` property to a Blueprint:
 
 </details>
 
-Create or edit an Entity of the Blueprint you added the `Datadog` property to, and specify the URL to the Datadog dashboard:
+创建或编辑添加了 `Datadog` 属性的蓝图实体，并指定 Datadog 面板的 URL: 
 
 ![Datadog Entity edit example](/img/software-catalog/widgets/editEntityDatadog.png)
 
-Now go to the specific entity page of your Entity and the Datadog dashboard will be visible in a dedicated tab:
+现在转到实体的特定实体页面，Datadog 仪表板将在专用选项卡中显示: 
 
 ![Datadog dashboard example](/img/software-catalog/widgets/datadog.png)
 
-### New Relic Chart
+### 新 Relic 图表
 
-In this example we are embedding a CPU usage [New Relic Chart](https://one.eu.newrelic.com/) to get infrastructure metrics directly inside Port.
+在本例中，我们嵌入了一个 CPU 使用率[New Relic Chart](https://one.eu.newrelic.com/) ，以便直接在 Port 中获取基础设施指标。
 
-Add the `embedded-URL` property to a Blueprint:
+在蓝图中添加 `embedded-URL` 属性: 
 
 <details>
 <summary>Blueprint property definition</summary>
@@ -139,10 +137,10 @@ Go to new relic and extract the chart URL of a specific chart
 
 ![New Relic get embed URL](/img/software-catalog/widgets/GetEmbedUrlNewRelic.png)
 
-Create or edit an Entity of the Blueprint you added the `cpuUsage` property to, and specify the URL to the CPU Usage chart:
+创建或编辑您添加了 `cpuUsage` 属性的蓝图实体，并指定 CPU Usage 图表的 URL: 
 
 ![New Relic Entity edit example](/img/software-catalog/widgets/editEntityNewRelic.png)
 
-Now go to the specific entity page of your Entity and the CPU Usage chart will be visible in a dedicated tab:
+现在进入实体的特定实体页面，CPU Usage 图表就会在专门的标签页中显示出来: 
 
 ![New Relic dashboard example](/img/software-catalog/widgets/new-relic.png)

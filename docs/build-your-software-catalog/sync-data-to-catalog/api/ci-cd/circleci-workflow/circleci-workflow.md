@@ -1,30 +1,32 @@
 ---
+
 sidebar_position: 1
+
 ---
 
 import Tabs from "@theme/Tabs"
 import TabItem from "@theme/TabItem"
 
-# CircleCI workflows
+# CircleCI 工作流程
 
-Using CircleCI workflows, you can easily create/update and query entities in Port.
+被引用 CircleCI 工作流后，您可以在 Port 中轻松创建/更新和查询实体。
 
 <br></br>
 <br></br>
 
 ![Github Illustration](/img/build-your-software-catalog/sync-data-to-catalog/circleci/circleci-illustration.jpg)
 
-## 💡 Common CircleCI workflow usage
+## 💡 常见的 CircleCI 工作流程 Usage
 
-Port's API allows for easy integration between Port and your CircleCI workflows, for example:
+例如，Port 的应用程序接口(API)可以轻松实现 Port 与 CircleCI 工作流的集成: 
 
-- Report the status of a running **CI job**;
-- Update the software catalog about a new **build version** for a **microservice**;
-- Get existing **entities**.
+* 报告正在运行的**CI任务**的状态；
+* 更新软件目录中有关**微服务**新**构建版本的信息；
+* 获取现有**实体**。
 
-## Setup
+## 设置
 
-To interact with Port using Circle CI, you will first need to set up a [CircleCI context](https://circleci.com/docs/contexts/) in order to save your Port credentials, and pass the context to the relevant workflow.
+要使用 Circle CI 与 Port 交互，首先需要设置[CircleCI context](https://circleci.com/docs/contexts/) ，以便保存 Port 凭据，并将上下文传递给相关工作流。
 
 ```yaml showLineNumbers
 workflows:
@@ -38,19 +40,19 @@ workflows:
             # highlight-end
 ```
 
-Make sure you have an existing [Blueprint](/build-your-software-catalog/define-your-data-model/setup-blueprint/setup-blueprint.md) in your Port installation to create/update entities.
+请确保您的 Port 安装中已有[Blueprint](/build-your-software-catalog/define-your-data-model/setup-blueprint/setup-blueprint.md) ，以便创建/更新实体。
 
-## Working with Port's API
+## 使用 Port 的 API
 
-Here is an example snippet showing how to integrate a job that uses Port's API with your existing CircleCI pipelines using Python:
+下面的示例片段展示了如何使用 Python 将被引用 Port API 的作业与现有的 CircleCI 管道集成: 
 
-Add the following job and workflow to your CircleCI pipeline:
+将以下任务和工作流程添加到 CircleCI Pipelines 中: 
 
 <details>
   <summary> CircleCI Pipeline YAML </summary>
 
 ```yaml showLineNumbers
-  jobs:
+jobs:
   # ... other jobs
     report-to-port:
       docker:
@@ -72,15 +74,13 @@ workflows:
         context:
           - port
       # highlight-end
-
 ```
 
 </details>
 
 <br></br>
 
-:::note
-In the following example, we use Python modules which need to be installed. You can use the following `requirements.txt`:
+:::note 在下面的示例中，我们使用了需要安装的 Python 模块。 你可以引用下面的 `requirements.txt`: 
 
 <details>
   <summary> port_requirements.txt </summary>
@@ -100,7 +100,7 @@ requests>=2.28.2
 
 <TabItem value="upsert">
 
-Create the following Python script in your repository to create or update Port entities as part of your pipeline:
+在版本库中创建以下 Python 脚本，以创建或更新 Port 实体，作为管道的一部分: 
 
 ```python showLineNumbers
 import os
@@ -119,7 +119,7 @@ token_response = requests.post(f"{API_URL}/auth/access_token", json=credentials)
 access_token = token_response.json()['accessToken']
 
 headers = {
-	'Authorization': f'Bearer {access_token}'
+    'Authorization': f'Bearer {access_token}'
 }
 
 entity_json = {
@@ -141,7 +141,7 @@ print(json.dumps(get_response.json(), indent=4))
 </TabItem>
 <TabItem value="get">
 
-Create the following Python script in your repository to get Port entities as part of your pipeline:
+在版本库中创建以下 Python 脚本，以获取 Port 实体作为管道的一部分: 
 
 ```python showLineNumbers
 import os
@@ -160,7 +160,7 @@ token_response = requests.post(f"{API_URL}/auth/access_token", json=credentials)
 access_token = token_response.json()['accessToken']
 
 headers = {
-	'Authorization': f'Bearer {access_token}'
+    'Authorization': f'Bearer {access_token}'
 }
 
 # request url : {API_URL}/blueprints/<blueprint_id>/entities/<entity_id>
@@ -171,6 +171,6 @@ print(json.dumps(get_response.json(), indent=4))
 </TabItem>
 </Tabs>
 
-## Examples
+## 示例
 
-Refer to the [examples](./examples.md) page for practical examples of working with Port using CircleCI.
+有关使用 CircleCI 处理 Port 的实用示例，请参阅[examples](./examples.md) 页面。

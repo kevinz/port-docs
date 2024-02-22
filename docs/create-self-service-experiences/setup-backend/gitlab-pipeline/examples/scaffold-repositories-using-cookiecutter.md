@@ -1,43 +1,45 @@
 ---
+
 sidebar_position: 2
+
 ---
 
-# Scaffold Repositories Using Cookiecutter
+# 使用 Cookiecutter 创建脚手架资源库
 
-This example demonstrates how to quickly scaffold Gitlab repositories using a [Cookiecutter Template](https://www.cookiecutter.io/templates) via Port Actions.
+本示例演示了如何使用[Cookiecutter Template](https://www.cookiecutter.io/templates) 通过 Port Actions 快速搭建 Gitlab 仓库。
 
-In addition, as cookiecutter is an open-source project you can make your own project template, learn more about it [here](https://cookiecutter.readthedocs.io/en/2.0.2/tutorials.html#create-your-very-own-cookiecutter-project-template).
+此外，由于 cookiecutter 是一个开源项目，您可以制作自己的项目模板，了解更多信息请访问[here](https://cookiecutter.readthedocs.io/en/2.0.2/tutorials.html#create-your-very-own-cookiecutter-project-template) 。
 
-## Example - scaffolding python template
+## 示例 - python 模板脚手架
 
-Follow these steps to get started with the Python template:
+请按照以下步骤开始使用 Python 模板: 
 
-1. Create the following variables as [Gitlab Variables](https://docs.gitlab.com/ee/ci/variables/index.html):
+1. 创建以下变量作为[Gitlab Variables](https://docs.gitlab.com/ee/ci/variables/index.html) : 
+    1. GITLAB_ACCESS_TOKEN` -[Personal Access Token](https://docs.gitlab.com/ee/user/profile/personal_access_tokens.html) ，作用域如下:   
+    `api`, `read_api`, `read_repository`, `write_repository`.
+    2. `PORT_CLIENT_ID` - Port客户端 ID[learn more](/build-your-software-catalog/sync-data-to-catalog/api/#get-api-token) 。
+    3. `PORT_CLIENT_SECRET` - Port客户端secret[learn more](/build-your-software-catalog/sync-data-to-catalog/api/#get-api-token).
+       <br/>
+2.在 Gitlab 组中创建名为 `python_scaffolder` 的 Gitlab 项目，并配置[Pipeline Trigger Token](https://docs.gitlab.com/ee/ci/triggers/index.html) 。
 
-   1. `GITLAB_ACCESS_TOKEN` - a [Personal Access Token](https://docs.gitlab.com/ee/user/profile/personal_access_tokens.html) with the following scopes:  
-      `api`, `read_api`, `read_repository`, `write_repository`.
-   2. `PORT_CLIENT_ID` - Port Client ID [learn more](/build-your-software-catalog/sync-data-to-catalog/api/#get-api-token).
-   3. `PORT_CLIENT_SECRET` - Port Client Secret [learn more](/build-your-software-catalog/sync-data-to-catalog/api/#get-api-token).
-      <br/>
+:::note 您可以被引用任何您喜欢的名称，只要确保在 Port Action 中正确配置即可。
 
-2. Create a Gitlab Project called `python_scaffolder` in your Gitlab Group and configure a [Pipeline Trigger Token](https://docs.gitlab.com/ee/ci/triggers/index.html).
-
-:::note
-You can use any name that you like, just make sure to configure properly in your Port Action.
 :::
+
 <br/>
 
-3. Install Port's Gitlab agent by following our guide [here](../Installation).
+3.按照我们的指南[here](../Installation) 安装 Port 的 Gitlab 代理。
 
-:::note
-Make sure to use your Pipeline Trigger Token while installing Port's Gitlab agent.
+:::note 确保在安装 Port 的 Gitlab 代理时被引用 Pipeline 触发令牌。
+
 :::
+
 <br/>
 
-4. Create a Port blueprint with the following JSON definition:
+4.使用以下 JSON 定义创建 Port 蓝图: 
 
-:::note
-Keep in mind this can be any blueprint you would like and this is just an example.
+:::note 请记住，这可以是你想要的任何蓝图，这只是一个例子。
+
 :::
 
 <details>
@@ -71,10 +73,10 @@ Keep in mind this can be any blueprint you would like and this is just an exampl
 </details>
 <br/>
 
-5. Create Port action using the following JSON definition:
+5.使用以下 JSON 定义创建 Port 操作: 
 
-:::note
-Make sure to replace the placeholders for PROJECT_NAME and GROUP_NAME of your `python_scaffolder`.
+:::note 确保替换 `python_scaffolder` 中 PROJECT_NAME 和 GROUP_NAME 的占位符。
+
 :::
 
 <details>
@@ -135,7 +137,7 @@ Make sure to replace the placeholders for PROJECT_NAME and GROUP_NAME of your `p
 </details>
 <br/>
 
-6. In your `python_scaffolder` Gitlab Project, create a Gitlab CI file under `.gitlab-ci.yml` in the main branch with the following content:
+6.在你的 `python_scaffolder` Gitlab 项目中，在主分支的 `.gitlab-ci.yml` 下创建一个 Gitlab CI 文件，内容如下: 
 
 <details>
 <summary>Gitlab CI Script</summary>
@@ -199,7 +201,6 @@ scaffold:
           echo "Failed to create GitLab repository."
           exit 1
       fi
-
 
       FIRST_NAME=$(cat $TRIGGER_PAYLOAD | jq -r '.trigger.by.user.firstName')
       LAST_NAME=$(cat $TRIGGER_PAYLOAD | jq -r '.trigger.by.user.lastName')
@@ -267,4 +268,4 @@ update-run-status:
 </details>
 <br/>
 
-7. Trigger the action from the [Self-service](https://app.getport.io/self-serve) tab of your Port application.
+7.从 Port 应用程序的[Self-service](https://app.getport.io/self-serve) 标签触发操作。

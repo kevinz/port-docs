@@ -3,32 +3,32 @@ import TabItem from "@theme/TabItem"
 
 # Bitbucket
 
-import BitbucketResources from './\_bitbucket_exporter_supported_resources.mdx'
+import BitbucketResources from './_bitbucket_exporter_supported_resources.mdx'
 
-Our integration with Bitbucket allows you to export Bitbucket objects to Port as entities of existing blueprints. The integration supports real-time event processing so Port always provides an accurate real-time representation of your Bitbucket resources.
+通过与 Bitbucket 的集成，您可以将 Bitbucket 对象作为现有蓝图的实体导出到 Port。 集成支持实时事件处理，因此 Port 可以始终准确地实时呈现您的 Bitbucket 资源。
 
-## 💡 Bitbucket integration common use cases
+## 💡 Bitbucket 集成常见用例
 
-Our Bitbucket integration makes it easy to fill the software catalog with data directly from your Bitbucket workspace, for example:
+例如，我们的 Bitbucket 集成可以轻松地将 Bitbucket Workspace 中的数据直接填充到软件目录中: 
 
-- Map all of the resources in your Bitbucket workspace, including **repositories**, **pull requests** and other Bitbucket objects;
-- Watch for Bitbucket object changes (create/update/delete) in real-time, and automatically apply the changes to your entities in Port;
-- Manage Port entities using GitOps;
-- etc.
+* 映射 Bitbucket Workspace 中的所有资源，包括**仓库**、**拉取请求**和其他 Bitbucket 对象；
+* 实时关注 Bitbucket 对象的变更(创建/更新/删除)，并自动将变更应用到 Port 中的实体；
+* 使用 GitOps 管理 Port 实体；
+* 等等。
 
-## Installation
+## 安装
 
-To install Port's Bitbucket app, follow the [installation](./installation.md) guide.
+要安装 Port 的 Bitbucket 应用程序，请遵循[installation](./installation.md) 指南。
 
-## Ingesting Git objects
+## 接收 Git 对象
 
-By using Port's Bitbucket app, you can automatically ingest Bitbucket resources into Port based on real-time events.
+通过使用 Port 的 Bitbucket 应用程序，您可以根据实时事件自动将 Bitbucket 资源引用到 Port 中。
 
-Port's Bitbucket app allows you to ingest a variety of objects resources provided by the Bitbucket API, including repositories, pull requests and more. The Bitbucket app allows you to perform extract, transform, load (ETL) on data from the Bitbucket API into the desired software catalog data model.
+Provider 的 Bitbucket 应用程序允许您摄取 Bitbucket API 提供的各种对象资源，包括版本库、拉取请求等。 Bitbucket 应用程序允许您对来自 Bitbucket API 的数据执行提取、转换、加载(ETL)，将其转换为所需的软件目录数据模型。
 
-The Bitbucket app uses a YAML configuration file to describe the ETL process to load data into the developer portal. The approach reflects a golden middle between an overly opinionated Git visualization that might not work for everyone and a too-broad approach that could introduce unneeded complexity into the developer portal.
+Bitbucket 应用程序使用 YAML 配置文件来描述将数据加载到开发者门户的 ETL 流程。 这种方法体现了一个黄金分割点，即过于主观的 Git 可视化可能并不适用于每个人，而过于宽泛的方法可能会给开发者门户带来不必要的复杂性。
 
-Here is an example snippet from the `port-app-config.yml` file which demonstrates the ETL process for getting `pullRequest` data from the Bitbucket workspace and into the software catalog:
+下面是`port-app-config.yml`文件中的一个示例片段，演示了从 Bitbucket Workspace 获取`pullRequest`数据并将其导入软件目录的 ETL 流程: 
 
 ```yaml showLineNumbers
 resources:
@@ -57,13 +57,13 @@ resources:
             # highlight-end
 ```
 
-The app makes use of the [JQ JSON processor](https://stedolan.github.io/jq/manual/) to select, modify, concatenate, transform and perform other operations on existing fields and values from Bitbucket's API events.
+该应用程序利用[JQ JSON processor](https://stedolan.github.io/jq/manual/) 对来自 Bitbucket API 事件的现有字段和值进行选择、修改、连接、转换和其他操作。
 
-### `port-app-config.yml` file
+###`port-app-config.yml` 文件
 
-The `port-app-config.yml` file is how you specify the exact resources you want to query from your Bitbucket workspace, and also how you specify which entities and which properties you want to fill with data from Bitbucket.
+Port-app-config.yml "文件用于指定要从 Bitbucket Workspace 中查询的确切资源，也用于指定要从 Bitbucket 中填充数据的实体和属性。
 
-Here is an example `port-app-config.yml` block:
+下面是一个 `port-app-config.yml` 块示例: 
 
 ```yaml showLineNumbers
 resources:
@@ -82,9 +82,10 @@ resources:
             defaultBranch: ".main_branch"
 ```
 
-### `port-app-config.yml` structure
+###`port-app-config.yml` 结构
 
-- The root key of the `port-app-config.yml` file is the `resources` key:
+* Port-app-config.yml` 文件的根键是 `resources` 键: 
+
 
   ```yaml showLineNumbers
   # highlight-next-line
@@ -94,7 +95,9 @@ resources:
       ...
   ```
 
-- The `kind` key is a specifier for an object from the Bitbucket API:
+
+* 类型 "键是 Bitbucket API 中对象的指定符: 
+
 
   ```yaml showLineNumbers
     resources:
@@ -104,11 +107,13 @@ resources:
         ...
   ```
 
+
   <BitbucketResources/>
 
-#### Filtering unwanted objects
+#### 过滤不需要的对象
 
-The `selector` and the `query` keys let you filter exactly which objects from the specified `kind` will be ingested to the software catalog
+通过 "选择器 "和 "查询 "键，你可以准确地筛选出指定 "类型 "中的哪些对象将被录入软件目录
+
 
   ```yaml showLineNumbers
   resources:
@@ -120,7 +125,8 @@ The `selector` and the `query` keys let you filter exactly which objects from th
       port:
   ```
 
-For example, to ingest only repositories that have a name starting with `"service"`, use the `query` key like this:
+
+例如，要只引用名称以`"service"`开头的存储库，可以这样使用`query`键: 
 
 ```yaml showLineNumbers
 query: .name | startswith("service")
@@ -128,7 +134,8 @@ query: .name | startswith("service")
 
 <br/>
 
-The `port`, `entity` and the `mappings` keys open the section used to map the Bitbucket API object fields to Port entities. The `mappings` key can either be an object or an array of objects that matches the structure of an [entity](../../../sync-data-to-catalog/sync-data-to-catalog.md#entity-json-structure)
+Port"、"实体 "和 "映射 "键打开了用于将 Bitbucket API 对象字段映射到Port实体的部分。 映射 "键可以是一个对象，也可以是一个对象数组，该数组应与Port实体的结构相匹配。[entity](../../../sync-data-to-catalog/sync-data-to-catalog.md#entity-json-structure)
+
 
   ```yaml showLineNumbers
   resources:
@@ -149,74 +156,73 @@ The `port`, `entity` and the `mappings` keys open the section used to map the Bi
       # highlight-end
   ```
 
-  :::tip
-  Pay attention to the value of the `blueprint` key, if you want to use a hardcoded string, you need to encapsulate it in 2 sets of quotes, for example use a pair of single-quotes (`'`) and then another pair of double-quotes (`"`)
-  :::
 
-### Setup
+:::提示 注意 `blueprint` 键的值，如果要使用硬编码字符串，需要用 2 组引号封装，例如使用一对单引号 (`'`)，然后再用一对双引号 (`"`)::: 
 
-To ingest Bitbucket objects using the [`port-app-config.yml`](#port-app-configyml-file) file, you can use one of the following methods:
+#### 设置
+
+要使用[`port-app-config.yml`](#port-app-configyml-file) 文件引用 Bitbucket 对象，可以使用以下方法之一: 
 
 <Tabs queryString="method">
 
 <TabItem label="Using Port" value="port">
 
-To manage your Bitbucket integration configuration using Port:
+使用 Port 管理 Bitbucket 集成配置: 
 
-1. Go to the DevPortal Builder page;
-2. Select a blueprint you want to ingest using Bitbucket;
-3. Choose the **Ingest Data** option from the menu;
-4. Select Bitbucket under the Git providers category;
-5. Add the contents of your `port-app-config.yml` file to the editor;
-6. Click save configuration.
+1. 转到 DevPortal Builder 页面；
+2. 选择要被 Bitbucket 引用的蓝图；
+3. 从菜单中选择**录入数据**选项；
+4. 在 Git Provider 类别下选择 Bitbucket；
+5. 在编辑器中添加 `port-app-config.yml` 文件的内容；
+6. 点击保存配置。
 
-Using this method applies the configuration to all repositories in your Bitbucket workspace.
+使用这种方法会将配置应用到 Bitbucket Workspace 中的所有版本库。
 
-When configuring the integration **using Port**, the configuration specified in the ingest data window is global, allowing you to specify in the editor mappings for multiple Port blueprints, regardless of the blueprint you selected.
+在使用 Port***配置集成时，在摄取数据窗口中指定的配置是全局的，允许您在编辑器中为多个 Port 蓝图指定映射，而不管您选择的是哪个蓝图。
 
 </TabItem>
 
 <TabItem label="Using Bitbucket" value="bitbucket">
 
-To manage your Bitbucket integration configuration using Bitbucket, you can choose either a global or granular configuration:
+要使用 Bitbucket 管理 Bitbucket 集成配置，可以选择全局配置或细粒度配置: 
 
-- **Global configuration:** create a `.bitbucket-private` repository in your workspace and add the `port-app-config.yml` file to the repository;
-  - Using this method applies the configuration to all repositories in your Bitbucket workspace (unless it is overridden by a granular `port-app-config.yml` in a repository);
-- **Granular configuration:** add the `port-app-config.yml` file to the root of your desired repository;
-  - Using this method applies the configuration only to the repository where the `port-app-config.yml` file exists.
+* **全局配置: ** 在您的 Workspace 中创建一个 `.bitbucket-private` 仓库，并将 `port-app-config.yml` 文件添加到该仓库；
+    - 使用该方法会将配置引用到 Bitbucket Workspace 中的所有版本库(除非该配置被版本库中的细粒度 `port-app-config.yml` 覆盖)；
+* **粒度配置: ** 将 `port-app-config.yml` 文件添加到所需版本库的根目录；
+    - 使用这种方法，配置只被引用到存在 `port-app-config.yml` 文件的版本库。
 
-When using global configuration **using Bitbucket**, the configuration specified in the `port-app-config.yml` file will only be applied if the file is in the **default branch** of the repository (usually `main`).
+当**使用 Bitbucket**进行全局配置时，只有当`port-app-config.yml`文件位于版本库的**默认分支**(通常为`main`)中时，才会引用该文件中指定的配置。
 
 </TabItem>
 
 </Tabs>
 
-:::info Important
+:::info  重要
 
-When using global configuration **using Port**, the configuration specified will override any other configuration source (both global configuration using Bitbucket and granular configuration using Bitbucket);
-:::
-
-## Permissions
-
-Port's Bitbucket integration requires the following scopes:
-
-- `account`;
-- `repository`;
-- `pullrequest`.
-
-:::note
-You will be prompted to confirm these permissions when first installing the App.
+使用全局配置**使用 Port**时，指定的配置将覆盖任何其他配置源(包括使用 Bitbucket 的全局配置和使用 Bitbucket 的细粒度配置)；
 
 :::
 
-## Examples
+## 权限
 
-Refer to the [examples](./examples.md) page for practical configurations and their corresponding blueprint definitions.
+Port 的 Bitbucket 集成需要以下范围: 
+
+* `账户`；
+* 存储库
+* 拉取请求
+
+:::note 首次安装应用程序时，系统会提示您确认这些权限。
+
+:::
+
+## 示例
+
+有关实用配置及其相应的蓝图定义，请参阅[examples](./examples.md) 页面。
 
 ## GitOps
 
-Port's Bitbucket app also provides GitOps capabilities, refer to the [GitOps](./gitops/gitops.md) page to learn more.
+Port 的 Bitbucket 应用程序也提供 GitOps 功能，请参考[GitOps](./gitops/gitops.md) 页面了解更多信息。
 
-## Advanced
+## 高级
 
-Refer to the [advanced](./advanced.md) page for advanced use cases and examples.
+有关高级用例和示例，请参阅[advanced](./advanced.md) 页面。

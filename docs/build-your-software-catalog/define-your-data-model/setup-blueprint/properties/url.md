@@ -1,26 +1,28 @@
 ---
+
 sidebar_position: 18
-description: URL is a data type used to save links to websites
+description: URLURL 是一种数据类型，被引用来保存网站链接
+
 ---
 
-import ApiRef from "../../../../api-reference/\_learn_more_reference.mdx"
+import ApiRef from "../../../../api-reference/_learn_more_reference.mdx"
 
 import Tabs from "@theme/Tabs"
 import TabItem from "@theme/TabItem"
 
 # URL
 
-URL is a data type used to save links to websites.
+URL 是一种数据类型，被引用来保存网站链接。
 
-## 💡 Common url usage
+## 💡 常用网址 Usage
 
-The URL property type can be used to store a link to any web resource, for example:
+例如，URL 属性类型可被用来存储指向任何网络资源的链接: 
 
-- Link to Datadog dashboard
-- Link to Sentry tracing
-- Link to pull request
+* 链接到 Datadog 仪表板
+* 指向 Sentry 跟踪的链接
+* 链接到拉取请求
 
-## API definition
+## 应用程序接口定义
 
 <Tabs groupId="api-definition" queryString defaultValue="basic" values={[
 {label: "Basic", value: "basic"},
@@ -91,7 +93,7 @@ The URL property type can be used to store a link to any web resource, for examp
 
 <ApiRef />
 
-## Terraform definition
+## Terraform 定义
 
 <Tabs groupId="tf-definition" queryString defaultValue="basic" values={[
 {label: "Basic", value: "basic"},
@@ -170,7 +172,7 @@ resource "port_blueprint" "myBlueprint" {
 </TabItem>
 </Tabs>
 
-## Pulumi definition
+## Pulumi 的定义
 
 <Tabs groupId="pulumi-definition" queryString defaultValue="basic" values={[
 {label: "Basic", value: "basic"},
@@ -273,33 +275,33 @@ exports.title = entity.title;
 package main
 
 import (
-	"github.com/port-labs/pulumi-port/sdk/go/port"
-	"github.com/pulumi/pulumi/sdk/v3/go/pulumi"
+    "github.com/port-labs/pulumi-port/sdk/go/port"
+    "github.com/pulumi/pulumi/sdk/v3/go/pulumi"
 )
 
 func main() {
-	pulumi.Run(func(ctx *pulumi.Context) error {
-		blueprint, err := port.NewBlueprint(ctx, "myBlueprint", &port.BlueprintArgs{
-			Identifier: pulumi.String("myBlueprint"),
-			Title:      pulumi.String("My Blueprint"),
+    pulumi.Run(func(ctx *pulumi.Context) error {
+    	blueprint, err := port.NewBlueprint(ctx, "myBlueprint", &port.BlueprintArgs{
+    		Identifier: pulumi.String("myBlueprint"),
+    		Title:      pulumi.String("My Blueprint"),
       // highlight-start
-			Properties: port.BlueprintPropertiesArgs{
-				StringProps: port.BlueprintPropertiesStringPropsMap{
+    		Properties: port.BlueprintPropertiesArgs{
+    			StringProps: port.BlueprintPropertiesStringPropsMap{
                     "myUrlProp": &port.BlueprintPropertyArgs{
                         Title:      pulumi.String("My url"),
                         Required:   pulumi.Bool(true),
                         Format:     pulumi.String("url"),
                     },
                 },
-			},
+    		},
       // highlight-end
-		})
-		ctx.Export("blueprint", blueprint.Title)
-		if err != nil {
-			return err
-		}
-		return nil
-	})
+    	})
+    	ctx.Export("blueprint", blueprint.Title)
+    	if err != nil {
+    		return err
+    	}
+    	return nil
+    })
 }
 ```
 
@@ -421,43 +423,42 @@ exports.title = entity.title;
 package main
 
 import (
-	"github.com/port-labs/pulumi-port/sdk/go/port"
-	"github.com/pulumi/pulumi/sdk/v3/go/pulumi"
+    "github.com/port-labs/pulumi-port/sdk/go/port"
+    "github.com/pulumi/pulumi/sdk/v3/go/pulumi"
 )
 
 func main() {
-	pulumi.Run(func(ctx *pulumi.Context) error {
-		blueprint, err := port.NewBlueprint(ctx, "myBlueprint", &port.BlueprintArgs{
-			Identifier: pulumi.String("myBlueprint"),
-			Title:      pulumi.String("My Blueprint"),
+    pulumi.Run(func(ctx *pulumi.Context) error {
+    	blueprint, err := port.NewBlueprint(ctx, "myBlueprint", &port.BlueprintArgs{
+    		Identifier: pulumi.String("myBlueprint"),
+    		Title:      pulumi.String("My Blueprint"),
       // highlight-start
-			Properties: port.BlueprintPropertiesArgs{
-				StringProps: port.BlueprintPropertiesStringPropsMap{
-					"myUrlProp": port.BlueprintPropertiesStringPropsArgs{
-						Title:      pulumi.String("My url"),
-						Required:   pulumi.Bool(false),
-						Format:     pulumi.String("url"),
-						Enums: pulumi.StringArray{
-							pulumi.String("https://example.com"),
-							pulumi.String("https://getport.io"),
-						},
-						EnumColors: pulumi.StringMap{
-							"https://example.com": pulumi.String("red"),
-							"https://getport.io":  pulumi.String("green"),
-						},
-					},
-				},
-			},
+    		Properties: port.BlueprintPropertiesArgs{
+    			StringProps: port.BlueprintPropertiesStringPropsMap{
+    				"myUrlProp": port.BlueprintPropertiesStringPropsArgs{
+    					Title:      pulumi.String("My url"),
+    					Required:   pulumi.Bool(false),
+    					Format:     pulumi.String("url"),
+    					Enums: pulumi.StringArray{
+    						pulumi.String("https://example.com"),
+    						pulumi.String("https://getport.io"),
+    					},
+    					EnumColors: pulumi.StringMap{
+    						"https://example.com": pulumi.String("red"),
+    						"https://getport.io":  pulumi.String("green"),
+    					},
+    				},
+    			},
+    		},
       // highlight-end
-		})
-		ctx.Export("blueprint", blueprint.Title)
-		if err != nil {
-			return err
-		}
-		return nil
-	})
+    	})
+    	ctx.Export("blueprint", blueprint.Title)
+    	if err != nil {
+    		return err
+    	}
+    	return nil
+    })
 }
-
 ```
 
 </TabItem>

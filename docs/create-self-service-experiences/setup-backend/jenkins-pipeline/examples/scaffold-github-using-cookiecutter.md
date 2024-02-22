@@ -1,30 +1,30 @@
 ---
+
 sidebar_position: 2
+
 ---
 
-# Scaffold GitHub Repositories Using Cookiecutter
+# 使用 Cookiecutter 为 GitHub 仓库搭建脚手架
 
-This example demonstrates how to quickly scaffold GitHub repositories using a [Cookiecutter Template](https://www.cookiecutter.io/templates) via Port Actions.
+本示例演示了如何使用[Cookiecutter Template](https://www.cookiecutter.io/templates) 通过 Port Actions 快速为 GitHub 仓库搭建脚手架。
 
-In addition, as cookiecutter is an open-source project you can make your own project template, learn more about it [here](https://cookiecutter.readthedocs.io/en/2.0.2/tutorials.html#create-your-very-own-cookiecutter-project-template).
+此外，由于 cookiecutter 是一个开源项目，您可以制作自己的项目模板，了解更多信息请访问[here](https://cookiecutter.readthedocs.io/en/2.0.2/tutorials.html#create-your-very-own-cookiecutter-project-template) 。
 
-## Example - scaffolding golang template
+## 示例 - golang 模板脚手架
 
-Follow these steps to get started with the Golang template:
+请按照以下步骤开始使用 Golang 模板: 
 
-1. Create the following as Jenkins Credentials:
+1. 创建以下 Jenkins 认证: 
+    1. `GITHUB_TOKEN` - 具有创建版本库权限的[fine-grained PAT](https://github.com/settings/tokens?type=beta) 。
+    2. `PORT_CLIENT_ID` - Port客户端 ID[learn more](/build-your-software-catalog/sync-data-to-catalog/api/#get-api-token) 。
+    3. `PORT_CLIENT_SECRET` - Port客户端secret[learn more](/build-your-software-catalog/sync-data-to-catalog/api/#get-api-token) 。
+    ::注意
+    使用 `Secret text` 作为证书类型。
+    :::
+2.创建具有以下属性的Port蓝图: 
 
-   1. `GITHUB_TOKEN` - a [fine-grained PAT](https://github.com/settings/tokens?type=beta) with permissions to create repositories.
-   2. `PORT_CLIENT_ID` - Port Client ID [learn more](/build-your-software-catalog/sync-data-to-catalog/api/#get-api-token).
-   3. `PORT_CLIENT_SECRET` - Port Client Secret [learn more](/build-your-software-catalog/sync-data-to-catalog/api/#get-api-token).
-      :::note
-      Use `Secret text` as Credential type.
-      :::
+:::note 请记住，这可以是你想要的任何蓝图，这只是一个例子。
 
-2. Create a Port blueprint with the following properties:
-
-:::note
-Keep in mind this can be any blueprint you would like and this is just an example.
 :::
 
 ```json showLineNumbers
@@ -52,10 +52,7 @@ Keep in mind this can be any blueprint you would like and this is just an exampl
 }
 ```
 
-3. Create Port action using the following JSON definition:
-   :::note
-   Make sure to replace the placeholders for JENKINS_URL and JOB_TOKEN.
-   :::
+3.使用以下 JSON 定义创建 Port 操作:  :::note 请确保替换 JENKINS_URL 和 JOB_TOKEN 的占位符。 :::: 
 
 ```json showLineNumbers
 [
@@ -91,14 +88,12 @@ Keep in mind this can be any blueprint you would like and this is just an exampl
 ]
 ```
 
-4. Create a Jenkins Pipeline with the following configuration:
-
-   1. [Enable webhook trigger for a pipeline](../jenkins-pipeline.md#enabling-webhook-trigger-for-a-pipeline)
-   2. [Define variables for a pipeline](../jenkins-pipeline.md#defining-variables): Define the REPO_NAME,GITHUB_ORG_NAME and RUN_ID variables.
-      ![Define Vars](../../../../../static/img/self-service-actions/setup-backend/jenkins-pipeline/scaffold-jenkins-vars.png)
-   3. [Token Setup](../jenkins-pipeline.md#token-setup): Define the token to match `JOB_TOKEN` as configured in your Port Action.
-
-5. Create a Jenkins Pipeline with the following content:
+4.用以下配置创建一个 Jenkins Pipeline: 
+    1.[Enable webhook trigger for a pipeline](../jenkins-pipeline.md#enabling-webhook-trigger-for-a-pipeline)
+    2.[Define variables for a pipeline](../jenkins-pipeline.md#defining-variables) 定义 REPO_NAME、GITHUB_ORG_NAME 和 RUN_ID 变量。
+    ![Define Vars](../../../../../static/img/self-service-actions/setup-backend/jenkins-pipeline/scaffold-jenkins-vars.png)
+    3.[Token Setup](../jenkins-pipeline.md#token-setup): 定义令牌，使其与 Port Action 中配置的 `JOB_TOKEN` 匹配。
+5.创建包含以下内容的 Jenkins Pipeline: 
 
 <details>
 <summary>Jenkins Pipeline Script</summary>
@@ -247,15 +242,15 @@ default_context:
                 }
                 script {
                     def status_report_response = sh(script: """
-						curl --location --request POST "https://api.getport.io/v1/blueprints/$PORT_BLUEPRINT_ID/entities?upsert=true&run_id=$PORT_RUN_ID&create_missing_related_entities=true" \
+    					curl --location --request POST "https://api.getport.io/v1/blueprints/$PORT_BLUEPRINT_ID/entities?upsert=true&run_id=$PORT_RUN_ID&create_missing_related_entities=true" \
         --header "Authorization: Bearer $PORT_ACCESS_TOKEN" \
         --header "Content-Type: application/json" \
         --data-raw '{
-				"identifier": "${REPO_NAME}",
-				"title": "${REPO_NAME}",
-				"properties": {"description":"${REPO_NAME} golang project","url":"https://github.com/${GITHUB_ORG_NAME}/${REPO_NAME}"},
-				"relations": {}
-			}'
+    			"identifier": "${REPO_NAME}",
+    			"title": "${REPO_NAME}",
+    			"properties": {"description":"${REPO_NAME} golang project","url":"https://github.com/${GITHUB_ORG_NAME}/${REPO_NAME}"},
+    			"relations": {}
+    		}'
 
                     """, returnStdout: true)
 
@@ -313,4 +308,4 @@ default_context:
 
 </details>
 
-6. Trigger the action from the [Self-service](https://app.getport.io/self-serve) tab of your Port application.
+6.从 Port 应用程序的[Self-service](https://app.getport.io/self-serve) 标签触发操作。

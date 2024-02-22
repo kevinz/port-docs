@@ -1,74 +1,69 @@
-# Webhook Self-Service Actions
+# Webhook 自助行动
 
-## Overview
+## 概览
 
-Port can trigger webhooks based on a customer provided `URL` Both for `Action` and `Changelog` events.
+Port 可根据客户提供的 "URL "触发 webhook，既可触发 "Action "事件，也可触发 "Changelog "事件。
 
 ![Port Kafka Architecture](../../../../static/img/self-service-actions/portWebhookArchitecture.jpg)
 
-The steps shown in the image above are as follows:
+上图所示步骤如下: 
 
-1. Port generates an invocation of `Action` or `Changelog` event.
-2. Port signs the payload + timestamp using `HMAC-SHA-256` and puts it in the request header.
-   :::info WEBHOOK SECURITY
-   Verifying the webhook request using the request headers provides the following benefits:
+1. Port 会调用 `Action` 或 `Changelog` 事件。
+2. Port 使用 `HMAC-SHA-256` 对有效负载 + 时间戳进行签名，并将其放入请求头。
+::info Webhook 安全性
+使用请求头验证 webhook 请求有以下好处: 
+    - 确保请求有效载荷未被篡改
+    - 确保信息发送方是 Port
+    - 确保收到的信息不是旧信息的重放
+    要了解如何验证 webhook 请求，请参阅[Verifying Webhook Signature](../webhook/signature-verification) 页面。::: 
+3.Port 通过 `POST` 请求将调用的 `Action` 或 `Changelog` 发布到客户定义的 `URL` 上。
+4.客户端的监听器会接收新的 "POST "请求，并运行 DevOps 团队定义的代码。
 
-   - Ensures that the request payload has not been tampered with
-   - Ensures that the sender of the message is Port
-   - Ensures that the received message is not a replay of an older message
+:::info 例如，监听器可以是任何能够读取 Kafka 主题并根据接收到的消息运行代码的设备: 
 
-   To learn how to verify the webhook request, refer to the [Verifying Webhook Signature](../webhook/signature-verification) page.
+* AWS Lambda；
+* 从主题中读取的 Python 代码；
+* 运行代码的 docker 容器。
 
-   :::
+您可以控制如何以最适合您的组织和基础设施的方式与 webhook 交互。
 
-3. Port publishes an invoked `Action` or `Changelog` via a `POST` request to the customer defined `URL`.
-4. A listener implemented on the Client side receives the new `POST` request and runs code defined by the DevOps team.
-
-:::info
-The listener can be anything that can read from a Kafka topic and run code based on the received message, for example:
-
-- AWS Lambda;
-- Python code that reads from the topic;
-- Docker container running code.
-
-You control how you interact with webhooks, in the way that best suits your organization and infrastructure.
 :::
 
-An example flow would be:
+流程示例如下
 
-1. A developer asks to deploy a new version of an existing `Microservice`;
-2. The `create` action is sent to the defined `URL`;
-3. An AWS Lambda function is triggered by this new action message;
-4. The Lambda function deploys a new version of the service;
-5. When the Lambda is done, it reports back to Port about the new Microservice `Deployment`.
+1. 开发人员要求部署现有 "Microservice "的新版本；
+2. 创建 "操作会发送到定义的 "URL"；
+3. 此新操作消息将触发 AWS Lambda 函数；
+4. Lambda 函数会部署服务的新版本；
+5. Lambda 完成后，向 Port 报告新的微服务 "部署 "情况。
 
-## Configuration
+## 配置
 
-When creating the action, the `Backend` step includes multiple configurations that you can customize:
+创建操作时，"后端 "步骤包括多个配置，您可以对其进行自定义: 
 
-### HTTP request type
+### HTTP 请求类型
 
-By default, a `POST` request will be sent to the specified endpoint URL. You can change the request to any of the supported types:
+默认情况下，"POST "请求将发送到指定的端点 URL。 您可以将请求更改为任何受支持的类型: 
 
 ![httpRequestType](/img/self-service-actions/setup-backend/httpRequestType.png)
 
-### Sync vs. async execution
+### 同步执行与异步执行
 
-By default, the action will be executed **asynchronous**, meaning that your backend will need to explicitly send Port its result via the API.
+默认情况下，该操作将**异步**执行，这意味着您的后端需要通过 API 明确发送 Port 的结果。
 
-Alternatively, you can set the execution type to **synchronous**, which will cause the action to automatically report its result back to Port via the returned HTTP status code and payload.
+或者，您也可以将执行类型设置为 **同步**，这将使操作通过返回的 HTTP 状态代码和有效负载自动向 Port 报告结果。
 
-## Next steps
+## 下一步
 
-To get started with webhook Self-Service Actions, please check the sources below:
+要开始使用 webhook 自助服务操作，请查看下面的资料来源: 
 
-### Examples
+### 示例
 
-- [Create an S3 bucket using Self-Service Actions](./examples/s3-using-webhook.md)
-- [Webhook changelog listener](./examples/changelog-listener.md)
-- [Provisioning software templates using Cookiecutter](./examples/software-templates.md)
+* * [Create an S3 bucket using Self-Service Actions](./examples/s3-using-webhook.md)
+* [Webhook changelog listener](./examples/changelog-listener.md)
+* [Provisioning software templates using Cookiecutter](./examples/software-templates.md)
 
-### Local setup, debugging and security validation
+###本地设置、调试和安全验证
 
-- [Debugging webhooks locally](./local-debugging-webhook.md)
-- [Validating webhook signatures](./signature-verification.md)
+* * [Debugging webhooks locally](./local-debugging-webhook.md)
+* [Validating webhook signatures](./signature-verification.md)

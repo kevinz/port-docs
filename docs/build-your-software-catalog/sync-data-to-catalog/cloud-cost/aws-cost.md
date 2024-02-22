@@ -1,39 +1,39 @@
 import Tabs from "@theme/Tabs"
 import TabItem from "@theme/TabItem"
 
-# AWS Cost
+# AWS 成本
 
-Our AWS Cost integration allows you to import your `AWS Cost` report into Port.
+通过 AWS 成本集成，您可以将 "AWS 成本 "报告导入 Port。
 
-Each entity in Port represents the cost details for a single resource per bill.
+Port 中的每个实体代表每张账单中单个资源的成本详情。
 
-The entities will be kept in Port for several months, according to your configuration (3 months by default).
+根据您的配置，实体将在 Port 中保存几个月(默认为 3 个月)。
 
-## Installation
+## 安装
 
-:::info
-This is an [open-source](https://github.com/port-labs/port-aws-cost-exporter) integration.
+:::info 这是一个[open-source](https://github.com/port-labs/port-aws-cost-exporter) 集成。
+
 :::
 
-1. [AWS Setup](#aws) - Required.
-2. [Port Setup](#port) - Required.
-3. [Exporter Setup](#exporter) - Choose one of the options:
-   - [Local](#local)
-   - [Docker](#docker)
-   - [GitHub Workflow](#github-workflow)
-   - [GitLab Pipeline](#gitlab-pipeline)
+1. [AWS Setup](#aws) - 需要。
+2. [Port Setup](#port) - 需要。
+3. [Exporter Setup](#exporter) - 请选择其中一个选项: 
+    -[Local](#local)
+    -[Docker](#docker)
+    -[GitHub Workflow](#github-workflow)
+    -[GitLab Pipeline](#gitlab-pipeline)
 
 ![Catalog Architecture](/img/sync-data-to-catalog/aws_cost.png)
 
-### AWS
+#### AWS
 
-1. [Create an AWS S3 Bucket](https://docs.aws.amazon.com/AmazonS3/latest/userguide/create-bucket-overview.html) for hosting the cost reports (replace `<AWS_BUCKET_NAME>`, `<AWS_REGION>` with your intended bucket name and AWS region).
+1. [Create an AWS S3 Bucket](https://docs.aws.amazon.com/AmazonS3/latest/userguide/create-bucket-overview.html) 用于托管成本报告(将 `<AWS_BUCKET_NAME>`, `<AWS_REGION>` 替换为您想要的存储桶名称和 AWS 区域).
 
 ```bash showLineNumbers
 aws s3api create-bucket --bucket <AWS_BUCKET_NAME> --region <AWS_REGION>
 ```
 
-2. Create a file locally called `policy.json`. Copy and paste the following [content](https://docs.aws.amazon.com/cur/latest/userguide/cur-s3.html) into this file and save it, ensuring that you update `<AWS_BUCKET_NAME>` and `<AWS_ACCOUNT_ID>` with the name of the bucket you created in step one and your AWS Account ID.
+2.在本地创建一个名为 `policy.json` 的文件。将以下[content](https://docs.aws.amazon.com/cur/latest/userguide/cur-s3.html) 复制并粘贴到该文件中并保存，确保用第一步中创建的水桶名称和 AWS 账户 ID 更新 `<AWS_BUCKET_NAME>` 和 `<AWS_ACCOUNT_ID>`。
 
 <details>
   <summary> policy.json </summary>
@@ -82,13 +82,13 @@ aws s3api create-bucket --bucket <AWS_BUCKET_NAME> --region <AWS_REGION>
 
 </details>
 
-3. Add the [bucket policy](https://docs.aws.amazon.com/AmazonS3/latest/userguide/add-bucket-policy.html) you created in step two to the bucket you created in step one (the following command assumes that the `policy.json` is in your current working directory, and should be updated with the correct file location if saved elsewhere). This policy will allow AWS to write the cost and usage report (CUR) (replace `<AWS_BUCKET_NAME>` with the name of the bucket you created in step one) to your bucket:
+3.将您在第二步中创建的[bucket policy](https://docs.aws.amazon.com/AmazonS3/latest/userguide/add-bucket-policy.html) 添加到您在第一步中创建的存储桶中(以下命令假定 `policy.json` 位于您当前的工作目录中，如果保存在其他地方，则应更新文件的正确位置) 。此策略将允许 AWS 将成本和使用报告 (CUR) (将 `<AWS_BUCKET_NAME>` 替换为您在第一步中创建的存储桶名称) 写入您的存储桶: 
 
 ```bash
 aws s3api put-bucket-policy --bucket <AWS_BUCKET_NAME> --policy file://policy.json
 ```
 
-4. Create a file locally called `report-definition.json`. Copy and paste the following recommended content into this file and save it, ensuring that you update `<AWS_BUCKET_NAME>` and `<AWS_REGION>` with the name of the bucket you created in step one and your intended AWS region.
+4.在本地创建一个名为 `report-definition.json`的文件。将以下推荐内容复制并粘贴到该文件中并保存，确保用第一步中创建的水桶名称和目标 AWS 区域更新 `<AWS_BUCKET_NAME>` 和 `<AWS_REGION>`。
 
 <details>
   <summary> report-definition.json </summary>
@@ -112,23 +112,23 @@ aws s3api put-bucket-policy --bucket <AWS_BUCKET_NAME> --policy file://policy.js
 
 </details>
 
-5. [Create an AWS Cost and Usage Report](https://docs.aws.amazon.com/cur/latest/userguide/cur-create.html) for generating cost reports on a daily basis, that will be saved in the bucket (the following command assumes that the `report-definition.json` is in your current working directory, and should be updated with the correct file location if saved elsewhere).
+5. [Create an AWS Cost and Usage Report](https://docs.aws.amazon.com/cur/latest/userguide/cur-create.html) 用于每日生成成本报告，并保存在报告桶中(以下命令假定 `report-definition.json` 位于当前工作目录中，如果保存在其他目录中，则应更新文件的正确位置).
 
 ```bash
 aws cur put-report-definition --report-definition file://report-definition.json
 ```
 
-6. Wait for up to 24 hours, until the first report will be generated. Run the following AWS CLI command to check if the CUR has been created and added to your bucket, ensuring to update `AWS_BUCKET_NAME` in the command below with the name of the bucket you created in step one:
+6.最多等待 24 小时，直到生成第一份报告。运行以下 AWS CLI 命令，检查是否已创建 CUR 并将其添加到您的存储桶，确保用您在第一步中创建的存储桶名称更新以下命令中的 `AWS_BUCKET_NAME`: 
 
 ```bash
 aws s3 ls s3://AWS_BUCKET_NAME/cost-reports/aws-monthly-cost-report-for-port/
 ```
 
-If the command above returns at least one directory named with the date range of the day following CUR creation, the report is ready and can be ingested into Port.
+如果上述命令至少返回一个以 CUR 创建次日的日期范围命名的目录，则报告已准备就绪，可以输入 Port。
 
 ### Port
 
-1. Create the `awsCost` blueprint (the blueprint below is an example that can be modified according to your needs):
+1. 创建 `awsCost` 蓝图(下面的蓝图是一个示例，可根据需要进行修改): 
 
 <details>
   <summary> AWS Cost Blueprint </summary>
@@ -195,9 +195,10 @@ If the command above returns at least one directory named with the date range of
 
 </details>
 
-### Exporter
+### 出口商
 
-Environment variables of the exporter for all the setup options:
+所有设置选项的输出器环境变量: 
+
 
 | Env Var                        | Description                                                                  | Required | Default                                         |
 | ------------------------------ | ---------------------------------------------------------------------------- | -------- | ----------------------------------------------- |
@@ -210,22 +211,23 @@ Environment variables of the exporter for all the setup options:
 | AWS_BUCKET_NAME                | Your AWS bucket name to store cost reports                                   | **true** |                                                 |
 | AWS_COST_REPORT_S3_PATH_PREFIX | Your AWS cost report S3 path prefix                                          | false    | `cost-reports/aws-monthly-cost-report-for-port` |
 
-#### Local
 
-1. Make sure that you have Python installed and ensure the Python version is at least Python 3.11:
+#### 本地
+
+1. 确保已安装 Python，并确保 Python 版本至少为 Python 3.11: 
 
 ```bash
 python3 --version
 ```
 
-2. Clone the [port-aws-cost-exporter](https://github.com/port-labs/port-aws-cost-exporter) repository according to your preferred cloning method (the example below uses the SSH cloning method), then switch your working directory to this cloned repository.
+2.根据你首选的克隆方法(下面的示例被引用了 SSH 克隆方法)克隆[port-aws-cost-exporter](https://github.com/port-labs/port-aws-cost-exporter) 版本库 ，然后将你的工作目录切换到该克隆版本库。
 
 ```bash showLineNumbers
 git clone git@github.com:port-labs/port-aws-cost-exporter.git
 cd port-aws-cost-exporter
 ```
 
-3. Create a new virtual environment and install requirements
+3.创建新的虚拟环境并安装需求
 
 ```bash showLineNumbers
 python3 -m venv venv
@@ -233,7 +235,7 @@ source venv/bin/activate
 pip3 install -r requirements.txt
 ```
 
-4. Set the required environment variables and run the exporter
+4.设置所需的环境变量并运行输出程序
 
 ```bash showLineNumbers
 export PORT_CLIENT_ID=<PORT_CLIENT_ID>
@@ -244,9 +246,9 @@ export AWS_SECRET_ACCESS_KEY=<AWS_SECRET_ACCESS_KEY>
 python3 main.py
 ```
 
-#### Docker
+#### docker
 
-1. Create `.env` file with the required environment variables
+1. 创建包含所需环境变量的 `.env` 文件
 
 ```
 PORT_CLIENT_ID=<PORT_CLIENT_ID>
@@ -256,34 +258,34 @@ AWS_ACCESS_KEY_ID=<AWS_ACCESS_KEY_ID>
 AWS_SECRET_ACCESS_KEY=<AWS_SECRET_ACCESS_KEY>
 ```
 
-2. Run exporter's Docker image with `.env`
+2.使用 `.env` 运行 docker 的 Docker 镜像
 
 ```bash
 docker run -d --name getport.io-port-aws-cost-exporter --env-file .env ghcr.io/port-labs/port-aws-cost-exporter:latest
 ```
 
-3. View the logs of the container, to watch the progress:
+3.查看容器的 logging，观察进度: 
 
 ```bash
 docker logs -f getport.io-port-aws-cost-exporter
 ```
 
-#### GitHub Workflow
+#### GitHub 工作流程
 
-1. Create the following GitHub repository secrets:
+1. 创建以下 GitHub 仓库 secrets: 
 
-Required:
+需要: 
 
-- `AWS_ACCESS_KEY_ID`
-- `AWS_SECRET_ACCESS_KEY`
-- `PORT_CLIENT_ID`
-- `PORT_CLIENT_SECRET`
+* aws_access_key_id`
+* 访问密钥
+* Port客户 ID
+* Port客户机密钥
 
-Required for scheduling:
+排期所需: 
 
-- `AWS_BUCKET_NAME`
+* aws_bucket_name`
 
-2. Use this GitHub Workflow definition, to allow scheduled and manual run of the exporter:
+2.被引用的 GitHub 工作流定义允许按计划或手动运行导出器: 
 
 <details>
   <summary> GitHub Workflow run.yml </summary>
@@ -319,20 +321,21 @@ jobs:
 
 #### GitLab Pipeline
 
-1. Create the following GitLab CI/CD variables: 
-:::tip
-Refer to this guide on how to [setup a GitLab CI variable](https://docs.gitlab.com/ee/ci/variables/index.html#define-a-cicd-variable-in-the-ui)
+1. 创建以下 GitLab CI/CD 变量: 
+
+:::tip 请参阅本指南，了解如何[setup a GitLab CI variable](https://docs.gitlab.com/ee/ci/variables/index.html#define-a-cicd-variable-in-the-ui)
+
 :::
 
-Required:
+需要: 
 
-- `AWS_ACCESS_KEY_ID`
-- `AWS_ACCESS_KEY_ID`
-- `AWS_BUCKET_NAME`
-- `PORT_CLIENT_ID`
-- `PORT_CLIENT_SECRET`
+* aws_access_key_id`
+* aws_access_key_id`
+* `aws_bucket_name`(服务器名称
+* Port客户 ID
+* `port_client_secret` Port客户密钥
 
-2. Use this GitLab CI Pipeline definition to allow scheduled and manual run of the exporter:
+2.被引用的 GitLab CI Pipeline 定义允许按计划或手动运行输出程序: 
 
 <details>
   <summary> GitLab Pipeline gitlab-ci.yml </summary>
@@ -364,13 +367,12 @@ run_job:
 
 </details>
 
-3. Schedule the script:
-
-   1. Go to your GitLab repository and select **Build** from the sidebar menu.
-   2. Click on **Pipeline schedules** and click on **New Schedule**.
-   3. Fill the form with the schedule details: description, interval pattern, timezone, target branch.
-   4. Ensure the **Activated** checkbox is selected.
-   5. Click on **Create pipeline schedule** to create the schedule.
-   :::tip
-   It is recommended to schedule the pipeline to run at most once a day, as AWS refreshes the data once a day.
-   :::
+3.安排脚本时间: 
+    1.进入 GitLab 仓库，从侧边栏菜单中选择**构建**。
+    2.点击**Pipelines schedules**，然后点击**New Schedule**。
+    3.在表单中填写计划详情: 描述、间隔模式、时区、目标分支。
+    4.确保选中**已激活**复选框。
+    5.单击 ** 创建 Pipelines 计划表** 创建计划表。
+    提示
+    建议将 Pipelines 计划为每天最多运行一次，因为 AWS 每天刷新一次数据。
+    :::

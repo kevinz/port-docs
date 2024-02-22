@@ -1,30 +1,32 @@
 ---
+
 sidebar_position: 14
-description: Secret is an input whose value is encrypted with your client secret when sent to your backend and is never saved or logged in its transit.
+description: Secret 是一种输入法，其值在发送到后端时会用客户secret加密，在其传输过程中绝不会保存或记录。
+
 ---
 
-import ApiRef from "../../../api-reference/\_learn_more_reference.mdx"
+import ApiRef from "../../../api-reference/_learn_more_reference.mdx"
 
 import Tabs from "@theme/Tabs"
 import TabItem from "@theme/TabItem"
 
 # Secret
 
-Secret input is an input type used to pass secrets and sensitive information to action backends, the values sent via the secret input go through an additional layer of encryption using your private key. In addition, the values sent via the secret input are not logged or saved by Port.
+secret输入是一种用于向操作后端传递secret和敏感信息的输入类型，通过secret输入发送的值会使用您的私人密钥进行额外的加密。 此外，通过secret输入发送的值不会被 Port 记录或保存。
 
-## 💡 Common Secret Usage
+## 💡 常用secret Usage
 
-The secret input type can be used for sensitive information, such as:
+secret输入类型可被引用于敏感信息，如: "......": 
 
-- Cloud secrets;
-- Passwords;
-- API keys;
-- Secret tokens
-- etc.
+* 云secret；
+* 密码
+* API 密钥
+* Secret 令牌
+* 等等。
 
-## Secret Input Structure
+## secret输入结构
 
-A secret input is defined as a regular input, but with the additional `encryption` field which specifies the encryption algorithm to use:
+secret输入的定义与普通输入相同，但多了一个指定加密算法的 "加密 "字段: 
 
 ```json showLineNumbers
 {
@@ -40,14 +42,15 @@ A secret input is defined as a regular input, but with the additional `encryptio
 }
 ```
 
-- [aes256-gcm](https://www.nist.gov/publications/advanced-encryption-standard-aes) - This will encrypt the property data using 256 bits AES in [GCM mode](https://csrc.nist.gov/glossary/term/aes_gcm). The encrypted value will be prefixed by the 16 bits IV and suffixed by the 16 bits MAC, encoded to base-64. The encryption key will be the first 32 bytes of your organization's [Client Secret](../../../build-your-software-catalog/sync-data-to-catalog/api/#find-your-port-credentials).
+* [aes256-gcm](https://www.nist.gov/publications/advanced-encryption-standard-aes) - 这将在[GCM mode](https://csrc.nist.gov/glossary/term/aes_gcm) 中使用 256 位 AES 对属性数据进行加密。加密值前缀为 16 位 IV，后缀为 16 位 MAC，编码为基序 64。加密密钥将是贵组织[Client Secret](../../../build-your-software-catalog/sync-data-to-catalog/api/#find-your-port-credentials) 的前 32 个字节。
 
-### Supported Types
+#### 支持的类型
 
 <Tabs groupId="supported-types" queryString defaultValue="string" values={[
 {label: "String Secret", value: "string"},
 {label: "Object Secret", value: "object"}
 ]}>
+
 <TabItem value="string">
 
 ```json showLineNumbers
@@ -64,7 +67,7 @@ A secret input is defined as a regular input, but with the additional `encryptio
 }
 ```
 
-**Note:** it is unsupported to have the a `format` for secrets inputs.
+**注意: ** 不支持为 secrets 输入设置 `format` 格式。
 
 </TabItem>
 <TabItem value="object">
@@ -86,11 +89,11 @@ A secret input is defined as a regular input, but with the additional `encryptio
 </TabItem>
 </Tabs>
 
-## Handling the Payload
+## 处理有效载荷
 
-The payload sent to your infrastructure will contain the encrypted value of your secret property inputs. To make use of your secret inputs, you will need to decrypt them:
+发送到基础架构的有效载荷将包含secret属性输入的加密值。 要使用secret输入，您需要对其进行解密: 
 
-### Examples
+### 示例
 
 <Tabs groupId="algorithm" queryString defaultValue="aes256-gcm" values={[
 {label: "AES 256 GCM", value: "aes256-gcm"},
@@ -98,7 +101,7 @@ The payload sent to your infrastructure will contain the encrypted value of your
 
 <TabItem value="aes256-gcm">
 
-Examples for decrypting properties encrypted with the `aes256-gcm` algorithm.
+解密使用 "aes256-gcm "算法加密的属性的示例。
 
 <Tabs groupId="language" queryString defaultValue="aes256-gcm-python" values={[
 {label: "Python Webhook", value: "aes256-gcm-python"},
@@ -107,7 +110,7 @@ Examples for decrypting properties encrypted with the `aes256-gcm` algorithm.
 
 <TabItem value="aes256-gcm-python">
 
-The following example uses the `flask` and `pycryptodome` packages:
+下面的示例被引用了 `flask` 和 `pycryptodome` 软件包: 
 
 ```python showLineNumbersimport base64
 import base64
@@ -153,7 +156,7 @@ if __name__ == '__main__':
 </TabItem>
 <TabItem value="aes256-gcm-nodeJs">
 
-The following example uses the `express` package and node's built-in crypto module:
+下面的示例被引用了 `express` 软件包和节点内置的加密模块: 
 
 ```js showLineNumbers
 const express = require("express");

@@ -1,18 +1,20 @@
 ---
+
 sidebar_position: 1
-description: Keep pull requests up to date using webhooks
+description: 使用 webhook 保持拉取请求更新
+
 ---
 
-import PullRequestBlueprint from '../resources/github/\_example_github_pr_blueprint.mdx'
-import PullRequestWebhookConfig from '../resources/github/\_example_github_pr_configuration.mdx'
+import PullRequestBlueprint from '../resources/github/_example_github_pr_blueprint.mdx'
+import PullRequestWebhookConfig from '../resources/github/_example_github_pr_configuration.mdx'
 
 # GitHub
 
-In this example you are going to create a webhook integration between [GitHub](https://github.com) and Port, which will ingest pull request entities.
+在本示例中，您将在[GitHub](https://github.com) 和 Port 之间创建一个 webhook 集成，用于接收拉取请求实体。
 
-## Port configuration
+## Port 配置
 
-Create the following blueprint definition:
+创建以下蓝图定义: 
 
 <details>
 <summary>Pull request blueprint</summary>
@@ -21,57 +23,55 @@ Create the following blueprint definition:
 
 </details>
 
-Create the following webhook configuration [using Port's UI](/build-your-software-catalog/sync-data-to-catalog/webhook/?operation=ui#configuring-webhook-endpoints):
+创建以下 webhook 配置[using Port's UI](/build-your-software-catalog/sync-data-to-catalog/webhook/?operation=ui#configuring-webhook-endpoints) : 
 
 <details>
 <summary>Pull request webhook configuration</summary>
 
-1. **Basic details** tab - fill the following details:
-   1. Title : `Pull Request Mapper`;
-   2. Identifier : `pull_request_mapper`;
-   3. Description : `A webhook configuration for pull-request events from GitHub`;
-   4. Icon : `Github`;
-2. **Integration configuration** tab - fill the following JQ mapping:
+1. **基本信息** 选项卡 - 填写以下详细信息: 
+    1.title: "拉取请求映射器"；
+    2.标识符: `pull_request_mapper`；
+    3.Description : `来自 GitHub 的 pull-request 事件的 webhook 配置；
+    4.图标 : `Github`；
+2. **集成配置**选项卡 - 填写以下 JQ 映射: 
    <PullRequestWebhookConfig/>
-
-3. Scroll down to **Advanced settings** and input the following details:
-
-   1. Secret: `WEBHOOK_SECRET`;
-   2. Signature Header Name : `X-Hub-Signature-256`;
-   3. Signature Algorithm : Select `sha256` from dropdown option;
-   4. Signature Prefix : `sha256=`;
-   5. Request Identifier Path : `.headers.\"X-GitHub-Delivery\"`;
-   6. Click **Save** at the bottom of the page.
+3.向下滚动到 **高级设置**，输入以下详细信息: 
+    1.Secret: `WEBHOOK_SECRET`；
+    2.签名头名称:  `X-Hub-Signature-256`；
+    3.签名算法: 从下拉选项中选择 `sha256`；
+    4.签名前缀 : `sha256=`；
+    5.请求标识符路径 : `.headers.\"X-GitHub-Delivery\"`；
+    6.点击页面底部的**保存**。
 
 </details>
 
-## Create a webhook in GitHub
+## 在 GitHub 中创建 webhook
 
-1. Go to your desired organization/repository in GitHub;
-2. Select **Settings**;
-3. Select **Webhooks**;
-4. Click on **Add webhook**;
-5. Input the following details:
-   1. `Payload URL` - enter the value of the `url` key you received after creating the webhook configuration;
-   2. `Content type` - `application/json`;
-   3. `Secret` - enter the secret value you specified when creating the webhook;
-   4. Under "Which events would you like to trigger this webhook?" - select "Let me select individual events" and select **Pull requests**;
-   5. Be sure to keep the "Active" checkbox checked.
-6. Click on **Add webhook**
+1. 转到 GitHub 上所需的组织/仓库；
+2. 选择 **设置**；
+3. 选择 **Webhooks**；
+4. 点击 **添加 webhook**；
+5. 输入以下详细信息: 
+    1. Payload URL` - 输入您在创建 webhook 配置后收到的 `url` 键的值；
+    2. 内容类型` - `应用程序/json`；
+    3. `Secret` - 输入您在创建 webhook 时指定的 secret 值；
+    4.在 "您希望哪些事件触发此 webhook？ - 选择 "让我选择单个事件 "并选择 **拉取请求**；
+    5.确保选中 "激活 "复选框。
+6.点击**添加网络钩子**
 
-:::tip
-In order to view the different payloads and events available in GitHub webhooks, [look here](https://docs.github.com/en/webhooks-and-events/webhooks/webhook-events-and-payloads)
+:::tip 为了查看 GitHub webhooks 中可用的不同有效载荷和事件、[look here](https://docs.github.com/en/webhooks-and-events/webhooks/webhook-events-and-payloads)
+
 :::
 
-Done! any change you make to a pull request (open, close, edit, etc.) will trigger a webhook event that GitHub will send to the webhook URL provided by Port. Port will parse the events according to the mapping and update the catalog entities accordingly.
+完成！您对拉取请求所做的任何更改(打开、关闭、编辑等)都会触发 webhook 事件，GitHub 会将该事件发送到 Port 提供的 webhook URL。 Port 会根据映射解析事件，并相应地更新目录实体。
 
-## Let's Test It
+## 让我们来测试一下
 
-This section includes a sample webhook event sent from GitHub when a pull request is created. In addition, it includes the entity created from the event based on the webhook configuration provided in the previous section.
+本节包括创建拉取请求时从 GitHub 发送的 webhook 事件示例。 此外，还包括根据上一节提供的 webhook 配置从事件中创建的实体。
 
-### Payload
+### 有效载荷
 
-Here is an example of the payload structure sent to the webhook URL when a GitHub pull request is opened:
+下面是打开 GitHub 拉取请求时发送到 webhook URL 的有效载荷结构示例: 
 
 <details>
 <summary> Webhook event payload</summary>
@@ -146,9 +146,9 @@ Here is an example of the payload structure sent to the webhook URL when a GitHu
 
 </details>
 
-### Mapping Result
+#### 映射结果
 
-The combination of the sample payload and the webhook configuration generates the following Port entity:
+结合示例有效载荷和 webhook 配置可生成以下 Port 实体: 
 
 ```json showLineNumbers
 {

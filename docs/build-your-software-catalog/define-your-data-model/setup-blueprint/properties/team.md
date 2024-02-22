@@ -1,29 +1,31 @@
 ---
+
 sidebar_position: 16
-description: Team is a data type used to reference teams that exist in Port
+description: 团队是一种数据类型，用于引用存在于 Port
+
 ---
 
-import ApiRef from "../../../../api-reference/\_learn_more_reference.mdx"
+import ApiRef from "../../../../api-reference/_learn_more_reference.mdx"
 
 import Tabs from "@theme/Tabs"
 import TabItem from "@theme/TabItem"
 
-# Team
+# 团队
 
-Team is a data type used to reference teams that exist in Port.
+团队是一种数据类型，用于引用存在于 Port 中的团队。
 
-## 💡 Common team usage
+## 💡 团队常用 Usage
 
-The team property type can be used to reference any team that exists in Port, for example:
+例如，团队属性类型可被用来引用任何存在于 Port 中的团队: 
 
-- The service owning team;
-- The current on-call;
-- The lead maintainers;
-- etc.
+* 服务拥有团队；
+* 当前待命人员
+* 主要维护者；
+* 等等。
 
-In this [live demo](https://demo.getport.io/service_catalog) example, we can see the `Team` team property. 🎬
+在[live demo](https://demo.getport.io/service_catalog) 这个例子中，我们可以看到 `Team` 团队属性。
 
-## API definition
+## 应用程序接口定义
 
 <Tabs groupId="api-definition" queryString defaultValue="basic" values={[
 {label: "Basic", value: "basic"},
@@ -72,7 +74,7 @@ In this [live demo](https://demo.getport.io/service_catalog) example, we can see
 
 <ApiRef />
 
-## Terraform definition
+## Terraform 定义
 
 <Tabs groupId="tf-definition" queryString defaultValue="basic" values={[
 {label: "Basic", value: "basic"},
@@ -126,7 +128,7 @@ resource "port_blueprint" "myBlueprint" {
 
 </Tabs>
 
-## Pulumi definition
+## Pulumi 的定义
 
 <Tabs groupId="pulumi-definition-team-basic" queryString defaultValue="python" values={[
 {label: "Python", value: "python"},
@@ -223,33 +225,33 @@ exports.title = entity.title;
 package main
 
 import (
-	"github.com/port-labs/pulumi-port/sdk/go/port"
-	"github.com/pulumi/pulumi/sdk/v3/go/pulumi"
+    "github.com/port-labs/pulumi-port/sdk/go/port"
+    "github.com/pulumi/pulumi/sdk/v3/go/pulumi"
 )
 
 func main() {
-	pulumi.Run(func(ctx *pulumi.Context) error {
-		blueprint, err := port.NewBlueprint(ctx, "myBlueprint", &port.BlueprintArgs{
-			Identifier: pulumi.String("myBlueprint"),
-			Title:      pulumi.String("My Blueprint"),
+    pulumi.Run(func(ctx *pulumi.Context) error {
+    	blueprint, err := port.NewBlueprint(ctx, "myBlueprint", &port.BlueprintArgs{
+    		Identifier: pulumi.String("myBlueprint"),
+    		Title:      pulumi.String("My Blueprint"),
       // highlight-start
-			Properties: port.BlueprintPropertiesArgs{
-				StringProps: port.BlueprintPropertiesStringPropsMap{
-					"myTeamProp": &port.BlueprintPropertyArgs{
+    		Properties: port.BlueprintPropertiesArgs{
+    			StringProps: port.BlueprintPropertiesStringPropsMap{
+    				"myTeamProp": &port.BlueprintPropertyArgs{
                         Title:      pulumi.String("My team"),
                         Required:   pulumi.Bool(false),
                         Format:     pulumi.String("team"),
                     },
                 },
-			},
+    		},
       // highlight-end
-		})
-		ctx.Export("blueprint", blueprint.Title)
-		if err != nil {
-			return err
-		}
-		return nil
-	})
+    	})
+    	ctx.Export("blueprint", blueprint.Title)
+    	if err != nil {
+    		return err
+    	}
+    	return nil
+    })
 }
 ```
 

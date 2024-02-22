@@ -1,49 +1,51 @@
 ---
+
 sidebar_position: 1
+
 ---
 
 import Tabs from "@theme/Tabs"
 import TabItem from "@theme/TabItem"
-import Prerequisites from "../templates/\_ocean_helm_prerequisites_block.mdx"
-import AzurePremise from "../templates/\_ocean_azure_premise.mdx"
-import DockerParameters from "./\_jenkins-docker-parameters.mdx"
+import Prerequisites from "../templates/_ocean_helm_prerequisites_block.mdx"
+import AzurePremise from "../templates/_ocean_azure_premise.mdx"
+import DockerParameters from "./_jenkins-docker-parameters.mdx"
 import AdvancedConfig from '../../../generalTemplates/_ocean_advanced_configuration_note.md'
 
 # Jenkins
 
-Our Jenkins integration allows you to import `jobs`, `builds`, and `users` from your Jenkins environment into Port, according to your mapping and definitions.
+我们的 Jenkins 集成允许您根据映射和定义将 Jenkins 环境中的 "任务"、"构建 "和 "用户 "导入 Port。
 
-## Common use cases
+## 常见被引用情况
 
-- Map `jobs`, `builds`, and `users` in your Jenkins environment.
-- Watch for object changes (create/update/delete) in real-time, and automatically apply the changes to your entities in Port.
+* 映射 Jenkins 环境中的 "工作"、"构建 "和 "用户"。
+* 实时观察对象更改(创建/更新/删除)，并自动将更改应用到 Port 中的实体。
 
-## Prerequisites
+## 先决条件
 
 <Prerequisites />
 
-To generate a token for authenticating the Jenkins API calls:
-1. In the Jenkins banner frame, click your user name to open the user menu.
-2. Navigate to Your **Username** > **Configure** > **API Token**.
-3. Click Add new Token.
-4. Click Generate.
-5. Copy the API token that is generated to use as the `JENKINS_TOKEN`.
+生成用于验证 Jenkins API 调用的令牌: 
+
+1. 在 Jenkins 横幅框中，点击用户名打开用户菜单。
+2. 导航至您的**用户名** > **配置** > **API令牌**。
+3. 单击添加新令牌。
+4. 单击生成。
+5. 复制生成的 API 令牌作为 `JENKINS_TOKEN`。
 
 <img src='/img/build-your-software-catalog/sync-data-to-catalog/jenkins/configure-api-token.png' width='80%' />
 
+## 安装
 
-## Installation
-
-Choose one of the following installation methods:
+从以下安装方法中选择一种: 
 
 <Tabs groupId="installation-methods" queryString="installation-methods">
 
 <TabItem value="real-time-always-on" label="Real Time & Always On" default>
 
-Using this installation option means that the integration will be able to update Port in real time using webhooks.
+使用该安装选项意味着集成将能使用 webhook 实时更新 Port。
 
-This table summarizes the available parameters for the installation.
-Set them as you wish in the script below, then copy it and run it in your terminal:
+本表总结了安装时可用的参数，请在下面的脚本中按自己的需要进行设置，然后复制并在终端运行: 
+
 
 | Parameter                           | Description                                                                                                        | Required |
 | ----------------------------------- | ------------------------------------------------------------------------------------------------------------------ | -------- |
@@ -59,21 +61,22 @@ Set them as you wish in the script below, then copy it and run it in your termin
 | `scheduledResyncInterval`           | The number of minutes between each resync                                                                          | ❌       |
 | `initializePortResources`           | Default true, When set to true the integration will create default blueprints and the port App config Mapping      | ❌       |
 
+
 <br/>
 
 ```bash showLineNumbers
 helm repo add --force-update port-labs https://port-labs.github.io/helm-charts
 helm upgrade --install my-jenkins-integration port-labs/port-ocean \
-	--set port.clientId="PORT_CLIENT_ID"  \
-	--set port.clientSecret="PORT_CLIENT_SECRET"  \
-	--set initializePortResources=true  \
-	--set scheduledResyncInterval=120 \
-	--set integration.identifier="my-jenkins-integration"  \
-	--set integration.type="jenkins"  \
-	--set integration.eventListener.type="POLLING"  \
-	--set integration.secrets.jenkinsUser="JENKINS_USER"  \
-	--set integration.secrets.jenkinsToken="JENKINS_TOKEN" \
-	--set integration.config.jenkinsHost="JENKINS_HOST"  
+    --set port.clientId="PORT_CLIENT_ID"  \
+    --set port.clientSecret="PORT_CLIENT_SECRET"  \
+    --set initializePortResources=true  \
+    --set scheduledResyncInterval=120 \
+    --set integration.identifier="my-jenkins-integration"  \
+    --set integration.type="jenkins"  \
+    --set integration.eventListener.type="POLLING"  \
+    --set integration.secrets.jenkinsUser="JENKINS_USER"  \
+    --set integration.secrets.jenkinsToken="JENKINS_TOKEN" \
+    --set integration.config.jenkinsHost="JENKINS_HOST"
 ```
 
 </TabItem>
@@ -83,16 +86,16 @@ helm upgrade --install my-jenkins-integration port-labs/port-ocean \
   <TabItem value="github" label="GitHub">
 This workflow will run the Jenkins integration once and then exit, this is useful for **scheduled** ingestion of data.
 
-:::warning
-If you want the integration to update Port in real time using webhooks you should use the [Real Time & Always On](?installation-methods=real-time-always-on#installation) installation option
+:::warning 如果希望集成使用 webhooks 实时更新 Port，则应使用[Real Time & Always On](?installation-methods=real-time-always-on#installation) 安装选项
+
 :::
 
-Make sure to configure the following [Github Secrets](https://docs.github.com/en/actions/security-guides/using-secrets-in-github-actions):
+确保配置以下[Github Secrets](https://docs.github.com/en/actions/security-guides/using-secrets-in-github-actions) : 
 
 <DockerParameters />
 <br/>
 
-Here is an example for `jenkins-integration.yml` workflow file:
+下面是 `jenkins-integration.yml` 工作流程文件的示例: 
 
 ```yaml showLineNumbers
 name: Jenkins Exporter Workflow
@@ -132,21 +135,19 @@ jobs:
   <TabItem value="jenkins" label="Jenkins">
 This pipeline will run the Jenkins integration once and then exit, this is useful for **scheduled** ingestion of data.
 
-:::tip
-Your Jenkins agent should be able to run docker commands.
+:::tip 你的 Jenkins 代理应该能够运行 docker 命令。
+
 :::
-:::warning
-If you want the integration to update Port in real time using webhooks you should use
-the [Real Time & Always On](?installation-methods=real-time-always-on#installation) installation option.
+:::warning 如果希望集成使用 webhooks 实时更新 Port，则应使用 安装选项。[Real Time & Always On](?installation-methods=real-time-always-on#installation) 
+
 :::
 
-Make sure to configure the following [Jenkins Credentials](https://www.jenkins.io/doc/book/using/using-credentials/)
-of `Secret Text` type:
+请确保配置以下[Jenkins Credentials](https://www.jenkins.io/doc/book/using/using-credentials/)的 "Secret Text "类型: 
 
 <DockerParameters />
 <br/>
 
-Here is an example for `Jenkinsfile` groovy pipeline file:
+下面是 `Jenkinsfile` groovy Pipelines 文件的示例: 
 
 ```text showLineNumbers
 pipeline {
@@ -195,7 +196,7 @@ pipeline {
 <DockerParameters />
 <br/>
 
-Here is an example for `jenkins-integration.yml` pipeline file:
+下面是 `jenkins-integration.yml` Pipelines 文件的示例: 
 
 ```yaml showLineNumbers
 trigger:
@@ -206,7 +207,6 @@ pool:
 
 variables:
   - group: port-ocean-credentials
-
 
 steps:
 - script: |
@@ -228,7 +228,6 @@ steps:
 
     exit $?
   displayName: 'Ingest Data into Port'
-
 ```
 
   </TabItem>
@@ -240,11 +239,11 @@ steps:
 
 <AdvancedConfig/>
 
-## Ingesting Jenkins objects
+## 接收 Jenkins 对象
 
-The Jenkins integration uses a YAML configuration to describe the process of loading data into the developer portal.
+Jenkins 集成使用 YAML 配置来描述将数据加载到开发者门户的过程。
 
-Here is an example snippet from the config which demonstrates the process for getting `job` data from Jenkins:
+下面是配置中的一个示例片段，演示了从 Jenkins 获取 "job "数据的过程: 
 
 ```yaml showLineNumbers
 createMissingRelatedEntities: true
@@ -266,14 +265,14 @@ resources:
             timestamp: .time
 ```
 
-The integration makes use of the [JQ JSON processor](https://stedolan.github.io/jq/manual/) to select, modify, concatenate, transform and perform other operations on existing fields and values from Jenkins's API events.
+该集成利用[JQ JSON processor](https://stedolan.github.io/jq/manual/) 对 Jenkins API 事件中的现有字段和值进行选择、修改、连接、转换和其他操作。
 
-### Configuration structure
+### 配置结构
 
-The integration configuration determines which resources will be queried from Jenkins, and which entities and properties will be created in Port.
+集成配置决定了将从 Jenkins 查询哪些资源，以及将在 Port 中创建哪些实体和属性。
 
+* 集成配置的根密钥是 "资源 "密钥: 
 
-- The root key of the integration configuration is the `resources` key:
 
   ```yaml showLineNumbers
   # highlight-next-line
@@ -283,7 +282,9 @@ The integration configuration determines which resources will be queried from Je
       ...
   ```
 
-- The `kind` key is a specifier for a Jenkins object:
+
+* 类型 "键是 Jenkins 对象的指定符: 
+
 
   ```yaml showLineNumbers
     resources:
@@ -293,7 +294,9 @@ The integration configuration determines which resources will be queried from Je
         ...
   ```
 
-- The `selector` and the `query` keys allow you to filter which objects of the specified `kind` will be ingested into your software catalog:
+
+* 通过 "选择器 "和 "查询 "键，您可以过滤哪些指定 "类型 "的对象将被录入软件目录: 
+
 
   ```yaml showLineNumbers
   resources:
@@ -305,7 +308,9 @@ The integration configuration determines which resources will be queried from Je
       port:
   ```
 
-- The `port`, `entity` and the `mappings` keys are used to map the Jenkins object fields to Port entities. To create multiple mappings of the same kind, you can add another item in the `resources` array;
+
+* Port"、"实体 "和 "映射 "键被用来将 Jenkins 对象字段映射到Port实体。要创建多个同类映射，可在 `resources` 数组中添加另一项；
+
 
   ```yaml showLineNumbers
   resources:
@@ -333,26 +338,25 @@ The integration configuration determines which resources will be queried from Je
           mappings: ...
   ```
 
-  :::tip Blueprint key
-  Note the value of the `blueprint` key - if you want to use a hardcoded string, you need to encapsulate it in 2 sets of quotes, for example use a pair of single-quotes (`'`) and then another pair of double-quotes (`"`)
-  :::
 
-### Ingest data into Port
+:::tip 蓝图键 注意 `blueprint` 键的值 - 如果要使用硬编码字符串，需要用 2 组引号封装，例如使用一对单引号 (`'`)，然后再用一对双引号 (`"`): ::: 
 
-To ingest Jenkins objects using the [integration configuration](#configuration-structure), you can follow the steps below:
+#### 将数据输入Port
 
-1. Go to the DevPortal Builder page.
-2. Select a blueprint you want to ingest using Jenkins.
-3. Choose the **Ingest Data** option from the menu.
-4. Select Jenkins under the CI/CD category.
-5. Modify the [configuration](#configuration-structure) according to your needs.
-6. Click `Resync`.
+要使用[integration configuration](#configuration-structure) 引用 Jenkins 对象，可以按照以下步骤操作: 
 
-## Examples
+1. 转到 DevPortal Builder 页面。
+2. 选择要被 Jenkins 引用的蓝图。
+3. 从菜单中选择**摄取数据**选项。
+4. 在 CI/CD 类别下选择 Jenkins。
+5. 根据需要修改[configuration](#configuration-structure) 。
+6. 单击 `Resync`。
 
-Examples of blueprints and the relevant integration configurations:
+## 示例
 
-### Job
+蓝图和相关集成配置示例: 
+
+### 工作
 
 <details>
 <summary>Job blueprint</summary>
@@ -434,7 +438,7 @@ resources:
 
 </details>
 
-### Build
+#### 建设
 
 <details>
 <summary>Build blueprint</summary>
@@ -532,8 +536,7 @@ resources:
 
 </details>
 
-
-### User
+#### 用户
 
 <details>
 <summary>User blueprint</summary>
@@ -585,7 +588,6 @@ resources:
         properties:
           url: .user.absoluteUrl
           lastUpdateTime: if .lastChange then (.lastChange/1000) else now end | strftime("%Y-%m-%dT%H:%M:%SZ")
-
 ```
 
 </details>

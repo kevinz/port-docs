@@ -1,16 +1,18 @@
 ---
+
 sidebar_position: 1
+
 ---
 
-# Auto Discovery
+# 汽车发现
 
-Actions auto discovery automates the process of discovering and syncing GitHub workflow actions with Port.
+操作自动发现功能可自动发现 GitHub 工作流操作并将其与 Port 同步。
 
-You can run the tool and it will automatically import your GitHub action workflows to Port and add them as self-service actions in a specified blueprint.
+您可以运行该工具，它会自动将您的 GitHub 动作工作流导入 Port，并将其添加为指定蓝图中的自助服务动作。
 
-For more detailed information about the auto discovery tool, please refer to the README file in the [project's repository](https://github.com/port-labs/actions-auto-discovery).
+有关自动发现工具的详细信息，请参阅[project's repository](https://github.com/port-labs/actions-auto-discovery) 中的 README 文件。
 
-# Usage example
+# Usage 示例
 
 ```bash showLineNumbers
 #!/bin/bash

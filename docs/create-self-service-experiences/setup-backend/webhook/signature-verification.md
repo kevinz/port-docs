@@ -1,54 +1,56 @@
 ---
+
 sidebar_position: 5
+
 ---
 
 import Tabs from "@theme/Tabs"
 import TabItem from "@theme/TabItem"
 
-# Validating Webhook signatures
+# 验证 Webhook 签名
 
-In this guide, we will show how to validate that a message your webhook has received was sent by Port.
+在本指南中，我们将介绍如何验证 Webhook 收到的消息是否由 Port 发送。
 
-## Signature verification security benefits
+## 签名验证安全效益
 
-When exposing an HTTP server on the internet, anyone with the URL can send a web request to it.
+当 HTTP 服务器暴露在互联网上时，任何拥有该 URL 的人都可以向其发送网络请求。
 
-Unwanted triggers of your webhook could have adverse effects such as:
+对 webhook 的意外触发可能会产生不良影响，例如: ..: 
 
-- Excessive usage costs due to a high volume of unnecessary triggers;
-- Executing an action that gives an attacker access to your environment, or that changes your infrastructure or causes downtime;
-- And more.
+* 由于大量不必要的触发而导致使用成本过高；
+* 执行的操作会让攻击者访问您的环境，或改变您的基础架构或导致停机；
+* 以及更多。
 
-Verifying the webhook request using the request headers provides the following benefits:
+被引用请求头验证 webhook 请求有以下好处: 
 
-- Ensures that the request payload has not been tampered with
-- Ensures that the sender of the message is Port
-- Ensures that the received message is not a replay of an older message
+* 确保请求有效载荷未被篡改
+* 确保信息发送方是 Port
+* 确保收到的信息不是旧信息的重放
 
-## Custom headers
+## 自定义标题
 
-Each webhook request includes the following custom headers provided by Port:
+每个 webhook 请求都包括以下由 Port 提供的自定义标头: 
 
-- `x-port-timestamp` - timestamp in [seconds since epoch](https://en.wikipedia.org/wiki/Epoch)
-- `x-port-signature` - the [Base64](https://en.wikipedia.org/wiki/Base64) encoded signature
+* `x-port-timestamp` - 文件中的时间戳[seconds since epoch](https://en.wikipedia.org/wiki/Epoch)
+* `x-port-signature` -[Base64](https://en.wikipedia.org/wiki/Base64) 编码的签名
 
-## Signature structure
+## 签名结构
 
-The webhook signature takes the `timestamp` the message was generated in and the request `payload` and concatenates them using a dot (`.`):
+webhook 签名会引用信息生成的 "时间戳 "和请求的 "支付负载"，并使用点 (`.`)将它们连接起来: 
 
 ```js
 const signatureContent = `${timestamp}.${payload}`;
 ```
 
-Port takes the content that needs to be signed, hashes it using `HMAC-SHA-256` and then encodes it in `Base64`. Then Port takes the output and adds the version as a prefix with a comma (`,`) for example the `x-port-signature` header should look like this: `v1,2ehMaSsW+OTSDFERA/SmIKSSySlE3uaJELVlNIOLJ1OE=`
+Port 接收需要签名的内容，使用 `HMAC-SHA-256` 对其进行散列，然后用 `Base64` 进行编码。 然后，Port 接收输出，并将版本作为前缀加上逗号 (`,`)，例如 `x-port-signature` 头应该如下所示: `v1,2ehMaSsW+OTSDFERA/SmIKSSySlE3uaJELVlNIOLJ1OE=`。
 
-## Timestamp verification
+## 时间戳验证
 
-As mentioned above, Port also sends the timestamp for the webhook request in the `x-port-timestamp` header. To prevent replay attacks you can compare the value of the timestamp with the timestamp of your systems and verify that the difference is within your allowed tolerance.
+如上所述，Port 还会在 `x-port-timestamp` 标头中发送 webhook 请求的时间戳。 为防止重放攻击，您可以将时间戳的值与系统的时间戳进行比较，并验证两者的差异是否在允许的容差范围内。
 
-## Code examples
+## 代码示例
 
-Here are some examples showing how to verify a webhook request signature using the request headers:
+下面是一些示例，说明如何使用请求头验证 webhook 请求签名: 
 
 <Tabs groupId="code-examples" defaultValue="python" values={[
 {label: "Python", value: "python"},

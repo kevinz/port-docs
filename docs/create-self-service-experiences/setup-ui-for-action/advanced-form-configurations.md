@@ -1,33 +1,33 @@
 import Tabs from '@theme/Tabs';
 import TabItem from '@theme/TabItem';
 
-# Advanced input configurations
+# 高级输入配置
 
-Advanced input settings allow you to create more customizable experiences for users who perform self-service actions. This is done by creating adaptive inputs that change according to data about the entity, the user, and other inputs.
+高级输入设置可让您为执行自助操作的用户创建更多可定制的体验。 具体方法是创建自适应输入，根据实体、用户和其他输入的相关数据进行更改。
 
-## Common use-cases
+## 常见被引用情况
 
-- Filter the available options in a dropdown input.
-- Create a dependency between inputs to allow the user to select a value based on the value of another input.
-- Define dynamic default values based on the logged-in user properties(such as teams, email, role) or the entity that the action is being executed on (for day-2 or delete actions only).
+* 过滤下拉输入中的可用选项。
+* 在输入之间创建依赖关系，允许用户根据另一个输入的值选择一个值。
+* 根据登录的用户属性(如团队、电子邮件、角色)或正在执行操作的实体(仅限第 2 天或删除操作)定义动态默认值。
 
-:::info Pulumi Examples' Language
-Unless otherwise specified, all **Pulumi** configuration examples are provided in Python. For usage in other languages, please see the Pulumi provider documentation [here](https://www.pulumi.com/registry/packages/port/api-docs/action/).
+:::info  Pulumi 示例的语言 除非另有说明，所有**Pulumi**配置示例均以 Python 语言提供。 有关其他语言的用法，请参阅 Pulumi Provider 文档[here](https://www.pulumi.com/registry/packages/port/api-docs/action/) 。
+
 :::
 
 ## Usage
 
-Defining advanced inputs is currently supported in JSON-mode only.
+目前仅支持以 JSON 模式定义高级输入。
 
-When creating an action, the second step is defining its inputs. After defining at least one input, an `Advanced configuration` section will appear in the bottom of the form. Click on `Edit JSON`, then add your configuration in JSON format.
+创建动作后，第二步是定义输入。 至少定义一个输入后，表单底部会出现 "高级配置 "部分。 单击 "编辑 JSON"，然后添加 JSON 格式的配置。
 
 <img src='/img/self-service-actions/advancedInputsFormExample.png' width='60%' />
 
-### Writing your configuration schema
+### 编写配置模式
 
-Port provides a `jqQuery` property that can be used to extract data from the entity, the logged-in user, or the current action's form inputs. It can also be used to perform data manipulations.  
+Port 提供了一个 `jqQuery` 属性，可用于从实体、登录用户或当前操作的表单输入中提取数据。 它还可用于执行数据操作。
 
-For example, the following `jqQuery` checks the value of another property (`language`) and determines the possible values of the `SDK` property accordingly:
+例如，下面的 `jqQuery` 检查另一个属性(`language`)的值，并据此确定 `SDK` 属性的可能值: 
 
 ```json showLineNumbers
 {
@@ -46,7 +46,7 @@ For example, the following `jqQuery` checks the value of another property (`lang
 }
 ```
 
-#### The properties you can access using the "jqQuery" object
+#### 使用 "jqQuery "对象可以访问的属性
 
 <Tabs
 groupId="jqquery-properties"
@@ -60,7 +60,7 @@ values={[
 
 <TabItem value="form">
 
-The values of the inputs in the current action form.
+当前操作表单中的输入值。
 
 Usage:
 
@@ -70,7 +70,7 @@ Usage:
 }
 ```
 
-The available `form` object(each input is a key in the action's [`userInputs`](/create-self-service-experiences/setup-ui-for-action/user-inputs/) object):
+可用的 `form` 对象(每个输入都是动作[`userInputs`](/create-self-service-experiences/setup-ui-for-action/user-inputs/) 对象中的一个键) : 
 
 ```json
 {
@@ -83,7 +83,7 @@ The available `form` object(each input is a key in the action's [`userInputs`](/
 </TabItem>
 <TabItem value="entity">
 
-The properties of the `entity` on which the action is performed. Entity data is only available in "day-2" and "delete" actions.
+执行操作的 "实体 "的属性。 实体数据仅在 "第 2 天 "和 "删除 "操作中可用。
 
 Usage:
 
@@ -93,7 +93,7 @@ Usage:
 }
 ```
 
-The available `entity` object:
+可用的 "实体 "对象: 
 
 ```json
 {
@@ -153,7 +153,7 @@ The available `entity` object:
 </TabItem>
 <TabItem value="user">
 
-The properties of the user that executed the action.
+执行操作的用户的属性。
 
 Usage:
 
@@ -163,7 +163,7 @@ Usage:
 }
 ```
 
-The available logged-in user object:
+可用的 logging 用户对象: 
 
 ```json
 {
@@ -193,7 +193,8 @@ The available logged-in user object:
 </TabItem>
 </Tabs>
 
-Keys that are supported with jqQuery expressions:
+jqQuery 表达式支持的键: 
+
 
 | Key      | Description                                       |
 | -------- | ------------------------------------------------- |
@@ -203,11 +204,12 @@ Keys that are supported with jqQuery expressions:
 | value    | the value inside a "dataset" rule                 |
 | visible  | the condition to display any property in the form |
 
+
 ---
 
-#### Additional available properties
+#### 其他可用房产
 
-You can use these additional properties to create more complex inputs:
+您可以使用这些附加属性创建更复杂的输入: 
 
 <Tabs
 defaultValue="visible"
@@ -221,10 +223,9 @@ values={[
 
 <TabItem value="visible">
 
-The `visible` property is used to dynamically hide/show inputs in the form.
-The `visible` value could be set to either a boolean (`true` value is always shown, `false` value is always hidden), or to a `jqQuery` which evaluates to a boolean.
+可见 "属性用于动态隐藏/显示表单中的输入。 可见 "值可以设置为一个布尔值("true "值总是显示，"false "值总是隐藏)，也可以设置为一个评估为布尔值的 "jqQuery"。
 
-In this example, the `runArguments` properties are configured with `visible` so that they only show up in the form when the matching value is selected in the `language` input:
+在本例中，"runArguments "属性配置为 "visible"，因此只有在 "language "输入框中选择匹配值时，它们才会显示在表单中: 
 
 <Tabs
 defaultValue="api"
@@ -299,7 +300,6 @@ action = Action(
     },
   }
 )
-
 ```
 
 </TabItem>
@@ -310,8 +310,7 @@ action = Action(
 
 <TabItem value="dependsOn">
 
-The `dependsOn` property is used to create a dependency between inputs. If input X depends on input Y, input X will be **disabled** until input Y is filled.  
-In the example below, the `SDK` input depends on the `Language` input:
+依赖于 "属性被用来创建输入之间的依赖关系。 如果输入 X 依赖于输入 Y，则输入 X 将被**禁用**，直到输入 Y 填满为止。 在下面的示例中，"SDK "输入依赖于 "语言 "输入: 
 
 <Tabs
 defaultValue="api"
@@ -358,6 +357,7 @@ resource "port_action" myAction {
   }
 }
 ```
+
 </TabItem>
 <TabItem value="pulumi">
 
@@ -375,26 +375,20 @@ action = Action(
     },
   }
 )
-
 ```
+
 </TabItem>
 </Tabs>
 
 </TabItem>
 <TabItem value="dataset">
 
-The `dataset` property is used to filter the displayed options in an [entity](/create-self-service-experiences/setup-ui-for-action/user-inputs/entity) input. It is comprised of two properties:
+数据集 "属性用于过滤[entity](/create-self-service-experiences/setup-ui-for-action/user-inputs/entity) 输入中显示的选项。它由两个属性组成: 
 
-- `Combinator` - the logical operation to apply between the rules of the dataset. [Read more](/search-and-query/#combinator).
-- `Rules` - an array of [rules](/search-and-query/#rules), only entities that pass them will be displayed in the form.
-  Note that the `value` key in the dataset can be a constant (string, number, etc) or a "jqQuery" object.
+* `Combinator` - 在数据集的规则之间应用的逻辑运算。[Read more](/search-and-query/#combinator).
+* `Rules` -[rules](/search-and-query/#rules) 的数组，只有通过这些规则的实体才会显示在表单中。请注意，数据集中的 `value` 键可以是常量(字符串、数字等)或 "jqQuery "对象。
 
-<Tabs
-defaultValue="api"
-values={[
-{label: 'API', value: 'api'},
-{label: 'Terraform', value: 'terraform'},
-{label: 'Pulumi', value: 'pulumi'}
+<Tabs defaultValue="api" Values={[ {label: 'API', value: 'api'}, {label: 'Terraform', value: 'terraform'}, {label: 'Pulumi', value: 'pulumi'}
 
 ]}>
 
@@ -446,6 +440,7 @@ resource "port_action" "myAction" {
   }
 }
 ```
+
 </TabItem>
 <TabItem value="pulumi">
 
@@ -471,8 +466,8 @@ action = Action(
     }
   }
 )
-
 ```
+
 </TabItem>
 
 </Tabs>
@@ -483,11 +478,11 @@ action = Action(
 
 ---
 
-## Schema examples
+## 模式示例
 
-### Creating a dependency between two form inputs
+### 在两个表单输入之间创建依赖关系
 
-This example contains a dependency between the `language` input and the `SDK` input. The `SDK` input's available options are defined according to the selected language (see the `jqQuery` key).
+此示例中，"language "输入和 "SDK "输入之间存在依赖关系，"SDK "输入的可用选项是根据所选语言定义的(参见 "jqQuery "键)。
 
 <Tabs
 defaultValue="api"
@@ -558,16 +553,16 @@ action = Action(
     },
   }
 )
-
 ```
+
 </TabItem>
 </Tabs>
 
 ![Cluster And Namespace Action](../../../static/img/software-catalog/blueprint/javascriptSDK.png)
 
-### Hiding property based on the executing user's roles
+###根据执行用户的角色隐藏属性
 
-In this example, the `visible` checks if the executing user has the `"admin"` role, and if they don't have this role then the advanced option will be hidden for them. The default value will still be filled in and sent to the backend:
+在此示例中，"visible "会检查执行用户是否具有 "admin "角色，如果不具有该角色，则会隐藏高级选项。 默认值仍会被填写并发送到后端: 
 
 <Tabs
 defaultValue="api"
@@ -645,15 +640,13 @@ action = Action(
 </TabItem>
 </Tabs>
 
-This is how the run form would show up for non-admin users:
-![What Non-Admins See](../../../static/img/software-catalog/blueprint/hiddenPropertyExample.png)
+非管理员用户的运行表单显示如下:  ！[What Non-Admins See](../../../static/img/software-catalog/blueprint/hiddenPropertyExample.png)
 
-And this is how the form would show up for admin users:
-![What Admins See](../../../static/img/software-catalog/blueprint/hiddenPropertyShownExample.png)
+管理员用户的表单显示如下:  ！[What Admins See](../../../static/img/software-catalog/blueprint/hiddenPropertyShownExample.png)
 
-### Filter the dropdown's available options based on a property
+###根据属性过滤下拉菜单中的可用选项
 
-This example contains a filter that will only display the namespaces that are [related to](/search-and-query/#operators-1) the cluster that was selected in the `Cluster` input:
+此示例包含一个过滤器，只显示[related to](/search-and-query/#operators-1) 在 `Cluster` 输入中所选集群的 namespace: 
 
 <Tabs
 defaultValue="api"
@@ -716,6 +709,7 @@ resource "port_action" myAction {
   }
 }
 ```
+
 </TabItem>
 
 <TabItem value="pulumi">
@@ -749,11 +743,11 @@ action = Action(
 
 ![Only Production Envs](../../../static/img/software-catalog/blueprint/onlyNotProductionEnvs.png)
 
-:point_up: only the environments whose type is not `production` will appear in the dropdown. :point_up:
+:point_up: 只有类型不是 "生产 "的环境才会出现在下拉菜单中。 :point_up: 
 
-### Filter the dropdown's available options based on a previous input
+###根据之前的输入过滤下拉菜单中的可用选项
 
-This example contains a filter that will only display the namespaces that are [related to](/search-and-query/#operators-1) the cluster that was selected in the `Cluster` input:
+此示例包含一个过滤器，只显示[related to](/search-and-query/#operators-1) 在 `Cluster` 输入中所选集群的 namespace: 
 
 <Tabs
 defaultValue="api"
@@ -880,11 +874,11 @@ action = Action(
 
 ![Cluster And Namespace Action](../../../static/img/software-catalog/blueprint/clusterNamespaceActionSmallerExample.png)
 
-:point_up: The user will be required to choose a cluster, then the `namespace` input list will be populated with namespace entities related to the chosen cluster. :point_up:
+point_up: 用户需要选择一个集群，然后`namespace'输入列表将填充与所选集群相关的 namespace 实体: 
 
-### Filter the dropdown's available options based on properties of the user that executes the action
+###根据执行操作的用户属性过滤下拉菜单的可用选项
 
-This example contains a filter that will only display the namespaces that belong to the user's teams (note the value key in the rules object):
+此示例包含一个过滤器，只显示属于用户团队的 namespace(注意规则对象中的值键): 
 
 <Tabs
 defaultValue="api"
@@ -949,6 +943,7 @@ resource "port_action" myAction {
   }
 }
 ```
+
 </TabItem>
 
 <TabItem value="pulumi">
@@ -984,11 +979,11 @@ action = Action(
 
 ![Cluster And Namespace Action](../../../static/img/software-catalog/blueprint/userPropertiesModal.png)
 
-:point_up: These are the only namespaces that are associated with the logged-in user's teams. :point_up:
+:point_up: 这些是唯一与登录用户的团队相关联的 namespace: 
 
-### Filter the dropdown's available options based on the properties of the entity on which the action is performed
+###根据执行操作的实体属性过滤下拉菜单的可用选项
 
-This example contains a filter that will only display the namespaces that have similar tags to those of the entity on which the action is performed:
+此示例包含一个过滤器，只显示与执行操作的实体具有相似标记的 namespace: 
 
 <Tabs
 defaultValue="api"
@@ -1087,9 +1082,9 @@ action = Action(
 </TabItem>
 </Tabs>
 
-### Setting a default value with the jqQuery
+### 使用 jqQuery 设置默认值
 
-This example contains an array input with a default value that will be equal to the tags of the entity on which the action is performed:
+此示例包含一个数组输入，其默认值将等于执行操作的实体的标记: 
 
 <Tabs
 defaultValue="api"
@@ -1153,11 +1148,11 @@ action = Action(
 
 ![entity tags action](../../../static/img/software-catalog/blueprint/defaultEntityTags.png)
 
-:point_up: The namespace tags are already inserted into the form. :point_up:
+:point_up: 命名空间标记已插入表单中。 :point_up: 
 
-### Setting required inputs with the jqQuery
+### 使用 jqQuery 设置所需输入内容
 
-This example contains two user inputs: one will always be required, and the other will be required based on the entity's properties.
+此示例包含两个用户输入: 一个始终为必填项，另一个根据实体属性为必填项。
 
 <Tabs
 defaultValue="api"
@@ -1228,15 +1223,15 @@ pulumi.export("name", action.title)
 </TabItem>
 </Tabs>
 
-## Complete Example
+## 完整示例
 
-In this example, we will create an action that lets the user select a cluster and a namespace in that cluster. The user will also be able to select a service that is already running in the cluster. The action will then deploy the selected service to the selected namespace in the cluster. The user will only be able to select a service that is linked to his team.
+在这个示例中，我们将创建一个操作，让用户选择一个集群和该集群中的一个命名空间。 用户还可以选择一个已在集群中运行的服务。 然后，该操作将把选定的服务部署到集群中选定的命名空间。 用户只能选择与他的团队相关联的服务。
 
-#### the existing model in Port:
+#### Port 中的现有模型: 
 
 ![Developer PortalCreate New Blueprint](../../../static/img/software-catalog/blueprint/clusterNamespaceBlueprint.png)
 
-#### the action's configuration:
+#### 动作配置: 
 
 <Tabs
 defaultValue="api"
@@ -1529,9 +1524,8 @@ exports.title = entity.title;
 </TabItem>
 </Tabs>
 
-#### The action in the developer portal:
+#### 开发人员门户网站中的操作: 
 
 ![Cluster And Namespace Action](../../../static/img/software-catalog/blueprint/clusterNamespaceAction.png)
 
-:point_up: The user will be required to choose a cluster, and then the namespace input list will be populated with namespace entities related to the chosen cluster. The user will only be able to deploy services associated with his team.  
-Note the `$` before `team`, this indicates that this is a [metadata property](/build-your-software-catalog/define-your-data-model/setup-blueprint/properties/meta-properties).
+point_up: 用户需要选择一个集群，然后在名称空间输入列表中填入与所选集群相关的名称空间实体。 用户只能部署与其团队相关的服务。请注意 "team "前的"$"，这表示这是一个[metadata property](/build-your-software-catalog/define-your-data-model/setup-blueprint/properties/meta-properties) 。

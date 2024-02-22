@@ -6,11 +6,11 @@ const darkCodeTheme = require("prism-react-renderer").themes.dracula;
 
 /** @type {import('@docusaurus/types').Config} */
 const config = {
-  title: "Port",
-  tagline: "Documentation site",
-  url: "https://docs.getport.io",
+  title: "Port官方文档中文版",
+  tagline: "Port官方文档中文版 平台工程 IDP Portal",
+  url: "https://port.devops.gold",
   baseUrl: "/",
-  onBrokenLinks: "throw",
+  onBrokenLinks: "warn",
   onBrokenMarkdownLinks: "throw",
   favicon: "img/favicon.svg",
   organizationName: "port-labs", // Usually your GitHub org/user name.

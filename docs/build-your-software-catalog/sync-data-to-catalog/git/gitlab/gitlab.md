@@ -1,33 +1,33 @@
 import Tabs from "@theme/Tabs"
 import TabItem from "@theme/TabItem"
-import GitlabResources from './\_gitlab_exporter_supported_resources.mdx'
+import GitlabResources from './_gitlab_exporter_supported_resources.mdx'
 
 # GitLab
 
-Our integration with GitLab allows you to export GitLab objects to Port as entities of existing blueprints. The integration supports real-time event processing so Port always provides an accurate real-time representation of your GitLab resources.
+通过与 GitLab 的集成，您可以将 GitLab 对象作为现有蓝图的实体导出到 Port。 集成支持实时事件处理，因此 Port 可以始终准确地实时呈现您的 GitLab 资源。
 
-## 💡 GitLab integration common use cases
+## 💡 GitLab 集成常见用例
 
-Our GitLab integration makes it easy to fill the software catalog with data directly from your GitLab organization, for example:
+例如，我们与 GitLab 的集成可让您轻松地直接从 GitLab 组织中获取数据来填充软件目录: 
 
-- Map all of the resources in your GitLab organization, including **groups**, **projects**, **monorepos**, **merge requests**, **issues**, **pipelines** and other GitLab objects;
-- Watch for GitLab object changes (create/update/delete) in real-time, and automatically apply the changes to your entities in Port;
-- Manage Port entities using GitOps;
-- etc.
+* 映射 GitLab 组织中的所有资源，包括**组**、**项目**、**monorepos**、**合并请求**、**问题**、**Pipelines**和其他 GitLab 对象；
+* 实时关注 GitLab 对象的更改(创建/更新/删除)，并自动将更改应用到 Port 中的实体；
+* 使用 GitOps 管理 Port 实体；
+* 等等。
 
-## Installation
+## 安装
 
-To install Port's GitLab integration, follow the [installation](./installation.md) guide.
+要安装 Port 的 GitLab 集成，请遵循[installation](./installation.md) 指南。
 
-## Ingesting Git objects
+## 接收 Git 对象
 
-By using Port's GitLab integration, you can automatically ingest GitLab resources into Port based on real-time events.
+通过被引用 Port 的 GitLab 集成，您可以根据实时事件自动将 GitLab 资源摄入 Port。
 
-Port's GitLab integration allows you to ingest a variety of objects resources provided by the GitLab API, including groups, projects, merge requests, pipelines and more. The GitLab integration allows you to perform extract, transform, load (ETL) on data from the GitLab API into the desired software catalog data model.
+通过 Port 的 GitLab 集成，您可以摄取 GitLab API 提供的各种对象资源，包括组、项目、合并请求、管道等。 通过 GitLab 集成，您可以对来自 GitLab API 的数据执行提取、转换、加载(ETL)，将其转换为所需的软件目录数据模型。
 
-The GitLab integration uses a YAML configuration to describe the ETL process to load data into the developer portal. The approach reflects a golden middle between an overly opinionated Git visualization that might not work for everyone and a too-broad approach that could introduce unneeded complexity into the developer portal.
+GitLab 集成使用 YAML 配置来描述将数据加载到开发者门户的 ETL 流程。 这种方法体现了一个黄金分割点，即过于主观的 Git 可视化可能不适用于每个人，而过于宽泛的方法可能会给开发者门户带来不必要的复杂性。
 
-Here is an example snippet from the config which demonstrates the ETL process for getting `merge-request` data from GitLab and into the software catalog:
+下面是配置中的一个示例片段，演示了从 GitLab 获取 "合并请求 "数据并将其导入软件目录的 ETL 流程: 
 
 ```yaml showLineNumbers
 resources:
@@ -54,13 +54,13 @@ resources:
         # highlight-end
 ```
 
-The integration makes use of the [JQ JSON processor](https://stedolan.github.io/jq/manual/) to select, modify, concatenate, transform and perform other operations on existing fields and values from GitLab's API events.
+该集成利用[JQ JSON processor](https://stedolan.github.io/jq/manual/) 对 GitLab API 事件中的现有字段和值进行选择、修改、连接、转换和其他操作。
 
-### The integration configuration
+### 整合配置
 
-The integration configuration is how you specify the exact resources you want to query from your GitLab, and also how you specify which entities and which properties you want to fill with data from GitLab.
+集成配置是指定要从 GitLab 中查询的确切资源的方式，也是指定要从 GitLab 中填充数据的实体和属性的方式。
 
-Here is an example for the integration configuration block:
+下面是集成配置块的示例: 
 
 ```yaml showLineNumbers
 resources:
@@ -81,9 +81,10 @@ resources:
           defaultBranch: .default_branch
 ```
 
-### Integration configuration structure
+### 整合配置结构
 
-- The root key of the integration configuration is the `resources` key:
+* 集成配置的根密钥是 "资源 "密钥: 
+
 
   ```yaml showLineNumbers
   # highlight-next-line
@@ -93,7 +94,9 @@ resources:
       ...
   ```
 
-- The `kind` key is a specifier for an object from the GitLab API:
+
+* 类型 "键是 GitLab API 中对象的指定符: 
+
 
   ```yaml showLineNumbers
     resources:
@@ -103,11 +106,13 @@ resources:
         ...
   ```
 
+
   <GitlabResources/>
 
-#### Filtering unwanted objects
+#### 过滤不需要的对象
 
-The `selector` and the `query` keys let you filter exactly which objects from the specified `kind` will be ingested to the software catalog
+通过 "选择器 "和 "查询 "键，你可以准确地筛选出指定 "类型 "中的哪些对象将被录入软件目录
+
 
   ```yaml showLineNumbers
   resources:
@@ -119,7 +124,8 @@ The `selector` and the `query` keys let you filter exactly which objects from th
       port:
   ```
 
-For example, to ingest only repositories that have a name starting with `"service"`, use the `query` key like this:
+
+例如，要只引用名称以`"service"`开头的存储库，可以这样使用`query`键: 
 
 ```yaml showLineNumbers
 query: .name | startswith("service")
@@ -127,7 +133,8 @@ query: .name | startswith("service")
 
 <br/>
 
-The `port`, `entity` and the `mappings` keys open the section used to map the GitLab API object fields to Port entities. To create multiple mappings of the same kind, you can add another item to the `resources` array;
+Port"、"实体 "和 "映射 "键打开了用于将 GitLab API 对象字段映射到Port实体的部分。 要创建多个同类映射，可以在 "资源 "数组中添加另一项；
+
 
   ```yaml showLineNumbers
   resources:
@@ -156,24 +163,23 @@ The `port`, `entity` and the `mappings` keys open the section used to map the Gi
           mappings: ...
   ```
 
-  :::tip
-  Pay attention to the value of the `blueprint` key, if you want to use a hardcoded string, you need to encapsulate it in 2 sets of quotes, for example use a pair of single-quotes (`'`) and then another pair of double-quotes (`"`)
-  :::
 
-## Permissions
+:::提示 注意 `blueprint` 键的值，如果要使用硬编码字符串，需要用 2 组引号封装，例如使用一对单引号 (`'`)，然后再用一对双引号 (`"`)::: 
 
-Port's GitLab integration requires a group access token with the `api` scope.
+## 权限
 
-To create a group access token, follow the instructions in the [installation](./installation.md#creating-a-gitlab-group-access-token) guide
+Port 的 GitLab 集成需要一个范围为 `api` 的组访问令牌。
 
-## Examples
+要创建组访问令牌，请按照[installation](./installation.md#creating-a-gitlab-group-access-token) 指南中的说明进行操作
 
-Refer to the [examples](./examples.md) page for practical configurations and their corresponding blueprint definitions.
+## 示例
+
+有关实用配置及其相应的蓝图定义，请参阅[examples](./examples.md) 页面。
 
 ## GitOps
 
-Port's GitLab integration also provides GitOps capabilities, refer to the [GitOps](./gitops/gitops.md) page to learn more.
+Port 的 GitLab 集成还提供 GitOps 功能，请参阅[GitOps](./gitops/gitops.md) 页面了解更多信息。
 
-## Advanced
+## 高级
 
-Refer to the [advanced](./advanced.md) page for advanced use cases and examples.
+有关高级用例和示例，请参阅[advanced](./advanced.md) 页面。

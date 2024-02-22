@@ -1,78 +1,73 @@
 ---
+
 sidebar_position: 5
-description: Trivy quickstart
+description: Trivy 快速入门
+
 ---
 
 import TemplateInstallation from "./_template_installation.mdx";
 import TemplatePrerequisites from "./_template_prerequisites.mdx";
 
-# Trivy Operator
+# 特里维操作员
 
-[Trivy Operator](https://github.com/aquasecurity/trivy-operator) is an open-source security scanner that leverages [Trivy](https://github.com/aquasecurity/trivy) to continuously scan your Kubernetes cluster for security issues.
+[Trivy Operator](https://github.com/aquasecurity/trivy-operator) 是一款开源安全扫描仪，它利用[Trivy](https://github.com/aquasecurity/trivy) 持续扫描 Kubernetes 集群，查找安全问题。
 
-Using Port's Kubernetes Exporter, you can keep track of all Trivy resources across your different clusters and export
-all the security issues to Port. You will use built in metadata from your kubernetes resources and CRDs to create entities in
-Port and keep track of their state.
+使用 Port 的 Kubernetes Exporter，您可以跟踪不同集群中的所有 Trivy 资源，并将所有安全问题导出到 Port。 您将使用 kubernetes 资源和 CRD 的内置元数据在 Port 中创建实体，并跟踪其状态。
 
-:::tip
-Get to know the basics of our Kubernetes exporter [here!](/build-your-software-catalog/sync-data-to-catalog/kubernetes/kubernetes.md)
+:::tip 了解 Kubernetes 输出程序的基础知识[here!](/build-your-software-catalog/sync-data-to-catalog/kubernetes/kubernetes.md)
+
 :::
 
-## Prerequisites
+## 先决条件
 
 <TemplatePrerequisites />
 
-## Setting up blueprints & resource mapping
+## 设置蓝图和资源映射
 
-The following section will guide you through the process of setting up your blueprints and resource mapping using the
-installation script. You can read more about the installation script [here](#how-does-the-installation-script-work).
+下文将指导您使用安装脚本设置蓝图和资源映射。您可以阅读有关安装脚本的更多信息[here](#how-does-the-installation-script-work) 。
 
-### Creating blueprints
+### 创建蓝图
 
-The installation script provides a convenient way to create your blueprints. Using the `CUSTOM_BP_PATH` environment
-variable, you can fetch a pre-defined `blueprints.json` to create your blueprints. For this use-case, you will
-use [this file](https://github.com/port-labs/template-assets/blob/main/kubernetes/blueprints/trivy-blueprints.json) to
-define your blueprints. Do this by running:
+安装脚本提供了一种创建蓝图的便捷方法。 使用 `CUSTOM_BP_PATH` 环境变量，您可以获取预定义的 `blueprints.json` 来创建蓝图。 在本例中，您将使用[this file](https://github.com/port-labs/template-assets/blob/main/kubernetes/blueprints/trivy-blueprints.json) 来定义蓝图。请通过运行
 
 ```bash showLineNumbers
 export CUSTOM_BP_PATH="https://raw.githubusercontent.com/port-labs/template-assets/main/kubernetes/blueprints/trivy-blueprints.json"
 ```
 
-This `blueprints.json` file defines the following blueprints:
+该 `blueprints.json` 文件定义了以下蓝图: 
 
-- Cluster;
-- Namespace;
-- Node;
-- Pod;
-- ReplicaSet;
-- Workload \*;
-- Trivy Vulnerabilities.
+* 集群；
+* namespace；
+* 节点
+* Pod
+* ReplicaSet；
+* 工作负载 *；
+* Trivy 漏洞。
 
-:::note
+:::note 
 
-- `Workload` is an abstraction of Kubernetes objects which create and manage pods.
-  By creating this blueprint, you can avoid creating a dedicated blueprint per Workload type, all of which will likely
-  look pretty similar.
-  Here is the list of kubernetes objects `Workload` will represent:
+* Workload "是创建和管理 pod 的 Kubernetes 对象的抽象。
+通过创建该蓝图，可以避免为每种工作负载类型创建专用蓝图，因为所有这些蓝图都可能
+看起来非常相似。
+以下是 "Workload "将代表的 kubernetes 对象列表: 
+    - 部署；
+    - StatefulSet；
+    - DaemonSet。
+* `Trivy Vulnerabilities` 是最重要的 Trivy 资源之一，让开发人员能够查找和查看与 Kubernetes 集群中不同资源相关的风险。
 
-    - Deployment;
-    - StatefulSet;
-    - DaemonSet.
-
-- `Trivy Vulnerabilities` is one of the most important Trivy resources, giving developers the capability to find and view the risks that relate to different resources in their Kubernetes cluster.
 :::
 
-### Exporting custom resource mapping
+### 导出自定义资源映射
 
-Using the `CONFIG_YAML_URL` parameter, you can define a custom resource mapping to use when installing the exporter.
+使用 `CONFIG_YAML_URL` 参数，可以定义自定义资源映射，以便在安装导出程序时使用。
 
-In this use-case you will be using the **[this configuration file](https://github.com/port-labs/template-assets/blob/main/kubernetes/templates/trivy-kubernetes_v1_config.yaml)**. To achieve this, run:
+在本例中，您将被引用 ** [this configuration file](https://github.com/port-labs/template-assets/blob/main/kubernetes/templates/trivy-kubernetes_v1_config.yaml)**。为此，请运行
 
 ```bash showLineNumbers
 export CONFIG_YAML_URL="https://raw.githubusercontent.com/port-labs/template-assets/main/kubernetes/templates/trivy-kubernetes_v1_config.yaml"
 ```
 
-You can now run the installation script using the following code snippet:
+现在，您可以使用以下代码片段运行安装脚本: 
 
 ```bash showLineNumbers
 export CLUSTER_NAME="my-cluster"
@@ -81,12 +76,12 @@ export PORT_CLIENT_SECRET="my-port-client-secret"
 curl -s https://raw.githubusercontent.com/port-labs/template-assets/main/kubernetes/install.sh | bash
 ```
 
-You can now browse to your Port environment to see that your blueprints have been created, and your k8s and Trivy
-resources are being reported to Port using the freshly installed k8s exporter.
+现在您可以浏览您的 Port 环境，查看蓝图是否已创建，您的 k8s 和 Trivy 资源是否正在使用新安装的 k8s 导出器向 Port 报告。
 
-## How does the installation script work?
+## 安装脚本如何工作？
 
 <TemplateInstallation />
 
-## Alternative integration using script
-While the Trivy Kubernetes exporter described above is the recommended installation method, you may prefer to use a webhook and a script to [ingest your Trivy scan results to Port](/build-your-software-catalog/sync-data-to-catalog/webhook/examples/packages/trivy). 
+## 使用脚本的另一种整合方式
+
+虽然上述 Trivy Kubernetes 输出程序是推荐的安装方法，但您可能更喜欢使用 webhook 和脚本来[ingest your Trivy scan results to Port](/build-your-software-catalog/sync-data-to-catalog/webhook/examples/packages/trivy) 。

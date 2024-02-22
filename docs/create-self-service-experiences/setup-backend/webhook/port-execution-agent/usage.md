@@ -1,23 +1,25 @@
 ---
+
 sidebar_position: 2
+
 ---
 
 # Usage
 
-When using the execution agent, in the `url` field you need to provide a URL to a service (for example, a REST API) that will accept the invocation event.
+在使用执行代理时，您需要在 `url` 字段中提供一个指向服务(例如 REST API)的 URL，该服务将接受调用事件。
 
-- The service can be a private service running inside your private network;
-- Or, it can be a public accessible service from the public internet (**note** in this scenario, the execution agent needs corresponding outbound network rules that will allow it to contact the public service).
+* 服务可以是运行在专用网络内的专用服务；
+* 或者，它可以是一个可从公共互联网访问的公共服务(**注** 在这种情况下，执行代理需要相应的出站网络规则，使其能够联系公共服务)。
 
-:::note
-**IMPORTANT**: To make use of the **Port execution agent**, you need to configure:
+:::note 
+**重要**:  要被引用**Port 执行代理**，需要进行配置: 
 
 <!-- TODO: add back the URLs here for changelog destination -->
 
-- [Self-Service Action invocation method](/create-self-service-experiences/self-service-actions-deep-dive/self-service-actions-deep-dive.md#invocation-method-structure-fields) / Change Log destination `type` field value should be equal to `WEBHOOK`.
-- [Self-Service Action invocation method](/create-self-service-experiences/self-service-actions-deep-dive/self-service-actions-deep-dive.md#invocation-method-structure-fields) / Change Log `agent` field value should be equal to `true`.
+* [Self-Service Action invocation method](/create-self-service-experiences/self-service-actions-deep-dive/self-service-actions-deep-dive.md#invocation-method-structure-fields) / 更改日志目的地 `type` 字段值应等于 `WEBhook`。
+* [Self-Service Action invocation method](/create-self-service-experiences/self-service-actions-deep-dive/self-service-actions-deep-dive.md#invocation-method-structure-fields) / 更改日志`代理`字段值应等于`true`。
 
-For example:
+例如
 
 ```json showLineNumbers
 { "type": "WEBHOOK", "agent": true, "url": "URL_TO_API_INSIDE_YOUR_NETWORK" }
@@ -25,29 +27,31 @@ For example:
 
 :::
 
-Well Done! **Port Agent** is now running in your environment and will trigger any webhook that you've configured (for self-service actions, or changes in the software catalog).
+干得好！**Port Agent** 现在已在您的环境中运行，并将触发您配置的任何 webhook(用于自助服务操作或软件目录中的更改)。
 
-When a new invocation is detected, the agent will pull it from your Kafka topic and forward it to the internal API in your private network.
+检测到新的调用时，代理将从 Kafka 主题中提取该调用，并将其转发到私人网络中的内部 API。
 
 ![Port Execution Agent Logs](/img/self-service-actions/port-execution-agent/portAgentLogs.png)
 
+## 高级配置
 
-## Advanced configuration
-Some environments require special configuration when working with the Port agent. This includes working with self-signed certificates and/or proxies.
+使用 Port 代理时，某些环境需要特殊配置，包括使用自签名证书和/或代理。
 
-Port's agent uses Python's [requests](https://requests.readthedocs.io/en/latest/) library. This allows passing advanced configuration using environment variables.
+Port 的代理程序使用 Python 的[requests](https://requests.readthedocs.io/en/latest/) 库。这允许使用环境变量传递高级配置。
 
-To add an environment variable using the agent's Helm chart, either:
+要使用代理的 helm chart 引用环境变量，可以选择
 
-1. Using Helm's `--set` flag:
+1. 被引用 Helm 的 `--set` flag: 
+
 ```sh showLineNumbers
 helm upgrade --install <MY_INSTALLATION_NAME> port-labs/port-ocean \
   # Standard installation flags
   # ...
-  --set env.normal.VAR_NAME=VAR_VALUE 
+  --set env.normal.VAR_NAME=VAR_VALUE
 ```
 
-2. The Helm `values.yaml` file:
+2.Helm `values.yaml` 文件: 
+
 ```yaml showLineNumbers
 # The rest of the configuration
 # ...
@@ -56,12 +60,14 @@ env:
     VAR_NAME: VAR_VALUE
 ```
 
-###  Proxy configuration
+#### 代理配置
 
-#### `HTTP_PROXY`, `HTTPS_PROXY` & `ALL_PROXY`
-`HTTP_PROXY`, `HTTPS_PROXY`, and `ALL_PROXY` are environment variables used to specify a proxy server for handling HTTP, HTTPS, or all types of requests, respectively. The values assigned to these settings should be the URL of the proxy server.
+#### `http_proxy`、`https_proxy` 和 `all_proxy
 
-For example:
+HTTP_PROXY"、"HTTPS_PROXY "和 "ALL_PROXY "是环境变量，分别用于指定处理 HTTP、HTTPS 或所有类型请求的代理服务器。 分配给这些设置的值应该是代理服务器的 URL。
+
+例如
+
 ```sh showLineNumbers
 HTTP_PROXY=http://my-proxy.com:1111
 HTTPS_PROXY=http://my-proxy.com:2222
@@ -70,35 +76,36 @@ ALL_PROXY=http://my-proxy.com:3333
 
 #### `NO_PROXY`
 
-`NO_PROXY` allows blacklisting certain addresses from being handled through a proxy. This vairable accepts a comma-seperated list of hostnames or urls.
+NO_PROXY "允许将某些地址列入黑名单，使其无法通过代理处理。 该变量接受一个逗号分隔的主机名或 urls 列表。
 
-For example:
+例如
+
 ```sh showLineNumbers
 NO_PROXY=http://127.0.0.1,google.com
 ```
 
-For more information take a look at the Requests [proxy configuration documentation](https://requests.readthedocs.io/en/latest/user/advanced/#proxies).
+欲了解更多信息，请访问请求[proxy configuration documentation](https://requests.readthedocs.io/en/latest/user/advanced/#proxies) 。
 
-### SSL Environment Configuration
+### SSL 环境配置
 
-#### `REQUESTS_CA_BUNDLE`
+#### `requests_ca_bundle`
 
-`REQUESTS_CA_BUNDLE` is an environment variable used to specify a custom Certificate Authority (CA) bundle for verifying SSL/TLS certificates in HTTPS requests.
+REQUESTS_CA_BUNDLE "是一个环境变量，用于指定一个自定义的证书颁发机构(CA)捆绑包，以验证 HTTPS 请求中的 SSL/TLS 证书。
 
-Set `REQUESTS_CA_BUNDLE` to the file path of your CA bundle, which should contain one or more CA certificates in PEM format.
+将 `REQUESTS_CA_BUNDLE` 设为 CA 包的文件路径，其中应包含一个或多个 PEM 格式的 CA 证书。
 
-For example:
+例如
+
 ```sh
 REQUESTS_CA_BUNDLE=/path/to/cacert.pem
 ```
 
-This configuration directs the `requests` library to use the specified CA bundle for SSL/TLS certificate verification, overriding default system settings. It's useful for trusting self-signed certificates or certificates from a private CA.
+此配置指示 `requests` 库使用指定的 CA 捆绑包进行 SSL/TLS 证书验证，覆盖系统默认设置。 它对于信任自签证书或来自私有 CA 的证书非常有用。
 
+## 接下来的步骤
 
-## Next Steps
+请按照以下指南之一进行操作: 
 
-Follow one of the guides below:
-
-- [Self-Service Actions Deep Dive](/create-self-service-experiences/self-service-actions-deep-dive/self-service-actions-deep-dive.md) - Set up a blueprint and self-service actions.
-- [Changelog Listener](/create-self-service-experiences/setup-backend/webhook/examples/changelog-listener.md) - Create a blueprint with `changelogDestination` to listen and act on changes in the software catalog.
-- [GitLab Pipeline Trigger](/create-self-service-experiences/setup-backend/gitlab-pipeline/gitlab-pipeline.md) - Create an action that triggers GitLab Pipeline execution.
+* [Self-Service Actions Deep Dive](/create-self-service-experiences/self-service-actions-deep-dive/self-service-actions-deep-dive.md) - 设置蓝图和自助操作。
+* [Changelog Listener](/create-self-service-experiences/setup-backend/webhook/examples/changelog-listener.md) - 创建一个带有 `changelogDestination` 的蓝图，以监听软件目录中的变更并采取相应行动。
+* [GitLab Pipeline Trigger](/create-self-service-experiences/setup-backend/gitlab-pipeline/gitlab-pipeline.md) - 创建一个可触发 GitLab Pipelines 执行的操作。

@@ -1,52 +1,53 @@
 ---
+
 sidebar_position: 1
-title: Terraform Cloud
-description: Terraform integration in Port
+title: Terraform 云
+description: Port 中的 Terraform 集成
+
 ---
 
 import Tabs from "@theme/Tabs"
 import TabItem from "@theme/TabItem"
-import DockerParameters from "./\_terraform_one_time_docker_parameters.mdx"
+import DockerParameters from "./_terraform_one_time_docker_parameters.mdx"
 
-# Terraform Cloud
+# Terraform 云
 
-The Terraform Cloud Integration for Port enables seamless import and synchronization of `organizations`, `projects`, `workspaces`, `runs`, and `state versions` from your Terraform infrastructure management into Port. This integration allows you to effectively monitor and manage your Terraform Cloud workspaces and runs within the Port platform.
+Terraform Cloud Integration for Port 可将 Terraform 基础架构管理中的 "组织"、"项目"、"工作空间"、"运行 "和 "状态版本 "无缝导入和同步到 Port 中。 通过该集成，您可以在 Port 平台中有效监控和管理 Terraform Cloud 工作空间和运行。
 
-An `Organization` is a shared space for one or more teams to collaborate on workspaces.
+组织 "是一个或多个团队协作工作空间的共享空间。
 
-A `Project` in Terraform Cloud is a collection of infrastructure configurations, often corresponding to a code repository. It serves as the primary organizational unit, grouping related `workspaces`, `runs`, and `state versions` to manage and structure Terraform code for efficient deployment and collaboration.
+Terraform 云中的 "项目 "是基础架构配置的集合，通常与代码库相对应。 它作为主要的组织单位，将相关的 "Workspace"、"run "和 "state 版本 "分组，以管理和构建 Terraform 代码，实现高效部署和协作。
 
-A `Workspace` represents a workspace in Terraform cloud. A workspace is a logical environment where Terraform manages infrastructure, such as a set of cloud resources.
+Workspace "表示 Terraform 云中的一个工作区。 工作区是 Terraform 管理基础设施(如一组云资源)的逻辑环境。
 
-A `Run` represents an instance of Terraform operations (plan, apply, or destroy) executed within a workspace. Each run holds information about the operation status, duration, and other relevant metadata.
+运行"(Run)表示在 Workspace 中执行的 Terraform 操作(计划、应用或销毁)的一个实例。 每个运行保存有关操作状态、持续时间和其他相关元数据的信息。
 
-A `State Version` represents a versioned state file in Terraform. Each state version is immutable and represents the state of your managed infrastructure at a particular point in time. State versions are used to track the changes in your infrastructure and help with auditing, rollbacks, and historical analysis.
+状态版本 "代表 Terraform 中的版本化状态文件。 每个状态版本都是不可变的，代表受管基础架构在特定时间点的状态。 状态版本被引用来跟踪基础架构中的变更，有助于审计、回滚和历史分析。
 
+## 常见被引用情况
 
-## Common use cases
+* 同步基础架构管理: 自动将 Terraform Cloud 中的 Workspace、运行和状态版本数据同步到 Port 中，以便集中跟踪和管理。
+* 监控运行状态: 跟踪运行结果(成功、失败等)和持续时间，深入了解基础架构管理流程的健康状况和性能。
+* 识别 Terraform 配置与云中有效部署之间的偏差。
 
-- Synchronization of Infrastructure Management: Automatically synchronize workspace, run and state version data from Terraform Cloud into Port for centralized tracking and management.
-- Monitoring Run Statuses: Keep track of run outcomes (success, failure, etc.) and durations, providing insights into the health and performance of your infrastructure management processes.
-- Identify drifts between your Terraform configuration and what's effectively deployed in your Cloud.
+## 先决条件
 
-## Prerequisites
+要安装集成，你需要一个 Kubernetes 集群，集成的容器图将部署到该集群中。
 
-To install the integration, you need a Kubernetes cluster that the integration's container chart will be deployed to.
+请确保您的计算机上安装了[`kubectl`](https://kubernetes.io/docs/tasks/tools/#kubectl) 和[`helm`](https://helm.sh/) ，并确保您的 `kubectl` CLI 已连接到计划安装集成的 Kubernetes 集群。
 
-Please make sure that you have [`kubectl`](https://kubernetes.io/docs/tasks/tools/#kubectl) and [`helm`](https://helm.sh/) installed on your machine, and that your `kubectl` CLI is connected to the Kubernetes cluster where you plan to install the integration.
+## 安装
 
-## Installation
-
-Choose one of the following installation methods:
+从以下安装方法中选择一种: 
 
 <Tabs groupId="installation-methods" queryString="installation-methods">
 
 <TabItem value="real-time-always-on" label="Real Time & Always On" default>
 
-Using this installation option means that the integration will be able to update Port in real time using webhooks.
+使用该安装选项意味着集成将能使用 webhook 实时更新 Port。
 
-This table summarizes the available parameters for the installation.
-Set them as you wish in the script below, then copy it and run it in your terminal:
+本表总结了安装时可用的参数，请在下面的脚本中按自己的需要进行设置，然后复制并在终端运行: 
+
 
 | Parameter                                | Description                                                                                                   | Required |
 | ---------------------------------------- | ------------------------------------------------------------------------------------------------------------- | -------- |
@@ -56,11 +57,12 @@ Set them as you wish in the script below, then copy it and run it in your termin
 | `integration.identifier`                 | Change the identifier to describe your integration                                                            | ✅       |
 | `integration.type`                       | The integration type                                                                                          | ✅       |
 | `integration.eventListener.type`         | The event listener type                                                                                       | ✅       |
-| `integration.config.terraformCloudHost` | Your Terraform host. For example https://app.terraform.io  token                                                                           | ✅       |
+| `integration.config.terraformCloudHost` | Your Terraform host. For example https://app.terraform.io token                                                                           | ✅       |
 | `integration.config.terraformCloudToken` | The Terraform cloud API token                                                                           | ✅       |
 | `integration.config.appHost`             | Your application's host url                                                                                   | ❌       |
 | `scheduledResyncInterval`                | The number of minutes between each resync                                                                     | ❌       |
 | `initializePortResources`                | Default true, When set to true the integration will create default blueprints and the port App config Mapping | ❌       |
+
 
 <br/>
 <Tabs groupId="deploy" queryString="deploy">
@@ -71,25 +73,27 @@ To install the integration using Helm, run the following command:
 ```bash showLineNumbers
 helm repo add --force-update port-labs https://port-labs.github.io/helm-charts
 helm upgrade --install terraform port-labs/port-ocean \
-	--set port.clientId="PORT_CLIENT_ID"  \
-	--set port.clientSecret="PORT_CLIENT_SECRET"  \
-	--set port.baseUrl="https://api.getport.io"  \
-	--set initializePortResources=true  \
-	--set integration.identifier="my-terraform-cloud-integration"  \
-	--set integration.type="terraform-cloud"  \
-	--set integration.eventListener.type="POLLING"  \
+    --set port.clientId="PORT_CLIENT_ID"  \
+    --set port.clientSecret="PORT_CLIENT_SECRET"  \
+    --set port.baseUrl="https://api.getport.io"  \
+    --set initializePortResources=true  \
+    --set integration.identifier="my-terraform-cloud-integration"  \
+    --set integration.type="terraform-cloud"  \
+    --set integration.eventListener.type="POLLING"  \
         --set integration.secrets.terraformCloudHost="string" \
-	--set integration.secrets.terraformCloudToken="string" 
+    --set integration.secrets.terraformCloudToken="string"
 ```
+
 </TabItem>
 <TabItem value="argocd" label="ArgoCD" default>
 To install the integration using ArgoCD, follow these steps:
 
-1. Create a `values.yaml` file in `argocd/my-ocean-terraform-cloud-integration` in your git repository with the content:
+1. 在你的 git 仓库的 `argocd/my-ocean-terraform-cloud-integration` 中创建一个 `values.yaml` 文件，内容如下: 
 
-:::note
-Remember to replace the placeholders for  `TERRAFORM_CLOUD_HOST` and `TERRAFORM_CLOUD_TOKEN`.
+:::note 请记住替换 `TERRAFORM_CLOUD_HOST` 和 `TERRAFORM_CLOUD_TOKEN` 的占位符。
+
 :::
+
 ```yaml showLineNumbers
 initializePortResources: true
 scheduledResyncInterval: 120
@@ -104,13 +108,15 @@ integration:
     terraformCloudToken: TERRAFORM_CLOUD_TOKEN
   // highlight-end
 ```
+
 <br/>
 
-2. Install the `my-ocean-terraform-cloud-integration` ArgoCD Application by creating the following `my-ocean-terraform-cloud-integration.yaml` manifest:
-:::note
-Remember to replace the placeholders for `YOUR_PORT_CLIENT_ID` `YOUR_PORT_CLIENT_SECRET` and `YOUR_GIT_REPO_URL`.
+2.创建以下 "my-ocean-terraform-cloud-integration.yaml "配置清单，安装 "my-ocean-terraform-cloud-integration "ArgoCD应用程序: 
 
-Multiple sources ArgoCD documentation can be found [here](https://argo-cd.readthedocs.io/en/stable/user-guide/multiple_sources/#helm-value-files-from-external-git-repository).
+:::note 记住要替换 `YOUR_PORT_CLIENT_ID``YOUR_PORT_CLIENT_SECRET` 和 `YOUR_GIT_REPO_URL` 的占位符。
+
+多种来源的 ArgoCD 文档可在[here](https://argo-cd.readthedocs.io/en/stable/user-guide/multiple_sources/#helm-value-files-from-external-git-repository) 上找到。
+
 :::
 
 <details>
@@ -155,10 +161,12 @@ spec:
 </details>
 <br/>
 
-3. Apply your application manifest with `kubectl`:
+3.使用 `kubectl` 配置应用程序清单: 
+
 ```bash
 kubectl apply -f my-ocean-terraform-cloud-integration.yaml
 ```
+
 </TabItem>
 </Tabs>
 
@@ -170,17 +178,17 @@ kubectl apply -f my-ocean-terraform-cloud-integration.yaml
   <TabItem value="github" label="GitHub">
 This workflow will run the Terraform cloud integration once and then exit, this is useful for **scheduled** ingestion of data.
 
-:::warning
-If you want the integration to update Port in real time you should use the [Real Time & Always On](?installation-methods=real-time-always-on#installation) installation option
+:::warning 如果希望集成能实时更新 Port，则应使用[Real Time & Always On](?installation-methods=real-time-always-on#installation) 安装选项
+
 :::
 
-Make sure to configure the following [Github Secrets](https://docs.github.com/en/actions/security-guides/using-secrets-in-github-actions):
+确保配置以下[Github Secrets](https://docs.github.com/en/actions/security-guides/using-secrets-in-github-actions) : 
 
 <DockerParameters/>
 
 <br/>
 
-Here is an example for `terraform-integration.yml` workflow file:
+下面是 `terraform-integration.yml` 工作流程文件的示例: 
 
 ```yaml showLineNumbers
 name: Terraform Exporter Workflow
@@ -215,22 +223,22 @@ jobs:
 
   </TabItem>
   <TabItem value="jenkins" label="Jenkins">
-This pipeline will run the Terraform  cloud integration once and then exit, this is useful for **scheduled** ingestion of data.
+This pipeline will run the Terraform cloud integration once and then exit, this is useful for **scheduled** ingestion of data.
 
-:::tip
-Your Jenkins agent should be able to run docker commands.
+:::tip 你的 Jenkins 代理应该能够运行 docker 命令。
+
 :::
-:::warning
-If you want the integration to update Port in real time using webhooks you should use the [Real Time & Always On](?installation-methods=real-time-always-on#installation) installation option.
+:::warning 如果希望集成使用 webhooks 实时更新 Port，则应使用 安装选项。[Real Time & Always On](?installation-methods=real-time-always-on#installation) 
+
 :::
 
-Make sure to configure the following [Terraform Cloud Credentials](https://www.jenkins.io/doc/book/using/using-credentials/) of `Secret Text` type:
+请确保配置以下[Terraform Cloud Credentials](https://www.jenkins.io/doc/book/using/using-credentials/) 的 "Secret Text "类型: 
 
 <DockerParameters/>
 
 <br/>
 
-Here is an example for `Jenkinsfile` groovy pipeline file:
+下面是 `Jenkinsfile` groovy Pipelines 文件的示例: 
 
 ```yml showLineNumbers
 pipeline {
@@ -276,15 +284,15 @@ pipeline {
 
 </Tabs>
 
-### Event listener
+### 事件监听器
 
-The integration uses polling to pull the configuration from Port every minute and check it for changes. If there is a change, a resync will occur.
+该集成使用轮询方式，每分钟从 Port 中提取一次配置，并检查配置是否有变化。 如果有变化，就会重新同步。
 
-## Ingesting Terraform Cloud objects
+## 摄取 Terraform 云对象
 
-The Terraform integration uses a YAML configuration to describe the process of loading data into the developer portal.
+Terraform 集成使用 YAML 配置来描述将数据加载到开发者门户的过程。
 
-Here is an example snippet from the config which demonstrates the process for getting `Workspace` from Terraform cloud:
+下面是配置中的一个示例片段，演示了从 Terraform 云获取 "Workspace "的过程: 
 
 ```yaml showLineNumbers
 resources:
@@ -308,24 +316,24 @@ resources:
             latestChangeAt: .attributes."latest-change-at"
 ```
 
-The integration makes use of the [JQ JSON processor](https://stedolan.github.io/jq/manual/) to select, modify, concatenate, transform and perform other operations on existing fields and values from Terraform's API events.
+该集成利用[JQ JSON processor](https://stedolan.github.io/jq/manual/) 对 Terraform API 事件中的现有字段和值进行选择、修改、连接、转换和其他操作。
 
-### Configuration structure
+### 配置结构
 
-The integration configuration determines which resources will be queried from Terraform Cloud, and which entities and properties will be created in Port.
+集成配置决定了将从 Terraform Cloud 查询哪些资源，以及将在 Port 中创建哪些实体和属性。
 
-:::tip Supported resources
-The following resources can be used to map data from Terraform Cloud, it is possible to reference any field that appears in the API responses linked below for the mapping configuration.
+:::tip  支持的资源 以下资源可用于映射 Terraform Cloud 中的数据，可以引用下面链接的 API 响应中出现的任何字段进行映射配置。
 
-- [`Organization`](https://developer.hashicorp.com/terraform/cloud-docs/api-docs/organizations)
-- [`Project`](https://developer.hashicorp.com/terraform/cloud-docs/api-docs/projects)
-- [`Workspace`](https://www.terraform.io/docs/cloud/api/workspaces.html)
-- [`Run`](https://www.terraform.io/docs/cloud/api/runs.html)
-- [`State Version`](https://developer.hashicorp.com/terraform/cloud-docs/api-docs/state-versions)
+* * [`Organization`](https://developer.hashicorp.com/terraform/cloud-docs/api-docs/organizations)
+* [`Project`](https://developer.hashicorp.com/terraform/cloud-docs/api-docs/projects)
+* [`Workspace`](https://www.terraform.io/docs/cloud/api/workspaces.html)
+* [`Run`](https://www.terraform.io/docs/cloud/api/runs.html)
+* [`State Version`](https://developer.hashicorp.com/terraform/cloud-docs/api-docs/state-versions)
 
 :::
 
-- The root key of the integration configuration is the `resources` key:
+* 集成配置的根密钥是 "资源 "密钥: 
+
 
   ```yaml showLineNumbers
   # highlight-next-line
@@ -335,7 +343,9 @@ The following resources can be used to map data from Terraform Cloud, it is poss
       ...
   ```
 
-- The `kind` key is a specifier for a Terraform object:
+
+* 类型 "键是 Terraform 对象的指定符: 
+
 
   ```yaml showLineNumbers
     resources:
@@ -345,7 +355,8 @@ The following resources can be used to map data from Terraform Cloud, it is poss
         ...
   ```
 
-- The `port`, `entity` and the `mappings` keys are used to map the Terraform Cloud object fields to Port entities. To create multiple mappings of the same kind, you can add another item in the `resources` array;
+
+* Port"、"实体 "和 "映射 "键被用来将 Terraform Cloud 对象字段映射到Port实体。要创建多个同类映射，可在 `resources` 数组中添加另一项；
 
 ```yaml showLineNumbers
 resources:
@@ -371,32 +382,32 @@ resources:
             currentStateVersion: .relationships."current-state-version".data.id
 ```
 
-:::tip Blueprint key
-Note the value of the `blueprint` key - if you want to use a hardcoded string, you need to encapsulate it in 2 sets of quotes, for example use a pair of single-quotes (`'`) and then another pair of double-quotes (`"`)
+:::tip  Blueprint key 注意 `blueprint` 键的值 - 如果要使用硬编码字符串，则需要用 2 组引号封装，例如使用一对单引号 (`'`)，然后再使用一对双引号 (`"`)。
+
 :::
 
-### Ingest data into Port
+#### 将数据输入Port
 
-To ingest Terraform Cloud objects using the [integration configuration](#configuration-structure), you can follow the steps below:
+要使用[integration configuration](#configuration-structure) 引用 Terraform Cloud 对象，可以按照以下步骤操作: 
 
-1. Go to the DevPortal Builder page.
-2. Select a blueprint you want to ingest using Terraform Cloud.
-3. Choose the **Ingest Data** option from the menu.
-4. Select Terraform Cloud under the IaC category.
-5. Add the contents of your [integration configuration](#configuration-structure) to the editor.
-6. Click `Resync`.
+1. 转到 DevPortal Builder 页面。
+2. 选择要使用 Terraform Cloud 进行引用的蓝图。
+3. 从菜单中选择**摄取数据**选项。
+4. 选择 IaC 类别下的 Terraform Cloud。
+5. 将[integration configuration](#configuration-structure) 的内容添加到编辑器中。
+6. 单击 `Resync`。
 
-## Examples
+## 示例
 
-Examples of blueprints and the relevant integration configurations:
+蓝图和相关集成配置示例: 
 
-### Organization
+#### 组织
 
 <details>
 <summary>Organization blueprint</summary>
 
 ```json showLineNumbers
-  {
+{
     "identifier": "terraformCloudOrganization",
     "description": "This blueprint represents an organization in Terraform Cloud",
     "title": "Terraform Cloud Organization",
@@ -452,6 +463,7 @@ Examples of blueprints and the relevant integration configurations:
     "relations": {}
   }
 ```
+
 </details>
 
 <details>
@@ -477,14 +489,16 @@ Examples of blueprints and the relevant integration configurations:
           samlEnabled: .attributes."saml-enabled"
           defaultExecutionMode: .attributes."default-execution-mode"
 ```
+
 </details>
 
-### Project
+### 项目
+
 <details>
 <summary>Project blueprint</summary>
 
 ```json showLineNumbers
-  {
+{
     "identifier": "terraformCloudProject",
     "description": "This blueprint represents a project in Terraform Cloud",
     "title": "Terraform Cloud Project",
@@ -516,6 +530,7 @@ Examples of blueprints and the relevant integration configurations:
     }
   }
 ```
+
 </details>
 
 <details>
@@ -537,6 +552,7 @@ Examples of blueprints and the relevant integration configurations:
         relations:
           organization: .relationships.organization.data.id
 ```
+
 </details>
 
 ### Workspace
@@ -545,7 +561,7 @@ Examples of blueprints and the relevant integration configurations:
 <summary>Workspace blueprint</summary>
 
 ```json showLineNumbers
-  {
+{
     "identifier": "terraformCloudWorkspace",
     "description": "This blueprint represents a workspace in Terraform Cloud",
     "title": "Terraform Cloud Workspace",
@@ -621,8 +637,8 @@ Examples of blueprints and the relevant integration configurations:
     }
   }
 ```
-</details>
 
+</details>
 
 <details>
 <summary>Integration configuration</summary>
@@ -654,7 +670,7 @@ Examples of blueprints and the relevant integration configurations:
 
 </details>
 
-### Run
+#### 运行
 
 <details>
 <summary>Run blueprint</summary>
@@ -759,7 +775,7 @@ Examples of blueprints and the relevant integration configurations:
 
 </details>
 
-### State Version
+#### 国家版本
 
 <details>
 <summary>State Version blueprint</summary>
@@ -859,13 +875,13 @@ Examples of blueprints and the relevant integration configurations:
 
 </details>
 
-## Let's Test It
+## 让我们来测试一下
 
-This section includes a sample response data from Terrform Cloud. In addition, it includes the entity created from the resync event based on the Ocean configuration provided in the previous section.
+本节包括来自 Terrform Cloud 的响应数据示例。 此外，还包括根据上一节提供的 Ocean 配置从重新同步事件中创建的实体。
 
-### Payload
+### 有效载荷
 
-Here is an example of the payload structure from Terraform:
+下面是 Terraform 提供的有效载荷结构示例: 
 
 <details>
 <summary> Organization response data</summary>
@@ -989,8 +1005,8 @@ Here is an example of the payload structure from Terraform:
   }
 }
 ```
-</details>
 
+</details>
 
 <details>
 <summary> Workspace response data</summary>
@@ -1056,10 +1072,10 @@ Here is an example of the payload structure from Terraform:
       "description":"None",
       "file-triggers-enabled":false,
       "trigger-prefixes":[
-        
+
       ],
       "trigger-patterns":[
-        
+
       ],
       "assessments-enabled":false,
       "last-assessment-result-at":"None",
@@ -1090,7 +1106,7 @@ Here is an example of the payload structure from Terraform:
       },
       "outputs":{
         "data":[
-            
+
         ]
       },
       "remote-state-consumers":{
@@ -1121,7 +1137,7 @@ Here is an example of the payload structure from Terraform:
       },
       "vars":{
         "data":[
-            
+
         ]
       }
   },
@@ -1730,9 +1746,9 @@ Here is an example of the payload structure from Terraform:
 
 </details>
 
-### Mapping Result
+#### 映射结果
 
-The combination of the sample payload and the Ocean configuration generates the following Port entity:
+结合样本有效载荷和 Ocean 配置，可生成以下 Port 实体: 
 
 <details>
 <summary> organization entity in Port</summary>
@@ -1791,6 +1807,7 @@ The combination of the sample payload and the Ocean configuration generates the 
   "icon": "Terraform"
 }
 ```
+
 </details>
 
 <details>
@@ -1819,6 +1836,7 @@ The combination of the sample payload and the Ocean configuration generates the 
   "icon": "Terraform"
 }
 ```
+
 </details>
 
 <details>

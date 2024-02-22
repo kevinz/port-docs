@@ -1,23 +1,25 @@
 ---
+
 sidebar_position: 6
-description: Ingest Terraform resources into your catalog
+description: 将 Terraform 资源摄入目录
+
 ---
 
 import Tabs from "@theme/Tabs"
 import TabItem from "@theme/TabItem"
-import TerraformResourceBlueprint from './resources/terraform/\_example_tfstate_resource_blueprint.mdx'
-import TerraformOutputBlueprint from './resources/terraform/\_example_tfstate_output_blueprint.mdx'
-import TerraformWebhookConfig from './resources/terraform/\_example_tfstate_webhook_config.mdx'
+import TerraformResourceBlueprint from './resources/terraform/_example_tfstate_resource_blueprint.mdx'
+import TerraformOutputBlueprint from './resources/terraform/_example_tfstate_output_blueprint.mdx'
+import TerraformWebhookConfig from './resources/terraform/_example_tfstate_webhook_config.mdx'
 
-# Terraform State
+# Terraform 状态
 
-In this example you are going to create a `terraformResource` and `tarraformOutput` blueprint that ingests all resources and outputs in your `terraform.tfstate` file using a combination of Port's [API](../../../api/api.md) and [webhook functionality](../../webhook.md).
+在本例中，您将创建一个 `terraformResource` 和 `tarraformOutput` 蓝图，该蓝图将使用 Port's[API](../../../api/api.md) 和[webhook functionality](../../webhook.md) 的组合来引用 `terraform.tfstate` 文件中的所有资源和输出。
 
-To ingest the resources to Port, a script that sends information about resources and outputs according to the webhook configuration is used.
+要将资源引用到 Port，需要使用一个脚本，根据 webhook 配置发送资源信息并输出。
 
-## Prerequisites
+## 先决条件
 
-Create the following blueprint definition and webhook configuration:
+创建以下蓝图定义和 webhook 配置: 
 
 <details>
 <summary>Terraform resources blueprint</summary>
@@ -36,9 +38,9 @@ Create the following blueprint definition and webhook configuration:
 
 </details>
 
-## Working with Port's API and Bash script
+## 使用 Port 的 API 和 Bash 脚本
 
-Here is an example snippet showing how to integrate Port's API and Webhook with your existing pipelines using Python and Bash:
+下面的示例片段展示了如何使用 Python 和 Bash 将 Port 的 API 和 Webhook 与现有管道集成: 
 
 <Tabs groupId="usage" defaultValue="python" values={[
 {label: "Python", value: "python"},
@@ -47,7 +49,7 @@ Here is an example snippet showing how to integrate Port's API and Webhook with 
 
 <TabItem value="python">
 
-Create the following Python script in your repository to create or update Port entities as part of your pipeline:
+在版本库中创建以下 Python 脚本，以创建或更新 Port 实体，作为管道的一部分: 
 
 <details>
   <summary> Python script example </summary>
@@ -60,7 +62,6 @@ import os
 # Get environment variables using the config object or os.environ["KEY"]
 WEBHOOK_URL = os.environ['WEBHOOK_URL'] ## the value of the URL you receive after creating the Port webhook
 PATH_TO_TERRAFORM_TFSTATE_FILE = os.environ['PATH_TO_TERRAFORM_TFSTATE_FILE']
-
 
 def add_entity_to_port(entity_object):
     """A function to create the passed entity in Port using the webhook URL
@@ -109,7 +110,6 @@ def parse_tf_resources(resources):
         index+=1
     return tf_resources
 
-
 def read_tfstate_file(tfstate_json_path):
     """This function takes a tfstate_json_path file path, converts the resources and outputs property into a
     JSON array and then sends the data to Port
@@ -152,7 +152,7 @@ print(response)
 
 <TabItem value="bash">
 
-Create the following Bash script in your repository to create or update Port entities as part of your pipeline:
+在版本库中创建以下 Bash 脚本，以创建或更新作为 Pipelines 一部分的 Port 实体: 
 
 <details>
   <summary> Bash script example </summary>

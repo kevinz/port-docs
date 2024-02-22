@@ -1,20 +1,22 @@
 ---
+
 sidebar_position: 4
-sidebar_label: Page Permissions
+sidebar_label: 页面权限
+
 ---
 
 import Tabs from "@theme/Tabs"
 import TabItem from "@theme/TabItem"
 
-# Page permissions
+# 页面权限
 
-Pages have 4 regular CRUD permissions: `create`, `read`, `update` and `delete`.
+页面有 4 种常规的 CRUD 权限: "创建"、"读取"、"更新 "和 "删除"。
 
-Currently only `read` permission can be modified.
+目前只能修改 `读取`权限。
 
-## Get page permissions
+## 获取页面权限
 
-Any user can get the permissions of a specific page:
+任何用户都可以获取特定页面的权限: 
 
 <Tabs groupId="view-permissions" queryString values={[
 {label: "From the UI", value: "ui"},
@@ -23,7 +25,7 @@ Any user can get the permissions of a specific page:
 
 <TabItem value="ui">
 
-In your software catalog, choose the page for which you would like to view permissions, then click on `Permissions`:
+在软件目录中，选择要查看权限的页面，然后单击 "权限": 
 
 <img src='/img/software-catalog/pages/viewPagePermissions.gif' width='70%' />
 
@@ -31,17 +33,17 @@ In your software catalog, choose the page for which you would like to view permi
 
 <TabItem value="api">
 
-:::info
+:::info 
 
-- Remember that an access token is needed to make API requests, refer back to [Getting an API token](/build-your-software-catalog/sync-data-to-catalog/api/api.md#get-api-token) if you need to generate a new one.
-- Currently in order to see the page identifiers you can request all pages by making a  
-  GET request to `https://api.getport.io/v1/pages`
+* 请记住，API 请求需要访问令牌，如果需要生成一个新的访问令牌，请参阅[Getting an API token](/build-your-software-catalog/sync-data-to-catalog/api/api.md#get-api-token) 。
+* 目前，要查看页面标识符，可以通过向  
+GET 请求到 `https://api.getport.io/v1/pages`
 
 :::
 
-Make an **HTTP GET** request to the URL: `https://api.getport.io/v1/pages/{page_identifier}/permissions`.
+向 URL 发送 **HTTP GET** 请求: `https://api.getport.io/v1/pages/{page_identifier}/permissions`。
 
-The response will contain the roles and users that are allowed to read (view) the requested page:
+响应将包含允许读取(查看)所请求页面的角色和用户: 
 
 ```json showLineNumbers
 {
@@ -53,20 +55,19 @@ The response will contain the roles and users that are allowed to read (view) th
 }
 ```
 
-This response body indicates that those roles, users and teams have permissions to read the page.
-In addition, every role, user and team which does not appear in this request body does not have permission to view the page.
+该响应体表明这些角色、用户和团队拥有阅读该页面的权限。 此外，未出现在该请求体中的每个角色、用户和团队都没有查看该页面的权限。
 
 </TabItem>
 
 </Tabs>
 
-:::note
-Only page permissions of software catalog pages can be requested. For example, the permissions for the Builder page and the audit log page cannot be changed.
+:::note 只能申请软件目录页面的页面权限。 例如，不能更改 "生成器 "页面和 "审计日志 "页面的权限。
+
 :::
 
-## Update page permissions
+## 更新页面权限
 
-Only users with the `admin` role can update the permissions of a catalog page:
+只有具有 "admin "角色的用户才能更新目录页面的权限: 
 
 <Tabs groupId="edit-permissions" queryString values={[
 {label: "From the UI", value: "ui"},
@@ -75,8 +76,7 @@ Only users with the `admin` role can update the permissions of a catalog page:
 
 <TabItem value="ui">
 
-In your software catalog, choose the page for which you would like to edit permissions, then click on `Permissions`.  
-Choose the user/s or team/s that you would like to give permissions to, then click on `Done`. 
+在软件目录中，选择要编辑权限的页面，然后点击 "权限"。 选择要授予权限的用户或团队，然后点击 "完成"。
 
 <img src='/img/software-catalog/pages/editPagePermissions.gif' width='70%' />
 
@@ -84,11 +84,11 @@ Choose the user/s or team/s that you would like to give permissions to, then cli
 
 <TabItem value="api">
 
-To update page permissions, you will need to specify the roles, teams or users that should have permissions for the page.
+要更新页面权限，需要指定对页面拥有权限的角色、团队或用户。
 
-To perform an update, make an **HTTP PATCH** request to the following URL: `https://api.getport.io/v1/pages/{page_identifier}/permissions`.
+要执行更新，请向以下 URL 发送 **HTTP PATCH** 请求: `https://api.getport.io/v1/pages/{page_identifier}/permissions`。
 
-Here is an example request body:
+下面是一个请求正文示例: 
 
 ```json showLineNumbers
 {
@@ -98,13 +98,13 @@ Here is an example request body:
 }
 ```
 
-:::tip
+:::tip 
 
-The `PATCH` API will perform updates only to keys that are specified in the request body. Be sure to include only the relevant keys in the request body (users, roles or teams)
+PATCH` API 只对请求正文中指定的密钥执行更新。 请确保在请求正文中只包含相关密钥(用户、角色或团队)。
 
-If you do not specify a specific key (for example `users` in the request, user permissions to the specific page will remain unchanged).
+如果不指定特定密钥(例如请求中的 `users`，用户对特定页面的权限将保持不变)。
 
-When making changes to permissions, any role, user or team that does not appear in the corresponding key in the request body will lose permissions to the page (this is how you remove permissions to a page).
+更改权限时，任何未出现在请求正文相应键值中的角色、用户或团队都将失去对页面的权限(这就是删除页面权限的方法)。
 
 :::
 
@@ -112,11 +112,11 @@ When making changes to permissions, any role, user or team that does not appear 
 
 </Tabs>
 
-### Examples
+### 示例
 
-Let's present a set of page permissions and then explore how different `PATCH` request bodies change the effective permissions of the page.
+让我们介绍一组页面权限，然后探讨不同的 `PATCH` 请求体如何改变页面的有效权限。
 
-Given the following permissions for a page:
+给定页面的权限如下: 
 
 ```json showLineNumbers
 {
@@ -128,9 +128,9 @@ Given the following permissions for a page:
 }
 ```
 
-#### Add permissions to role
+#### 为角色添加权限
 
-Making an **HTTP PATCH** request with the following body will give the `Services-Moderator` role permissions to view the page (without removing the permissions of any existing role):
+发送包含以下正文的 **HTTP PATCH** 请求，将赋予 `Services-Moderator` 角色查看页面的权限(不会删除任何现有角色的权限): 
 
 ```json showLineNumbers
 {
@@ -140,9 +140,9 @@ Making an **HTTP PATCH** request with the following body will give the `Services
 }
 ```
 
-#### Remove permissions from role
+#### 删除角色权限
 
-Making an **HTTP PATCH** request with the following body will remove the `Member` roles' permissions to view the page:
+发送包含以下正文的 **HTTP PATCH** 请求，将移除 `Member` 角色查看页面的权限: 
 
 ```json showLineNumbers
 {
@@ -152,9 +152,9 @@ Making an **HTTP PATCH** request with the following body will remove the `Member
 }
 ```
 
-#### Add permissions to user
+#### 为用户添加权限
 
-Making an **HTTP PATCH** request with the following body will give the specified users permissions to view the page (without changing the permissions of existing `roles`):
+使用以下正文发出 **HTTP PATCH** 请求，将赋予指定用户查看页面的权限(不改变现有`角色`的权限): 
 
 ```json showLineNumbers
 {
@@ -164,9 +164,9 @@ Making an **HTTP PATCH** request with the following body will give the specified
 }
 ```
 
-#### Add permissions to team
+#### 为团队添加权限
 
-Making an **HTTP PATCH** request with the following body will give the specified teams permissions to view the page (without changing the permissions of existing `roles`):
+发送包含以下正文的 **HTTP PATCH** 请求，将赋予指定团队查看页面的权限(无需更改现有 "角色 "的权限): 
 
 ```json showLineNumbers
 {
@@ -176,15 +176,15 @@ Making an **HTTP PATCH** request with the following body will give the specified
 }
 ```
 
-:::info
-It is possible to update multiple permission keys (`roles`, `teams` and/or `users`) in a single `PATCH` request, just keep in mind that any `role`, `team` or `user` that is not specified and previously had permissions to the page, will lose those permissions.
+:::info 可以在单个`PATCH`请求中更新多个权限键(`角色`、`团队`和/或`用户`)，但请注意，任何未指定的`角色`、`团队`或`用户`，如果之前拥有页面权限，则将失去这些权限。
+
 :::
 
-## Lock pages
+## 锁定页面
 
-Locking the page affects widgets that have Filter and/or Hide functionality.
+锁定页面会影响具有过滤和/或隐藏功能的部件。
 
-See the section below for the different methods to lock a page:
+有关锁定页面的不同方法，请参阅下面的章节: 
 
 <Tabs values={[
 {label: "API", value: "api"},
@@ -193,9 +193,9 @@ See the section below for the different methods to lock a page:
 
 <TabItem value="api">
 
-To lock a page, make an **HTTP PATCH** request to the following URL: `https://api.getport.io/v1/pages/{page_identifier}`
+要锁定页面，请向以下 URL 发送 **HTTP PATCH** 请求: `https://api.getport.io/v1/pages/{page_identifier}`。
 
-with the following body:
+正文如下
 
 ```json showLineNumbers
 {
@@ -207,17 +207,16 @@ with the following body:
 
 <TabItem value="ui">
 
-Users that have permissions to update a page (Usually users with the admin role) can lock the page's widgets.
+拥有更新页面权限的用户(通常是具有管理员角色的用户)可以锁定页面的部件。
 
-1. Save the page in the desired view by clicking the `save page` button;
-2. Open the page menu and click on `lock page`.
+1. 单击 "保存页面 "按钮，在所需视图中保存页面；
+2. 打开页面菜单，点击 "锁定页面"。
 
 </TabItem>
 
 </Tabs>
 
-:::note
-A locked page will have the `Lock` icon next to the page's title.
+:::note 锁定的页面标题旁边会有 "锁定 "图标。
 
 <center>
 

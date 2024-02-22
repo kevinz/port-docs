@@ -1,28 +1,31 @@
 ---
+
 sidebar_position: 2
+
 ---
 
-# Scaffold Repositories Using Cookiecutter
+# 使用 Cookiecutter 创建脚手架资源库
 
-This example demonstrates how to quickly scaffold Azure DevOps repositories using a [Cookiecutter Template](https://www.cookiecutter.io/templates) via Port Actions.
+本示例演示了如何使用[Cookiecutter Template](https://www.cookiecutter.io/templates) 通过 Port Actions 快速搭建 Azure DevOps 资源库。
 
-In addition, as cookiecutter is an open-source project you can make your own project template, learn more about it [here](https://cookiecutter.readthedocs.io/en/2.0.2/tutorials.html#create-your-very-own-cookiecutter-project-template).
+此外，由于 cookiecutter 是一个开源项目，您可以制作自己的项目模板，了解更多信息请访问[here](https://cookiecutter.readthedocs.io/en/2.0.2/tutorials.html#create-your-very-own-cookiecutter-project-template) 。
 
-## Example - scaffolding python template
+## 示例 - python 模板脚手架
 
-Follow these steps to get started with the Python template:
+请按照以下步骤开始使用 Python 模板: 
 
-1. Create an Azure DevOps Repository called `python_scaffolder` in your Azure Devops Organization/Project and configure a [Service Connection](/create-self-service-experiences/setup-backend/azure-pipeline#define-incoming-webhook-in-azure).
+1. 在 Azure Devops 组织/项目中创建名为 "python_scaffolder "的 Azure DevOps 资源库，并配置[Service Connection](/create-self-service-experiences/setup-backend/azure-pipeline#define-incoming-webhook-in-azure) 。
 
-:::note
-Use `port_trigger` for both `WebHook Name` and `Service connection name` when configuring your [Service Connection](https://learn.microsoft.com/en-us/azure/devops/pipelines/library/service-endpoints?view=azure-devops&tabs=yaml)
+:::note 配置 Webhook 名称 "和 "服务连接名称 "时，请将 "port_trigger "用于 "Webhook 名称 "和 "服务连接名称"。[Service Connection](https://learn.microsoft.com/en-us/azure/devops/pipelines/library/service-endpoints?view=azure-devops&amp;tabs=yaml)
+
 :::
+
 <br/>
 
-2. Create a Port blueprint with the following JSON definition:
+2.使用以下 JSON 定义创建 Port 蓝图: 
 
-:::note
-Keep in mind this can be any blueprint you would like and this is just an example.
+:::note 请记住，这可以是你想要的任何蓝图，这只是一个例子。
+
 :::
 
 <details>
@@ -56,11 +59,10 @@ Keep in mind this can be any blueprint you would like and this is just an exampl
 </details>
 <br/>
 
-3. Create Port action using the following JSON definition:
+3.使用以下 JSON 定义创建 Port 操作: 
 
-:::note
-Make sure to replace the placeholder for AZURE_DEVOPS_ORANZATION_NAME to where your `python_scaffolder` resides in.
-Also validate that `invocationMethod.webhook` equals `port_trigger`.
+:::note 确保将 AZURE_DEVOPS_ORANZATION_NAME 的占位符替换为`python_scaffolder`所在的位置。 同时验证`invocationMethod.webhook`等于`port_trigger`。
+
 :::
 
 <details>
@@ -121,7 +123,7 @@ Also validate that `invocationMethod.webhook` equals `port_trigger`.
 </details>
 <br/>
 
-4. In your `python_scaffolder` Azure DevOps Repository, create an Azure Pipeline file under `azure-pipelines.yml` in the root of the repo's main branch with the following content:
+4.在您的 `python_scaffolder` Azure DevOps Repository 中，在 repo 主分支根中的 `azure-pipelines.yml` 下创建一个 Azure Pipelines 文件，内容如下: 
 
 <details>
 <summary>Azure DevOps Pipeline Script</summary>
@@ -292,17 +294,14 @@ stages:
 </details>
 <br/>
 
-5. To configure the Pipeline in your project go to Pipelines -> Create Pipeline -> Azure Repos Git and choose `python_scaffolder` and click Save(in "Run" dropdown menu).
+5.要在项目中配置 Pipelines，请转到 Pipelines -> Create Pipeline -> Azure Repos Git，然后选择 "python_scaffolder"，点击保存(在 "运行 "下拉菜单中)。
    <br/>
+6.将以下变量创建为[Secret Variables](https://learn.microsoft.com/en-us/azure/devops/pipelines/process/set-secret-variables?view=azure-devops&amp;tabs=yaml%2Cbash) : 
+    1. PERSONAL_ACCESS_TOKEN` - base64 编码的[Personal Access Token](https://learn.microsoft.com/en-us/azure/devops/organizations/accounts/use-personal-access-tokens-to-authenticate?view=azure-devops&amp;tabs=Windows) ，其作用域如下: 
+        + 代码: Full.
+        + 发布: 读取、写入和执行。
+        使用以下脚本对您的 PAT 进行编码: 
 
-6. Create the following variables as [Secret Variables](https://learn.microsoft.com/en-us/azure/devops/pipelines/process/set-secret-variables?view=azure-devops&tabs=yaml%2Cbash):
-
-   1. `PERSONAL_ACCESS_TOKEN` - a base64-encoded [Personal Access Token](https://learn.microsoft.com/en-us/azure/devops/organizations/accounts/use-personal-access-tokens-to-authenticate?view=azure-devops&tabs=Windows) with the following scopes:
-
-      - Code: Full.
-      - Release: Read, write & execute.
-
-      Use the following script to encode your PAT:
 
       ```bash
       MY_PAT=YourPAT
@@ -310,9 +309,10 @@ stages:
       echo $B64_PAT
       ```
 
-   2. `PORT_CLIENT_ID` - Port Client ID [learn more](/build-your-software-catalog/sync-data-to-catalog/api/#get-api-token).
-   3. `PORT_CLIENT_SECRET` - Port Client Secret [learn more](/build-your-software-catalog/sync-data-to-catalog/api/#get-api-token).
+
+2.`PORT_CLIENT_ID` - Port客户 ID[learn more](/build-your-software-catalog/sync-data-to-catalog/api/#get-api-token).
+3.`PORT_CLIENT_SECRET` - Port客户端secret[learn more](/build-your-software-catalog/sync-data-to-catalog/api/#get-api-token).
 
 <br/>
 
-7. Trigger the action from the [Self-service](https://app.getport.io/self-serve) tab of your Port application.
+7.从 Port 应用程序的[Self-service](https://app.getport.io/self-serve) 标签触发操作。

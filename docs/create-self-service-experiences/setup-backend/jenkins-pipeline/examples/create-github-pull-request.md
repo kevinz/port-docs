@@ -1,103 +1,89 @@
 ---
+
 sidebar_position: 3
+
 ---
 
 import PortTooltip from "/src/components/tooltip/tooltip.jsx"
 import FindCredentials from "/docs/build-your-software-catalog/sync-data-to-catalog/api/_template_docs/_find_credentials.mdx";
 
+# 创建 Github 拉取请求
 
-# Create Github pull request
+本示例说明如何使用 Jenkins 管道从 Port 内部打开 GitHub 仓库中的拉取请求。
 
-This example illustrates how to open a pull-request in a GitHub repository from within Port using a Jenkins pipeline.
+工作流程包括在 Terraform 的 "main.tf "文件中添加一个资源块，然后在 GitHub 上生成修改 PR。 在此特定实例中，添加的资源是 Azure 云中的一个存储账户。
 
-The workflow involves adding a resource block to a Terraform `main.tf` file and subsequently generating a PR for the modification on GitHub. In this specific instance, the added resource is a storage account in the Azure cloud.
+:::info  先决条件
 
-:::info Prerequisites
+* 本指南假定您已拥有 Port 帐户并具备使用 Port 的基本知识。如果您还没有这样做，请继续完成[quickstart](/quickstart) 。 **设置本指南中将被引用的 "服务 "蓝图。
+* 你将需要一个 GitHub 仓库，用来放置本指南中要用到的文件。如果你没有，我们推荐你使用名为 "Port-actions "的[creating a new repository](https://docs.github.com/en/get-started/quickstart/create-a-repo) 。
+* [Generic Webhook Trigger](https://plugins.jenkins.io/generic-webhook-trigger/) - 该插件使 Jenkins 能够根据传入的 HTTP 请求接收和触发作业，从 JSON 或 XML 有效负载中提取数据，并将其作为变量提供。
 
-- This guide assumes you have a Port account and a basic knowledge of working with Port. If you haven't done so, go ahead and complete the [quickstart](/quickstart). **Setup the `Service` blueprint that you will be using in this guide.**
-- You will need a GitHub repository in which you can place the files that we will use in this guide. If you don't have one, we recommend [creating a new repository](https://docs.github.com/en/get-started/quickstart/create-a-repo) named `port-actions`.
-- [Generic Webhook Trigger](https://plugins.jenkins.io/generic-webhook-trigger/) - This plugin enables Jenkins to receive and trigger jobs based on incoming HTTP requests, extracting data from JSON or XML payloads and making it available as variables.
 :::
 
+## 示例 - 修改 `main.tf` 以添加资源块
 
-## Example - modify `main.tf` to add a resource block
+#### 设置动作的前端
 
-### Setup the action's frontend
-
-1. Head to the [Self-service tab](https://app.getport.io/self-serve) in your Port application, and click on `+ New action`.
-
-2. Each action in Port is directly tied to a <PortTooltip id="blueprint">blueprint</PortTooltip>. Our action creates a resource that is associated with a service and will be provisioned as part of the service's CD process.
-   
-   Choose `Service` from the dropdown list.
-
-3. This action does not create/delete entites, but rather performs an operation on an existing <PortTooltip id="entity">entity</PortTooltip>. Therefore, we will choose `Day-2` as the action type.  
-   Fill out the form like this and click `Next`:
+1. 前往 Port 应用程序中的[Self-service tab](https://app.getport.io/self-serve) ，点击 "+ 新操作"。
+2. Port 中的每个操作都与<PortTooltip id="blueprint">蓝图</PortTooltip>直接相关。我们的操作将创建一个与服务关联的资源，并作为服务 CD 流程的一部分进行供应。
+    从下拉列表中选择 "服务"。
+3.此操作不会创建/删除实体，而是对现有<PortTooltip id="entity">实体</PortTooltip>执行操作。因此，我们将选择 "Day-2 "作为操作类型。  
+像这样填写表格，然后单击 "下一步": 
 
 <img src='/img/self-service-actions/setup-backend/jenkins-pipeline/iacActionDetails.png' width='50%' />
 
 <br/><br/>
 
-4. We want the developer who uses this action to specify simple inputs and not be overwhelmed with all the configurations available for an Azure storage account. For this action, we will define a name and a location.  
-   Click on `+ New input`, fill out the form like this and click `Create`:
+4.我们希望使用此操作的开发人员能指定简单的输入，而不是被 Azure 存储账户的所有可用配置弄得不知所措。对于此操作，我们将定义一个名称和一个位置。  
+单击 "+ 新输入"，像这样填写表格，然后单击 "创建": 
 
 <img src='/img/self-service-actions/setup-backend/jenkins-pipeline/iacActionInputName.png' width='50%' />
 
 <br/><br/>
 
-5. Now let's create the location input of our resource.  
-   Click on `+ New input`, fill out the form like this and click `Create`:
+5.现在，让我们创建资源的位置输入。  
+点击 "+ 新输入"，像这样填写表格，然后点击 "创建": 
 
 <img src='/img/self-service-actions/setup-backend/jenkins-pipeline/iacActionInputLocation.png' width='50%' />
 
 <br/><br/>
 
-6. Now we'll define the backend of the action. Select the `Run Jenkins pipeline` invocation type.
-   - Replace the `Webhook URL` with your jenkins job URL.
-   - Make sure the URL is in the format `http://JENKINS_URL/generic-webhook-trigger/invoke?token=<JOB_TOKEN>`
-   - Click `Next`:
-   
+6.现在我们来定义动作的后端。选择 "运行 Jenkins 管道 "调用类型。
+    - 将 `Webhook URL` 替换为你的 jenkins 作业 URL。
+    - 确保 URL 的格式为 `http://JENKINS_URL/generic-webhook-trigger/invoke?token=<JOB_TOKEN>`。
+    - 点击 `下一步
 
 <img src='/img/self-service-actions/setup-backend/jenkins-pipeline/iacActionBackend.png' width='75%' />
 
-<br/><br/>
-   :::tip
-   Learn more about the Jenkins invocation type [here](/create-self-service-experiences/setup-backend/jenkins-pipeline/).
-   :::
+<br/><br/>:::tip 了解更多有关 Jenkins 调用类型的信息[here](/create-self-service-experiences/setup-backend/jenkins-pipeline/) : 
 
+7.最后一步是自定义操作权限。为简单起见，我们将被引用默认设置。更多信息，请参阅[permissions](/create-self-service-experiences/set-self-service-actions-rbac/) 页面。单击 "创建"。
 
-7. The last step is customizing the action's permissions. For simplicity's sake, we will use the default settings. For more information, see the [permissions](/create-self-service-experiences/set-self-service-actions-rbac/) page. Click `Create`.
+行动的前端已准备就绪 🥳
 
-The action's frontend is now ready 🥳
+#### 设置行动的后端
 
-### Setup the action's backend
+现在，我们要编写我们的操作将触发的 Jenkins Pipelines。
 
-Now we want to write the Jenkins pipeline that our action will trigger.
+1. 首先，让我们获取必要的 token 和 secrets: 
+    - 登录[GitHub tokens page](https://github.com/settings/tokens) ，创建一个具有 `repo` 和 `admin:org` 作用域的个人访问令牌，并将其复制(从我们的 Pipelines 创建拉取请求需要此令牌) 。
+    <img src='/img/guides/personalAccessToken.png' width='80%' />-<FindCredentials />
+2.将以下内容创建为 Jenkins 凭据: 
+    1.使用 `Username with password` 类型和 id `port-credentials` 创建Port凭据。
+        1. `PORT_CLIENT_ID` - Port客户端 ID。
+        2. `PORT_CLIENT_SECRET` - Port客户端secret。
+    2. `WEBHOOK_TOKEN` - 网络钩子令牌，只有提供该令牌才能触发任务。
+    3. `GITHUB_TOKEN` - 从上一步获得的个人访问令牌。
+3.现在，我们将创建一个简单的 `.tf` 文件，作为新资源的模板: 
 
-1. First, let's obtain the necessary token and secrets:
-
-    - Go to your [GitHub tokens page](https://github.com/settings/tokens), create a personal access token with `repo` and `admin:org` scope, and copy it (this token is needed to create a pull-request from our pipeline).
-
-    <img src='/img/guides/personalAccessToken.png' width='80%' />
-
-    - <FindCredentials />
-
-2. Create the following as Jenkins Credentials:
-    1. Create the Port Credentials using the `Username with password` kind and the id `port-credentials`.
-        1. `PORT_CLIENT_ID` - Port Client ID.
-        2. `PORT_CLIENT_SECRET` - Port Client Secret.
-    2. `WEBHOOK_TOKEN` - The webhook token so that the job can only be triggered if that token is supplied.
-    3. `GITHUB_TOKEN` - The personal access token obtained from the previous step.
-
-3. We will now create a simple `.tf` file that will serve as a template for our new resource:
-
-- In your GitHub repository, create a file named `create-azure-storage.tf` under `/templates/` (it's path should be `/templates/create-azure-storage.tf`).
-- Copy the following snippet and paste it in the file's contents:
+* 在 GitHub 仓库的 `/templates/`(路径应为 `/templates/create-azure-storage.tf`)下创建一个名为 `create-azure-storage.tf` 的文件。
+* 复制以下代码段并粘贴到文件内容中: 
 
 <details>
 <summary><b>create-azure-storage.tf</b></summary>
 
 ```hcl showLineNumbers title="create-azure-storage.tf"
-
 resource "azurerm_storage_account" "storage_account" {
   name                = "{{ storage_name }}"
   resource_group_name = "YourResourcesGroup" # replace this with one of your resource groups in your azure cloud acount
@@ -111,7 +97,7 @@ resource "azurerm_storage_account" "storage_account" {
 
 </details>
 
-Add the `main.tf` file in the root of your repository.
+在版本库根目录下添加 `main.tf` 文件。
 
 <details>
 <summary><b>main.tf</b></summary>
@@ -136,20 +122,19 @@ provider "azurerm" {
 ```
 
 </details>
-  
-4. Now let's create the pipeline file:
 
-    1. [Enable webhook trigger for a pipeline](../jenkins-pipeline.md#enabling-webhook-trigger-for-a-pipeline)
-    2. [Define variables for a pipeline](../jenkins-pipeline.md#defining-variables): Define the STORAGE_NAME, STORAGE_LOCATION, REPO_URL and PORT_RUN_ID variables.
-    3. [Token Setup](../jenkins-pipeline.md#token-setup): Define the token to match `JOB_TOKEN` as configured in your Port Action.
+4.现在，让我们创建 Pipelines 文件: 
+    1.[Enable webhook trigger for a pipeline](../jenkins-pipeline.md#enabling-webhook-trigger-for-a-pipeline)
+    2.[Define variables for a pipeline](../jenkins-pipeline.md#defining-variables) 定义 STORAGE_NAME、STORAGE_LOCATION、REPO_URL 和 PORT_RUN_ID 变量。
+    3.[Token Setup](../jenkins-pipeline.md#token-setup) 定义令牌，使其与 Port Action 中配置的 `JOB_TOKEN` 匹配。
 
-Our pipeline will consist of 3 steps for the selected service's repository:
+我们的 Pipelines 将由 3 个步骤组成，用于选定服务的存储库: 
 
-- Adding a resource block to the `main.tf` using the template and replacing its variables with the data from the action's input.
-- Creating a pull request in the repository to add the new resource.
-- Reporting & logging the action result back to Port.
+* 使用模板在 `main.tf` 中添加一个资源块，并用动作输入的数据替换其变量。
+* 在资源库中创建拉取请求以添加新资源。
+* 向 Port 报告并记录操作结果。
 
-In your Jenkins pipeline, use the following snippet as its content:
+在 Jenkins 管道中，请将以下片段作为其内容被引用: 
 
 <details>
 <summary><b>Jenkins pipeline</b></summary>
@@ -162,17 +147,15 @@ pipeline {
 
     environment {
         GITHUB_TOKEN = credentials("GITHUB_TOKEN")
-        
+
         NEW_BRANCH_PREFIX = 'infra/new-resource'
         NEW_BRANCH_NAME = "${NEW_BRANCH_PREFIX}-${STORAGE_NAME}"
         TEMPLATE_FILE = "templates/create-azure-storage.tf"
-        
+
         PORT_ACCESS_TOKEN = ""
         REPO = ""
     }
-    
-   
-    
+
     triggers {
         GenericTrigger(
             genericVariables: [
@@ -191,26 +174,25 @@ pipeline {
         )
     }
 
-
     stages {
         stage('Checkout') {
             steps {
                 script {
                     def path = REPO_URL.substring(REPO_URL.indexOf("/") + 1);
                     def pathUrl = path.replace("/github.com/", "");
-                    
+
                     REPO = pathUrl
                 }
-        
+
                 git branch: 'main', credentialsId: 'github', url: "git@github.com:${REPO}.git"
             }
         }
-        
+
         stage('Make Changes') {
             steps {
                 script {
                     sh """cat ${TEMPLATE_FILE} | sed "s/{{ storage_name }}/${STORAGE_NAME}/g; s/{{ storage_location }}/${STORAGE_LOCATION}/g" >> main.tf"""
-                    
+
                 }
             }
         }
@@ -294,7 +276,7 @@ pipeline {
             }
         }
     }
-    
+
     post {
 
         failure {
@@ -324,7 +306,6 @@ pipeline {
     }
 }
 
-
 def createPullRequestCurl(repo, headBranch, baseBranch, title, body) {
     curlCommand = "curl -X POST https://api.github.com/repos/$repo/pulls -H 'Authorization: Bearer ${GITHUB_TOKEN}' -d '{ \"head\": \"$headBranch\", \"base\": \"$baseBranch\", \"title\": \"$title\", \"body\": \"$body\", \"draft\": false }'"
 
@@ -345,33 +326,31 @@ def createPullRequestCurl(repo, headBranch, baseBranch, title, body) {
 
 </details>
 
-All done! The action is ready to be executed 🚀
+完成！操作已准备就绪 🚀
 
-### Execute the action
+### 执行操作
 
-After creating an action, it will appear under the `Self-service` tab of your Port application:
+创建操作后，该操作将出现在 Port 应用程序的 "自助服务 "选项卡下: 
 
 <img src='/img/self-service-actions/setup-backend/jenkins-pipeline/iacActionExecute.png' />
 
-1. Click on `Execute`.
+1. 点击 "执行"。
+2. 输入 Azure 存储账户的名称和位置，从列表中选择任何服务，然后单击 "执行"。此时会弹出一个小窗口，点击 "查看详情": 
 
-2. Enter a name for your Azure storage account and a location, select any service from the list and click `Execute`. A small popup will appear, click on `View details`:
 <img src='/img/self-service-actions/setup-backend/jenkins-pipeline/iacActionAfterCreation.png' width='35%' />
 <img src='/img/self-service-actions/setup-backend/jenkins-pipeline/iacActionExecutePopup.png' width='40%' />
 
-3. This page provides details about the action run. We can see that the backend returned `Success` and the pull-request was created successfully:
+3.该页面提供了有关操作运行的详细信息。我们可以看到，后端返回了 "成功"，拉取请求已成功创建: 
 
 <img src='/img/self-service-actions/setup-backend/jenkins-pipeline/iacActionRunAfterExecution.png' width='90%' />
 
 <br />
 All done! You can now create PRs for your services directly from Port 💪🏽
 
+:::tip  您可以创建一个 Jenkins 管道，在合并 PR 时触发资源部署。请查看此示例[pipeline](https://github.com/port-labs/jenkins-terraform-azure/blob/main/Jenkinsfile) 。
 
-:::tip 
-You may create a Jenkins pipeline to trigger the resource deployment on merging the PR. Checkout this example [pipeline](https://github.com/port-labs/jenkins-terraform-azure/blob/main/Jenkinsfile).
 :::
 
+更多相关指南和示例: 
 
-More relevant guides and examples:
-
-- [Deploy resource in Azure Cloud with Terraform](/create-self-service-experiences/setup-backend/jenkins-pipeline/examples/deploy-azure-resource.md)
+* * [Deploy resource in Azure Cloud with Terraform](/create-self-service-experiences/setup-backend/jenkins-pipeline/examples/deploy-azure-resource.md)

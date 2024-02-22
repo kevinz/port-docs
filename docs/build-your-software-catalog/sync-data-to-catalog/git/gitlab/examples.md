@@ -1,33 +1,35 @@
 ---
+
 sidebar_position: 2
+
 ---
 
-import RepositoryBlueprint from './\_gitlab_exporter_example_repository_blueprint.mdx'
-import PRBlueprint from './\_gitlab_exporter_example_merge_request_blueprint.mdx'
-import PortAppConfig from './\_gitlab_exporter_example_port_app_config.mdx'
-import GitlabResources from './\_gitlab_exporter_supported_resources.mdx'
+import RepositoryBlueprint from './_gitlab_exporter_example_repository_blueprint.mdx'
+import PRBlueprint from './_gitlab_exporter_example_merge_request_blueprint.mdx'
+import PortAppConfig from './_gitlab_exporter_example_port_app_config.mdx'
+import GitlabResources from './_gitlab_exporter_supported_resources.mdx'
 
-import PipelineBlueprint from './example-pipeline-job/\_git_exporter_example_pipeline_blueprint.mdx'
-import JobBlueprint from './example-pipeline-job/\_git_exporter_example_job_blueprint.mdx'
-import PortPipelineJobAppConfig from './example-pipeline-job/\_gitlab_exporter_example_pipeline_job_port_app_config.mdx'
+import PipelineBlueprint from './example-pipeline-job/_git_exporter_example_pipeline_blueprint.mdx'
+import JobBlueprint from './example-pipeline-job/_git_exporter_example_job_blueprint.mdx'
+import PortPipelineJobAppConfig from './example-pipeline-job/_gitlab_exporter_example_pipeline_job_port_app_config.mdx'
 
-import IssueBlueprint from './example-issue/\_git_exporter_example_issue_blueprint.mdx'
-import PortIssueAppConfig from './example-issue/\_gitlab_exporter_example_issue_port_app_config.mdx'
+import IssueBlueprint from './example-issue/_git_exporter_example_issue_blueprint.mdx'
+import PortIssueAppConfig from './example-issue/_gitlab_exporter_example_issue_port_app_config.mdx'
 
-import MonoRepoAppConfig from './example-repository-folders/\_gitlab_export_example_monorepo_port_app_config.mdx'
+import MonoRepoAppConfig from './example-repository-folders/_gitlab_export_example_monorepo_port_app_config.mdx'
 
-import FolderBlueprint from './example-repository-folders/\_gitlab_exporter_example_folder_blueprint.mdx'
-import PortFoldersAppConfig from './example-repository-folders/\_gitlab_exporter_example_repo_folders_port_app_config.mdx'
+import FolderBlueprint from './example-repository-folders/_gitlab_exporter_example_folder_blueprint.mdx'
+import PortFoldersAppConfig from './example-repository-folders/_gitlab_exporter_example_repo_folders_port_app_config.mdx'
 
-import RepositoryGroupBlueprint from './example-groups-subgroups/\_gitlab_exporter_example_repository_blueprint.mdx'
-import GroupBlueprint from './example-groups-subgroups/\_gitlab_exporter_example_group_blueprint.mdx'
-import PortGroupsAppConfig from './example-groups-subgroups/\_gitlab_exporter_example_group_repository_port_app_config.mdx'
+import RepositoryGroupBlueprint from './example-groups-subgroups/_gitlab_exporter_example_repository_blueprint.mdx'
+import GroupBlueprint from './example-groups-subgroups/_gitlab_exporter_example_group_blueprint.mdx'
+import PortGroupsAppConfig from './example-groups-subgroups/_gitlab_exporter_example_group_repository_port_app_config.mdx'
 
-# Examples
+# 示例
 
-## Mapping projects, file contents and merge requests
+## 映射项目、文件内容和合并请求
 
-In the following example you will ingest your GitLab projects, their README.md file contents and merge requests to Port, you may use the following Port blueprint definitions and integration configuration:
+在下面的示例中，您将把 GitLab 项目、其 README.md 文件内容和合并请求引用到 Port，您可以使用以下 Port 蓝图定义和集成配置: 
 
 <RepositoryBlueprint/>
 
@@ -35,20 +37,20 @@ In the following example you will ingest your GitLab projects, their README.md f
 
 <PortAppConfig/>
 
-:::tip To Learn more
+:::tip  了解更多信息
 
-- Refer to the [setup](gitlab.md#setup) section to learn more about the integration configuration setup process.
-- We leverage [JQ JSON processor](https://stedolan.github.io/jq/manual/) to map and transform GitLab objects to Port entities.
-- Click [Here](https://docs.gitlab.com/ee/api/groups.html#list-a-groups-projects) for the GitLab project object structure.
-- Click [Here](https://docs.gitlab.com/ee/api/merge_requests.html#list-project-merge-requests) for the GitLab merge request object structure.
+* 请参阅[setup](gitlab.md#setup) 部分，了解集成配置设置过程的更多信息。
+* 我们利用[JQ JSON processor](https://stedolan.github.io/jq/manual/) 将 GitLab 对象映射和转换为 Port 实体。
+* 点击[Here](https://docs.gitlab.com/ee/api/groups.html#list-a-groups-projects) 查看 GitLab 项目对象结构。
+* 点击[Here](https://docs.gitlab.com/ee/api/merge_requests.html#list-project-merge-requests) 查看 GitLab 合并请求对象结构。
 
 :::
 
-After creating the blueprints and saving the integration configuration, you will see new entities in Port matching your projects alongside their `README.md` file contents and merge requests.
+创建蓝图并保存集成配置后，您将在 Port 中看到与您的项目相匹配的新实体，以及它们的 `README.md` 文件内容和合并请求。
 
-## Mapping Groups, Subgroups and Projects
+## 映射组、分组和项目
 
-In the following example you will ingest your GitLab groups, subgroups and projects to Port, you may use the following Port blueprint definitions and integration configuration:
+在以下示例中，您将把 GitLab 组、子组和项目被引用到 Port，您可以使用以下 Port 蓝图定义和集成配置: 
 
 <GroupBlueprint/>
 
@@ -56,18 +58,18 @@ In the following example you will ingest your GitLab groups, subgroups and proje
 
 <PortGroupsAppConfig/>
 
-:::tip To Learn more
+:::tip  了解更多信息
 
-- Refer to the [setup](gitlab.md#setup) section to learn more about the integration configuration setup process.
-- We leverage [JQ JSON processor](https://stedolan.github.io/jq/manual/) to map and transform GitLab objects to Port entities.
-- Click [Here](https://docs.gitlab.com/ee/api/groups.html#list-a-groups-projects) for the GitLab project object structure.
-- Click [Here](https://docs.gitlab.com/ee/api/groups.html#list-a-groups-subgroups) for the GitLab subgroup object structure.
+* 请参阅[setup](gitlab.md#setup) 部分，了解集成配置设置过程的更多信息。
+* 我们利用[JQ JSON processor](https://stedolan.github.io/jq/manual/) 将 GitLab 对象映射和转换为 Port 实体。
+* 单击[Here](https://docs.gitlab.com/ee/api/groups.html#list-a-groups-projects) 查看 GitLab 项目对象结构。
+* 点击[Here](https://docs.gitlab.com/ee/api/groups.html#list-a-groups-subgroups) 查看 GitLab 子组对象结构。
 
 :::
 
-## Mapping projects, pipelines and jobs
+## 绘制项目、Pipelines 和工作图
 
-In the following example you will ingest your GitLab projects, their pipelines and jobs runs to Port, you may use the following Port blueprint definitions and integration configuration:
+在下面的示例中，您将把 GitLab 项目及其 Pipelines 和作业运行引用到 Port，您可以使用以下 Port 蓝图定义和集成配置: 
 
 <RepositoryBlueprint/>
 
@@ -77,28 +79,27 @@ In the following example you will ingest your GitLab projects, their pipelines a
 
 <PortPipelineJobAppConfig/>
 
-:::tip To Learn more
+:::tip  了解更多信息
 
-- Refer to the [setup](gitlab.md#setup) section to learn more about the integration configuration setup process.
-- We leverage [JQ JSON processor](https://stedolan.github.io/jq/manual/) to map and transform GitLab objects to Port entities.
-- Click [Here](https://docs.gitlab.com/ee/api/groups.html#list-a-groups-projects) for the GitLab project object structure.
-- Click [Here](https://docs.gitlab.com/ee/api/pipelines.html#list-project-pipelines) for the GitLab pipeline object structure.
-- Click [Here](https://docs.gitlab.com/ee/api/jobs.html#list-project-jobs) for the GitLab job object structure.
+* 请参阅[setup](gitlab.md#setup) 部分，了解集成配置设置过程的更多信息。
+* 我们利用[JQ JSON processor](https://stedolan.github.io/jq/manual/) 将 GitLab 对象映射和转换为 Port 实体。
+* 点击[Here](https://docs.gitlab.com/ee/api/groups.html#list-a-groups-projects) 查看 GitLab 项目对象结构。
+* 点击[Here](https://docs.gitlab.com/ee/api/pipelines.html#list-project-pipelines) 查看 GitLab Pipelines 对象结构。
+* 点击[Here](https://docs.gitlab.com/ee/api/jobs.html#list-project-jobs) 查看 GitLab 作业对象结构。
 
 :::
 
-After creating the blueprints and saving the integration configuration, you will see new entities in Port matching your projects alongside their pipelines and jobs.
+创建蓝图并保存集成配置后，您将在 Port 中看到与您的项目相匹配的新实体，以及它们的 Pipelines 和作业。
 
-## Mapping projects and monorepos
+## 映射项目和 monorepos
 
-In the following example you will ingest your GitLab projects and their monorepo folders to Port, you may use the following Port blueprint definitions and integration configuration:
+在以下示例中，您将把 GitLab 项目及其 monorepo 文件夹引用到 Port，您可以使用以下 Port 蓝图定义和集成配置: 
 
 <RepositoryBlueprint/>
 
 <MonoRepoAppConfig/>
 
-:::tip To Learn more
-To retrieve the root folders of your monorepo, you can use this following syntax in your `port-app-config.yml`:
+:::tip  要了解更多信息 要检索 monorepo 的根文件夹，可以在 `port-app-config.yml` 中使用以下语法: 
 
 ```yaml
 - kind: folder
@@ -113,9 +114,9 @@ To retrieve the root folders of your monorepo, you can use this following syntax
 
 :::
 
-:::tip
+:::tip 
 
-You can also specify different path for each monorepo repository, for example:
+例如，您也可以为每个 monorepo 版本库指定不同的路径: 
 
 ```yaml
 - kind: folder
@@ -132,18 +133,18 @@ You can also specify different path for each monorepo repository, for example:
 
 :::
 
-:::tip
+:::tip 
 
-- Refer to the [setup](gitlab.md#setup) section to learn more about the integration configuration setup process.
-- We leverage [JQ JSON processor](https://stedolan.github.io/jq/manual/) to map and transform GitLab objects to Port entities.
-- Click [Here](https://docs.gitlab.com/ee/api/groups.html#list-a-groups-projects) for the GitLab project object structure.
-- Click [Here](https://docs.gitlab.com/ee/api/repositories.html#list-repository-tree) for the GitLab repository tree object structure.
+* 请参阅[setup](gitlab.md#setup) 部分，了解集成配置设置过程的更多信息。
+* 我们利用[JQ JSON processor](https://stedolan.github.io/jq/manual/) 将 GitLab 对象映射和转换为 Port 实体。
+* 点击[Here](https://docs.gitlab.com/ee/api/groups.html#list-a-groups-projects) 查看 GitLab 项目对象结构。
+* 点击[Here](https://docs.gitlab.com/ee/api/repositories.html#list-repository-tree) 查看 GitLab 仓库树对象结构。
 
 :::
 
-## Mapping projects and folders
+## 映射项目和文件夹
 
-In the following example you will ingest your GitLab projects and their folders to Port, you may use the following Port blueprint definitions and integration configuration:
+在以下示例中，您将把 GitLab 项目及其文件夹引用到 Port，您可以使用以下 Port 蓝图定义和集成配置: 
 
 <RepositoryBlueprint/>
 
@@ -151,18 +152,18 @@ In the following example you will ingest your GitLab projects and their folders 
 
 <PortFoldersAppConfig/>
 
-:::tip To Learn more
+:::tip  了解更多信息
 
-- Refer to the [setup](gitlab.md#setup) section to learn more about the integration configuration setup process.
-- We leverage [JQ JSON processor](https://stedolan.github.io/jq/manual/) to map and transform GitLab objects to Port entities.
-- Click [Here](https://docs.gitlab.com/ee/api/groups.html#list-a-groups-projects) for the GitLab project object structure.
-- Click [Here](https://docs.gitlab.com/ee/api/repositories.html#list-repository-tree) for the GitLab repository tree object structure.
+* 请参阅[setup](gitlab.md#setup) 部分，了解集成配置设置过程的更多信息。
+* 我们利用[JQ JSON processor](https://stedolan.github.io/jq/manual/) 将 GitLab 对象映射和转换为 Port 实体。
+* 点击[Here](https://docs.gitlab.com/ee/api/groups.html#list-a-groups-projects) 查看 GitLab 项目对象结构。
+* 点击[Here](https://docs.gitlab.com/ee/api/repositories.html#list-repository-tree) 查看 GitLab 仓库树对象结构。
 
 :::
 
-## Mapping projects and issues
+## 绘制项目和问题图
 
-In the following example you will ingest your GitLab projects and their issues to Port, you may use the following Port blueprint definitions and integration configuration:
+在下面的示例中，您将把 GitLab 项目及其问题引用到 Port，您可以使用以下 Port 蓝图定义和集成配置: 
 
 <RepositoryBlueprint/>
 
@@ -170,21 +171,21 @@ In the following example you will ingest your GitLab projects and their issues t
 
 <PortIssueAppConfig/>
 
-:::tip To Learn more
+:::tip  了解更多信息
 
-- Refer to the [setup](gitlab.md#setup) section to learn more about the integration configuration setup process.
-- We leverage [JQ JSON processor](https://stedolan.github.io/jq/manual/) to map and transform GitLab objects to Port entities.
-- Click [Here](https://docs.gitlab.com/ee/api/groups.html#list-a-groups-projects) for the GitLab project object structure.
-- Click [Here](https://docs.gitlab.com/ee/api/issues.html#list-project-issues) for the GitLab issue object structure.
+* 请参阅[setup](gitlab.md#setup) 部分，了解集成配置设置过程的更多信息。
+* 我们利用[JQ JSON processor](https://stedolan.github.io/jq/manual/) 将 GitLab 对象映射和转换为 Port 实体。
+* 点击[Here](https://docs.gitlab.com/ee/api/groups.html#list-a-groups-projects) 查看 GitLab 项目对象结构。
+* 点击[Here](https://docs.gitlab.com/ee/api/issues.html#list-project-issues) 查看 GitLab 问题对象结构。
 
 :::
 
-After creating the blueprints and saving the integration configuration, you will see new entities in Port matching your projects alongside their issues.
+创建蓝图并保存集成配置后，您将在 Port 中看到与项目相匹配的新实体及其问题。
 
-## Mapping supported resources
+## 映射支持的资源
 
-The above examples shows a specific use cases, but Port's GitLab integration supports the ingestion of many other GitLab objects, to adapt the examples above, use the GitLab API reference to learn about the available fields for the different supported objects:
+上述示例展示了一个特定的使用案例，但 Port 的 GitLab 集成支持摄取许多其他 GitLab 对象，要调整上述示例，请使用 GitLab API 参考资料了解不同支持对象的可用字段: 
 
 <GitlabResources/>
 
-When adding the ingestion of other resources, remember to add an entry to the `resources` array and change the value provided to the `kind` key accordingly.
+在添加其他资源的摄取时，请记得在 `resources` 数组中添加一个条目，并相应更改提供给 `kind` 键的值。

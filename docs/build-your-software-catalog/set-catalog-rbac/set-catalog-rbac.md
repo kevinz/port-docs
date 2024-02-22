@@ -1,14 +1,16 @@
 ---
-title: Set catalog RBAC
-sidebar_label: Set catalog RBAC
+
+title: 设置目录 RBAC
+sidebar_label: 设置目录 RBAC
+
 ---
 
-import OwnershipTemplate from "./\_ownership_explanation_template.mdx";
+import OwnershipTemplate from "./_ownership_explanation_template.mdx";
 import Tabs from "@theme/Tabs";
 import TabItem from "@theme/TabItem";
 import styles from "./styles.module.css";
 
-# Set catalog RBAC
+# 设置 RBAC 目录
 
 <center>
 
@@ -16,41 +18,42 @@ import styles from "./styles.module.css";
 
 </center>
 
-Port provides granular control to make sure every user sees only the parts of the catalog that are relevant for them.
+Provider 提供细粒度控制，确保每个用户只能看到目录中与他们相关的部分。
 
-Port's catalog RBAC capabilities are enabled by Port's [permissions controls](../../sso-rbac/rbac/rbac.md).
+Port 目录 RBAC 功能由 Port 的[permissions controls](../../sso-rbac/rbac/rbac.md) 启用。
 
-:::tip
+:::tip 
 
-In order to manage who can view which pages in Port, check out [page permissions](../../customize-pages-dashboards-and-plugins/page/page-permissions.md).
+要管理谁可以查看 Port 中的哪些页面，请查看[page permissions](../../customize-pages-dashboards-and-plugins/page/page-permissions.md) 。
+
 :::
 
-## 💡 Common Catalog RBAC usage
+## 💡 常用目录 RBAC Usage
 
-Catalog RBAC allows admins to finely control which users have access to which information from the catalog, for example:
+例如，目录 RBAC 允许管理员精细控制哪些用户可以访问目录中的哪些信息: 
 
-- Show developers only the services that they owns;
-- Allow a user to edit just a specific property on an entity;
-- Create a fully read-only view for a developer;
-- etc.
+* 只向开发人员显示他们拥有的服务；
+* 允许用户只编辑实体的特定属性；
+* 为开发人员创建完全只读的视图；
+* 等等。
 
-## Set global access controls to catalog data
+## 设置目录数据的全局访问控制
 
-The default permissions assigned to every blueprint upon creation specify that users with the admin role, and users with the specific blueprint moderator role, can perform any action over a blueprint.
+创建时分配给每个蓝图的默认权限规定，具有管理员角色的用户和具有特定蓝图主持人角色的用户可以对蓝图执行任何操作。
 
-It is also possible to assign global permissions controls on **entities**:
+还可以为**实体**分配全局权限控制: 
 
 <Tabs groupId="permission" defaultValue="create">
 
 <TabItem value="create" label="Create (register)">
 
-To assign permissions to create an entity, give the desired persona permissions under the `register` object as shown below:
+要分配创建实体的权限，请在 "注册 "对象下赋予所需的角色权限，如下所示: 
 
 <Tabs groupId="target" defaultValue="role">
 
 <TabItem value="role" label="Role">
 
-To give `create` permissions to another role, add it to the `roles` array:
+要将 `create` 权限赋予另一个角色，请将其添加到 `roles` 数组中: 
 
 ```json showLineNumbers
 {
@@ -71,7 +74,7 @@ To give `create` permissions to another role, add it to the `roles` array:
 
 <TabItem value="user" label="User">
 
-To give `create` permissions to another user, add it to the `users` array:
+要将 `create` 权限赋予另一个用户，请将其添加到 `users` 数组中: 
 
 ```json showLineNumbers
 {
@@ -92,7 +95,7 @@ To give `create` permissions to another user, add it to the `users` array:
 
 <TabItem value="team" label="Team">
 
-To give `create` permissions to another team, add it to the `teams` array:
+要向另一个团队授予 "创建 "权限，请将其添加到 "团队 "数组中: 
 
 ```json showLineNumbers
 {
@@ -115,7 +118,7 @@ To give `create` permissions to another team, add it to the `teams` array:
 
 <OwnershipTemplate />
 
-To give `create` permissions to members of the owning team of an entity, change the `ownedByTeam` key:
+要向实体的拥有团队成员授予 `create` 权限，请更改 `ownedByTeam` 键: 
 
 ```json showLineNumbers
 {
@@ -132,8 +135,8 @@ To give `create` permissions to members of the owning team of an entity, change 
 }
 ```
 
-:::tip
-In the context of the `create` permission, owned by team means that a user can only create a new entity if he assigns to it a team that he is a member of.
+:::tip 在 "创建 "权限的上下文中，"由团队拥有 "是指用户只有为一个新实体指定了他所属的团队，才能创建该实体。
+
 :::
 
 </TabItem>
@@ -144,13 +147,13 @@ In the context of the `create` permission, owned by team means that a user can o
 
 <TabItem value="update" label="Update" attributes={{ className: styles.admonition_tip }}>
 
-To assign permissions to update an entity, give the desired persona permissions under the `update` object as shown below:
+要分配更新实体的权限，请在 "更新 "对象下赋予所需的角色权限，如下所示: 
 
 <Tabs groupId="target" defaultValue="role">
 
 <TabItem value="role" label="Role" attributes={{ className: styles.admonition_tip }}>
 
-To give `update` permissions to another role, add it to the `roles` array:
+要将 `update` 权限赋予另一个角色，请将其添加到 `roles` 数组中: 
 
 ```json showLineNumbers
 {
@@ -171,7 +174,7 @@ To give `update` permissions to another role, add it to the `roles` array:
 
 <TabItem value="user" label="User" attributes={{ className: styles.admonition_tip }}>
 
-To give `update` permissions to another user, add it to the `users` array:
+要将 `update` 权限赋予另一个用户，请将其添加到 `users` 数组中: 
 
 ```json showLineNumbers
 {
@@ -192,7 +195,7 @@ To give `update` permissions to another user, add it to the `users` array:
 
 <TabItem value="team" label="Team" attributes={{ className: styles.admonition_tip }}>
 
-To give `update` permissions to another team, add it to the `teams` array:
+要向另一个团队授予 "更新 "权限，请将其添加到 "团队 "数组中: 
 
 ```json showLineNumbers
 {
@@ -215,7 +218,7 @@ To give `update` permissions to another team, add it to the `teams` array:
 
 <OwnershipTemplate />
 
-To give `update` permissions to members of the owning team of an entity, change the `ownedByTeam` key:
+要向实体的拥有团队成员授予 `update` 权限，请更改 `ownedByTeam` 键: 
 
 ```json showLineNumbers
 {
@@ -240,13 +243,13 @@ To give `update` permissions to members of the owning team of an entity, change 
 
 <TabItem value="delete" label="Delete (unregister)" attributes={{ className: styles.admonition_caution }}>
 
-To assign permissions to delete an entity, give the desired persona permissions under the `delete` object as shown below:
+要分配删除实体的权限，请在 `delete` 对象下赋予所需的角色权限，如下所示: 
 
 <Tabs groupId="target" default ="role">
 
 <TabItem value="role" label="Role" attributes={{ className: styles.admonition_caution }}>
 
-To give `delete` permissions to another role, add it to the `roles` array:
+要将 `delete` 权限赋予另一个角色，请将其添加到 `roles` 数组中: 
 
 ```json showLineNumbers
 {
@@ -267,7 +270,7 @@ To give `delete` permissions to another role, add it to the `roles` array:
 
 <TabItem value="user" label="User" attributes={{ className: styles.admonition_caution }}>
 
-To give `delete` permissions to another user, add it to the `users` array:
+要将 `delete` 权限赋予另一个用户，请将其添加到 `users` 数组中: 
 
 ```json showLineNumbers
 {
@@ -288,7 +291,7 @@ To give `delete` permissions to another user, add it to the `users` array:
 
 <TabItem value="team" label="Team" attributes={{ className: styles.admonition_caution }}>
 
-To give `delete` permissions to another team, add it to the `teams` array:
+要向另一个团队授予 "删除 "权限，请将其添加到 "团队 "数组中: 
 
 ```json showLineNumbers
 {
@@ -311,7 +314,7 @@ To give `delete` permissions to another team, add it to the `teams` array:
 
 <OwnershipTemplate />
 
-To give `delete` permissions to members of the owning team of an entity, change the `ownedByTeam` key:
+要向实体的拥有团队成员授予 "删除 "权限，请更改 "ownedByTeam "键: 
 
 ```json showLineNumbers
 {
@@ -336,21 +339,21 @@ To give `delete` permissions to members of the owning team of an entity, change 
 
 </Tabs>
 
-## Set granular access controls to catalog data
+## 设置目录数据的细粒度访问控制
 
-It is also possible to assign more granular permissions controls on **entities**:
+还可以为**实体**分配更细粒度的权限控制: 
 
 <Tabs groupId="permission" defaultValue="updateProp">
 
 <TabItem value="updateProp" label="Update specific property">
 
-To assign permissions to update a specific entity property, give the desired persona permissions under the `updateProperties -> propertyName` object as shown below:
+要分配更新特定实体属性的权限，请在 `updateProperties -> propertyName` 对象下赋予所需的角色权限，如下所示: 
 
 <Tabs groupId="target" defaultValue="role">
 
 <TabItem value="role" label="Role">
 
-To give property `update` permissions to another role, add it to the `roles` array:
+要将属性 `update` 权限赋予另一个角色，请将其添加到 `roles` 数组中: 
 
 ```json showLineNumbers
 {
@@ -373,7 +376,7 @@ To give property `update` permissions to another role, add it to the `roles` arr
 
 <TabItem value="user" label="User">
 
-To give property `update` permissions to another user, add it to the `users` array:
+要将属性 `update` 权限赋予另一个用户，请将其添加到 `users` 数组中: 
 
 ```json showLineNumbers
 {
@@ -396,7 +399,7 @@ To give property `update` permissions to another user, add it to the `users` arr
 
 <TabItem value="team" label="Team">
 
-To give property `update` permissions to another team, add it to the `teams` array:
+要将属性 `update` 权限赋予另一个团队，请将其添加到 `teams` 数组中: 
 
 ```json showLineNumbers
 {
@@ -421,7 +424,7 @@ To give property `update` permissions to another team, add it to the `teams` arr
 
 <OwnershipTemplate />
 
-To give property `update` permissions to members of the owning team of an entity, change the `ownedByTeam` key:
+要向实体的拥有团队成员授予属性 `update` 权限，请更改 `ownedByTeam` 键: 
 
 ```json showLineNumbers
 {
@@ -446,15 +449,15 @@ To give property `update` permissions to members of the owning team of an entity
 
 </TabItem>
 
-<TabItem value="updateRel" label="Update specific relation" attributes={{ className: styles.admonition_tip }}>
+<TabItem value="updateRel" label="更新特定关系" attributes={{ className: styles.admonition_tip }}>
 
-To assign permissions to update a specific entity relation, give the desired persona permissions under the `updateRelations -> relationName` object as shown below:
+要分配更新特定实体关系的权限，请在 `updateRelations -> relationName` 对象下赋予所需的角色权限，如下所示: 
 
 <Tabs groupId="target" defaultValue="role">
 
 <TabItem value="role" label="Role" attributes={{ className: styles.admonition_tip }}>
 
-To give relation `update` permissions to another role, add it to the `roles` array:
+要将关系 `update` 权限赋予另一个角色，请将其添加到 `roles` 数组中: 
 
 ```json showLineNumbers
 {
@@ -477,7 +480,7 @@ To give relation `update` permissions to another role, add it to the `roles` arr
 
 <TabItem value="user" label="User" attributes={{ className: styles.admonition_tip }}>
 
-To give relation `update` permissions to another user, add it to the `users` array:
+要将关系 `update` 权限赋予另一个用户，请将其添加到 `users` 数组中: 
 
 ```json showLineNumbers
 {
@@ -500,7 +503,7 @@ To give relation `update` permissions to another user, add it to the `users` arr
 
 <TabItem value="team" label="Team" attributes={{ className: styles.admonition_tip }}>
 
-To give relation `update` permissions to another team, add it to the `teams` array:
+要将关系 `update` 权限赋予另一个团队，请将其添加到 `teams` 数组中: 
 
 ```json showLineNumbers
 {
@@ -525,7 +528,7 @@ To give relation `update` permissions to another team, add it to the `teams` arr
 
 <OwnershipTemplate />
 
-To give relation `update` permissions to members of the owning team of an entity, change the `ownedByTeam` key:
+要向实体的拥有团队成员授予关系 `update` 权限，请更改 `ownedByTeam` 键: 
 
 ```json showLineNumbers
 {
@@ -552,18 +555,18 @@ To give relation `update` permissions to members of the owning team of an entity
 
 </Tabs>
 
-## Software catalog RBAC examples
+## 软件目录 RBAC 示例
 
-Refer to the [examples](./examples.md) page for practical examples of Port's RBAC.
+有关 Port RBAC 的实际示例，请参阅[examples](./examples.md) 页面。
 
 ## FAQ
 
-Since the catalog RBAC can be very granular, in some instances it might not be perfectly clear what the resulting assigned permissions would do, this part aims to provide some real-world examples and the behavior of Port's RBAC in those instances:
+由于目录 RBAC 可以非常细化，在某些情况下，可能并不完全清楚由此分配的权限会做什么，本部分旨在提供一些实际例子以及在这些情况下 Provider 的 RBAC 的行为: 
 
-### What happens if a user lacks the permissions to edit a required property of the blueprint?
+### 如果用户没有权限编辑蓝图的必填属性，会发生什么情况？
 
-In this case the user will not be able to register or update entities as a whole because they can't provide a value for the required property;
+在这种情况下，用户将无法注册或更新整个实体，因为他们无法为所需属性提供值；
 
-### What happens if the `ownedByTeam` setting is enabled for entity registration, but the user can't edit the `team` property?
+### 如果实体注册启用了 `ownedByTeam` 设置，但用户无法编辑 `team` 属性，会发生什么情况？
 
-In this case the user will not be able to register a new entity since they can't select a value for the entity's team field and mark it as owned by their team.
+在这种情况下，用户将无法注册新实体，因为他们无法为实体的团队字段选择一个值，并将其标记为自己团队所有。

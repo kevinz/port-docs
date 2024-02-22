@@ -1,34 +1,34 @@
 import Tabs from "@theme/Tabs"
 import TabItem from "@theme/TabItem"
-import ProjecttBlueprint from '../webhook/examples/resources/argocd/\_example_project_blueprint.mdx'
-import ApplicationBlueprint from '../webhook/examples/resources/argocd/\_example_application_blueprint.mdx'
-import EventBlueprint from '../webhook/examples/resources/argocd/\_example_event_blueprint.mdx'
+import ProjecttBlueprint from '../webhook/examples/resources/argocd/_example_project_blueprint.mdx'
+import ApplicationBlueprint from '../webhook/examples/resources/argocd/_example_application_blueprint.mdx'
+import EventBlueprint from '../webhook/examples/resources/argocd/_example_event_blueprint.mdx'
 
-import ArgoCDWebhookConfig from '../webhook/examples/resources/argocd/\_example_webhook_configuration.mdx'
-import ArgoCDEventWebhookConfig from '../webhook/examples/resources/argocd/\_example_events_webhook_config.mdx'
-import ArgoCDEventManifest from '../webhook/examples/resources/argocd/\_example_events_manifest.mdx'
+import ArgoCDWebhookConfig from '../webhook/examples/resources/argocd/_example_webhook_configuration.mdx'
+import ArgoCDEventWebhookConfig from '../webhook/examples/resources/argocd/_example_events_webhook_config.mdx'
+import ArgoCDEventManifest from '../webhook/examples/resources/argocd/_example_events_manifest.mdx'
 
 # ArgoCD
 
-Our ArgoCD integration allows you to import `cluster`, `project`, `application` and `deployment-history` resources from your ArgoCD instance into Port, according to your mapping and definition.
+通过 ArgoCD 集成，您可以根据映射和定义将 ArgoCD 实例中的 "集群"、"项目"、"应用程序 "和 "部署历史 "资源导入 Port。
 
-## Common use cases
+## 常见被引用情况
 
-- Map your monitored Kubernetes resources in ArgoCD.
-- Watch for object changes (create/update) in real-time, and automatically apply the changes to your entities in Port.
+* 在 ArgoCD 中映射受监控的 Kubernetes 资源。
+* 实时关注对象变更(创建/更新)，并自动将变更应用到 Port 中的实体。
 
-## Installation
+## 安装
 
-Choose one of the following installation methods:
+从以下安装方法中选择一种: 
 
 <Tabs groupId="installation-methods" queryString="installation-methods">
 
 <TabItem value="real-time-always-on" label="Real Time & Always On" default>
 
-Using this installation option means that the integration will be able to update Port in real time using webhooks.
+使用该安装选项意味着集成将能使用 webhook 实时更新 Port。
 
-This table summarizes the available parameters for the installation.
-Set them as you wish in the script below, then copy it and run it in your terminal:
+本表总结了安装时可用的参数，请在下面的脚本中按自己的需要进行设置，然后复制并在终端运行: 
+
 
 | Parameter                        | Description                                                                                                   | Required |
 | -------------------------------- | ------------------------------------------------------------------------------------------------------------- | -------- |
@@ -42,6 +42,7 @@ Set them as you wish in the script below, then copy it and run it in your termin
 | `integration.config.serverUrl`   | The ArgoCD server url                                                                                         | ✅       |
 | `scheduledResyncInterval`        | The number of minutes between each resync                                                                     | ❌       |
 | `initializePortResources`        | Default true, When set to true the integration will create default blueprints and the port App config Mapping | ❌       |
+
 
 <br/>
 
@@ -66,11 +67,12 @@ helm upgrade --install my-argocd-integration port-labs/port-ocean \
   <TabItem value="github" label="GitHub">
 This workflow will run the ArgoCD integration once and then exit, this is useful for **scheduled** ingestion of data.
 
-:::warning
-If you want the integration to update Port in real time using webhooks you should use the [Real Time & Always On](?installation-methods=real-time-always-on#installation) installation option
+:::warning 如果希望集成使用 webhooks 实时更新 Port，则应使用[Real Time & Always On](?installation-methods=real-time-always-on#installation) 安装选项
+
 :::
 
-Make sure to configure the following [Github Secrets](https://docs.github.com/en/actions/security-guides/using-secrets-in-github-actions):
+确保配置以下[Github Secrets](https://docs.github.com/en/actions/security-guides/using-secrets-in-github-actions) : 
+
 
 | Parameter                                | Description                                                                                                        | Required |
 | ---------------------------------------- | ------------------------------------------------------------------------------------------------------------------ | -------- |
@@ -82,9 +84,10 @@ Make sure to configure the following [Github Secrets](https://docs.github.com/en
 | `OCEAN__PORT__CLIENT_SECRET`             | Your port client secret                                                                                            | ✅       |
 | `OCEAN__PORT__BASE_URL`                  | Your port base url, relevant only if not using the default port app                                                | ❌       |
 
+
 <br/>
 
-Here is an example for `argocd-integration.yml` workflow file:
+下面是 `argocd-integration.yml` 工作流程文件的示例: 
 
 ```yaml showLineNumbers
 name: ArgoCD Exporter Workflow
@@ -123,16 +126,15 @@ jobs:
   <TabItem value="jenkins" label="Jenkins">
 This pipeline will run the ArgoCD integration once and then exit, this is useful for **scheduled** ingestion of data.
 
-:::tip
-Your Jenkins agent should be able to run docker commands.
+:::tip 你的 Jenkins 代理应该能够运行 docker 命令。
+
 :::
-:::warning
-If you want the integration to update Port in real time using webhooks you should use
-the [Real Time & Always On](?installation-methods=real-time-always-on#installation) installation option.
+:::warning 如果希望集成使用 webhooks 实时更新 Port，则应使用 安装选项。[Real Time & Always On](?installation-methods=real-time-always-on#installation) 
+
 :::
 
-Make sure to configure the following [Jenkins Credentials](https://www.jenkins.io/doc/book/using/using-credentials/)
-of `Secret Text` type:
+请确保配置以下[Jenkins Credentials](https://www.jenkins.io/doc/book/using/using-credentials/)的 "Secret Text "类型: 
+
 
 | Parameter                                | Description                                                                                                        | Required |
 | ---------------------------------------- | ------------------------------------------------------------------------------------------------------------------ | -------- |
@@ -144,9 +146,10 @@ of `Secret Text` type:
 | `OCEAN__PORT__CLIENT_SECRET`             | Your port client secret                                                                                            | ✅       |
 | `OCEAN__PORT__BASE_URL`                  | Your port base url, relevant only if not using the default port app                                                | ❌       |
 
+
 <br/>
 
-Here is an example for `Jenkinsfile` groovy pipeline file:
+下面是 `Jenkinsfile` groovy Pipelines 文件的示例: 
 
 ```text showLineNumbers
 pipeline {
@@ -192,16 +195,16 @@ pipeline {
 
 </Tabs>
 
-### Generating ArgoCD token
+### 生成 ArgoCD 令牌
 
-1. Navigate to `<serverURL>/settings/accounts/<user>`. For example, if you access your ArgoCD at `https://localhost:8080`, you should navigate to `https://localhost:8080/settings/accounts/<user>`.
-2. Under Tokens, Click **Generate New** to create a new token.
+1. 导航至 `<serverURL>/settings/accounts/<user>`。例如，如果您在 `https://localhost:8080` 访问 ArgoCD，则应导航到 `https://localhost:8080/settings/accounts/<user>`。
+2. 在 "令牌 "下，单击 "**生成新**"创建新令牌。
 
-## Ingesting ArgoCD objects
+## 接收 ArgoCD 对象
 
-The ArgoCD integration uses a YAML configuration to describe the process of loading data into the developer portal.
+ArgoCD 集成使用 YAML 配置来描述将数据加载到开发者门户的过程。
 
-Here is an example snippet from the config which demonstrates the process for getting `application` data from ArgoCD:
+下面是配置中的一个示例片段，演示了从 ArgoCD 获取 "应用程序 "数据的过程: 
 
 ```yaml showLineNumbers
 createMissingRelatedEntities: true
@@ -228,23 +231,23 @@ resources:
             project: .spec.project
 ```
 
-The integration makes use of the [JQ JSON processor](https://stedolan.github.io/jq/manual/) to select, modify, concatenate, transform and perform other operations on existing fields and values from ArgoCD's API events.
+该集成利用[JQ JSON processor](https://stedolan.github.io/jq/manual/) 从 ArgoCD 的 API 事件中对现有字段和 Values 进行选择、修改、连接、转换和其他操作。
 
-### Configuration structure
+### 配置结构
 
-The integration configuration determines which resources will be queried from ArgoCD, and which entities and properties will be created in Port.
+集成配置决定了从 ArgoCD 中查询哪些资源，以及在 Port 中创建哪些实体和属性。
 
-:::tip Supported resources
-The following resources can be used to map data from ArgoCD, it is possible to reference any field that appears in the API responses linked below for the mapping configuration.
+:::tip  支持的资源 以下资源可被引用来映射 ArgoCD 中的数据，可以引用下面链接的 API 响应中出现的任何字段来进行映射配置。
 
-- [`cluster`](https://cd.apps.argoproj.io/swagger-ui#operation/ClusterService_List)
-- [`project`](https://cd.apps.argoproj.io/swagger-ui#operation/ProjectService_List)
-- [`application`](https://cd.apps.argoproj.io/swagger-ui#operation/ApplicationService_List)
-- [`deployment-history`](https://cd.apps.argoproj.io/swagger-ui#operation/ApplicationService_List)
+* * [`cluster`](https://cd.apps.argoproj.io/swagger-ui#operation/ClusterService_List)
+* [`project`](https://cd.apps.argoproj.io/swagger-ui#operation/ProjectService_List)
+* [`application`](https://cd.apps.argoproj.io/swagger-ui#operation/ApplicationService_List)
+* [`deployment-history`](https://cd.apps.argoproj.io/swagger-ui#operation/ApplicationService_List)
 
 :::
 
-- The root key of the integration configuration is the `resources` key:
+* 集成配置的根密钥是 "资源 "密钥: 
+
 
   ```yaml showLineNumbers
   # highlight-next-line
@@ -254,7 +257,9 @@ The following resources can be used to map data from ArgoCD, it is possible to r
       ...
   ```
 
-- The `kind` key is a specifier for an ArgoCD object:
+
+* kind "键是 ArgoCD 对象的说明符: 
+
 
   ```yaml showLineNumbers
     resources:
@@ -264,7 +269,9 @@ The following resources can be used to map data from ArgoCD, it is possible to r
         ...
   ```
 
-- The `selector` and the `query` keys allow you to filter which objects of the specified `kind` will be ingested into your software catalog:
+
+* 通过 "选择器 "和 "查询 "键，您可以过滤哪些指定 "类型 "的对象将被录入软件目录: 
+
 
   ```yaml showLineNumbers
   resources:
@@ -276,7 +283,9 @@ The following resources can be used to map data from ArgoCD, it is possible to r
       port:
   ```
 
-- The `port`, `entity` and the `mappings` keys are used to map the ArgoCD object fields to Port entities. To create multiple mappings of the same kind, you can add another item in the `resources` array;
+
+* Port"、"实体 "和 "映射 "键被用来将 ArgoCD 对象字段映射到Port实体。要创建多个同类映射，可在 `resources` 数组中添加另一项；
+
 
   ```yaml showLineNumbers
   resources:
@@ -309,57 +318,53 @@ The following resources can be used to map data from ArgoCD, it is possible to r
           mappings: ...
   ```
 
-  :::tip Blueprint key
-  Note the value of the `blueprint` key - if you want to use a hardcoded string, you need to encapsulate it in 2 sets of quotes, for example use a pair of single-quotes (`'`) and then another pair of double-quotes (`"`)
-  :::
 
-## Configuring real-time updates
+:::tip 蓝图键 注意 `blueprint` 键的值 - 如果要使用硬编码字符串，需要用 2 组引号封装，例如使用一对单引号 (`'`)，然后再用一对双引号 (`"`): ::: 
 
-Currently, the ArgoCD REST API lacks support for programmatic webhook creation. To set up a webhook configuration in ArgoCD for sending notifications to the Ocean integration, follow these steps:
+## 配置实时更新
 
-### Prerequisite
+目前，ArgoCD REST API 不支持以编程方式创建 webhook。 要在 ArgoCD 中设置 webhook 配置，以便向 Ocean 集成发送通知，请按以下步骤操作: 
 
-1. You have access to a Kubernetes cluster where ArgoCD is deployed.
-2. You have `kubectl` installed and configured to access your cluster.
+### 前提条件
 
-### Steps
+1. 您可以访问部署 ArgoCD 的 Kubernetes 集群。
+2. 安装并配置了 `kubectl` 以访问集群。
 
-1. Install ArgoCD notifications manifest;
+### 步骤
+
+1. 配置 ArgoCD 通知清单；
 
 ```bash showLineNumbers
 kubectl apply -n argocd -f https://raw.githubusercontent.com/argoproj-labs/argocd-notifications/release-1.0/manifests/install.yaml
 ```
 
-2. Install ArgoCD triggers and templates manifest;
+2.安装 ArgoCD 触发器和模板配置清单；
 
 ```bash showLineNumbers
 kubectl apply -n argocd -f https://raw.githubusercontent.com/argoproj-labs/argocd-notifications/release-1.0/catalog/install.yaml
 ```
 
-3. Use `kubectl` to connect to the Kubernetes cluster where your ArgoCD instance is deployed;
+3.使用 `kubectl` 连接到部署 ArgoCD 实例的 Kubernetes 集群；
 
 ```bash showLineNumbers
 kubectl config use-context <your-cluster-context>
 ```
 
-4. Set the current namespace to your ArgoCD namespace, use the following command;
+4.将当前名称空间设置为 ArgoCD 名称空间，请使用以下命令；
 
 ```bash showLineNumbers
 kubectl config set-context --current --namespace=<your-namespace>
 ```
 
-5. Create a YAML file (e.g. `argocd-webhook-config.yaml`) that configures the webhook notification service. The example below shows how to set up a webhook to send real-time events whenever ArgoCD applications are updated. The YAML file includes the following components:
+5.创建一个 YAML 文件(例如 `argocd-webhook-config.yml`)，配置 webhook 通知服务。下面的示例展示了如何设置 webhook，以便在 ArgoCD 应用程序更新时发送实时事件。YAML 文件包括以下组件: 
+    1.通知服务定义；
+    2.webhook 消息正文模板；
+    3.触发器定义；
+    4.订阅通知。
+    下面是一个 YAML 示例。请确保将 `<WEBHOOK_URL>` 替换为部署海洋集成的 ingress 或服务的实际 URL。默认情况下，传入的 Webhook 事件会发送到 Ocean 中的 `/integration/webhook` 路径，因此请勿替换路径参数。
+<details>
+<summary>webhook manifest file </summary>
 
-   1. Notification service definition;
-   2. Template for the webhook message body;
-   3. Trigger definitions;
-   4. Subscriptions to the notifications.
-
-   Here's an example YAML. Make sure to replace `<WEBHOOK_URL>` with the actual URL of the ingress or service where the ocean integration will be deployed. By default, incoming webhook events are sent to `/integration/webhook` path in Ocean so do not replace the path parameter.
-
-   <details>
-
-   <summary>webhook manifest file </summary>
 
    ```yaml showLineNumbers
    apiVersion: v1
@@ -406,32 +411,33 @@ kubectl config set-context --current --namespace=<your-namespace>
      - on-sync-operation-change
    ```
 
+
    </details>
 
-6. Use `kubectl` to apply the YAML file to your cluster. Run the following command, replacing `<your-namespace>` with your ArgoCD namespace and `<path-to-yaml-file>` with the actual path to your YAML file:
+6.使用 `kubectl` 将 YAML 文件引用到集群。运行以下命令，将 `<your-namespace>` 替换为 ArgoCD 名称空间，将 `<path-to-yaml-file>` 替换为 YAML 文件的实际路径: 
 
 ```bash
 kubectl apply -n <your-namespace> -f <path-to-yaml-file>
 ```
 
-This command deploys the webhook notification configuration to your ArgoCD notification configmap (`argocd-notifications-cm`), allowing Ocean to receive real-time events.
+该命令将 webhook 通知配置部署到 ArgoCD 通知 configmaps("argocd-notifications-cm")中，使 Ocean 能够接收实时事件。
 
-### Ingest data into Port
+#### 将数据输入Port
 
-To ingest ArgoCD objects using the [integration configuration](#configuration-structure), you can follow the steps below:
+要使用[integration configuration](#configuration-structure) 引用 ArgoCD 对象，可以按照以下步骤操作: 
 
-1. Go to the DevPortal Builder page.
-2. Select a blueprint you want to ingest using ArgoCD.
-3. Choose the **Ingest Data** option from the menu.
-4. Select ArgoCD under the Kubernetes Stack providers category.
-5. Modify the [configuration](#configuration-structure) according to your needs.
-6. Click `Resync`.
+1. 转到 DevPortal Builder 页面。
+2. 选择要被 ArgoCD 引用的蓝图。
+3. 从菜单中选择**采集数据**选项。
+4. 在 Kubernetes Stack Provider 类别下选择 ArgoCD。
+5. 根据需要修改[configuration](#configuration-structure) 。
+6. 单击 "Resync"。
 
-## Examples
+## 示例
 
-Examples of blueprints and the relevant integration configurations:
+蓝图和相关集成配置示例: 
 
-### Cluster
+#### 集群
 
 <details>
 <summary>Cluster blueprint</summary>
@@ -522,7 +528,7 @@ resources:
 
 </details>
 
-### Project
+### 项目
 
 <details>
 <summary> Project blueprint</summary>
@@ -596,7 +602,7 @@ resources:
 
 </details>
 
-### Application
+### 申请
 
 <details>
 <summary> Application blueprint</summary>
@@ -715,7 +721,7 @@ resources:
 
 </details>
 
-### Deployment history
+### 部署历史
 
 <details>
 <summary> Deployment history blueprint</summary>
@@ -809,18 +815,18 @@ resources:
 
 </details>
 
-## Alternative installation via webhook
+## 通过 webhook 进行替代安装
 
-While the Ocean integration described above is the recommended installation method, you may prefer to use a webhook to ingest data from ArgoCD. If so, use the following instructions:
+虽然上述 Ocean 集成是推荐的安装方法，但您可能更喜欢使用 webhook 从 ArgoCD 引用数据。 如果是这样，请使用以下说明: 
 
 <details>
 <summary><b>Webhook installation (click to expand)</b></summary>
 
-In this example you are going to create a webhook integration between [ArgoCD](https://argo-cd.readthedocs.io/en/stable/) and Port, which will ingest application entities and map them to your ArgoCD projects.
+在本例中，您将在[ArgoCD](https://argo-cd.readthedocs.io/en/stable/) 和 Port 之间创建一个 webhook 集成，该集成将摄取应用程序实体并将其映射到 ArgoCD 项目。
 
 <h2>Port configuration</h2>
 
-Create the following blueprint definition:
+创建以下蓝图定义: 
 
 <details>
 <summary>Project blueprint</summary>
@@ -836,72 +842,67 @@ Create the following blueprint definition:
 
 </details>
 
-Create the following webhook configuration [using Port UI](/build-your-software-catalog/sync-data-to-catalog/webhook/?operation=ui#configuring-webhook-endpoints)
+创建以下 webhook 配置[using Port UI](/build-your-software-catalog/sync-data-to-catalog/webhook/?operation=ui#configuring-webhook-endpoints)
 
 <details>
 
 <summary>Application webhook configuration</summary>
 
-1. **Basic details** tab - fill the following details:
-   1. Title : `ArgoCD Application Mapper`;
-   2. Identifier : `argocd_application_mapper`;
-   3. Description : `A webhook configuration to map ArgoCD applications to Port`;
-   4. Icon : `Argo`;
-2. **Integration configuration** tab - fill the following JQ mapping:
-
+1. **基本信息** 选项卡 - 填写以下详细信息: 
+    1.title: `ArgoCD Application Mapper`；
+    2.标识符 : `argocd_application_mapper`；
+    3.Description : `将 ArgoCD 应用程序映射到 Port` 的 webhook 配置；
+    4.图标 : `Argo`；
+2. **集成配置**选项卡 - 填写以下 JQ 映射: 
    <ArgoCDWebhookConfig/>
-
-3. Click **Save** at the bottom of the page.
+3.点击页面底部的**保存**。
 
 </details>
 
 <h2>Create a webhook in ArgoCD</h2>
 
-To set up a webhook configuration in ArgoCD for sending notifications to Port, follow these steps:
+要在 ArgoCD 中设置向 Port 发送通知的 webhook 配置，请按以下步骤操作: 
 
 <h3>Prerequisite</h3>
 
-1. You have access to a Kubernetes cluster where ArgoCD is deployed.
-2. You have `kubectl` installed and configured to access your cluster.
+1. 您可以访问部署 ArgoCD 的 Kubernetes 集群。
+2. 安装并配置了 `kubectl` 以访问集群。
 
 <h3>Steps</h3>
 
-1. Install ArgoCD notifications manifest;
+1. 配置 ArgoCD 通知清单；
 
 ```bash showLineNumbers
 kubectl apply -n argocd -f https://raw.githubusercontent.com/argoproj-labs/argocd-notifications/release-1.0/manifests/install.yaml
 ```
 
-2. Install ArgoCD triggers and templates manifest;
+2.安装 ArgoCD 触发器和模板配置清单；
 
 ```bash showLineNumbers
 kubectl apply -n argocd -f https://raw.githubusercontent.com/argoproj-labs/argocd-notifications/release-1.0/catalog/install.yaml
 ```
 
-3. Use `kubectl` to connect to the Kubernetes cluster where your ArgoCD instance is deployed;
+3.使用 `kubectl` 连接到部署 ArgoCD 实例的 Kubernetes 集群；
 
 ```bash showLineNumbers
 kubectl config use-context <your-cluster-context>
 ```
 
-4. Set the current namespace to your ArgoCD namespace, use the following command;
+4.将当前名称空间设置为 ArgoCD 名称空间，请使用以下命令；
 
 ```bash showLineNumbers
 kubectl config set-context --current --namespace=<your-namespace>
 ```
 
-5. Create a YAML file (e.g. `argocd-webhook-config.yaml`) that configures the webhook notification service. The example below shows how to set up a webhook to send real-time events whenever ArgoCD applications are updated. The YAML file includes the following components:
+5.创建一个 YAML 文件(例如 `argocd-webhook-config.yml`)，配置 webhook 通知服务。下面的示例展示了如何设置 webhook，以便在 ArgoCD 应用程序更新时发送实时事件。YAML 文件包括以下组件: 
+    1.通知服务定义；
+    2.webhook 消息正文模板；
+    3.触发器定义；
+    4.订阅通知。
+    下面是一个 YAML 示例。请确保将 `<YOUR_WEBHOOK_URL>` 替换为创建 webhook 配置后收到的 `url` 键值。
+<details>
+<summary>webhook manifest file </summary>
 
-   1. Notification service definition;
-   2. Template for the webhook message body;
-   3. Trigger definitions;
-   4. Subscriptions to the notifications.
-
-   Here's an example YAML. Make sure to replace `<YOUR_WEBHOOK_URL>` with the value of `url` key you received after creating the webhook configuration.
-
-   <details>
-
-   <summary>webhook manifest file </summary>
 
    ```yaml showLineNumbers
    apiVersion: v1
@@ -955,25 +956,26 @@ kubectl config set-context --current --namespace=<your-namespace>
      - on-sync-operation-change
    ```
 
+
    </details>
 
-6. Use `kubectl` to apply the YAML file to your cluster. Run the following command, replacing `<your-namespace>` with your ArgoCD namespace and `<path-to-yaml-file>` with the actual path to your YAML file:
+6.使用 `kubectl` 将 YAML 文件引用到集群。运行以下命令，将 `<your-namespace>` 替换为 ArgoCD 名称空间，将 `<path-to-yaml-file>` 替换为 YAML 文件的实际路径: 
 
 ```bash
 kubectl apply -n <your-namespace> -f <path-to-yaml-file>
 ```
 
-This command deploys the webhook notification configuration to your ArgoCD notification configmap (`argocd-notifications-cm`), allowing Port to receive real-time events.
+该命令将 webhook 通知配置部署到 ArgoCD 通知 configmaps (`argocd-notifications-cm`)，使 Port 能够接收实时事件。
 
-Done! any change that happens to your applications in ArgoCD will trigger a webhook event to the webhook URL provided by Port. Port will parse the events according to the mapping and update the catalog entities accordingly.
+完成！您在 ArgoCD 中的应用程序发生的任何变化都将触发指向 Port 提供的 webhook URL 的 webhook 事件。 Port 将根据映射解析事件，并相应地更新目录实体。
 
 <h2>Argocd Events</h2>
 
-In this example you are going to create a webhook integration between [ArgoCD](https://argo-cd.readthedocs.io/en/stable/) and Port, which will ingest all events entities and map them to your ArgoCD applications.
+在本示例中，您将在[ArgoCD](https://argo-cd.readthedocs.io/en/stable/) 和 Port 之间创建一个 webhook 集成，该集成将摄取所有事件实体并将其映射到 ArgoCD 应用程序。
 
 <h3>Port configuration</h3>
 
-Create the following blueprint definition:
+创建以下蓝图定义: 
 
 <details>
 <summary>Events blueprint</summary>
@@ -982,84 +984,75 @@ Create the following blueprint definition:
 
 </details>
 
-Create the following webhook configuration [using Port UI](/build-your-software-catalog/sync-data-to-catalog/webhook/?operation=ui#configuring-webhook-endpoints)
+创建以下 webhook 配置[using Port UI](/build-your-software-catalog/sync-data-to-catalog/webhook/?operation=ui#configuring-webhook-endpoints)
 
 <details>
 
 <summary>Application webhook configuration</summary>
 
-1. **Basic details** tab - fill the following details:
-   1. Title : `ArgoCD Event Mapper`;
-   2. Identifier : `argocd_event_mapper`;
-   3. Description : `A webhook configuration to map ArgoCD events to Port`;
-   4. Icon : `Argo`;
-2. **Integration configuration** tab - fill the following JQ mapping:
-
+1. **基本信息** 选项卡 - 填写以下详细信息: 
+    1.title: `ArgoCD Event Mapper`；
+    2.标识符 : `argocd_event_mapper`；
+    3.Description : `将 ArgoCD 事件映射到 Port` 的 webhook 配置；
+    4.图标 : `Argo`；
+2. **集成配置**选项卡 - 填写以下 JQ 映射: 
    <ArgoCDEventWebhookConfig/>
-
-3. Click **Save** at the bottom of the page.
+3.点击页面底部的**保存**。
 
 </details>
 
 <h3> Create a webhook in ArgoCD </h3>
 
-To set up a webhook configuration in ArgoCD for sending notifications to Port, follow these steps:
+要在 ArgoCD 中设置向 Port 发送通知的 webhook 配置，请按以下步骤操作: 
 
 <h4> Prerequisite </h4>
 
-1. You have access to a Kubernetes cluster where ArgoCD is deployed.
-2. You have `kubectl` installed and configured to access your cluster.
+1. 您可以访问部署 ArgoCD 的 Kubernetes 集群。
+2. 安装并配置了 `kubectl` 以访问集群。
 
 <h4> Steps </h4>
 
-1. Install ArgoCD notifications manifest;
+1. 配置 ArgoCD 通知清单；
 
 ```bash showLineNumbers
 kubectl apply -n argocd -f https://raw.githubusercontent.com/argoproj-labs/argocd-notifications/release-1.0/manifests/install.yaml
 ```
 
-2. Install ArgoCD triggers and templates manifest;
+2.安装 ArgoCD 触发器和模板配置清单；
 
 ```bash showLineNumbers
 kubectl apply -n argocd -f https://raw.githubusercontent.com/argoproj-labs/argocd-notifications/release-1.0/catalog/install.yaml
 ```
 
-3. Use `kubectl` to connect to the Kubernetes cluster where your ArgoCD instance is deployed;
+3.使用 `kubectl` 连接到部署 ArgoCD 实例的 Kubernetes 集群；
 
 ```bash showLineNumbers
 kubectl config use-context <your-cluster-context>
 ```
 
-4. Set the current namespace to your ArgoCD namespace, use the following command;
+4.将当前名称空间设置为 ArgoCD 名称空间，请使用以下命令；
 
 ```bash showLineNumbers
 kubectl config set-context --current --namespace=<your-namespace>
 ```
 
-5. Create a YAML file (e.g. `argocd-events-config.yaml`) that configures the webhook notification service. The example below shows how to set up a webhook to send real-time events from ArgoCD. The YAML file includes the following components:
-
-   1. Notification service definition;
-   2. Template for the webhook message body;
-   3. Trigger definitions;
-   4. Subscriptions to the notifications.
-
-   Here's an example YAML. Make sure to replace `<YOUR_WEBHOOK_URL>` with the value of `url` key you received after creating the webhook configuration.
-
-   <details>
-
-   <summary>event manifest file </summary>
-   <ArgoCDEventManifest/>
-
-   </details>
-
-6. Use `kubectl` to apply the YAML file to your cluster. Run the following command, replacing `<your-namespace>` with your ArgoCD namespace and `<path-to-yaml-file>` with the actual path to your YAML file:
+5.创建一个 YAML 文件(例如 `argocd-events-config.yaml`)，配置 webhook 通知服务。下面的示例展示了如何设置 webhook 从 ArgoCD 发送实时事件。YAML 文件包括以下组件: 
+    1.通知服务定义；
+    2.webhook 消息正文模板；
+    3.触发器定义；
+    4.订阅通知。
+    下面是一个 YAML 示例。请确保将 `<YOUR_WEBHOOK_URL>` 替换为创建 webhook 配置后收到的 `url` 键值。
+<details>
+<summary>event manifest file </summary>
+    <ArgoCDEventManifest/></details>
+6.使用 `kubectl` 将 YAML 文件引用到集群。运行以下命令，将 `<your-namespace>` 替换为 ArgoCD 名称空间，将 `<path-to-yaml-file>` 替换为 YAML 文件的实际路径: 
 
 ```bash
 kubectl apply -n <your-namespace> -f <path-to-yaml-file>
 ```
 
-This command deploys the webhook notification configuration to your ArgoCD notification configmap (`argocd-notifications-cm`), allowing Port to receive real-time events.
+该命令将 webhook 通知配置部署到 ArgoCD 通知 configmaps (`argocd-notifications-cm`)，使 Port 能够接收实时事件。
 
-Done! any change that happens to your applications in ArgoCD will trigger a webhook event to the webhook URL provided by Port. Port will parse the events according to the mapping and update the catalog entities accordingly.
+完成！您在 ArgoCD 中的应用程序发生的任何变化都将触发指向 Port 提供的 webhook URL 的 webhook 事件。 Port 将根据映射解析事件，并相应地更新目录实体。
 
 </details>

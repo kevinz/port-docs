@@ -1,19 +1,21 @@
 ---
+
 sidebar_position: 9
-description: Ingest Datadog alerts/monitors into your catalog
+description: 将 Datadog 警报/监视器纳入目录
+
 ---
 
-import DatadogBlueprint from "./resources/datadog/\_example_datadog_alert_blueprint.mdx";
-import DatadogConfiguration from "./resources/datadog/\_example_datadog_webhook_configuration.mdx"
-import DatadogMicroserviceBlueprint from "./resources/datadog/\_example_datadog_microservice.mdx"
+import DatadogBlueprint from "./resources/datadog/_example_datadog_alert_blueprint.mdx";
+import DatadogConfiguration from "./resources/datadog/_example_datadog_webhook_configuration.mdx"
+import DatadogMicroserviceBlueprint from "./resources/datadog/_example_datadog_microservice.mdx"
 
 # Datadog
 
-In this example you are going to create a webhook integration between [Datadog](https://www.datadoghq.com/) and Port, which will ingest alerts and monitors entities to Port and map them to your microservice entities.
+在本示例中，您将在[Datadog](https://www.datadoghq.com/) 和 Port 之间创建 webhook 集成，将警报和监控实体摄取到 Port，并将其映射到您的微服务实体。
 
-## Port configuration
+## Port 配置
 
-Create the following blueprint definitions:
+创建以下蓝图定义: 
 
 <details>
 <summary>Datadog microservice blueprint</summary>
@@ -25,39 +27,39 @@ Create the following blueprint definitions:
 <DatadogBlueprint/>
 </details>
 
-Create the following webhook configuration [using Port UI](/build-your-software-catalog/sync-data-to-catalog/webhook/?operation=ui#configuring-webhook-endpoints)
+创建以下 webhook 配置[using Port UI](/build-your-software-catalog/sync-data-to-catalog/webhook/?operation=ui#configuring-webhook-endpoints)
 
 <details>
 <summary>Datadog webhook configuration</summary>
 
-1. **Basic details** tab - fill the following details:
-   1. Title : `Datadog Alert Mapper`;
-   2. Identifier : `datadog_alert_mapper`;
-   3. Description : `A webhook configuration for alerts/monitors events from Datadog`;
-   4. Icon : `Datadog`;
-2. **Integration configuration** tab - fill the following JQ mapping:
-
+1. **基本信息** 选项卡 - 填写以下详细信息: 
+    1.title: `Datadog Alert Mapper`；
+    2.标识符 : `datadog_alert_mapper`；
+    3.Description : `来自 Datadog 的警报/监控事件的 webhook 配置；
+    4.图标 : `Datadog`；
+2. **集成配置**选项卡 - 填写以下 JQ 映射: 
    <DatadogConfiguration/>
-
-3. Click **Save** at the bottom of the page.
+3.单击页面底部的**保存**。
 
 </details>
 
-:::note
-The webhook configuration's relation mapping will function properly only when the identifiers of the Port microservice entities match the names of the services or hosts in your Datadog.
+:::note 只有当 Port 微服务实体的标识符与 Datadog 中服务或主机的名称相匹配时，webhook 配置的关系映射才能正常运行。
+
 :::
 
-## Create a webhook in Datadog
+## 在 Datadog 中创建 webhook
 
-1. Log in to Datadog with your credentials;
-2. Click on **Integrations** at the left sidebar of the page;
-3. Search for **Webhooks** in the search box and select it;
-4. Go to the **Configuration** tab and follow the installation instructions;
-5. Click on **New**;
-6. Input the following details:
-   1. `Name` - use a meaningful name such as Port_Webhook;
-   2. `URL` - enter the value of the `url` key you received after [creating the webhook configuration](../webhook.md#configuring-webhook-endpoints);
-   3. `Payload` - When an alert is triggered on your monitors, this payload will be sent to the webhook URL. You can enter this JSON placeholder in the textbox;
+1. 使用您的凭据登录 Datadog；
+2. 点击页面左侧边栏的**集成**；
+3. 在搜索框中搜索**Webhooks**，然后选择它；
+4. 进入 "**配置**"选项卡，并按照安装说明进行操作；
+5. 点击**新**；
+6. 输入以下详细信息: 
+    1. 名称 `Name` - 被引用一个有意义的名称，如 Port_Webhook；
+    2. `URL` - 输入[creating the webhook configuration](../webhook.md#configuring-webhook-endpoints) 后收到的 `url` 键的值；
+    3. `Payload` - 当监控器触发警报时，此有效载荷将被发送到 webhook URL。您可以在文本框中输入此 JSON 占位符；
+
+
       ```json showLineNumbers
       {
         "id": "$ID",
@@ -80,31 +82,32 @@ The webhook configuration's relation mapping will function properly only when th
         "tags": "$TAGS"
       }
       ```
+
    4. `Custom Headers` - configure any custom HTTP header to be added to the webhook event. The format for the header should be in JSON;
 7. Click **Save** at the bottom of the page;
 
-:::tip
-In order to view the different payloads and structure of the events in Datadog webhooks, [look here](https://docs.datadoghq.com/integrations/webhooks/#variables)
+:::tip 为了查看 Datadog webhook 中事件的不同有效载荷和结构、[look here](https://docs.datadoghq.com/integrations/webhooks/#variables)
+
 :::
 
-Done! any problem detected on your Datadog instance will trigger a webhook event. Port will parse the events according to the mapping and update the catalog entities accordingly.
+完成！在 Datadog 实例上检测到的任何问题都将触发 webhook 事件。 Port 将根据映射解析事件，并相应地更新目录实体。
 
-## Ingest service level objectives (SLOs)
+## 摄取服务级别目标(SLO)
 
-This guide will walk you through the steps to ingest Datadog SLOs into Port. By following these steps, you will be able to create a blueprint for a `microservice` entity in Port, representing a service in your Datadog account. Furthermore, you will establish a relation between this service and the `datadogSLO` blueprint, allowing the ingestion of all defined SLOs from your Datadog account.
+本指南将指导您完成将 Datadog SLO 导入 Port 的步骤。 按照这些步骤，您将能够在 Port 中创建一个 `microservice` 实体蓝图，代表 Datadog 帐户中的一个服务。 此外，您还将在此服务和 `datadogSLO` 蓝图之间建立关系，从而能够从 Datadog 帐户中导入所有已定义的 SLO。
 
-The provided example demonstrates how to pull data from Datadog's REST API at scheduled intervals using GitLab Pipelines and report the data to Port.
+Provider 提供的示例演示了如何使用 GitLab Pipelines 按预定时间间隔从 Datadog 的 REST API 提取数据并将数据报告给 Port。
 
-- [GitLab CI Pipeline Example](https://github.com/port-labs/datadog-slo-example)
+* * [GitLab CI Pipeline Example](https://github.com/port-labs/datadog-slo-example)
 
-## Ingest service dependency from your APM
+## 从 APM 获取服务依赖性
 
-In this example, you will create a `service` blueprint that ingests all services and their related dependencies in your Datadog APM using REST API. You will then add some shell script to create new entities in Port every time GitLab CI is triggered by a schedule.
+在本示例中，您将创建一个 `service` 蓝图，使用 REST API 在 Datadog APM 中引用所有服务及其相关依赖关系。 然后，您将添加一些 shell 脚本，以便每次 GitLab CI 被日程触发时在 Port 中创建新实体。
 
-- [GitLab CI Pipeline Example](https://github.com/port-labs/datadog-service-dependency-example)
+* * [GitLab CI Pipeline Example](https://github.com/port-labs/datadog-service-dependency-example)
 
-## Ingest service catalog
+## 接收服务目录
 
-In this example, you will create a `datadogServiceCatalog` blueprint that ingests all service catalogs from your Datadog account. You will then add some python script to make API calls to Datadog REST API and fetch data for your account.
+在本示例中，您将创建一个 `datadogServiceCatalog` 蓝图，用于从 Datadog 帐户中摄取所有服务目录。 然后，您将添加一些 python 脚本，以便向 Datadog REST API 进行 API 调用，并为您的帐户获取数据。
 
-- [Code Repository Example](https://github.com/port-labs/datadog-service-catalog)
+* * [Code Repository Example](https://github.com/port-labs/datadog-service-catalog)

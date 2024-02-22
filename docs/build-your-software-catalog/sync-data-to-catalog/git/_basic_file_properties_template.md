@@ -1,8 +1,8 @@
-It is possible to use the contents of files in the repository as the value for entity properties using a simple reference.
+通过简单引用，可以将资源库中的文件内容作为实体属性的值。
 
-The following example will read the string contents of `~/module1/README.md` and upload it to `myStringProp` of the specified entity.
+下面的示例将读取 `~/module1/README.md` 中的字符串内容，并将其上传到指定实体的 `myStringProp` 中。
 
-Repository folder structure used for the example:
+被引用到示例中的资源库文件夹结构: 
 
 ```
 root
@@ -17,7 +17,7 @@ root
 ...
 ```
 
-`port.yml` file:
+Port.yml` 文件: 
 
 ```yaml showLineNumbers
 blueprint: code_module

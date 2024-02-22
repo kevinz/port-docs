@@ -1,30 +1,32 @@
 ---
+
 sidebar_position: 1
-description: Text is a basic input for textual information
+description: 文本文本是文本信息的基本输入
+
 ---
 
-import ApiRef from "../../../api-reference/\_learn_more_reference.mdx"
+import ApiRef from "../../../api-reference/_learn_more_reference.mdx"
 
 import Tabs from "@theme/Tabs"
 import TabItem from "@theme/TabItem"
 
-# Text
+# 文本
 
-Text is a basic input for textual information.
+文字是文本信息的基本输入方式。
 
-## 💡 Common text usage
+## 💡 常用文本 Usage
 
-The text input type can be used to store any text based data, for example:
+文本输入类型可被引用来存储任何基于文本的数据，例如: 
 
-- Image tags;
-- Variable keys;
-- Commit SHA;
-- File names;
-- etc.
+* 镜像标签；
+* 可变密钥
+* 提交 SHA；
+* 文件名；
+* 等等。
 
-In the [live demo](https://demo.getport.io/self-serve) self-service hub page, we can see the **scaffold new service** action whose `Service Name` input is a text input. 🎬
+在[live demo](https://demo.getport.io/self-serve) 自助中心页面中，我们可以看到**脚手架新服务**操作，其 "服务名称 "输入为文本输入。
 
-## API definition
+## 应用程序接口定义
 
 <Tabs groupId="api-definition" queryString defaultValue="basic" values={[
 {label: "Basic", value: "basic"},
@@ -113,7 +115,7 @@ In the [live demo](https://demo.getport.io/self-serve) self-service hub page, we
 
 <ApiRef />
 
-## Terraform definition
+## Terraform 定义
 
 <Tabs groupId="tf-definition" queryString defaultValue="basic" values={[
 {label: "Basic", value: "basic"},
@@ -159,7 +161,6 @@ resource "port_action" "myAction" {
   }
   # highlight-end
 }
-
 ```
 
 </TabItem>
@@ -167,7 +168,6 @@ resource "port_action" "myAction" {
 <TabItem value="array">
 
 ```hcl showLineNumbers
-
 resource "port_action" "myAction" {
   # ...action properties
   # highlight-start
@@ -188,13 +188,13 @@ resource "port_action" "myAction" {
 
 </Tabs>
 
-## Validate text
+## 验证文本
 
-Text validations support the following operators:
+文本验证支持以下操作符: 
 
-- `minLength` - enforce minimal string length;
-- `maxLength` - enforce maximal string length;
-- `pattern` - enforce Regex patterns.
+* `minLength` - 执行最小字符串长度；
+* `maxLength` - 执行最大字符串长度；
+* `pattern` - 执行 Regex 模式。
 
 <Tabs groupId="validation-definition" queryString defaultValue="basic" values={[
 {label: "Basic", value: "basic"},

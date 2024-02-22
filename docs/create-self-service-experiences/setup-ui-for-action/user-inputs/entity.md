@@ -1,31 +1,33 @@
 ---
+
 sidebar_position: 13
-description: Entity is an input used to reference existing entities from the software catalog when triggering actions
+description: 实体实体是一种输入，用于在触发操作时引用软件目录中的现有实体
+
 ---
 
-import ApiRef from "../../../api-reference/\_learn_more_reference.mdx"
+import ApiRef from "../../../api-reference/_learn_more_reference.mdx"
 
 import Tabs from "@theme/Tabs"
 import TabItem from "@theme/TabItem"
 
-# Entity
+# 实体
 
-Entity is an input type used to reference existing [entities](../../../build-your-software-catalog/sync-data-to-catalog/sync-data-to-catalog.md#creating-entities) from the software catalog when triggering actions.
+实体是一种输入类型，用于在触发操作时引用软件目录中的现有[entities](../../../build-your-software-catalog/sync-data-to-catalog/sync-data-to-catalog.md#creating-entities) 。
 
-## 💡 Common entity usage
+## 💡 常见实体 Usage
 
-The entity input type can be used to reference any existing entity from the software catalog, for example:
+例如，实体输入类型可被用来引用软件目录中的任何现有实体: 
 
-- Cloud regions;
-- Clusters;
-- Configurations;
-- etc.
+* 云区域；
+* 集群；
+* 配置；
+* 等等。
 
-In the [live demo](https://demo.getport.io/self-serve) self-service hub page, we can see the **scaffold new service** action whose `Domain` input is an entity input. 🎬
+在[live demo](https://demo.getport.io/self-serve) 自助中心页面，我们可以看到**scaffold new service** 操作，其 `Domain` 输入是实体输入。
 
-## Entity input structure
+## 实体输入结构
 
-The entity is represented by the unique `entity` _format_ and the `blueprint` key that accompanies it, as shown in the following section:
+实体由唯一的 "entity"_format_和随附的 "blueprint "键表示，如下节所示: 
 
 ```json showLineNumbers
 {
@@ -42,14 +44,16 @@ The entity is represented by the unique `entity` _format_ and the `blueprint` ke
 }
 ```
 
-### Structure table
+#### 结构表
+
 
 | Field                        | Description                                                                               | Notes                                                       |
 | ---------------------------- | ----------------------------------------------------------------------------------------- | ----------------------------------------------------------- |
 | `"format": "entity"`         | Used to specify that this is an entity input                                              | **Required**                                                |
 | `"blueprint": "myBlueprint"` | Used to specify the identifier of the target blueprint that entities will be queried from | **Required**. Must specify an existing blueprint identifier |
 
-## API definition
+
+## 应用程序接口定义
 
 <Tabs groupId="api-definition" queryString defaultValue="basic" values={[
 {label: "Basic", value: "basic"},
@@ -99,7 +103,7 @@ The entity is represented by the unique `entity` _format_ and the `blueprint` ke
 
 <ApiRef />
 
-## Terraform definition
+## Terraform 定义
 
 <Tabs groupId="tf-definition" queryString defaultValue="basic" values={[
 {label: "Basic", value: "basic"},

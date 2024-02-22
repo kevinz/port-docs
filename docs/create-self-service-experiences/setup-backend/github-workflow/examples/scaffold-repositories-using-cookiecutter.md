@@ -1,29 +1,28 @@
 ---
+
 sidebar_position: 2
+
 ---
 
-# Scaffold Repositories Using Cookiecutter
+# 使用 Cookiecutter 创建脚手架资源库
 
-[This GitHub action](https://github.com/port-labs/cookiecutter-gha) allows you to quickly scaffold repositories using any selected [Cookiecutter Template](https://www.cookiecutter.io/templates) via Port Actions.
+[This GitHub action](https://github.com/port-labs/cookiecutter-gha) 可让您通过 Port Actions 使用任何选定的[Cookiecutter Template](https://www.cookiecutter.io/templates) 快速构建软件源。
 
-In addition, as cookiecutter is an open-source project you can make your own project template, learn more about it [here](https://cookiecutter.readthedocs.io/en/2.0.2/tutorials.html#create-your-very-own-cookiecutter-project-template).
+此外，由于 cookiecutter 是一个开源项目，您可以制作自己的项目模板，了解更多信息请访问[here](https://cookiecutter.readthedocs.io/en/2.0.2/tutorials.html#create-your-very-own-cookiecutter-project-template) 。
 
-## Example - scaffolding golang template
+## 示例 - golang 模板脚手架
 
-Follow these steps to get started with the Golang template:
+请按照以下步骤开始使用 Golang 模板: 
 
-1. Create the following GitHub action secrets:
+1. 创建以下 GitHub 操作secret: 
+    1. `ORG_TOKEN` - 具有创建版本库权限的[fine-grained PAT](https://github.com/settings/tokens?type=beta) 。
+    2. `PORT_CLIENT_ID` - Port客户端 ID[learn more](../../../../build-your-software-catalog/sync-data-to-catalog/api/#get-api-token) 。
+    3. `PORT_CLIENT_SECRET` - Port客户端secret[learn more](../../../../build-your-software-catalog/sync-data-to-catalog/api/#get-api-token) 。
+2.点击[here](https://github.com/apps/getport-io/installations/new) 安装 Port 的 GitHub 应用程序。
+3.创建具有以下属性的 Port 蓝图: 
 
-   1. `ORG_TOKEN` - a [fine-grained PAT](https://github.com/settings/tokens?type=beta) with permissions to create repositories.
-   2. `PORT_CLIENT_ID` - Port Client ID [learn more](../../../../build-your-software-catalog/sync-data-to-catalog/api/#get-api-token).
-   3. `PORT_CLIENT_SECRET` - Port Client Secret [learn more](../../../../build-your-software-catalog/sync-data-to-catalog/api/#get-api-token).
+:::note 请记住，这可以是你想要的任何蓝图，这只是一个例子。
 
-2. Install Port's GitHub app by clicking [here](https://github.com/apps/getport-io/installations/new).
-
-3. Create a Port blueprint with the following properties:
-
-:::note
-Keep in mind this can be any blueprint you would like and this is just an example.
 :::
 
 ```json showLineNumbers
@@ -57,10 +56,10 @@ Keep in mind this can be any blueprint you would like and this is just an exampl
 }
 ```
 
-4. Create Port action using the following JSON definition:
+4.使用以下 JSON 定义创建 Port 操作: 
 
-:::note
-Keep in mind that any input that starts with `cookiecutter_` will automatically be injected into the cookiecutter action as a variable. He we are using the `cookiecutter_app_name` input of the [Golang Template](https://github.com/lacion/cookiecutter-golang).
+:::note 请记住，任何以 `cookiecutter_` 开头的输入都会自动作为变量注入 cookiecutter 操作中。我们正在使用[Golang Template](https://github.com/lacion/cookiecutter-golang) 的 `cookiecutter_app_name` 输入。
+
 :::
 
 ```json showLineNumbers
@@ -95,7 +94,7 @@ Keep in mind that any input that starts with `cookiecutter_` will automatically 
 ]
 ```
 
-5. Create a workflow file under `.github/workflows/scaffold-golang.yml` with the following content:
+5.在`.github/workflows/scaffold-golang.yml`下创建一个工作流程文件，内容如下: 
 
 ```yml showLineNumbers
 on:
@@ -129,13 +128,12 @@ jobs:
           organizationName: INSERT_ORG_NAME
 ```
 
-6. Trigger the action from Port's UI.
+6.从 Port 的用户界面触发操作。
 
 ![gif](../../../../../static/img/self-service-actions/ScaffoldGolang.gif)
 
-## Next steps
+## 下一步
 
-- [Connect Port's GitHub exporter](../../../../build-your-software-catalog/sync-data-to-catalog/git/github/github.md)
-  to make sure all of the properties (like URL, readme etc..) are automatically ingested from GitHub.
-  - You can learn how to setup Port's GitHub exporter [here](../../../../build-your-software-catalog/sync-data-to-catalog/git/github/github.md#ingesting-git-objects).
-  - You can see example configurations and use cases [here](../../../../build-your-software-catalog/sync-data-to-catalog/git/github/examples.md).
+* [Connect Port's GitHub exporter](../../../../build-your-software-catalog/sync-data-to-catalog/git/github/github.md) 以确保从 GitHub 自动获取所有属性(如 URL、readme 等)。
+    - 您可以了解如何设置 Port 的 GitHub 输出程序[here](../../../../build-your-software-catalog/sync-data-to-catalog/git/github/github.md#ingesting-git-objects) 。
+    - 您可以查看示例配置和用例[here](../../../../build-your-software-catalog/sync-data-to-catalog/git/github/examples.md) 。

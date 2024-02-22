@@ -1,45 +1,46 @@
 ---
+
 sidebar_position: 1
+
 ---
 
-# Installation
+# 安装
 
-GitLab pipelines can be triggered using [Port's execution agent](/create-self-service-experiences/setup-backend/webhook/port-execution-agent/port-execution-agent.md).
+GitLab 管道可通过[Port's execution agent](/create-self-service-experiences/setup-backend/webhook/port-execution-agent/port-execution-agent.md) 被引用。
 
-Let's install the agent and configure it to trigger GitLab pipelines.
+让我们安装代理并配置它以触发 GitLab Pipelines。
 
-## Prerequisites
+## 先决条件
 
-- [Helm](https://helm.sh) must be installed to use the chart. Please refer to
-  Helm's [documentation](https://helm.sh/docs) for further details on the installation;
-- The connection credentials to Kafka are provided to you by Port;
-- If you want to trigger a GitLab Pipeline, you need to have a [GitLab trigger token](https://docs.gitlab.com/ee/ci/triggers/).
+* [Helm](https://helm.sh) 必须安装才能使用海图。有关安装的更多详情，请参阅 Helm 的[documentation](https://helm.sh/docs) ；
+* 与 Kafka 的连接凭证由 Port 提供给您；
+* 如果想触发 GitLab Pipelines，需要有[GitLab trigger token](https://docs.gitlab.com/ee/ci/triggers/) 。
 
-:::important Trigger Tokens
+:::important  触发令牌
 
-In order to trigger your GitLab Pipeline you need to provide a GitLab [trigger token](https://docs.gitlab.com/ee/ci/triggers/#create-a-trigger-token) as an environment variable.
+要触发 GitLab Pipeline，需要提供一个 GitLab[trigger token](https://docs.gitlab.com/ee/ci/triggers/#create-a-trigger-token) 作为环境变量。
 
-To provide the trigger token to the agent, pass the helm chart an environment variable with a name that is the combination of the `GitLab group` and `GitLab project` separated by an underscore (`_`) , the name is case sensitive.
+要向代理提供触发令牌，可将 helm chart 传递给一个环境变量，变量名为 "GitLab 组 "和 "GitLab 项目 "的组合，以下划线 (`_`)分隔，名称区分大小写。
 
-For example: `group_project=token`
+例如: "group_project=token
 
-You can load multiple trigger tokens, for different groups and projects in your GitLab environment.
+您可以为 GitLab 环境中的不同组和项目加载多个触发令牌。
+
 :::
 
-## Installing the agent
+## 安装代理
 
-1. Add Port's Helm repo by using the following command:
+1. 使用以下命令添加 Port 的 Helm 软件源: 
 
 ```bash showLineNumbers
 helm repo add port-labs https://port-labs.github.io/helm-charts
 ```
 
-:::note
-If you already added this repo earlier, run `helm repo update` to retrieve
-the latest versions of the charts. You can then run `helm search repo port-labs` to see the charts.
+:::note 如果之前已经添加了此 repo，请运行 `helm repo update` 获取最新版本的图表。 然后运行 `helm search repo port-labs` 查看图表。
+
 :::
 
-2. Install the `port-agent` chart by using the following command:
+2.使用以下命令安装 `port-agent` 图表: 
 
 ```bash showLineNumbers
 helm install my-port-agent port-labs/port-agent \
@@ -51,23 +52,23 @@ helm install my-port-agent port-labs/port-agent \
     --set env.secret.<YOUR GITLAB GROUP>_<YOUR GITLAB PROJECT>=YOUR_GITLAB_TOKEN
 ```
 
-### Self Hosted GitLab
+#### 自主托管 GitLab
 
-If you are using a private GitLab environment, pass the `GITLAB_URL` environment variable to your Port agent installation:
+如果使用私人 GitLab 环境，请将 `GITLAB_URL` 环境变量引用到 Port 代理安装中: 
 
 ```bash showLineNumbers
 --set env.normal.GITLAB_URL
 ```
 
-Done! **Port's execution agent** is now running in your environment and will trigger any GitLab pipeline that you have configured.
+完成！**Port 的执行代理**已在您的环境中运行，并将触发您配置的任何 GitLab 管道。
 
-## Control the payload
+## 控制有效载荷
 
-The Port agent allows you to control the payload that is sent to gitlab api when triggering a pipeline.
+通过 Port 代理，您可以控制触发管道时发送到 gitlab api 的有效载荷。
 
-By customizing the payload you can control the data that is sent to gitlab and the way the pipeline is triggered.
+通过自定义 Pipeline 的有效载荷，您可以控制发送到 gitlab 的数据以及触发 Pipeline 的方式。
 
-By default, the Port agent use the this default mapping to trigger gitlab pipelines:
+默认情况下，Port 代理会被引用此默认映射来触发 gitlab 管道: 
 
 <details>
 <summary>Default Gitlab port agent mapping</summary>
@@ -89,4 +90,4 @@ By default, the Port agent use the this default mapping to trigger gitlab pipeli
 
 </details>
 
-You can read more about the payload mapping in the [Control the payload mapping](/create-self-service-experiences/setup-backend/webhook/port-execution-agent/control-the-payload.md) page.
+有关有效载荷映射的更多信息，请访问[Control the payload mapping](/create-self-service-experiences/setup-backend/webhook/port-execution-agent/control-the-payload.md) 页面。

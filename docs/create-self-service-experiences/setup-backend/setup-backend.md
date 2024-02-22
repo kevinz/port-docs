@@ -1,10 +1,12 @@
 ---
-title: Setup backend
+
+title: 设置后端
+
 ---
 
 import DocCardList from '@theme/DocCardList';
 
-# Setup backend
+# 设置后端
 
 <center>
 
@@ -12,20 +14,20 @@ import DocCardList from '@theme/DocCardList';
 
 </center>
 
-Port's self-service actions support a variety of backends that can be triggered when a user invokes an action.
+Port 的自助操作支持各种后端，用户调用操作时可触发这些后端。
 
-Here is the basic backend model:
+下面是基本的后端模型: 
 
 ![self-service action backend diagram](../../../static/img/self-service-actions/setup-backend/backend-flow-diagram.png)
 
-The Port-backend integration includes the following steps:
+Port 后端集成包括以下步骤: 
 
-1. **The action is triggered in Port** - the trigger can be either a user interacting with the self-service actions UI, or an automation triggering an action via the API;
-2. **Port generates the event payload** - the payload includes metadata about the invoked action and the user inputs;
-3. **The payload is sent to your backend** - the backend can be a URL, a dedicated Kafka topic or one of your CI/CD workflows and pipelines;
-4. **Your backend receives the payload and handles the request** - depending on the action, the backend might open a PR, create a new cloud resource, provision a new environment etc.;
-5. **Your backend updates Port on the status of the execution** - You can enrich the action run object in Port by adding logs, attaching links to other workflows or pipelines that help fullfil the request and add a final success/fail status once the action is complete.
+1. **在 Port** 中触发操作 - 触发器可以是与自助操作用户界面交互的用户，也可以是通过应用程序接口触发操作的自动化程序；
+2. **Port 生成事件有效载荷** - 有效载荷包括有关调用操作和用户输入的元数据；
+3. **将有效载荷发送到后端**--后端可以是一个 URL、一个专用的 Kafka 主题或一个 CI/CD 工作流和 Pipelines；
+4. **您的后端接收有效载荷并处理请求**--根据操作，后端可能会打开一个 PR、创建一个新的云资源、提供一个新的环境等；
+5. **您的后端更新 Port 的执行状态** - 您可以通过添加日志、附加到其他工作流或管道的链接来丰富 Port 中的操作运行对象，以帮助完成请求，并在操作完成后添加最终的成功/失败状态。
 
-## Supported backends
+## 支持的后端
 
 <DocCardList/>

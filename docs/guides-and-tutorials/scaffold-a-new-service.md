@@ -1,49 +1,50 @@
 ---
+
 sidebar_position: 1
-title: Scaffold a new service
+title: 脚手架新服务
+
 ---
 
 import Tabs from "@theme/Tabs"
 import TabItem from "@theme/TabItem"
 import PortTooltip from "/src/components/tooltip/tooltip.jsx"
 
-# Scaffold a new service
+# 新服务脚手架
 
-This guide takes 7 minutes to complete, and aims to demonstrate the power of self-service actions in Port.
+本指南只需 7 分钟即可完成，旨在展示 Port 中自助行动的力量。
 
-:::tip Prerequisites
+:::tip  先决条件
 
-- This guide assumes you have a Port account and that you have finished the [onboarding process](/quickstart). We will use the `Service` blueprint that was created during the onboarding process.
-- You will need a Git repository (Github, GitLab, or Bitbucket) in which you can place a workflow/pipeline that we will use in this guide. If you don't have one, we recommend creating a new repository named `Port-actions`.
+* 本指南假定您已拥有 Port 账户，并已完成[onboarding process](/quickstart) 。我们将使用入职过程中创建的 "服务 "蓝图。
+* 您需要一个 Git 仓库(Github、GitLab 或 Bitbucket)，您可以在其中放置我们将在本指南中使用的工作流/Pipelines。如果没有，建议创建一个名为 "Port-actions "的新仓库。
 
 :::
 
 <br/>
 
-### The goal of this guide
+### 本指南的目标
 
-In this guide we will create an action that initializes a new Git repository. In reality, such an action can be used by developers to scaffold new services.
+在本指南中，我们将创建一个初始化新 Git 仓库的动作。 在现实中，开发人员可以用这样的动作来搭建新服务的脚手架。
 
-After completing it, you will get a sense of how it can benefit different personas in your organization:
+完成这项工作后，你就会了解它如何使你的组织中的不同角色受益: 
 
-- Developers will be able to scaffold new services easily.
-- R&D managers will be able to get an overview of new services - how many were created and by who.
-- Platform engineers will be able to control permissions to ensure only the relevant people can create new services.
+* 开发人员可以轻松构建新服务。
+* 研发经理将能获得新服务的总体情况--有多少服务是由谁创建的。
+* 平台工程师将能够控制权限，确保只有相关人员才能创建新服务。
 
 <br/>
 
-### Setup the action's frontend
+#### 设置动作的前端
 
-:::tip Onboarding
+:::tip  入职
 
-As part of the onboarding process, you should already have an action named `Scaffold a new service` in your [self-service tab](https://app.getport.io/self-serve).  
-In that case, you can hover over the action, click the `...` button in the top right corner, and choose "Edit":
+作为入职流程的一部分，您的[self-service tab](https://app.getport.io/self-serve) 中应该已经有一个名为 "脚手架新服务 "的操作。在这种情况下，您可以将鼠标悬停在该操作上，单击右上角的"... "按钮，然后选择 "编辑": 
 
 <img src='/img/guides/editActionBackend.png' width='45%' />
 
-Then, skip to the [Define backend type](#define-backend-type) step.
+然后，跳到[Define backend type](#define-backend-type) 步骤。
 
-If you **skipped** the onboarding, or you want to create the action from scratch, complete the `Create the action's frontend` steps below.
+如果您跳过了***入职培训，或者您想从头开始创建操作，请完成下面的 "创建操作的前端 "步骤。
 
 :::
 
@@ -58,17 +59,16 @@ If you **skipped** the onboarding, or you want to create the action from scratch
 
 <TabItem value="github">
 
-1. Click on `New action`:
+1. 点击 "新建操作": 
 
 <img src='/img/guides/actionsCreateNew.png' width='50%' />
 
-2. Each action in Port is directly tied to a <PortTooltip id="blueprint">blueprint</PortTooltip>. Since we are creating a repository, let's use the `Service` blueprint that was created for us as part of the [onboarding](/quickstart) process. Choose it from the dropdown.
-
-3. Fill in the basic details of the action like this, then click `Next`:
+2.Port 中的每个操作都与一个<PortTooltip id="blueprint">蓝图</PortTooltip>直接相关。由于我们正在创建一个资源库，因此让我们使用[onboarding](/quickstart) 流程中为我们创建的 `Service` 蓝图。从下拉菜单中选择它。
+3.像这样填写操作的基本细节，然后单击 "下一步": 
 
 <img src='/img/guides/actionScaffoldBasicDetails.png' width='60%' />
 
-4. The next step is to define the action's inputs. When someone uses this action, all we want them to enter is the new repository's name. Click on `New input`, fill in the form like this, then click on `Create`:
+4.下一步是定义动作的输入。当有人被引用此操作时，我们只希望他们输入新版本库的名称。点击 "新输入"，像这样填写表格，然后点击 "创建": 
 
 <img src='/img/guides/actionScaffoldInputName.png' width='50%' />
 
@@ -76,17 +76,16 @@ If you **skipped** the onboarding, or you want to create the action from scratch
 
 <TabItem value="gitlab">
 
-1. Click on `New action`:
+1. 点击 "新建操作": 
 
 <img src='/img/guides/actionsCreateNew.png' width='50%' />
 
-2. Each action in Port is directly tied to a <PortTooltip id="blueprint">blueprint</PortTooltip>. Since we are creating a repository, let's use the `Service` blueprint that was created for us as part of the [onboarding](/quickstart) process. Choose it from the dropdown.
-
-3. Fill in the basic details of the action like this, then click `Next`:
+2.Port 中的每个操作都与一个<PortTooltip id="blueprint">蓝图</PortTooltip>直接相关。由于我们正在创建一个资源库，因此让我们使用[onboarding](/quickstart) 流程中为我们创建的 `Service` 蓝图。从下拉菜单中选择它。
+3.像这样填写操作的基本细节，然后单击 "下一步": 
 
 <img src='/img/guides/actionScaffoldBasicDetails.png' width='60%' />
 
-4. The next step is to define the action's inputs. When someone uses this action, all we want them to enter is the new repository's name. Click on `New input`, fill in the form like this, then click on `Create`:
+4.下一步是定义动作的输入。当有人被引用此操作时，我们只希望他们输入新版本库的名称。点击 "新输入"，像这样填写表格，然后点击 "创建": 
 
 <img src='/img/guides/actionScaffoldInputName.png' width='50%' />
 
@@ -94,21 +93,20 @@ If you **skipped** the onboarding, or you want to create the action from scratch
 
 <TabItem value="bitbucket">
 
-1. Click on `New action`:
+1. 点击 "新建操作": 
 
 <img src='/img/guides/actionsCreateNew.png' width='50%' />
 
-2. Each action in Port is directly tied to a <PortTooltip id="blueprint">blueprint</PortTooltip>. Since we are creating a repository, let's use the `Service` blueprint that was created for us as part of the [onboarding](/quickstart) process. Choose it from the dropdown.
-
-3. Fill in the basic details of the action like this, then click `Next`:
+2.Port 中的每个操作都与一个<PortTooltip id="blueprint">蓝图</PortTooltip>直接相关。由于我们正在创建一个资源库，因此让我们使用[onboarding](/quickstart) 流程中为我们创建的 `Service` 蓝图。从下拉菜单中选择它。
+3.像这样填写操作的基本细节，然后单击 "下一步": 
 
 <img src='/img/guides/actionScaffoldBasicDetails.png' width='60%' />
 
-4. The next step is to define the action's inputs. When someone uses this action, all we want them to enter is the new repository's name. Click on `New input`, fill in the form like this, then click on `Create`:
+4.下一步是定义动作的输入。当有人被引用此操作时，我们只希望他们输入新版本库的名称。点击 "新输入"，像这样填写表格，然后点击 "创建": 
 
 <img src='/img/guides/actionScaffoldInputName.png' width='50%' />
 
-5. The action requires two more inputs, so click on `New input` again and fill the form out like this:
+5.该操作还需要两个输入，因此再次点击 "新建输入"，然后像这样填写表格: 
 
 <img src='/img/guides/bitbucketWorkspaceActionInputConfig.png' width='50%' />
 
@@ -118,13 +116,11 @@ If you **skipped** the onboarding, or you want to create the action from scratch
 
 </Tabs>
 
+:::info  说明
 
-
-:::info notes
-
-- We set the `Required` field to `true` to ensure that a name is always provided when using this action.
-- We set the type to `Text` since this is a name, but note all of the different types of input that Port allows.
-- When using `Text` inputs, you can set constraints and limitations to enforce certain patterns.
+* 我们将 "Required "字段设置为 "true"，以确保在使用此操作时始终提供一个名称。
+* 由于这是一个名称，因此我们将类型设置为 `Text`，但请注意 Port 允许的所有不同类型的输入。
+* 在被引用`Text`输入时，您可以设置约束和限制以强制执行某些模式。
 
 :::
 
@@ -132,9 +128,9 @@ If you **skipped** the onboarding, or you want to create the action from scratch
 
 <br/>
 
-#### Define backend type
+#### 定义后端类型
 
-Now we'll define the backend of the action. Port supports multiple invocation types, one of them should be selected for you depending on the Git provider you selected in the beginning of the onboarding process.
+现在我们来定义操作的后端。 Port 支持多种调用类型，根据您在入门过程中选择的 Git Provider，我们会为您选择其中一种。
 
 <Tabs groupId="git-provider" queryString defaultValue="github" values={[
 {label: "GitHub", value: "github"},
@@ -144,15 +140,16 @@ Now we'll define the backend of the action. Port supports multiple invocation ty
 
 <TabItem value="github">
 
-Fill out the form with your values:
-- Replace the `Organization` and `Repository` values with your values (this is where the workflow will reside and run).
-- Name the workflow `portCreateRepo.yaml`.
-- Set `Omit user inputs` to `Yes`.
-- Fill out the rest of the form like this, then click `Next`:
+在表格中填写您的 Values: 
 
-:::tip Important
+* 用您的 Values 替换 `Organization` 和 `Repository` 值(这是工作流将驻留和运行的位置)。
+* 将工作流命名为 `portCreateRepo.yaml`。
+* 将 "忽略用户输入 "设置为 "是"。
+* 像这样填写表单的其余部分，然后单击 `下一步`: 
 
-In our workflow, the cookiecutter uses the payload for the inputs. We omit the user inputs in order to avoid sending additional inputs to the workflow.
+:::tip  重要
+
+在我们的工作流中，cookiecutter 使用有效载荷作为输入。 为了避免向工作流发送额外的输入，我们省略了用户输入。
 
 :::
 
@@ -162,15 +159,19 @@ In our workflow, the cookiecutter uses the payload for the inputs. We omit the u
 
 <TabItem value="gitlab">
 
-:::tip
-You will need a few parameters for this part that are generated in the [setup the action's backend](#setup-the-actions-backend) section, it is recommended to complete the steps there and then follow the instructions here with all of the required information in hand.
+:::tip 该部分需要一些参数，这些参数在[setup the action's backend](#setup-the-actions-backend) 部分生成，建议先完成该部分的步骤，然后在掌握所有所需信息的情况下按照此处的说明进行操作。
+
 :::
 
-Fill out the form with your values:
-- For the `Endpoint URL` you need to add a URL in the following format:
+在表格中填写您的 Values: 
+
+* 端点 URL "需要添加以下格式的 URL: 
+
+
   ```text showLineNumbers
   https://gitlab.com/api/v4/projects/{GITLAB_PROJECT_ID}/ref/main/trigger/pipeline?token={GITLAB_TRIGGER_TOKEN}
   ```
+
     - The value for `{GITLAB_PROJECT_ID}` is the ID of the GitLab group that you create in the [setup the action's backend](#setup-the-actions-backend) section which stores the `.gitlab-cy.yml` pipeline file.
       - To find the project ID, browse to the GitLab page of the group you created, at the top right corner of the page, click on the vertical 3 dots button (next to `Fork`) and select `Copy project ID`
     - The value for `{GITLAB_TRIGGER_TOKEN}` is the trigger token you create in the [setup the action's backend](#setup-the-actions-backend) section.
@@ -184,15 +185,19 @@ Fill out the form with your values:
 
 <TabItem value="bitbucket">
 
-:::tip
-You will need a few parameters for this part that are generated in the [setup the action's backend](#setup-the-actions-backend) section, it is recommended to complete the steps there and then follow the instructions here with all of the required information in hand.
+:::tip 该部分需要一些参数，这些参数在[setup the action's backend](#setup-the-actions-backend) 部分生成，建议先完成该部分的步骤，然后在掌握所有所需信息的情况下按照此处的说明进行操作。
+
 :::
 
-Fill out the form with your values:
-- For the `Endpoint URL` you need to add a URL in the following format:
+在表格中填写您的 Values: 
+
+* 端点 URL "需要添加以下格式的 URL: 
+
+
   ```text showLineNumbers
   https://{JENKINS_URL}/generic-webhook-trigger/invoke?token={JOB_TOKEN}
   ```
+
     - The value for `{JENKINS_URL}` is the URL of your Jenkins server.
     - The value for `{JOB_TOKEN}` is the unique token used to trigger the pipeline you create in the [setup the action's backend](#setup-the-actions-backend) section.
 - Set `HTTP method` to `POST`.
@@ -205,15 +210,15 @@ Fill out the form with your values:
 
 </Tabs>
 
-The last step is customizing the action's permissions. For simplicity's sake, we will use the default settings. For more information, see the [permissions](/create-self-service-experiences/set-self-service-actions-rbac/) page. Click `Create`.
+最后一步是自定义动作的权限。 为简单起见，我们将使用默认设置。 欲了解更多信息，请参阅[permissions](/create-self-service-experiences/set-self-service-actions-rbac/) 页面。 点击 "创建"。
 
-The action's frontend is now ready 🥳
+行动的前端已准备就绪 🥳
 
 <br/>
 
-### Setup the action's backend
+#### 设置行动的后端
 
-Now we want to write the logic that our action will trigger.
+现在，我们要编写我们的操作将触发的逻辑。
 
 <Tabs groupId="git-provider" queryString defaultValue="github" values={[
 {label: "GitHub", value: "github"},
@@ -223,33 +228,32 @@ Now we want to write the logic that our action will trigger.
 
 <TabItem value="github">
 
-:::info Important
-If the Github organization which will house your workflow is not the same as the one you'll create the new repository in, install Port's [Github app](https://github.com/apps/getport-io) in the other organization as well.
+:::info  重要事项 如果存放工作流程的 Github 组织与创建新版本库的组织不同，请在另一个组织中也安装 Port's[Github app](https://github.com/apps/getport-io) 。
+
 :::
 
-1. First, let's create the necessary token and secrets:
+1. 首先，让我们创建必要的令牌和secret: 
 
-- Go to your [Github tokens page](https://github.com/settings/tokens), create a personal access token (classic) with `repo`, `admin:repo_hook` and `admin:org` scope, and copy it (this token is needed to create a repo from our workflow).
+* 访问[Github tokens page](https://github.com/settings/tokens) ，创建一个包含 `repo`、`admin:repo_hook` 和 `admin:org` 范围的个人访问令牌(经典) ，然后复制它(从我们的工作流中创建 repo 需要此令牌) 。
+   <img src='/img/guides/personalAccessToken.png' width='80%' />
 
-  <img src='/img/guides/personalAccessToken.png' width='80%' />
+:::info  SAML SSO 如果贵组织被引用 SAML SSO，则需要授权令牌。请遵循[these instructions](https://docs.github.com/en/enterprise-cloud@latest/authentication/authenticating-with-saml-single-sign-on/authorizing-a-personal-access-token-for-use-with-saml-single-sign-on) ，然后继续本指南。
 
-:::info SAML SSO
-If your organization uses SAML SSO, you will need to authorize your token. Follow [these instructions](https://docs.github.com/en/enterprise-cloud@latest/authentication/authenticating-with-saml-single-sign-on/authorizing-a-personal-access-token-for-use-with-saml-single-sign-on) and then continue this guide.
 :::
 
-- Go to your [Port application](https://app.getport.io/), click on the `...` in the top right corner, then click `Credentials`. Copy your `Client ID` and `Client secret`.
+* 进入[Port application](https://app.getport.io/) ，点击右上角的"..."，然后点击 "凭据"。复制您的 "客户 ID "和 "客户 secret"。
 
-2. In the repository where your workflow will reside, create 3 new secrets under `Settings->Secrets and variables->Actions`:
+2.在工作流程所在的版本库中，在 "设置->secret和变量->操作 "下创建 3 个新secret: 
 
-- `ORG_ADMIN_TOKEN` - the personal access token you created in the previous step.
-- `PORT_CLIENT_ID` - the client ID you copied from your Port app.
-- `PORT_CLIENT_SECRET` - the client secret you copied from your Port app.
+* ORG_ADMIN_TOKEN` - 您在上一步中创建的个人访问令牌。
+* `PORT_CLIENT_ID` - 从 Port 应用程序复制的客户端 ID。
+* PORT_CLIENT_SECRET` - 从 Port 应用程序复制的客户机secret。
 
 <img src='/img/guides/repositorySecret.png' width='50%' />
 
 <br/><br/>
 
-3. Now let's create the workflow file that contains our logic. Under `.github/workflows`, create a new file named `portCreateRepo.yaml` and use the following snippet as its content (remember to change `<YOUR-ORG-NAME>` on line 19 to your GitHub organization name):
+3.现在，让我们创建包含逻辑的工作流文件。在`.github/workflows`下创建一个名为`portCreateRepo.yaml`的新文件，并使用以下代码段作为其内容(记得将第 19 行中的`<YOUR-ORG-NAME>`更改为您的 GitHub 组织名称): 
 
 <details>
 <summary><b>Github workflow (click to expand)</b></summary>
@@ -293,30 +297,29 @@ jobs:
 
 </details>
 
-:::tip
-This workflow uses Port's [cookiecutter Github action](https://github.com/port-labs/cookiecutter-gha) to scaffold the new repository.
+:::tip 该工作流程使用 Port 的[cookiecutter Github action](https://github.com/port-labs/cookiecutter-gha) 来构建新的资源库。
+
 :::
 
-</TabItem> 
+</TabItem>
 
 <TabItem value="gitlab">
 
-1. First, let's create a GitLab project that will store our new scaffolder pipeline - Go to your GitLab account and create a new project.
+1. 首先，让我们创建一个 GitLab 项目，存储我们新的 Pipelines - 进入 GitLab 账户，创建一个新项目。
+2. 然后，创建必要的 token 和 secrets: 
 
-2. Next, let's create the necessary token and secrets:
-
-- Go to your [Port application](https://app.getport.io/), click on the `...` in the top right corner, then click `Credentials`. Copy your `Client ID` and `Client secret`.
-- Go to your [root group](https://gitlab.com/dashboard/groups), and follow the steps [here](https://docs.gitlab.com/ee/user/group/settings/group_access_tokens.html#create-a-group-access-token-using-ui) to create a new group access token with the following permission scopes: `api, read_api, read_repository, write_repository`, then save its value as it will be required in the next step.
-  <img src='/img/guides/gitlabGroupAccessTokenPerms.png' width='80%' />
-- Go to the new GitLab project you created in step 1, from the `Settings` menu at the sidebar on the left, select `CI/CD`.
-- Expand the `Variables` section and save the following secrets:
-  - `PORT_CLIENT_ID` - Your Port client ID.
-  - `PORT_CLIENT_SECRET` - Your Port client secret.
-  - `GITLAB_ACCESS_TOKEN` - The GitLab group access token you created in the previous step.
-  <br/>
-  <img src='/img/guides/gitlabPipelineVariables.png' width='80%' />
-- Expand the `Pipeline trigger tokens` section and add a new token, give it a meaningful description such as `Scaffolder token` and save its value
-  - This is the `{GITLAB_TRIGGER_TOKEN}` that you need for the [define backend type](#define-backend-type) section.
+* 进入[Port application](https://app.getport.io/) ，点击右上角的"..."，然后点击 "凭据"。复制 "客户 ID "和 "客户 secret"。
+* 访问[root group](https://gitlab.com/dashboard/groups) ，按照[here](https://docs.gitlab.com/ee/user/group/settings/group_access_tokens.html#create-a-group-access-token-using-ui) 的步骤创建一个新的组访问令牌，其权限范围如下: `api, read_api, read_repository, write_repository`，然后保存其值，因为下一步将需要它。
+   <img src='/img/guides/gitlabGroupAccessTokenPerms.png' width='80%' />
+* 转到步骤 1 中创建的新 GitLab 项目，在左侧边栏的 "设置 "菜单中选择 "CI/CD"。
+* 展开 "变量 "部分，保存以下secret: 
+    - `PORT_CLIENT_ID` - 您的 Port 客户端 ID。
+    - `PORT_CLIENT_SECRET` - 您的 Port 客户端secret。
+    - `GITLAB_ACCESS_TOKEN` - 在上一步中创建的 GitLab 组访问令牌。
+   <br/>
+    <img src='/img/guides/gitlabPipelineVariables.png' width='80%' />
+* 展开 "Pipelines 触发令牌 "部分并添加一个新令牌，给它一个有意义的描述，如 "Scaffolder 令牌"，并保存其值
+    - 这是[define backend type](#define-backend-type) 部分所需的 `{GITLAB_TRIGGER_TOKEN}`。
 
 <br/>
 
@@ -324,11 +327,11 @@ This workflow uses Port's [cookiecutter Github action](https://github.com/port-l
 
 <br/><br/>
 
-:::tip
-Now that you have both the new GitLab project and its respective trigger token, you can go to the [define backend type](#define-backend-type) section and complete the action configuration in Port.
+:::tip 有了新的 GitLab 项目和相应的触发令牌，就可以进入[define backend type](#define-backend-type) 部分，在 Port 中完成操作配置。
+
 :::
 
-3. Now let's create the pipeline file that contains our logic. In the new GitLab project you created at step 1, at the root of the project, create a new file named `.gitlab-ci.yml` and use the following snippet as its content:
+3.现在让我们创建包含逻辑的 Pipelines 文件。在步骤 1 创建的新 GitLab 项目中，在项目根目录下创建一个名为 `.gitlab-ci.yml`的新文件，并将以下代码段作为其内容: 
 
 <details>
 <summary><b>GitLab pipeline (click to expand)</b></summary>
@@ -514,41 +517,35 @@ update-run-status:
 
 <TabItem value="bitbucket">
 
-1. First, install the [generic webhook trigger](https://plugins.jenkins.io/generic-webhook-trigger/) plugin in your Jenkins.
-2. Next, let's create the necessary tokens and secrets
-   - Go to your [Port application](https://app.getport.io/), click on the `...` in the top right corner, then click `Credentials`. Copy your `Client ID` and `Client secret`.
-   - Configure the following as Jenkins credentials:
-     - `BITBUCKET_USERNAME` - a user with access to the Bitbucket workspace and project.
-     - `BITBUCKET_APP_PASSWORD` - an [App Password](https://support.atlassian.com/bitbucket-cloud/docs/app-passwords/) with the `Repositories:Read` and `Repositories:Write` permissions permissions.
-     - `PORT_CLIENT_ID` - Your Port client ID.
-     - `PORT_CLIENT_SECRET` - Your Port client secret.
-     <br/>
-     <img src='/img/guides/bitbucketJenkinsCredentials.png' width='80%' />
+1. 首先，在 Jenkins 中安装[generic webhook trigger](https://plugins.jenkins.io/generic-webhook-trigger/) 插件。
+2. 接下来，让我们创建必要的令牌和 Secret
+    - 进入[Port application](https://app.getport.io/) ，点击右上角的"..."，然后点击 "Credentials"。复制你的 `客户 ID` 和 `客户 secret`.
+    - 将以下内容配置为 Jenkins 凭据: 
+        + `BITBUCKET_USERNAME` - 可以访问 Bitbucket Workspace 和项目的用户。
+        + `BITBUCKET_APP_PASSWORD` - 具有 `Repositories:Read` 和 `Repositories:Write` 权限的[App Password](https://support.atlassian.com/bitbucket-cloud/docs/app-passwords/) 。
+        + `PORT_CLIENT_ID` - 您的 Port 客户端 ID。
+        + `PORT_CLIENT_SECRET` - 您的 Port 客户端secret。
+       <br/>
+        <img src='/img/guides/bitbucketJenkinsCredentials.png' width='80%' />
 
 <br/>
 
-1. Create a Jenkins pipeline with the following configuration:
-   - [Enable the webhook trigger for the pipeline](/create-self-service-experiences/setup-backend/jenkins-pipeline/jenkins-pipeline.md#enabling-webhook-trigger-for-a-pipeline)
-   - Define the value of the [`token`](/create-self-service-experiences/setup-backend/jenkins-pipeline/jenkins-pipeline.md#token-setup) field, the token you specify will be used to trigger the scaffold pipeline specifically. For example, you can use `scaffolder-token`.
-   - [Define variables for the pipeline](/create-self-service-experiences/setup-backend/jenkins-pipeline/jenkins-pipeline.md#defining-variables): define the `SERVICE_NAME`, `BITBUCKET_WORKSPACE_NAME`, `BITBUCKET_PROJECT_KEY`, and `RUN_ID` variables. Scroll down to the `Post content parameters` and **for each variable** add configuration like so (look at the table bellow for the full variable list):
+1. 用以下配置创建一个 Jenkins 管道: 
+    -[Enable the webhook trigger for the pipeline](/create-self-service-experiences/setup-backend/jenkins-pipeline/jenkins-pipeline.md#enabling-webhook-trigger-for-a-pipeline)
+    - 定义[`token`](/create-self-service-experiences/setup-backend/jenkins-pipeline/jenkins-pipeline.md#token-setup) 字段的值，您指定的令牌将被用于专门触发脚手架管道。例如，你可以被引用 `scaffolder-token`。
+    -[Define variables for the pipeline](/create-self-service-experiences/setup-backend/jenkins-pipeline/jenkins-pipeline.md#defining-variables) 定义 `SERVICE_NAME`、`BITBUCKET_WORKSPACE_NAME`、`BITBUCKET_PROJECT_KEY` 和 `RUN_ID` 变量。向下滚动到 "发布内容参数"，并**为每个变量**添加配置，如图所示(完整的变量列表请参见下表) : 
+   <img src='/img/guides/jenkinsGenericVariable.png' width='100%' />创建以下变量及其相关 JSONPath 表达式: | 变量名 | JSONPath 表达式 |  |  | JSONPath 表达式 |  |  | JSONPath 表达式。
+     | ------------------------ | ----------------------------------------------- |
+     | 服务名称
+     BITBUCKET_WORKSPACE_NAME | `$.payload.properties.bitbucket_workspace_name` | | BITBUCKET_WORKSPACE_NAME
+     | BITBUCKET_PROJECT_KEY    | `$.payload.properties.bitbucket_project_key`    |
+     | RUN_ID | `$.context.runId` | $.payload.properties.bitbucket_project_key
 
-   <img src='/img/guides/jenkinsGenericVariable.png' width='100%' />
+:::tip 现在您已经有了 `JOB_TOKEN` 值，可以进入[define backend type](#define-backend-type) 部分，在 Port 中完成操作配置。
 
-    Create the following varaibles and their related JSONPath expression:
-
-    | Variable Name            | JSONPath Expression                             |
-    | ------------------------ | ----------------------------------------------- |
-    | SERVICE_NAME             | `$.payload.properties.service_name`             |
-    | BITBUCKET_WORKSPACE_NAME | `$.payload.properties.bitbucket_workspace_name` |
-    | BITBUCKET_PROJECT_KEY    | `$.payload.properties.bitbucket_project_key`    |
-    | RUN_ID                   | `$.context.runId`                               |
-
-
-:::tip
-Now that you have the `JOB_TOKEN` value, you can go to the [define backend type](#define-backend-type) section and complete the action configuration in Port.
 :::
 
-4. Add the following content to the new Jenkins pipeline:
+4.在新的 Jenkins Pipelines 中添加以下内容: 
 
 <details>
 <summary><b>Jenkins pipeline (click to expand)</b></summary>
@@ -698,15 +695,15 @@ default_context:
                 }
                 script {
                     def status_report_response = sh(script: """
-						curl --location --request POST "https://api.getport.io/v1/blueprints/$PORT_BLUEPRINT_ID/entities?upsert=true&run_id=$PORT_RUN_ID&create_missing_related_entities=true" \
+    					curl --location --request POST "https://api.getport.io/v1/blueprints/$PORT_BLUEPRINT_ID/entities?upsert=true&run_id=$PORT_RUN_ID&create_missing_related_entities=true" \
         --header "Authorization: Bearer $PORT_ACCESS_TOKEN" \
         --header "Content-Type: application/json" \
         --data-raw '{
-				"identifier": "${SERVICE_NAME}",
-				"title": "${SERVICE_NAME}",
-				"properties": {"description":"${SERVICE_NAME} golang project","url":"https://bitbucket.org/${BITBUCKET_WORKSPACE_NAME}/${SERVICE_NAME}/src"},
-				"relations": {}
-			}'
+    			"identifier": "${SERVICE_NAME}",
+    			"title": "${SERVICE_NAME}",
+    			"properties": {"description":"${SERVICE_NAME} golang project","url":"https://bitbucket.org/${BITBUCKET_WORKSPACE_NAME}/${SERVICE_NAME}/src"},
+    			"relations": {}
+    		}'
 
                     """, returnStdout: true)
 
@@ -767,52 +764,50 @@ default_context:
 
 </Tabs>
 
-All done! The action is ready to be used 🚀
+完成！动作已准备就绪，可以开始使用 🚀
 
 <br/>
 
-### Execute the action
+### 执行操作
 
-After creating an action, it will appear under the `Self-service` tab of your Port application:
+创建操作后，该操作将出现在 Port 应用程序的 "自助服务 "选项卡下: 
 
 <img src='/img/guides/selfServiceAfterScaffoldCreation.png' width='75%' />
 
-1. Click on `Create` to begin executing the action.
-
-2. Enter a name for your new repository, then click `Execute`. A small popup will appear, click on `View details`:
+1. 点击 "创建 "开始执行操作。
+2. 输入新版本库的名称，然后点击 "执行"。弹出一个小窗口，点击`查看详情`: 
 
 <img src='/img/guides/executionDetails.png' width='45%' />
 
 <br/><br/>
 
-:::tip Trigger bitbucket scaffolder
+:::tip  触发 bitbucket scaffolder
 
-To trigger the Bitbucket scaffolder, you will need to provide two additional parameters:
-- Bitbucket Workspace Name - the name of the workspace to create the new repository in
-- Bitbucket Project Key - the key of the Bitbucket project to create the new repository in.
-  - To find the Bitbucket project key, go to `https://bitbucket.org/YOUR_BITBUCKET_WORKSPACE/workspace/projects/`, find the desired project in the list, and copy the value seen in the `Key` column in the table
+要触发 Bitbucket scaffolder，您需要提供两个附加参数: 
+
+* Bitbucket Workspace Name(Bitbucket 工作区名称)--要在其中创建新版本库的工作区名称
+* Bitbucket 项目密钥 - 要在其中创建新版本库的 Bitbucket 项目的密钥。
+    - 要找到 Bitbucket 项目密钥，请访问 `https://bitbucket.org/YOUR_BITBUCKET_WORKSPACE/workspace/projects/`，在列表中找到所需的项目，然后复制在表中 `Key` 列看到的值
+
 :::
 
-1. This page provides details about the action run. As you can see, the backend returned `Success` and the repo was successfully created (this can take a few moments):
+1. 该页面提供了有关操作运行的详细信息。如您所见，后端返回了 `Success` 且 repo 已成功创建(这可能需要片刻时间): 
 
 <img src='/img/guides/runStatusScaffolding.png' width='90%' />
 
 <br/><br/>
 
-:::tip Logging action progress
-💡 Note the `Log stream` at the bottom, this can be used to report progress, results and errors. Click [here](/create-self-service-experiences/reflect-action-progress/reflect-action-progress.md) to learn more.
+:::tip  记录操作进度 💡 注意底部的 "日志流"，它可用于报告进度、结果和错误。 点击[here](/create-self-service-experiences/reflect-action-progress/reflect-action-progress.md) 了解更多信息。
+
 :::
 
-Congratulations! You can now create services easily from Port 💪🏽
+恭喜！您现在可以从 Port 💪🏽 轻松创建服务了。
 
-### Possible daily routine integrations
+### 可能的日常整合
 
-- Send a slack message in the R&D channel to let everyone know that a new service was created.
-- Send a weekly/monthly report for managers showing all the new services created in this timeframe and their owners.
+* 在研发频道中发送一条松弛消息，让每个人都知道创建了一项新服务。
+* 为管理人员发送周报/月报，显示该时间段内创建的所有新服务及其 Owner。
 
-### Conclusion
+#### 结论
 
-Creating a service is not just a periodic task developers undertake, but a vital step that can occur on a monthly basis. However, it's crucial to recognize that this is only a fragment of the broader experience that we're striving to create for developers.
-Our ultimate goal is to facilitate a seamless transition from ideation to production. In doing so, we aim to eliminate the need for developers to navigate through a plethora of tools, reducing friction and accelerating the time-to-production.  
-In essence, we're not just building a tool, but sculpting an ecosystem that empowers developers to bring new features to life with utmost efficiency.
-
+创建服务并不只是开发人员的一项定期任务，而是每月都会发生的重要步骤。 然而，我们必须认识到，这只是我们努力为开发人员创造的更广泛体验的一个片段。 我们的最终目标是促进从构思到生产的无缝过渡。 这样做，我们的目标是消除开发人员在大量工具中穿梭的需要，减少摩擦并加快生产时间。 从本质上讲，我们并不只是在构建一个工具，而是在构建一个生态系统，使开发人员能够以最高的效率将新功能变为现实。

@@ -1,20 +1,22 @@
 ---
+
 sidebar_position: 6
-description: Ingest Jenkins build and job events into your catalog
+description: 将 Jenkins 构建和作业事件纳入目录
+
 ---
 
-import JenkinsBuildBlueprint from './resources/jenkins/\_example_jenkins_build_blueprint.mdx'
-import JenkinsBuildWebhookConfig from './resources/jenkins/\_example_jenkins_build_webhook_configuration.mdx'
-import JenkinsJobBlueprint from './resources/jenkins/\_example_jenkins_job_blueprint.mdx'
-import JenkinsJobWebhookConfig from './resources/jenkins/\_example_jenkins_job_webhook_configuration.mdx'
+import JenkinsBuildBlueprint from './resources/jenkins/_example_jenkins_build_blueprint.mdx'
+import JenkinsBuildWebhookConfig from './resources/jenkins/_example_jenkins_build_webhook_configuration.mdx'
+import JenkinsJobBlueprint from './resources/jenkins/_example_jenkins_job_blueprint.mdx'
+import JenkinsJobWebhookConfig from './resources/jenkins/_example_jenkins_job_webhook_configuration.mdx'
 
 # Jenkins
 
-In this example you are going to create a webhook integration between [Jenkins](https://www.jenkins.io/) and Port, which will ingest job and build entities.
+在本示例中，您将在[Jenkins](https://www.jenkins.io/) 和 Port 之间创建一个 webhook 集成，用于接收作业和构建实体。
 
-## Port configuration
+## Port 配置
 
-Create the following blueprint definition:
+创建以下蓝图定义: 
 
 <details>
 <summary>Jenkins job blueprint</summary>
@@ -30,37 +32,35 @@ Create the following blueprint definition:
 
 </details>
 
-Create the following webhook configuration [using Port's UI](/build-your-software-catalog/sync-data-to-catalog/webhook/?operation=ui#configuring-webhook-endpoints)
+创建以下 webhook 配置[using Port's UI](/build-your-software-catalog/sync-data-to-catalog/webhook/?operation=ui#configuring-webhook-endpoints)
 
 <details>
 
 <summary>Jenkins job and build webhook configuration</summary>
 
-1. **Basic details** tab - fill the following details:
-   1. Title : `Jenkins Mapper`;
-   2. Identifier : `jenkins_mapper`;
-   3. Description : `A webhook configuration to map Jenkins builds and jobs to Port`;
-   4. Icon : `Jenkins`;
-2. **Integration configuration** tab - fill the following JQ mapping:
-
+1. **基本信息** 选项卡 - 填写以下详细信息: 
+    1.title: `Jenkins Mapper`；
+    2.标识符 : `jenkins_mapper`；
+    3.Description : `将 Jenkins 构建和作业映射到 Port` 的 webhook 配置；
+    4.图标 : `Jenkins`；
+2. **集成配置**选项卡 - 填写以下 JQ 映射: 
    <JenkinsBuildWebhookConfig/>
-
-3. Click **Save** at the bottom of the page.
+3.点击页面底部的**保存**。
 
 </details>
 
-## Create a webhook in Jenkins
+## 在 Jenkins 中创建 webhook
 
-1. Go to your Jenkins dashboard;
-2. At the sidebar on the left side of the page select **Manage Jenkins** and click on **Manage Plugins**;
-3. Navigate to the **Available Plugins** tab and search for **Generic Event** in the search bar. Install the [Generic Event](https://plugins.jenkins.io/generic-event/) or a suitable plugin that can notify some endpoints about all events that happen in Jenkins;
-4. Go back to your Jenkins dashboard and click on **Manage Jenkins** at the left side menu;
-5. Click on the **Configure System** tab and scroll down to the **Event Dispatcher** section;
-6. Enter the value of the `url` key you received after creating the webhook configuration in the textbox;
-7. Click on **Save** at the buttom of the page;
+1. 进入 Jenkins 面板；
+2. 在页面左侧的侧边栏中选择 **管理 Jenkins**，然后点击 **管理插件**；
+3. 导航至**可用插件**选项卡，在搜索栏中搜索**通用事件**。安装[Generic Event](https://plugins.jenkins.io/generic-event/) 或一个合适的插件，该插件可将 Jenkins 中发生的所有事件通知一些端点；
+4. 返回 Jenkins 面板，点击左侧菜单中的**管理 Jenkins**；
+5. 点击 "**配置系统**"选项卡，向下滚动到 "**事件调度器**"部分；
+6. 在文本框中输入创建 webhook 配置后收到的 `url` 键的值；
+7. 单击页面底部的**保存**；
 
-:::tip
-In order to view the different payloads and events available in Jenkins webhooks, [click here](https://plugins.jenkins.io/generic-event/)
+:::tip 为了查看 Jenkins webhooks 中可用的不同有效载荷和事件、[click here](https://plugins.jenkins.io/generic-event/)
+
 :::
 
-Done! any changes to a job or build process (queued, started, completed, finalized etc.) will trigger a webhook event to the webhook URL provided by Port. Port will parse the events according to the mapping and update the catalog entities accordingly.
+完成！作业或构建流程的任何更改(排队、开始、完成、Finalizer 等)都会触发 webhook 事件，并将其发送到 Port 提供的 webhook URL。 Port 将根据映射解析事件，并相应地更新目录实体。

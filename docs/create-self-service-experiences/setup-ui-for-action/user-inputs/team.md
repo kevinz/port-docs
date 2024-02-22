@@ -1,29 +1,31 @@
 ---
+
 sidebar_position: 9
-description: Team is an input used to reference teams that exist in Port
+description: 团队是用于引用 Port 中存在的团队的输入信息。
+
 ---
 
-import ApiRef from "../../../api-reference/\_learn_more_reference.mdx"
+import ApiRef from "../../../api-reference/_learn_more_reference.mdx"
 
 import Tabs from "@theme/Tabs"
 import TabItem from "@theme/TabItem"
 
-# Team
+# 团队
 
-Team is an input used to reference teams that exist in Port.
+团队是一个输入项，被用来引用存在于 Port 中的团队。
 
-## 💡 Common team usage
+## 💡 团队常用 Usage
 
-The team input type can be used to reference any team that exists in Port, for example:
+例如，团队输入类型可被用来引用任何存在于 Port 中的团队: 
 
-- The service owning team;
-- The current on-call;
-- The lead maintainers;
-- etc.
+* 服务拥有团队；
+* 当前待命人员
+* 主要维护者；
+* 等等。
 
-In the [live demo](https://demo.getport.io/self-serve) self-service hub page, we can see the **scaffold new service** action whose `Owning Team` input is a user input. 🎬
+在[live demo](https://demo.getport.io/self-serve) 自助中心页面，我们可以看到**脚手架新服务**操作，其 "Owning Team "输入是用户输入。
 
-## API definition
+## 应用程序接口定义
 
 <Tabs groupId="api-definition" queryString defaultValue="basic" values={[
 {label: "Basic", value: "basic"},
@@ -72,7 +74,7 @@ In the [live demo](https://demo.getport.io/self-serve) self-service hub page, we
 
 <ApiRef />
 
-## Terraform definition
+## Terraform 定义
 
 <Tabs groupId="tf-definition" queryString defaultValue="basic" values={[
 {label: "Basic", value: "basic"},
@@ -104,7 +106,6 @@ resource "port_action" "myAction" {
 <TabItem value="array">
 
 ```hcl showLineNumbers
-
 resource "port_action" "myAction" {
   # ...action properties
   # highlight-start

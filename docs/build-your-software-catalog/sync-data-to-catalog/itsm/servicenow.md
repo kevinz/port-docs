@@ -1,43 +1,45 @@
 ---
+
 sidebar_position: 3
+
 ---
 
 import Tabs from "@theme/Tabs"
 import TabItem from "@theme/TabItem"
-import Prerequisites from "../templates/\_ocean_helm_prerequisites_block.mdx"
-import AzurePremise from "../templates/\_ocean_azure_premise.mdx"
-import DockerParameters from "./\_servicenow_docker_parameters.mdx"
-import HelmParameters from "../templates/\_ocean-advanced-parameters-helm.mdx"
+import Prerequisites from "../templates/_ocean_helm_prerequisites_block.mdx"
+import AzurePremise from "../templates/_ocean_azure_premise.mdx"
+import DockerParameters from "./_servicenow_docker_parameters.mdx"
+import HelmParameters from "../templates/_ocean-advanced-parameters-helm.mdx"
 import AdvancedConfig from '../../../generalTemplates/_ocean_advanced_configuration_note.md'
 
 # ServiceNow
 
-Our ServiceNow integration allows you to import `sys_user_group`, `sc_catalog`, and `incident` from your ServiceNow instance into Port, according to your mapping and definitions.
+通过我们的 ServiceNow 集成，您可以根据映射和定义将 `sys_user_group`、`sc_catalog` 和 `incident` 从 ServiceNow 实例导入 Port。
 
-- A `sys_user_group` corresponds to user groups in ServiceNow.
-- A `sc_catalog` corresponds to service catalogs in ServiceNow.
-- An `incident` represents incidents and tickets within ServiceNow.
+* 一个 `sys_user_group` 对应 ServiceNow 中的用户组。
+* 一个 `sc_catalog` 对应 ServiceNow 中的服务目录。
+* 事件 "代表 ServiceNow 中的事件和票单。
 
-## Common use cases
+## 常见被引用情况
 
-- Map `sys_user_group`, `sc_catalog`, and `incident` in your ServiceNow account.
+* 映射 ServiceNow 帐户中的 `sys_user_group`、`sc_catalog` 和 `incident` 。
 
-## Prerequisites
+## 先决条件
 
 <Prerequisites />
 
-## Installation
+## 安装
 
-Choose one of the following installation methods:
+从以下安装方法中选择一种: 
 
 <Tabs groupId="installation-methods" queryString="installation-methods">
 
 <TabItem value="real-time-always-on" label="Real Time & Always On" default>
 
-Using this installation option means that the integration will be able to update Port in real time using webhooks.
+使用该安装选项意味着集成将能使用 webhook 实时更新 Port。
 
-This table summarizes the available parameters for the installation.
-Set them as you wish in the script below, then copy it and run it in your terminal:
+本表总结了安装时可用的参数，请在下面的脚本中按自己的需要进行设置，然后复制并在终端运行: 
+
 
 | Parameter                                | Description                                                                                                                                                      | Required |
 | ---------------------------------------- | ---------------------------------------------------------------------------------------------------------------------------------------------------------------- | -------- |
@@ -47,6 +49,7 @@ Set them as you wish in the script below, then copy it and run it in your termin
 | `integration.config.servicenowUsername`  | The ServiceNow account username                                                                                                                                  | ✅       |
 | `integration.secrets.servicenowPassword` | The ServiceNow account password                                                                                                                                  | ✅       |
 | `integration.config.servicenowUrl`       | The ServiceNow instance URL. For example https://example-id.service-now.com                                                                                      | ✅       |
+
 
 <HelmParameters />
 
@@ -60,25 +63,27 @@ To install the integration using Helm, run the following command:
 ```bash showLineNumbers
 helm repo add --force-update port-labs https://port-labs.github.io/helm-charts
 helm upgrade --install my-servicenow-integration port-labs/port-ocean \
-	--set port.clientId="CLIENT_ID"  \
-	--set port.clientSecret="CLIENT_SECRET"  \
-	--set initializePortResources=true  \
-	--set integration.identifier="my-servicenow-integration"  \
-	--set integration.type="servicenow"  \
-	--set integration.eventListener.type="POLLING"  \
-	--set integration.config.servicenowUsername="<SERVICENOW_USERNAME>"  \
-	--set integration.secrets.servicenowPassword="<SERVICENOW_PASSWORD>"  \
+    --set port.clientId="CLIENT_ID"  \
+    --set port.clientSecret="CLIENT_SECRET"  \
+    --set initializePortResources=true  \
+    --set integration.identifier="my-servicenow-integration"  \
+    --set integration.type="servicenow"  \
+    --set integration.eventListener.type="POLLING"  \
+    --set integration.config.servicenowUsername="<SERVICENOW_USERNAME>"  \
+    --set integration.secrets.servicenowPassword="<SERVICENOW_PASSWORD>"  \
     --set integration.config.servicenowUrl="<SERVICENOW_URL>"
 ```
+
 </TabItem>
 <TabItem value="argocd" label="ArgoCD" default>
 To install the integration using ArgoCD, follow these steps:
 
-1. Create a `values.yaml` file in `argocd/my-ocean-servicenow-integration` in your git repository with the content:
+1. 在你的 git 仓库的 `argocd/my-ocean-servicenow-integration` 中创建一个 `values.yaml` 文件，内容如下: 
 
-:::note
-Remember to replace the placeholders for `SERVICENOW_URL` `SERVICENOW_USERNAME` and `SERVICENOW_PASSWORD`.
+:::note 请记住替换 `SERVICENOW_URL``SERVICENOW_USERNAME` 和 `SERVICENOW_PASSWORD` 的占位符。
+
 :::
+
 ```yaml showLineNumbers
 initializePortResources: true
 scheduledResyncInterval: 120
@@ -96,13 +101,15 @@ integration:
   // highlight-next-line
     servicenowPassword: SERVICENOW_PASSWORD
 ```
+
 <br/>
 
-2. Install the `my-ocean-servicenow-integration` ArgoCD Application by creating the following `my-ocean-servicenow-integration.yaml` manifest:
-:::note
-Remember to replace the placeholders for `YOUR_PORT_CLIENT_ID` `YOUR_PORT_CLIENT_SECRET` and `YOUR_GIT_REPO_URL`.
+2.创建以下 "my-ocean-servicenow-integration.yaml "配置清单，安装 "my-ocean-servicenow-integration "ArgoCD应用程序: 
 
-Multiple sources ArgoCD documentation can be found [here](https://argo-cd.readthedocs.io/en/stable/user-guide/multiple_sources/#helm-value-files-from-external-git-repository).
+:::note 记住要替换 `YOUR_PORT_CLIENT_ID``YOUR_PORT_CLIENT_SECRET` 和 `YOUR_GIT_REPO_URL` 的占位符。
+
+多种来源的 ArgoCD 文档可在[here](https://argo-cd.readthedocs.io/en/stable/user-guide/multiple_sources/#helm-value-files-from-external-git-repository) 上找到。
+
 :::
 
 <details>
@@ -147,10 +154,12 @@ spec:
 </details>
 <br/>
 
-3. Apply your application manifest with `kubectl`:
+3.使用 `kubectl` 配置应用程序清单: 
+
 ```bash
 kubectl apply -f my-ocean-servicenow-integration.yaml
 ```
+
 </TabItem>
 </Tabs>
 
@@ -160,19 +169,19 @@ kubectl apply -f my-ocean-servicenow-integration.yaml
   <Tabs groupId="cicd-method" queryString="cicd-method">
   <TabItem value="github" label="GitHub">
 
-This workflow will run the ServiceNow integration once and then exit, this is useful for **scheduled** ingestion of data.
+此工作流程将运行 ServiceNow 集成一次，然后退出，这对 ** 计划**数据引用非常有用。
 
-:::warning
-If you want the integration to update Port in real time using webhooks you should use the [Real Time & Always On](?installation-methods=real-time-always-on#installation) installation option
+:::warning 如果希望集成使用 webhooks 实时更新 Port，则应使用[Real Time & Always On](?installation-methods=real-time-always-on#installation) 安装选项
+
 :::
 
-Make sure to configure the following [Github Secrets](https://docs.github.com/en/actions/security-guides/using-secrets-in-github-actions):
+确保配置以下[Github Secrets](https://docs.github.com/en/actions/security-guides/using-secrets-in-github-actions) : 
 
 <DockerParameters />
 
 <br/>
 
-Here is an example for `servicenow-integration.yml` workflow file:
+下面是 `servicenow-integration.yml` 工作流程文件的示例: 
 
 ```yaml showLineNumbers
 name: ServiceNow Exporter Workflow
@@ -212,22 +221,20 @@ jobs:
   <TabItem value="jenkins" label="Jenkins">
 This pipeline will run the ServiceNow integration once and then exit, this is useful for **scheduled** ingestion of data.
 
-:::tip
-Your Jenkins agent should be able to run docker commands.
+:::tip 你的 Jenkins 代理应该能够运行 docker 命令。
+
 :::
-:::warning
-If you want the integration to update Port in real time using webhooks you should use
-the [Real Time & Always On](?installation-methods=real-time-always-on#installation) installation option.
+:::warning 如果希望集成使用 webhooks 实时更新 Port，则应使用 安装选项。[Real Time & Always On](?installation-methods=real-time-always-on#installation) 
+
 :::
 
-Make sure to configure the following [Jenkins Credentials](https://www.jenkins.io/doc/book/using/using-credentials/)
-of `Secret Text` type:
+请确保配置以下[Jenkins Credentials](https://www.jenkins.io/doc/book/using/using-credentials/)的 "Secret Text "类型: 
 
 <DockerParameters />
 
 <br/>
 
-Here is an example for `Jenkinsfile` groovy pipeline file:
+下面是 `Jenkinsfile` groovy Pipelines 文件的示例: 
 
 ```text showLineNumbers
 pipeline {
@@ -278,7 +285,7 @@ pipeline {
 
 <br/>
 
-Here is an example for `servicenow-integration.yml` pipeline file:
+下面是 `servicenow-integration.yml` Pipelines 文件的示例: 
 
 ```yaml showLineNumbers
 trigger:
@@ -289,7 +296,6 @@ pool:
 
 variables:
   - group: port-ocean-credentials
-
 
 steps:
 - script: |
@@ -311,7 +317,6 @@ steps:
 
     exit $?
   displayName: 'Ingest Data into Port'
-
 ```
 
   </TabItem>
@@ -324,26 +329,26 @@ steps:
 
 <AdvancedConfig/>
 
-## Ingesting ServiceNow objects
+## 接收 ServiceNow 对象
 
-The ServiceNow integration uses a YAML configuration to describe the process of loading data into the developer portal. See [examples](#examples) below.
+ServiceNow 集成使用 YAML 配置来描述将数据加载到开发人员门户的过程。 请参阅下面的[examples](#examples) 。
 
-The integration makes use of the [JQ JSON processor](https://stedolan.github.io/jq/manual/) to select, modify, concatenate, transform and perform other operations on existing fields and values from ServiceNow's API events.
+该集成利用[JQ JSON processor](https://stedolan.github.io/jq/manual/) 对来自 ServiceNow API 事件的现有字段和 Values 进行选择、修改、连接、转换和其他操作。
 
-### Configuration structure
+### 配置结构
 
-The integration configuration determines which resources will be queried from ServiceNow, and which entities and properties will be created in Port.
+集成配置决定从 ServiceNow 查询哪些资源，以及在 Port 中创建哪些实体和属性。
 
-:::tip Supported resources and more
-Our ServiceNow integration currently supports the below resources for the mapping configuration. It is possible to extend the current capabilities by referencing any table that is supported in the [ServiceNow Table API](https://developer.servicenow.com/dev.do#!/reference/api/utah/rest/c_TableAPI#table-GET). When choosing this approach, the `kind` key in the mapping configuration should match the table name in ServiceNow as the integration uses the value of the `kind` key to fetch data from the Table API.
+:::tip  支持的资源及其他 我们的 ServiceNow 集成目前支持以下用于映射配置的资源。可以通过引用[ServiceNow Table API](https://developer.servicenow.com/dev.do#!/reference/api/utah/rest/c_TableAPI#table-GET) 中支持的任何表来扩展当前功能。选择这种方法时，映射配置中的 "kind "键应与 ServiceNow 中的表名相匹配，因为集成会使用 "kind "键的值从表 API 中获取数据。
 
-- User Groups
-- Service Catalog
-- Incident
+* 用户组
+* 服务目录
+* 事件
 
 :::
 
-- The root key of the integration configuration is the `resources` key:
+* 集成配置的根密钥是 "资源 "密钥: 
+
 
   ```yaml showLineNumbers
   # highlight-next-line
@@ -353,7 +358,9 @@ Our ServiceNow integration currently supports the below resources for the mappin
       ...
   ```
 
-- The `kind` key is a specifier for a ServiceNow object:
+
+* 类型 "键是 ServiceNow 对象的指定符: 
+
 
   ```yaml showLineNumbers
     resources:
@@ -363,7 +370,9 @@ Our ServiceNow integration currently supports the below resources for the mappin
         ...
   ```
 
-- The `selector` and the `query` keys allow you to filter which objects of the specified `kind` will be ingested into your software catalog:
+
+* 通过 "选择器 "和 "查询 "键，您可以过滤哪些指定 "类型 "的对象将被录入软件目录: 
+
 
   ```yaml showLineNumbers
   resources:
@@ -375,7 +384,9 @@ Our ServiceNow integration currently supports the below resources for the mappin
       port:
   ```
 
-- The `port`, `entity` and the `mappings` keys are used to map the ServiceNow object fields to Port entities. To create multiple mappings of the same kind, you can add another item in the `resources` array;
+
+* Port"、"实体 "和 "映射 "键被用来将 ServiceNow 对象字段映射到Port实体。要创建多个同类映射，可在 `resources` 数组中添加另一项；
+
 
   ```yaml showLineNumbers
   resources:
@@ -402,27 +413,26 @@ Our ServiceNow integration currently supports the below resources for the mappin
           mappings: ...
   ```
 
-  :::tip Blueprint key
-  Note the value of the `blueprint` key - if you want to use a hardcoded string, you need to encapsulate it in 2 sets of quotes, for example use a pair of single-quotes (`'`) and then another pair of double-quotes (`"`)
-  :::
 
-### Ingest data into Port
+:::tip 蓝图键 注意 `blueprint` 键的值 - 如果要使用硬编码字符串，需要用 2 组引号封装，例如使用一对单引号 (`'`)，然后再用一对双引号 (`"`): ::: 
 
-To ingest ServiceNow objects using the [integration configuration](#configuration-structure), you can follow the steps below:
+#### 将数据输入Port
 
-1. Go to the DevPortal Builder page.
-2. Select the Data Sources tab at the left sidebar.
-3. Click on `+ Data Source` at the top right corner.
-4. Select ServiceNow under the Incident Management category.
-5. Modify the [configuration](#configuration-structure) according to your needs.
-6. Run the installation command.
-7. Click `Next` and you can view the integration configuration and update it as necessary.
+要使用[integration configuration](#configuration-structure) 引用 ServiceNow 对象，可以按照以下步骤操作: 
 
-## Examples
+1. 转到 DevPortal Builder 页面。
+2. 选择左侧边栏的数据源选项卡。
+3. 点击右上角的 "+ 数据源"。
+4. 选择事件管理类别下的 ServiceNow。
+5. 根据需要修改[configuration](#configuration-structure) 。
+6. 运行安装命令。
+7. 单击 "下一步"，即可查看集成配置并根据需要进行更新。
 
-Examples of blueprints and the relevant integration configurations:
+## 示例
 
-### Group
+蓝图和相关集成配置示例: 
+
+###组
 
 <details>
 <summary>Group blueprint</summary>
@@ -486,7 +496,7 @@ resources:
 
 </details>
 
-### Service Catalog
+### 服务目录
 
 <details>
 <summary>Service catalog blueprint</summary>
@@ -550,7 +560,7 @@ resources:
 
 </details>
 
-### Incident
+###事件
 
 <details>
 <summary>Incident blueprint</summary>
@@ -645,13 +655,13 @@ resources:
 
 </details>
 
-## Let's Test It
+## 让我们来测试一下
 
-This section includes a sample response data from ServiceNow. In addition, it includes the entity created from the resync event based on the Ocean configuration provided in the previous section.
+本节包括 ServiceNow 的响应数据示例。 此外，还包括根据上一节提供的 Ocean 配置从重新同步事件中创建的实体。
 
-### Payload
+### 有效载荷
 
-Here is an example of the payload structure from ServiceNow:
+下面是 ServiceNow 提供的有效载荷结构示例: 
 
 <details>
 <summary> Group response data</summary>
@@ -856,9 +866,9 @@ Here is an example of the payload structure from ServiceNow:
 
 </details>
 
-### Mapping Result
+#### 映射结果
 
-The combination of the sample payload and the Ocean configuration generates the following Port entity:
+结合样本有效载荷和 Ocean 配置，可生成以下 Port 实体: 
 
 <details>
 <summary> Group entity in Port</summary>

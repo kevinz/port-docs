@@ -1,20 +1,22 @@
 ---
+
 sidebar_position: 1
+
 ---
 
 import DocCardList from '@theme/DocCardList';
 
-# Templates
+# 模板
 
-To allow for a quick start when implementing Port's k8s exporter, custom pre-built templates were created. These configurations will map common use-cases for when working with kubernetes.
+为了在实施 Port 的 k8s 输出程序时快速上手，我们创建了自定义预建模板。 这些配置将映射使用 kubernetes 时的常见用例。
 
-:::note
+:::note 
 
-- Files used in the pre-built configurations can be found [here](https://github.com/port-labs/template-assets/tree/main/kubernetes)
-- These use-cases are generic, and might not always fit your specific use-case. Achieving custom use-cases might require some extra configuration of the k8s exporter
+* 在预置配置中被引用的文件可以找到[here](https://github.com/port-labs/template-assets/tree/main/kubernetes)
+* 这些用例是通用的，不一定适合您的特定用例。要实现自定义用例，可能需要对 k8s 输出程序进行一些额外配置
 
 :::
 
-## Kubernetes quickstarts
+## Kubernetes 快速启动
 
 <DocCardList/>

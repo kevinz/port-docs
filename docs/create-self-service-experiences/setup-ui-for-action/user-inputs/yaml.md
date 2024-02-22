@@ -1,29 +1,31 @@
 ---
+
 sidebar_position: 12
-description: Yaml is an input used to save object definitions in YAML
+description: Yaml 是一种输入法，被引用用于以 YAML 保存对象定义
+
 ---
 
-import ApiRef from "../../../api-reference/\_learn_more_reference.mdx"
+import ApiRef from "../../../api-reference/_learn_more_reference.mdx"
 
 import Tabs from "@theme/Tabs"
 import TabItem from "@theme/TabItem"
 
 # Yaml
 
-Yaml is an input used to save object definitions in YAML.
+Yaml 是用于将对象定义保存为 YAML 格式的输入。
 
-## 💡 Common yaml usage
+## 💡 常见的 yaml Usage
 
-The yaml input type can be used to store any key/value based data, for example:
+yaml 输入类型可被用来存储任何基于键/值的数据，例如
 
-- Configurations;
-- Helm charts;
-- Dictionaries/Hash maps;
-- Manifests;
-- `values.yml`;
-- etc.
+* 配置；
+* Helm 图表；
+* 字典/哈希图
+* 配置清单；
+* `values.yml`；
+* 等。
 
-## API definition
+## 应用程序接口定义
 
 <Tabs groupId="api-definition" queryString defaultValue="basic" values={[
 {label: "Basic", value: "basic"},
@@ -71,7 +73,7 @@ The yaml input type can be used to store any key/value based data, for example:
 
 <ApiRef />
 
-## Terraform definition
+## Terraform 定义
 
 <Tabs groupId="tf-definition" queryString defaultValue="basic" values={[
 {label: "Basic", value: "basic"},
@@ -101,7 +103,6 @@ resource "port_action" "myAction" {
 <TabItem value="array">
 
 ```hcl showLineNumbers
-
 resource "port_action" "myAction" {
   # ...action properties
   # highlight-start

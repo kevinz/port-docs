@@ -2,8 +2,8 @@
 
 import DocCardList from '@theme/DocCardList';
 
-By integrating Port with GCP, you can enrich your software catalog with resources from various projects.
+通过将 Port 与 GCP 集成，您可以利用来自不同项目的资源丰富您的软件目录。
 
-## Examples
+## 示例
 
-Refer to the [examples](./examples/examples.md) page for practical configurations and their corresponding blueprint definitions.
+有关实用配置及其相应的蓝图定义，请参阅[examples](./examples/examples.md) 页面。

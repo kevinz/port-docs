@@ -1,22 +1,24 @@
 ---
+
 sidebar_position: 5
-description: Ingest Swagger paths into your catalog
+description: 将 Swagger 路径纳入目录
+
 ---
 
 import Tabs from "@theme/Tabs"
 import TabItem from "@theme/TabItem"
-import SwaggerBlueprint from './resources/swagger/\_example_swagger_blueprint.mdx'
-import SwaggerWebhookConfig from './resources/swagger/\_example_swagger_webhook_config.mdx'
+import SwaggerBlueprint from './resources/swagger/_example_swagger_blueprint.mdx'
+import SwaggerWebhookConfig from './resources/swagger/_example_swagger_webhook_config.mdx'
 
 # Swagger
 
-In this example you are going to create a `swaggerPath` blueprint that ingests all API paths in your `swagger.json` file using a combination of Port's [API](../../../api/api.md) and [webhook functionality](../../webhook.md).
+在本示例中，您将创建一个 `swaggerPath` 蓝图，该蓝图将使用 Port's[API](../../../api/api.md) 和[webhook functionality](../../webhook.md) 的组合来引用 `swagger.json` 文件中的所有 API 路径。
 
-To ingest the API paths to Port, a script that sends information about the paths according to the webhook configuration is used.
+要将 API 路径引用到 Port，需要使用一个脚本，根据 webhook 配置发送路径信息。
 
-## Prerequisites
+## 先决条件
 
-Create the following blueprint definition and webhook configuration:
+创建以下蓝图定义和 webhook 配置: 
 
 <details>
 <summary>Swagger path blueprint</summary>
@@ -30,9 +32,9 @@ Create the following blueprint definition and webhook configuration:
 
 </details>
 
-## Working with Port's API and Bash script
+## 使用 Port 的 API 和 Bash 脚本
 
-Here is an example snippet showing how to integrate Port's API and Webhook with your existing pipelines using Python and Bash:
+下面的示例片段展示了如何使用 Python 和 Bash 将 Port 的 API 和 Webhook 与现有管道集成: 
 
 <Tabs groupId="usage" defaultValue="python" values={[
 {label: "Python", value: "python"},
@@ -41,7 +43,7 @@ Here is an example snippet showing how to integrate Port's API and Webhook with 
 
 <TabItem value="python">
 
-Create the following Python script in your repository to create or update Port entities as part of your pipeline:
+在版本库中创建以下 Python 脚本，以创建或更新 Port 实体，作为管道的一部分: 
 
 <details>
   <summary> Python script example </summary>
@@ -56,7 +58,6 @@ import os
 # Get environment variables using the config object or os.environ["KEY"]
 WEBHOOK_URL = os.environ['WEBHOOK_URL'] ## the value of the URL you receive after creating the Port webhook
 PATH_TO_SWAGGER_JSON_FILE = os.environ["PATH_TO_SWAGGER_JSON_FILE"]
-
 
 def add_entity_to_port(entity_object):
     """A function to create the passed entity in Port using the webhook URL
@@ -74,7 +75,6 @@ def add_entity_to_port(entity_object):
     headers = {"Accept": "application/json"}
     response = requests.post(WEBHOOK_URL, json=entity_object, headers=headers)
     return response.json()
-
 
 def read_swagger_file(swagger_json_path):
     """This function takes a swagger.json file path, converts the "paths" property into a
@@ -136,7 +136,7 @@ print(response)
 
 <TabItem value="bash">
 
-Create the following Bash script in your repository to create or update Port entities as part of your pipeline:
+在版本库中创建以下 Bash 脚本，以创建或更新作为 Pipelines 一部分的 Port 实体: 
 
 <details>
   <summary> Bash script example </summary>

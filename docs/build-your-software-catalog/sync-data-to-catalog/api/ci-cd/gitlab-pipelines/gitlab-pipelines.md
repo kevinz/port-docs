@@ -1,5 +1,7 @@
 ---
+
 sidebar_position: 1
+
 ---
 
 import Tabs from "@theme/Tabs"
@@ -7,25 +9,24 @@ import TabItem from "@theme/TabItem"
 
 # Gitlab CI Pipelines
 
-Using Gitlab CI Pipelines, you can easily create/update and query entities in Port.
+通过 Gitlab CI Pipelines，您可以在 Port 中轻松创建/更新和查询实体。
 
 <br></br>
 <br></br>
 
 ![Github Illustration](/img/build-your-software-catalog/sync-data-to-catalog/gitlab/gitlab-pipelines-illustration.png)
 
-## 💡 Common Gitlab CI Pipelines usage
+## 💡 常见的 Gitlab CI Pipelines Usage
 
-Port's API allows for easy integration between Port and your Gitlab CI Pipeline jobs, for example:
+例如，Port 的 API 可以轻松实现 Port 与 Gitlab CI Pipelines 作业的集成: 
 
-- Report the status of a running **CI job**;
-- Update the software catalog about a new **build version** for a **microservice**;
-- Get existing **entities**.
+* 报告正在运行的**CI任务**的状态；
+* 更新软件目录中有关**微服务**新**构建版本的信息；
+* 获取现有**实体**。
 
-## Setup
+## 设置
 
-To interact with Port using Gitlab CI Pipeline, you will first need to [define your Port credentials](https://docs.gitlab.com/ee/ci/variables/index.html#define-a-cicd-variable-in-the-ui) as variables for your pipeline.
-Then, pass the defined variables to your ci pipeline script, for example, `Python`:
+要使用 Gitlab CI 管道与 Port 交互，首先需要将[define your Port credentials](https://docs.gitlab.com/ee/ci/variables/index.html#define-a-cicd-variable-in-the-ui) 作为管道的变量。然后，将定义好的变量传递给 ci 管道脚本，例如 `Python`: 
 
 ```yaml showLineNumbers
 image: python:3.9
@@ -40,13 +41,13 @@ report_to_port:
     - python main.py
 ```
 
-Make sure you have an existing [Blueprint](/build-your-software-catalog/define-your-data-model/setup-blueprint/setup-blueprint.md) in your Port installation to create/update entities.
+请确保您的 Port 安装中已有[Blueprint](/build-your-software-catalog/define-your-data-model/setup-blueprint/setup-blueprint.md) ，以便创建/更新实体。
 
-## Working with Port's API
+## 使用 Port 的 API
 
-Here is an example snippet showing how to integrate a job that uses Port's API with your existing Gitlab CI pipelines using Python:
+下面的示例片段展示了如何使用 Python 将被引用 Port API 的作业与现有的 Gitlab CI 管道集成: 
 
-Add the following task to your Gitlab pipeline:
+将以下任务添加到 Gitlab Pipelines: 
 
 <details>
   <summary> Gitlab pipeline YAML </summary>
@@ -74,15 +75,13 @@ report_to_port:
 
 <br></br>
 
-:::note
-In the following example, we use Python modules which need to be installed. You can use the following `requirements.txt`:
+:::note 在下面的示例中，我们使用了需要安装的 Python 模块。 你可以引用下面的 `requirements.txt`: 
 
 <details>
   <summary> port_requirements.txt </summary>
 
 ```
 requests>=2.28.2
-
 ```
 
 </details>
@@ -96,7 +95,7 @@ requests>=2.28.2
 
 <TabItem value="upsert">
 
-Create the following Python script in your repository to create or update Port entities as part of your pipeline:
+在版本库中创建以下 Python 脚本，以创建或更新 Port 实体，作为管道的一部分: 
 
 ```python showLineNumbers
 import os
@@ -139,7 +138,7 @@ print(json.dumps(get_response.json(), indent=4))
 </TabItem>
 <TabItem value="get">
 
-Create the following Python script in your repository to get Port entities as part of your pipeline:
+在版本库中创建以下 Python 脚本，以获取 Port 实体作为管道的一部分: 
 
 ```python showLineNumbers
 import os
@@ -171,6 +170,6 @@ print(json.dumps(get_response.json(), indent=4))
 </TabItem>
 </Tabs>
 
-## Examples
+## 示例
 
-Refer to the [examples](./examples.md) page for practical examples of working with Port using Gitlab CI Pipelines.
+有关使用 Gitlab CI Pipelines 处理 Port 的实际示例，请引用[examples](./examples.md) 页面。

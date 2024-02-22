@@ -1,14 +1,15 @@
-# Roles, teams & ownership
+# 角色、团队和所有权
 
-Port's RBAC mechanism makes it possible to assign permissions to specific users and teams, as well as configure custom roles tailored to the needs of the different personas in Port.
+Port 的 RBAC 机制可以为特定用户和团队分配权限，还可以根据 Port 中不同角色的需要配置自定义角色。
 
-## Assigning permissions
+## 分配权限
 
-In Port, you can assign permissions by using [roles](#roles), [team ownership](../../build-your-software-catalog/set-catalog-rbac/examples.md#team-ownership-examples) and [users](../../build-your-software-catalog/set-catalog-rbac/examples.md#user-examples).
+在 Port 中，可以通过[roles](#roles) 、[team ownership](../../build-your-software-catalog/set-catalog-rbac/examples.md#team-ownership-examples) 和[users](../../build-your-software-catalog/set-catalog-rbac/examples.md#user-examples) 来分配权限。
 
-### Roles
+### 角色
 
-There are 3 types of roles. Below are their out-of-the-box permissions:
+共有 3 种角色，以下是其开箱即用的权限: 
+
 
 | Role                         | Description                                                                                                      |
 | ---------------------------- | ---------------------------------------------------------------------------------------------------------------- |
@@ -16,97 +17,97 @@ There are 3 types of roles. Below are their out-of-the-box permissions:
 | **Moderator** of a Blueprint | Perform any operation on a specific blueprint and its entities. A user can be a moderator of multiple blueprints |
 | **Member**                   | Read-only permissions + permissions to execute actions                                                           |
 
-:::info
-The **Moderator** role is automatically created during blueprint creation.
-For example, creating the blueprint `Env` will generate a role named `Env-moderator`, which can perform any operation on the `Env` blueprint and its entities.
+
+:::info **Moderator** 角色会在创建蓝图时自动创建。 例如，创建 "Env "蓝图会生成一个名为 "Env-moderator "的角色，该角色可以对 "Env "蓝图及其实体执行任何操作。
+
 :::
 
-### Hierarchy
+#### 层次结构
 
-In addition to the permissions designated for each role, permissions are also inherited based on the following hierarchy:
+除了为每个角色指定权限外，还可根据以下层次结构继承权限: 
 
-**Admin** > **Moderator** > **Member**
+**管理员** > **版主** > **成员**
 
-For example, if **Members** are allowed to edit `Cluster` entities, then `Microservices` **Moderators** are also allowed to edit them (**Admins** can edit all entities under all blueprints).
+例如，如果允许**会员**编辑 "集群 "实体，那么 "微服务 "**管理员**也可以编辑它们(**管理员**可以编辑所有蓝图下的所有实体)。
 
-You can view (and edit) each user’s role in the users table:
+您可以在用户表中查看(和编辑)每个用户的角色: 
 
 ![Users page](../../../static/img/software-catalog/role-based-access-control/permissions/usersPageRolesHightlight.png)
 
-Refer to the [Users and Teams](#users-and-teams-management) section for more information about the users page
+有关用户页面的更多信息，请参阅[Users and Teams](#users-and-teams-management) 部分
 
-## Users and Teams management
+## 用户和团队管理
 
-In Port, you can control and manage all your users and teams, in one place.
+在 Port 中，您可以在一个地方控制和管理所有用户和团队。
 
-This allows admins to:
+这样，管理员就可以
 
-- Invite users to their organization and assign them specific roles and teams.
-- Manage teams and their members.
-- Promote ownership of assets within the organization (with team assignments).
-- Set granular permissions on the portal (permission management).
+* 邀请用户加入他们的组织，并为他们分配特定的角色和团队。
+* 管理团队及其成员。
+* 在组织内推广资产所有权(团队分配)。
+* 在门户网站上设置细粒度权限(权限管理)。
 
-It will also benefit developers, who could:
+这也将使开发商受益，他们可以
 
-- Know what software assets they own and are responsible for.
-- View and perform actions on their assets, according to their role and team.
+* 了解自己拥有并负责哪些软件资产。
+* 根据自己的角色和团队，查看自己的资产并对其执行操作。
 
-Each user is defined by the following properties:
+每个用户都由以下属性定义: 
 
-1. Basic information - image, name, and email.
-2. Role - the user’s permissions level (see the [set catalog RBAC](../../build-your-software-catalog/set-catalog-rbac/set-catalog-rbac.md) section);
-3. Teams - a `team` is a group of users that owns Entities (see the [team](#team-meta-property) section).
+1. 基本信息--镜像、姓名和电子邮件。
+2. 角色 - 用户的权限级别(请参阅[set catalog RBAC](../../build-your-software-catalog/set-catalog-rbac/set-catalog-rbac.md) 部分) ；
+3. 团队--"团队 "是拥有实体的一组用户(请参阅[team](#team-meta-property) 部分) 。
 
-Users and teams can be managed via:
+可通过以下方式管理用户和团队
 
-- The [Users & Teams page](#users--teams-page)
-- Port's [Terraform provider](#terraform-provider)
-- The [Port API](#port-api)
+* Port[Users & Teams page](#users--teams-page)
+* Port's[Terraform provider](#terraform-provider)
+* Port的[Port API](#port-api)
 
-### Users & Teams Page
+### 用户和团队页面
 
 ![Teams and Users page](../../../static/img/software-catalog/role-based-access-control/users-and-teams/usersAndTeams.png)
 
-#### Users tab
+#### 用户选项卡
 
-In the users tab, you can:
+在用户选项卡中，您可以
 
-- View all users;
-- Invite new users;
-- Edit users;
-- Delete users;
-- Etc.
+* 查看所有用户；
+* 邀请新用户
+* 编辑用户
+* 删除用户；
+* 等等。
 
-#### Teams tab
+#### 团队选项卡
 
-In the teams tab, you can:
+在团队选项卡中，您可以
 
-- View all teams;
-- Create new teams;
-- Edit teams;
-- Delete teams;
-- Etc.
+* 查看所有团队；
+* 创建新团队
+* 编辑团队
+* 删除团队；
+* 等等。
 
-:::tip Using SSO for users and teams
+:::tip  为用户和团队使用 SSO
 
-**Note:** the following limitations do not apply to teams created manually inside Port.
+**注意: ** 下列限制不适用于在 Port 内手动创建的团队。
 
-When Single Sign-On (SSO) is enabled, users and teams information (including team membership) is taken directly from your identity provider (IdP).
+启用单点登录(SSO)后，用户和团队信息(包括团队成员资格)将直接来自身份 Providers (IdP)。
 
-Since those teams are synced from your IdP the following actions cannot be performed on them:
+由于这些团队是通过 IdP 同步的，因此无法对其执行以下操作: 
 
-- Edit SSO team membership;
-- Delete SSO teams.
+* 编辑 SSO 团队成员；
+* 删除 SSO 团队。
 
-If you try to perform one of the disabled actions, the interface will display an explanation:
+如果您尝试执行其中一项禁用的操作，界面将显示解释: 
 
 ![Managed by SSO notice](../../../static/img/software-catalog/role-based-access-control/users-and-teams/createTeamNoticeWithSSO.png)
+
 :::
 
-### Terraform provider
+### Terraform Provider
 
-You can perform the aforementioned actions via the [Terraform provider](https://registry.terraform.io/providers/port-labs/port-labs/latest).  
-Here is a basic example of a `main.tf` file that defines a team with 3 users:
+您可以通过[Terraform provider](https://registry.terraform.io/providers/port-labs/port-labs/latest) 执行上述操作。下面是一个`main.tf`文件的基本示例，该文件定义了一个有 3 个用户的团队: 
 
 ```bash showLineNumbers
 resource "port_team" "example" {
@@ -120,17 +121,17 @@ resource "port_team" "example" {
 }
 ```
 
-You can browse the `team` schema [here](https://registry.terraform.io/providers/port-labs/port-labs/latest/docs/resources/port_team).
+您可以浏览 "团队 "模式[here](https://registry.terraform.io/providers/port-labs/port-labs/latest/docs/resources/port_team) 。
 
 ### Port API
 
-The API allows you to manage [teams](https://api.getport.io/static/index.html#/Teams) and [users](https://api.getport.io/static/index.html#/Users).
+应用程序接口允许您管理[teams](https://api.getport.io/static/index.html#/Teams) 和[users](https://api.getport.io/static/index.html#/Users) 。
 
-### `Team` meta property
+### `团队'元属性
 
-Each entity has a [meta-property](../../build-your-software-catalog/define-your-data-model/setup-blueprint/properties/meta-properties.md) called `team`, that allows you to set which team owns the entity. As an admin, you can also set blueprint permissions according to this field.
+每个实体都有一个名为 "team "的[meta-property](../../build-your-software-catalog/define-your-data-model/setup-blueprint/properties/meta-properties.md) ，允许您设置哪个团队拥有该实体。作为管理员，您还可以根据该字段设置蓝图权限。
 
-Entity JSON example with `team` field:
+包含`team`字段的实体 JSON 示例: 
 
 ```json showLineNumbers
 {
@@ -145,18 +146,20 @@ Entity JSON example with `team` field:
 }
 ```
 
-Team dropdown selector in the entity create/edit page:
+实体创建/编辑页面中的团队下拉选择器: 
 
 ![Team property](../../../static/img/software-catalog/role-based-access-control/users-and-teams/teamPropertyMarkedInUIForm.png)
+
 
 | Field | Type | Description                                            | Default      |
 | ----- | ---- | ------------------------------------------------------ | ------------ |
 | team  | List | System field that defines the team that owns an Entity | `"team": []` |
 
-- We support the manual creation of teams on Port, as well as integrating with identity providers, such as [Okta](../sso-providers/okta.md) and [AzureAD](../sso-providers/azure-ad.md), to import existing teams.
-- When users log in to Port, their groups will be pulled automatically from their identity provider, and the allowed team values will be updated accordingly.
-- It is also possible to configure [team inheritance](../../build-your-software-catalog/set-catalog-rbac/examples.md#team-inheritance) and utilize relations to auto-populate the `team` key of entities.
 
-:::info
-Okta and AzureAD integrations are only available after configuring SSO from the relevant identity provider, refer to the [Single Sign-On (SSO)](../sso-providers/) section for more details
+* 我们支持在 Port 上手动创建团队，也支持与身份 Provider(如[Okta](../sso-providers/okta.md) 和[AzureAD](../sso-providers/azure-ad.md) )集成以导入现有团队。
+* 当用户登录 Port 时，他们的群组将自动从其身份 Providers 中提取，允许的团队值也会相应更新。
+* 还可以配置[team inheritance](../../build-your-software-catalog/set-catalog-rbac/examples.md#team-inheritance) 并利用关系自动填充实体的 "团队 "键。
+
+:::info Okta 和 AzureAD 集成只有在从相关身份提供程序配置 SSO 后才能使用，详情请参考[Single Sign-On (SSO)](../sso-providers/) 部分。
+
 :::

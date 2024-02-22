@@ -1,56 +1,58 @@
 ---
+
 sidebar_position: 1
+
 ---
 
 import Tabs from "@theme/Tabs"
 import TabItem from "@theme/TabItem"
 
-# GitHub Workflow
+# GitHub 工作流程
 
-Our [GitHub action](https://github.com/marketplace/actions/port-github-action) allows you to create/update and query entities in Port directly from your GitHub workflows.
+我们的[GitHub action](https://github.com/marketplace/actions/port-github-action) 允许您直接从 GitHub 工作流中创建/更新和查询 Port 中的实体。
 
 <br></br>
 <br></br>
 
 ![Github Illustration](/img/build-your-software-catalog/sync-data-to-catalog/github/github-action-illustration.jpg)
 
-:::tip public repository
-Our GitHub action is open source - see it [**here**](https://github.com/port-labs/port-github-action)
+:::tip  公共仓库 我们的 GitHub 行动是开源的，请参见[**here**](https://github.com/port-labs/port-github-action)
+
 :::
 
-## 💡 Common Github workflow usage
+## 💡 常见的 Github 工作流程 Usage
 
-Port's GitHub action provides a native way to integrate Port with your GitHub workflows, for example:
+例如，Port 的 GitHub 操作提供了将 Port 与 GitHub 工作流集成的原生方式: 
 
-- Report the status of a running **CI job**;
-- Update the software catalog about a new **build version** for a **microservice**;
-- Get existing **entities**.
+* 报告正在运行的**CI任务**的状态；
+* 更新软件目录中有关**微服务**新**构建版本的信息；
+* 获取现有**实体**。
 
-## Installation
+## 安装
 
-To install Port's GitHub action, follow these steps:
+要安装 Port 的 GitHub 操作，请按照以下步骤操作: 
 
-1. Add the following line as a step in your GitHub workflow:
+1. 在 GitHub 工作流程中添加以下一行作为一个步骤: 
 
 ```yaml showLineNumbers
 - uses: port-labs/port-github-action@v1
 ```
 
-2. Add your Port `CLIENT_ID` and `CLIENT_SECRET` as [GitHub secrets](https://docs.github.com/en/actions/security-guides/encrypted-secrets);
-   1. This step is not mandatory, but it is recommended in order to not pass the `CLIENT_ID` and `CLIENT_SECRET` in plaintext in your workflows;
-3. Make sure you have an existing blueprint in your Port installation to create/update entities using the GitHub action.
+2.将您的 Port `CLIENT_ID` 和 `CLIENT_SECRET` 添加为[GitHub secrets](https://docs.github.com/en/actions/security-guides/encrypted-secrets) ；
+    1.此步骤不是强制性的，但为了避免在工作流程中以明文传递 `CLIENT_ID` 和 `CLIENT_SECRET`，建议使用此步骤；
+3. 确保您的 Port 安装中已有蓝图，以便使用 GitHub 操作创建/更新实体。
 
 ## Usage
 
-Port's GitHub action supports the following methods:
+Port 的 GitHub 操作支持以下方法: 
 
-- Create/Update catalog entities - invoked with the `UPSERT` operation, receives the identifier and other properties of a new entity or an entity that needs to be updated;
-- Bulk Create/Update catalog entities - invoked with the `BULK_UPSERT` operation, receives the entities definitions of some new entities or entities that needs to be updated;
-- Get catalog entities - invoked with the `GET` operation, receives the identifier of an existing entity and retrieves it for use in your CI;
-- Search catalog entities - invoked with the `SEARCH` operation, receives a query and retrieves the entities for use in your CI;
-- Delete catalog entities - invoked with the `DELETE` operation, receives the identifier of an existing entity and deletes it;
-- Update a running action - invoked with the `PATCH_RUN` operation, receives the identifier of an existing action run along with other properties of the run that need to be updated.
-- Create an action run - invoked with the `CREATE_RUN` operation, receives the identifier of an existing blueprint, action and entity (optional), along with input properties to run the action with.
+* 创建/更新目录实体--使用 "UPSERT "操作调用，接收新实体或需要更新的实体的标识符和其他属性；
+* 批量创建/更新目录实体--使用 "BULK_UPSERT "操作调用，接收一些新实体或需要更新的实体的实体定义；
+* 获取目录实体--使用 "GET "操作调用，接收现有实体的标识符并将其检索出来供 CI 使用；
+* 搜索目录实体 - 使用`SEARCH`操作调用，接收查询并检索实体供 CI 使用；
+* 删除目录实体--使用`DELETE`操作调用，接收现有实体的标识符并将其删除；
+* 更新正在运行的操作 - 使用`PATCH_RUN`操作调用，接收现有操作运行的标识符以及需要更新的运行的其他属性。
+* 创建一个正在运行的操作 - 使用 `CREATE_RUN` 操作调用，接收现有蓝图、操作和实体(可选)的标识符，以及要运行操作的输入属性。
 
 <Tabs groupId="usage" defaultValue="upsert" values={[
 {label: "Create/Update Entity", value: "upsert"},
@@ -243,6 +245,6 @@ use-entities:
 </TabItem>
 </Tabs>
 
-## Examples
+## 示例
 
-Refer to the [examples](./examples.md) page for practical examples of Port's GitHub action.
+有关 Port 在 GitHub 上的实际操作示例，请参阅[examples](./examples.md) 页面。

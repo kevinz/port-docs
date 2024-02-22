@@ -1,21 +1,22 @@
 ---
+
 sidebar_position: 7
+
 ---
 
 # Port Entity CRD
 
-[Port's K8s exporter](./kubernetes.md) allows exporting data from any resource in your Kubernetes clusters, including [Custom Resource Definitions](https://kubernetes.io/docs/concepts/extend-kubernetes/api-extension/custom-resources/)(CRDs).
-To take advantage of the flexibility of Port's K8s exporter, Port provides additional CRDs which make it possible to use K8s resource definitions as a source of [entities](/build-your-software-catalog/sync-data-to-catalog/sync-data-to-catalog.md#creating-entities) in your software catalog.
+[Port's K8s exporter](./kubernetes.md) 允许从您的 Kubernetes 集群中的任何资源导出数据，包括[Custom Resource Definitions](https://kubernetes.io/docs/concepts/extend-kubernetes/api-extension/custom-resources/)(CRDs) 。为了利用 Port 的 K8s 导出器的灵活性，Port 提供了额外的 CRDs，使得在您的软件目录中使用 K8s 资源定义作为[entities](/build-your-software-catalog/sync-data-to-catalog/sync-data-to-catalog.md#creating-entities) 的来源成为可能。
 
-:::tip
-All CRDs provided by Port can be found [here.](https://github.com/port-labs/port-crds)
+:::tip Port 提供的所有 CRD 均可查阅[here.](https://github.com/port-labs/port-crds)
+
 :::
 
 # Port CRDs
 
-A Port entity can represent any kind of data in your infrastructure, from nodes to pods to non-Kubernetes related entities such as repositories or microservices. To achieve this level of abstraction, 2 CRDs are provided:
+Port 实体可以代表基础架构中的任何类型数据，从节点、pod 到非 Kubernetes 相关实体(如存储库或微服务)。 为实现这一抽象层次，提供了 2 个 CRD: 
 
-## Namespace scoped entity CRD - `getport.io/v1/Entity`
+## 名称空间作用域实体 CRD - `getport.io/v1/Entity`
 
 <details>
   <summary>Entity CRD</summary>
@@ -75,7 +76,7 @@ spec:
 
 </details>
 
-## Cluster scoped entity CRD - `getport.io/v1/ClusterEntity`
+## 集群作用域实体 CRD - `getport.io/v1/ClusterEntity`
 
 <details>
   <summary>Cluster Entity CRD</summary>
@@ -135,14 +136,14 @@ spec:
 
 </details>
 
-## Port CRDs Structure
+## Port CRDs 结构
 
-Port CRDs provide four key attributes:
+Port CRD 提供四个关键属性: 
 
-- `Blueprint ID` **Required**: The [blueprint](/build-your-software-catalog/define-your-data-model/setup-blueprint/setup-blueprint.md#what-is-a-blueprint) identifier (string) of the entity you wish to map;
-- `Entity ID` **Required**: The [entity](/build-your-software-catalog/sync-data-to-catalog/sync-data-to-catalog.md#creating-entities) identifier (string) of the entity you wish to map;
-- `Properties` **Optional**: The [properties](/build-your-software-catalog/define-your-data-model/setup-blueprint/properties/properties.md) field (object) holds the properties data of the entity you want to map;
-- `Relations` **Optional**: The [relations](/build-your-software-catalog/define-your-data-model/relate-blueprints/relate-blueprints.md) field (object) holds the relations data of the entity you want to map.
+* 蓝图 ID ` **必填**: [blueprint](/build-your-software-catalog/define-your-data-model/setup-blueprint/setup-blueprint.md#what-is-a-blueprint) 您希望映射的实体的标识符(字符串) ；
+* 实体 ID ` **必填**: [entity](/build-your-software-catalog/sync-data-to-catalog/sync-data-to-catalog.md#creating-entities) 您希望映射的实体的标识符(字符串) ；
+* `Properties` **可选**: [properties](/build-your-software-catalog/define-your-data-model/setup-blueprint/properties/properties.md) 字段(对象) ，其中包含要映射的实体的属性数据；
+* 关系` **可选**: [relations](/build-your-software-catalog/define-your-data-model/relate-blueprints/relate-blueprints.md) 字段(对象) 保存要映射的实体的关系数据。
 
 <details>
   <summary>CRD examples</summary>
@@ -194,9 +195,9 @@ spec:
 
 </details>
 
-## Deploying Port's CRDs
+## 部署 Port 的 CRDs
 
-To deploy Port's CRDs in your K8s cluster, run the following commands:
+要在 K8s 集群中部署 Port 的 CRD，请运行以下命令: 
 
 ```bash showLineNumbers
 # Run this to install Port's namespace-scoped CRD
@@ -206,29 +207,27 @@ kubectl apply -f https://raw.githubusercontent.com/port-labs/port-crds/main/port
 kubectl apply -f https://raw.githubusercontent.com/port-labs/port-crds/main/port-entity-crd-cluster.yaml
 ```
 
-## Exporting Port's custom resources
+## 导出 Port 的自定义资源
 
-To export the Port entity CRDs using Port's K8s exporter, you will need to add a new resources to your exporter configuration. This mapping configuration will match the blueprint data model you defined in your software catalog.
+要使用 Port 的 k8s 导出器导出 Port 实体 CRD，您需要在导出器配置中添加一个新资源。 该映射配置将与您在软件目录中定义的蓝图数据模型相匹配。
 
-To learn how to use Port CRDs to fit your needs, you will follow an example. It will give you a general understanding of how to map any data you would like.
+要学习如何使用 Port CRD 来满足您的需求，您将按照一个示例来操作。 它将让您大致了解如何映射您想要的任何数据。
 
-### Example - Mapping a microservice using Port CRDs
+#### 示例 - 使用 Port CRD 映射微服务
 
-The goal for this example is to map a microservice using Port's CRD and Port's K8s exporter. For this example, you will map a microservice as a Port entity.
+本例的目标是使用 Port 的 CRD 和 Port 的 k8s 输出程序映射一个微服务。 在本例中，您将把一个微服务映射为 Port 实体。
 
-:::note Prerequisites
-Before getting started:
+:::note  开始之前的先决条件
 
-- Prepare your [Port credentials](/build-your-software-catalog/sync-data-to-catalog/api/api.md#find-your-port-credentials);
-- Be familiar with [Port's K8s exporter](/build-your-software-catalog/sync-data-to-catalog/kubernetes/kubernetes.md) and configuration;
-- Make sure you are connected to a K8s cluster using `kubectl`.
+* 准备好您的[Port credentials](/build-your-software-catalog/sync-data-to-catalog/api/api.md#find-your-port-credentials) ；
+* 熟悉[Port's K8s exporter](/build-your-software-catalog/sync-data-to-catalog/kubernetes/kubernetes.md) 和配置；
+* 确保使用 `kubectl` 连接到 k8s 集群。
 
 :::
 
-1. **Deploy the Port CRD** - follow the [deployment step](/build-your-software-catalog/sync-data-to-catalog/kubernetes/port-crd.md#deploying-ports-crds) to deploy the Port CRD. You will only need the cluster-scoped entity CRD.
-
-2. **Creating the blueprint** - You will begin by defining the blueprint which will represent a microservice in your software catalog.
-   Create the following blueprint in your Port environment:
+1. **部署 Port CRD** - 按照[deployment step](/build-your-software-catalog/sync-data-to-catalog/kubernetes/port-crd.md#deploying-ports-crds) 部署 Port CRD。您只需要集群作用域的实体 CRD。
+2. **创建蓝图** - 首先要定义蓝图，它将代表软件目录中的微服务。
+在 Port 环境中创建以下蓝图: 
 
 ```json showLineNumbers
 {
@@ -274,9 +273,8 @@ Before getting started:
 }
 ```
 
-3. **Create a Port entity custom resource in your cluster** - create an Entity CR which will represent a microservice, using the scheme defined in your blueprint:
-
-   1. Create the following file as `port-entity.yaml`:
+3. **在集群中创建 Port 实体自定义资源** - 使用蓝图中定义的方案，创建一个将代表微服务的实体 CR: 
+    1.创建以下文件作为 `port-entity.yaml`: 
 
 ```yaml showLineNumbers
 # Namespaces Port Entity CRD example
@@ -295,21 +293,19 @@ spec:
     language: typescript
 ```
 
-4.  Apply the CRD manifest to your cluster:
+4.将 CRD 配置清单应用到集群: 
 
 ```bash showLineNumbers
 kubectl apply -f port-entity.yaml
 ```
 
-4. **Create a mapping configuration for the K8s exporter** - create (or add to an existing) the following exporter configuration to map this CRD using Port's k8s exporter:
-   
-   1. Open the [data sources](https://app.getport.io/dev-portal/data-sources) page in your Port environment and click on the integration you wish to add the mapping to;
+4. **为 k8s 输出程序创建映射配置** - 创建(或添加到现有的)以下输出程序配置，以便使用 Port 的 k8s 输出程序映射此 CRD: 
+    1.在您的 Port 环境中打开[data sources](https://app.getport.io/dev-portal/data-sources) 页面，点击您希望添加映射的集成；
+    2.将以下映射配置添加到导出器配置中: 
+    :::tip 添加映射配置
+    如果您已经有了出口程序配置，可将以下映射添加到现有配置中，方法是将 "resources "键后面的行添加到现有配置中。
+    :::
 
-   2. Add the following mapping configuration to your exporter configuration:
-   
-   :::tip Adding the mapping configuration
-   If you already have an exporter configuration, you can add the following mapping to your existing configuration by appending the lines after the `resources` key to your existing configuration.
-   :::
 
    ```yaml showLineNumbers
    resources:
@@ -330,6 +326,7 @@ kubectl apply -f port-entity.yaml
                  language: .spec.properties.language
    ```
 
-   3. Click on the `Save & Resync` button to apply the configuration to your integration.
 
-You will now be able to see the newly exported entity in your Port environment.
+3.单击 "保存和重新同步 "按钮，将配置应用到集成中。
+
+现在您可以在 Port 环境中看到新导出的实体。

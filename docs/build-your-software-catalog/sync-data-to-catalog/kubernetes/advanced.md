@@ -1,28 +1,32 @@
 ---
+
 sidebar_position: 6
+
 ---
 
 import Tabs from "@theme/Tabs";
 import TabItem from "@theme/TabItem";
-import DeleteDependents from '/docs/generalTemplates/\_delete_dependents_kubernetes_explanation_template.md'
-import CreateMissingRelatedEntities from '/docs/generalTemplates/\_create_missing_related_entities_kubernetes_explanation_template.md'
+import DeleteDependents from '/docs/generalTemplates/_delete_dependents_kubernetes_explanation_template.md'
+import CreateMissingRelatedEntities from '/docs/generalTemplates/_create_missing_related_entities_kubernetes_explanation_template.md'
 
-# Advanced
+# 高级
 
-The K8s exporter supports additional flags and the option to provide additional configuration sources, making it easier to configure its behavior to your liking.
+k8s 输出程序支持额外的 flag 和提供额外配置源的选项，从而可以更方便地根据自己的喜好配置其行为。
 
-## Required configuration
+## 所需配置
 
-The following parameters are required with every K8s exporter installation/upgrade:
+每次安装/升级 k8s 输出程序时都需要以下参数: 
+
 
 | Parameter                         | Description                                                               |
 | --------------------------------- | ------------------------------------------------------------------------- |
 | `secret.secrets.portClientId`     | Port Client ID                                                            |
 | `secret.secrets.portClientSecret` | Port Client Secret                                                        |
 
-## Advanced installation parameters
 
-The following advanced configuration parameters are available:
+## 高级安装参数
+
+可使用以下高级配置参数: 
 
 <Tabs groupId="advanced" queryString="current-config-param" defaultValue="resyncInterval" values={[
 {label: "Resync Interval", value: "resyncInterval"},
@@ -33,109 +37,111 @@ The following advanced configuration parameters are available:
 
 <TabItem value="resyncInterval">
 
-The `resyncInterval` parameter specifies the interval in minutes to send a repeated sync event for all known existing objects (in addition to new cluster events).
+resyncInterval "参数指定为所有已知现有对象(除新的集群事件外)发送重复同步事件的时间间隔(以分钟为单位)。
 
-- Default value: `0` (re-sync disabled)
-- Use case: Re-sync every X minutes. This parameter is useful when reporting entities with relations inside your cluster in instances where an entity is reported before its related target has been created in Port. The initial sync will fail, but later when the target entity is available, the entity creation will succeed.
+* 默认值:  `0`(禁用重新同步)
+* 被引用: 每 X 分钟重新同步一次。在集群内报告有关系的实体时，如果在 Port 中创建了相关目标实体之前就报告了该实体，则此参数非常有用。初始同步将失败，但随后当目标实体可用时，实体创建将成功。
 
 </TabItem>
 
 <TabItem value="stateKey">
 
-The `stateKey` parameter specifies a unique state key per K8s exporter installation. Enables deletion of stale Port entities that had been created by the exporter, and shouldn't be synced (anymore) according to your existing exporter app configuration. The exporter will check for pending deletions during pod initialization, and also respond to deletion events in the cluster.
+stateKey "参数指定了每个 k8s 输出程序安装的唯一状态密钥。 根据现有的输出程序应用程序配置，可以删除输出程序创建的、不应再同步(的陈旧 Port 实体。 输出程序将在 pod 初始化过程中检查待处理的删除，并对集群中的删除事件做出响应。
 
-- Default: `""`.
-  - When empty, a `UUID` will be automatically generated and kept in the ConfigMap. Changing the state key will cause the existing exporter to lose track of entities it reported previously from the cluster, and will therefore not delete them from Port.
-- Use case: Deletion of stale Port entities. For example:
-  - Removal of entire resource (like `pods`) from the exporter app config, will also remove them from the software catalog.
-  - Modification of an entity's identifier will cause the stale entity to be removed and created again with the correct identifier.
+* 默认值: `""`。
+    - 为空时，将自动生成一个 `UUID` 并保存在 configmaps 中。更改状态密钥会导致现有的输出程序失去对之前从集群中报告的实体的跟踪，因此不会从 Port 中删除这些实体。
+* 被引用: 删除过时的 Port 实体。例如
+    - 从出口程序配置中删除整个资源(如 `pods`)，也会从软件目录中删除它们。
+    - 修改实体的标识符将导致删除过时的实体，并用正确的标识符重新创建。
 
 </TabItem>
 
 <TabItem value="eventListenerType">
 
-The K8S exporter provides support for multiple event listeners. The event listener is used to receive events and resync requests from Port and forward them to the exporter.
+k8s 输出程序为多个事件监听器提供支持。 事件监听器用于接收来自 Port 的事件和重同步请求，并将其转发给输出程序。
 
-By configuring an event listener the integration will listen to and react to the following events sent from Port:
+通过配置事件监听器，集成将监听Port发送的以下事件并作出反应: 
 
-- **Configuration update** - the integration will use the data of the new configuration to perform a resync of information from the k8s cluster
-- **Resync request** - the integration will perform a resync of data from the k8s cluster to Port based on the existing configuration
+* **配置更新** - 集成将使用新配置的数据从 k8s 集群重新同步信息
+* **重新同步请求** - 集成将根据现有配置从 k8s 集群到 Port 执行数据重新同步
 
-The following event listener types are supported:
+支持以下事件监听器类型
 
-- **POLLING** - the integration will automatically query Port for updates in the integration configuration and perform a
-  resync if changes are detected.
+* **POLLING** - 集成将自动查询 Port 中集成配置的更新，并在检测到更改时执行重新同步。
+重新同步。
+* **KAFKA** - 集成将从您的专用 Kafka 主题接收传入的重新同步请求。
 
-- **KAFKA** - the integration will consume incoming resync requests from your dedicated Kafka topic, provisioned to you by Port
+可找到可用的事件侦听器配置参数[here](https://github.com/port-labs/helm-charts/blob/main/charts/port-k8s-exporter/README.md#chart)
 
-Available event listeners configuration parameters can be found [here](https://github.com/port-labs/helm-charts/blob/main/charts/port-k8s-exporter/README.md#chart)
+:::caution  多个出口程序实例 目前可用的事件监听器不支持同一出口程序的多个实例
 
-:::caution multiple exporter instances
-The event listeners that are currently available do not support multiple instances of the same exporter
 :::
 
-:::danger resync
-If a resync event is received by your integration while it is actively performing a resync, the currently running resync will be aborted and a new resync process will start.
+:::danger  resync 如果集成在执行重新同步时收到重新同步事件，当前正在运行的重新同步将被中止，并启动新的重新同步进程。
 
-If a new resync trigger consistently aborts a running resync, it means that your integration never finishes a complete resync process (which means some information from the cluster might never appear in Port).
+如果新的重新同步触发器持续中止正在运行的重新同步，这意味着您的集成从未完成完整的重新同步过程(这意味着集群中的某些信息可能永远不会出现在 Port 中)。
+
 :::
 
 </TabItem>
 
 <TabItem value="verbosity">
 
-The `verbosity` parameter is used to control the verbosity level of info logs in K8s exporter's pod.
+verbosity` 参数用于控制 k8s 输出程序 pod 中 info logging 的冗长程度。
 
-- Default: `0` (show all info and error logs, including info logs of successful updates)
-- Use case: Set the value to `-1`, if you want to clear out info logs of successful entity updates. Error logs and some info logs (initialization and teardown logs), will be reported.
+* 默认:  `0`(显示所有信息和错误日志，包括成功更新的信息日志)
+* 被引用: 如果想清除成功实体更新的信息日志，请将值设为 `-1`。错误日志和一些信息日志(初始化和拆卸日志)将被报告。
 
 </TabItem>
 
 </Tabs>
 
-## Security Configuration
+## 安全配置
 
-The following security parameters can be modified to give the K8s exporter more granular access to your cluster:
+可以修改以下安全参数，让 k8s 输出程序对集群有更细粒度的访问权限: 
+
 
 | Parameter               | Description                                                                                                                                                                             | Default |
 | ----------------------- |-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------| ------- |
 | `clusterRole.apiGroups` | The API groups that the K8s Exporter can access. Make sure to grant access to the relevant API groups, with respect to the resources that you've configured in the resource mapping     | `{'*'}` |
 | `clusterRole.resources` | The resources that the K8s Exporter can access. Make sure to grant access to the relevant resources, with respect to the resources that you've configured in the resource mapping | `{'*'}` |
 
-## Overriding configurations
 
-When installing the K8s exporter, it is possible to override default values in the `helm upgrade` command:
+## 覆盖配置
 
-By using the `--set` flag, you can override specific exporter configuration parameters during exporter installation/upgrade:
+安装 k8s 输出程序时，可以覆盖 `helm upgrade` 命令中的默认值: 
+
+通过被引用 `--set` flag，你可以在安装/升级出口程序时覆盖特定的出口程序配置参数: 
 
 ```bash showLineNumbers
 helm upgrade --install k8s-exporter port-labs/port-k8s-exporter \
     --create-namespace --namespace port-k8s-exporter \
-	--set secret.secrets.portClientId="YOUR_PORT_CLIENT_ID"  \
-	--set secret.secrets.portClientSecret="YOUR_PORT_CLIENT_SECRET"  \
-	--set stateKey="k8s-exporter"  \
+    --set secret.secrets.portClientId="YOUR_PORT_CLIENT_ID"  \
+    --set secret.secrets.portClientSecret="YOUR_PORT_CLIENT_SECRET"  \
+    --set stateKey="k8s-exporter"  \
     # highlight-next-line
-	--set eventListenerType="KAFKA"  \
-	--set extraEnv=[{"name":"CLUSTER_NAME","value":"my-cluster"}] 
+    --set eventListenerType="KAFKA"  \
+    --set extraEnv=[{"name":"CLUSTER_NAME","value":"my-cluster"}]
 ```
 
-For example, to set the parameters from the [security configuration](#security-configuration) section:
+例如，从[security configuration](#security-configuration) 部分设置参数: 
 
 ```bash showLineNumbers
 --set clusterRole.apiGroups="{argoproj.io,'',apps}" \
 --set clusterRole.resources="{rollouts,pods,replicasets}"
 ```
 
-## All configuration parameters
+## 所有配置参数
 
-- A complete list of configuration parameters available when using the helm chart is available [here](https://github.com/port-labs/helm-charts/tree/main/charts/port-k8s-exporter#chart);
-- An example skeleton `values.yml` file is available [here](https://github.com/port-labs/helm-charts/blob/main/charts/port-k8s-exporter/values.yaml).
+* 使用 helm chart 时可用配置参数的完整列表可查阅[here](https://github.com/port-labs/helm-charts/tree/main/charts/port-k8s-exporter#chart) ；
+* `values.yml` 文件骨架示例见[here](https://github.com/port-labs/helm-charts/blob/main/charts/port-k8s-exporter/values.yaml) 。
 
+## 额外的环境变量
 
-## Extra environment variables
-To pass extra environment variables to the exporter's runtime, you can use the Helm chart provided with the installation. You can do this in one of two ways:
+要将额外的环境变量传递给出口程序的运行时，可以使用安装时提供的 helm chart。 可以通过以下两种方式之一来实现: 
 
-1. Using Helm's `--set` flag:
+1. 被引用 Helm 的 `--set` flag: 
+
 ```sh showLineNumbers
 helm upgrade --install <MY_INSTALLATION_NAME> port-labs/port-k8s-exporter \
   # Standard installation flags
@@ -144,7 +150,8 @@ helm upgrade --install <MY_INSTALLATION_NAME> port-labs/port-k8s-exporter \
   --set "extraEnv[0].value"=http://my-proxy.com:1111
 ```
 
-2. The Helm `values.yaml` file:
+2.Helm `values.yaml` 文件: 
+
 ```yaml showLineNumbers
 # The rest of the configuration
 # ...
@@ -152,32 +159,37 @@ extraEnvs:
   - name: HTTP_PROXY
     value: http://my-proxy.com:1111
 ```
-### Proxy Configuration
 
-#### `HTTP_PROXY` & `HTTPS_PROXY`
-`HTTP_PROXY` and `HTTPS_PROXY` are environment variables used to specify a proxy server for handling HTTP or HTTPS, respectively. The values assigned to these settings should be the URL of the proxy server.
+#### 代理配置
 
-For example:
+#### `http_proxy` &amp; `https_proxy`
+
+`HTTP_PROXY` 和 `HTTPS_PROXY` 是环境变量，分别用于指定处理 HTTP 或 HTTPS 的代理服务器。 分配给这些设置的值应为代理服务器的 URL。
+
+例如
+
 ```sh showLineNumbers
 HTTP_PROXY=http://my-proxy.com:1111
 HTTPS_PROXY=http://my-proxy.com:2222
 ```
 
-### `NO_PROXY`
+###`NO_PROXY`
 
-`NO_PROXY` allows blacklisting certain addresses from being handled through a proxy. This vairable accepts a comma-seperated list of hostnames or urls.
+NO_PROXY "允许将某些地址列入黑名单，使其无法通过代理处理。 该变量接受一个逗号分隔的主机名或 urls 列表。
 
-For example:
+例如
+
 ```sh showLineNumbers
 NO_PROXY=http://127.0.0.1,google.com
 ```
 
-## Advanced resource mapping configuration
+## 高级资源映射配置
 
 <Tabs groupId="advanced" queryString="current-resource-mapping-configuration" defaultValue="deleteDependents" values={[
 {label: "Delete Dependents", value: "deleteDependents"},
 {label: "Create Missing Related Entities", value: "createMissingRelatedEntities"},
 ]} >
+
 <TabItem value="deleteDependents">
 <DeleteDependents/>
 - Default: `false` (disabled)

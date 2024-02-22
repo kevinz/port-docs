@@ -1,17 +1,18 @@
 ---
+
 sidebar_position: 4
+
 ---
 
 import Tabs from "@theme/Tabs"
 import TabItem from "@theme/TabItem"
-import DeleteDependents from '../../../../generalTemplates/\_delete_dependents_git_explanation_template.md'
+import DeleteDependents from '../../../../generalTemplates/_delete_dependents_git_explanation_template.md'
 
-# Advanced
+# 高级
 
-The GitHub integration supports additional flags to provide additional configuration, making it easier to configure its behavior to your liking.
+GitHub 集成支持额外的 flag 以提供更多配置，从而更容易根据自己的喜好配置其行为。
 
-To use the advanced configuration and additional flags, add them as a root key to your [`port-app-config.yml`](./github.md#port-app-configyml-file) file, for example to add the
-`createMissingRelatedEntities` flag:
+要使用高级配置和附加 flag，请将它们作为根键添加到[`port-app-config.yml`](./github.md#port-app-configyml-file) 文件中，例如添加 `createMissingRelatedEntities` flag: 
 
 ```yaml showLineNumbers
 # highlight-next-line
@@ -26,20 +27,21 @@ resources:
         ... mappings configuration
 ```
 
-## Using advanced configurations
+## 使用高级配置
 
-The following advanced configuration parameters are available and can be added to the [`port-app-config.yml`](./github.md#port-app-configyml-file) file:
+可将下列高级配置参数添加到[`port-app-config.yml`](./github.md#port-app-configyml-file) 文件中: 
 
 <Tabs groupId="config" queryString="parameter">
 
 <TabItem label="Spec path" value="specPath">
 
-The `specPath` parameter specifies a list of [globPatterns](https://www.malikbrowne.com/blog/a-beginners-guide-glob-patterns)[] that Port's GitHub app will search for `port.yml` files in.
+`specPath` 参数指定了一个[globPatterns](https://www.malikbrowne.com/blog/a-beginners-guide-glob-patterns)
+ [] 列表，Port 的 GitHub 应用程序将在其中搜索 `port.yml` 文件。
 
-- Default value: `**/port.yml`
-- Use case:
-  - If you want the app to scan a different file than `port.yml` (for example, change configure the app to scan files named `my-port-config.yml` using the pattern `**/my-port-config.yml`);
-  - If you want the app to ignore `port.yml` files in certain paths.
+* 默认值:  `**/port.yml
+* 被引用: 
+    - 如果希望应用程序扫描与 `port.yml` 不同的文件(例如，使用模式 `**/my-port-config.yml` 更改配置，使应用程序扫描名为 `my-port-config.yml` 的文件)；
+    - 如果希望应用程序忽略某些路径下的 `port.yml` 文件。
 
 </TabItem>
 
@@ -47,42 +49,42 @@ The `specPath` parameter specifies a list of [globPatterns](https://www.malikbro
 
 <DeleteDependents/>
 
-- Default: `false` (disabled)
-- Use case: Deletion of dependent Port entities. Must be enabled, if you want to delete a target entity (and its source entities) in a required relation.
+* 默认:  `false`(禁用)
+* 被引用: 删除从属 Port 实体。如果要删除必填关系中的目标实体(及其源实体)，则必须启用。
 
 </TabItem>
 
 <TabItem label="Enable merge entity" value="enableMergeEntity">
 
-The `enableMergeEntity` parameter specifies whether to use the [create/update](../../api/api.md?operation=create-update#usage) or [create/override](../../api/api.md?operation=create-override#usage) strategy when creating entities listed in a `port.yml` file.
+enableMergeEntity "参数用于指定在创建 `port.yml` 文件中所列实体时，是使用[create/update](../../api/api.md?operation=create-update#usage) 还是[create/override](../../api/api.md?operation=create-override#usage) 策略。
 
-- Default value: `true` (use create/update)
-- Use case: use `false` if you want GitHub to be the source-of-truth for catalog entities. Use `true` if you want to use GitHub as the source for some properties of entities in the catalog, and use other sources to for properties which are subject to change automatically.
+* 默认值: `true`(使用创建/更新)
+* 用例: 如果希望 GitHub 成为目录实体的真实来源，请使用 `false`。如果希望将 GitHub 作为目录中实体的某些属性的来源，而将其他来源用于自动更改的属性，则使用 `true`。
 
 </TabItem>
 
 <TabItem value="createMissingRelatedEntities" label="Create missing related entities">
 
-The `createMissingRelatedEntities` parameter is used to enable the creation of missing related Port entities automatically in cases where the target related entity does not exist in the software catalog yet.
+createMissingRelatedEntities"(创建缺失的相关实体)参数用于在软件目录中还不存在目标相关实体的情况下，自动创建缺失的相关 Port 实体。
 
-- Default value: `false` (do not create missing related entities)
-- Use case: use `true` if you want GitHub app to create barebones related entities, in case those related entities do not exist in the software catalog.
+* 默认值: `false`(不创建缺失的相关实体)
+* 用例: 如果希望 GitHub 应用程序在软件目录中不存在相关实体的情况下创建裸相关实体，请使用 `true`。
 
 </TabItem>
 
 <TabItem value="enrichEntities" label="Enrich entities">
 
-The `enrichEntitiesWithGitopsMetadata` parameter is used to enable the enrichment of Port entities that are managed by GitOps with additional metadata.
+enrichEntitiesWithGitopsMetadata "参数用于启用附加元数据来丰富由 GitOps 管理的 Port 实体。
 
-When the parameter is active, ingesting entities listed in a `port.yml` file to Port will include additional information such as the spec file path (for example: `port.yml`, `/path/to/port.yml`, etc.), the latest commit information and more.
+当该参数激活时，将 `port.yml` 文件中列出的实体摄取到 Port 时将包括附加信息，如规范文件路径(例如: `port.yml`、`/path/to/port.yml` 等)、最新提交信息等。
 
-The additional information is reported as a JSON object property in your GitOps managed entities. In order to view the information, your respective [blueprint](../../../define-your-data-model/setup-blueprint/setup-blueprint.md) needs to include an [object property](../../../define-your-data-model/setup-blueprint/properties/object.md) to store the metadata. The default identifier this parameter sends data to is `gitopsMetadata`.
+附加信息会以 JSON 对象属性的形式报告给 GitOps 托管实体。为了查看这些信息，您的[blueprint](../../../define-your-data-model/setup-blueprint/setup-blueprint.md) 需要包含一个[object property](../../../define-your-data-model/setup-blueprint/properties/object.md) 来存储元数据。该参数发送数据的默认标识符是 `gitopsMetadata`。
 
-- Default value: `true` (enrich entities with GitOps metadata)
-- Use case: use `true` if you want the GitHub app to enrich the Port entities managed by GitOps with additional JSON metadata.
-  - Use the `gitopsMetadataProperty` to change the identifier of the `object` property, according to your blueprint schema definition (default property identifier: `gitopsMetadata`).
+* 默认值: `true`(用 GitOps 元数据丰富实体)
+* 用例: 如果希望 GitHub 应用程序用额外的 JSON 元数据来丰富由 GitOps 管理的 Port 实体，请使用 `true`。
+    - 根据蓝图模式定义(默认属性标识符: `gitopsMetadata`)，被引用`gitopsMetadataProperty`可更改`object`属性的标识符。
 
-**Configuration example**
+**配置示例**
 
 ```yaml showLineNumbers
 enrichEntitiesWithGitopsMetadata: true

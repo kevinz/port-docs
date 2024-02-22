@@ -1,14 +1,16 @@
 ---
-title: User Inputs
+
+title: 用户输入
+
 ---
 
 import DocCardList from '@theme/DocCardList';
 
-# User Inputs
+# 用户输入
 
-Each action has a `userInputs` section in its definition. In this section, you can define all of the user inputs you want your developers and users to fill when invoking the action.
+每个操作的定义中都有一个 "userInputs "部分，在这部分中，您可以定义您希望开发人员和用户在调用操作时填写的所有用户输入信息。
 
-## Structure
+## 结构
 
 ```json showLineNumbers
 {
@@ -24,7 +26,8 @@ Each action has a `userInputs` section in its definition. In this section, you c
 }
 ```
 
-The different components that make up a basic user input definition are listed in the following table:
+下表列出了构成基本用户输入定义的不同组件: 
+
 
 | Field         | Description                                                                                                                                                                                             |
 | ------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
@@ -34,19 +37,20 @@ The different components that make up a basic user input definition are listed i
 | `description` | Description of the input.<br /> This value is visible to users when hovering on the info icon in the UI. It provides detailed information about the use of a specific input or the way it will be used. |
 | `default`     | Default value for this input in case the self-service action will be executed without explicitly providing a value.                                                                                     |
 
-:::tip property structure
-The name of the input is the key of the input object. For example, in the code block above, the name of the input is `myInput`
 
-Note that all of the [properties](../../../build-your-software-catalog/define-your-data-model/setup-blueprint/properties/properties.md#supported-properties) available for Port blueprints can also be used as user inputs, which is why they follow the same structure.
+:::tip  属性结构 输入名称是输入对象的键。 例如，在上面的代码块中，输入名称是 `myInput` 。
+
+请注意，所有可用于 Port 蓝图的[properties](../../../build-your-software-catalog/define-your-data-model/setup-blueprint/properties/properties.md#supported-properties) 也可被用作用户输入，这就是为什么它们遵循相同的结构。
+
 :::
 
-## Supported user inputs
+## 支持的用户输入
 
 <DocCardList />
 
-## Ordering user inputs
+## 排序用户输入
 
-You can define the order in which the user inputs will be displayed in the UI by using the `order` field. This field is an array of the user input names.
+您可以使用 `order` 字段定义用户界面中显示用户输入的顺序。 该字段是一个包含用户输入名称的数组。
 
 ```json showLineNumbers
 {

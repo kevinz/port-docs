@@ -1,31 +1,33 @@
 ---
+
 sidebar_position: 20
-description: Yaml is a data type used to save object definitions in YAML
+description: Yaml 是一种数据类型，被引用来保存 YAML 中的对象定义
+
 ---
 
-import ApiRef from "../../../../api-reference/\_learn_more_reference.mdx"
+import ApiRef from "../../../../api-reference/_learn_more_reference.mdx"
 
 import Tabs from "@theme/Tabs"
 import TabItem from "@theme/TabItem"
 
 # Yaml
 
-Yaml is a data type used to save object definitions in YAML.
+Yaml 是一种数据类型，被引用来保存 YAML 中的对象定义。
 
-## 💡 Common yaml usage
+## 💡 常见的 yaml Usage
 
-The yaml property type can be used to store any key/value based data, for example:
+yaml 属性类型可被用来存储任何基于 key/value 的数据，例如: 
 
-- Configurations;
-- Helm charts;
-- Dictionaries/Hash maps;
-- Manifests;
-- `values.yml`;
-- etc.
+* 配置；
+* Helm 图表；
+* 字典/哈希图
+* 配置清单；
+* `values.yml`；
+* 等。
 
-In this [live demo](https://demo.getport.io/service_catalog) example, we can see the `Helm Chart` yaml property. 🎬
+在这个[live demo](https://demo.getport.io/service_catalog) 示例中，我们可以看到 `Helm Chart` yaml 属性。 🎬
 
-## API definition
+## 应用程序接口定义
 
 <Tabs groupId="api-definition" queryString defaultValue="basic" values={[
 {label: "Basic", value: "basic"},
@@ -73,7 +75,7 @@ In this [live demo](https://demo.getport.io/service_catalog) example, we can see
 
 <ApiRef />
 
-## Terraform definition
+## Terraform 定义
 
 <Tabs groupId="tf-definition" queryString defaultValue="basic" values={[
 {label: "Basic", value: "basic"},
@@ -125,7 +127,7 @@ resource "port_blueprint" "myBlueprint" {
 </TabItem>
 </Tabs>
 
-## Pulumi definition
+## Pulumi 的定义
 
 <Tabs groupId="pulumi-definition" queryString defaultValue="basic" values={[
 {label: "Basic", value: "basic"},
@@ -229,31 +231,31 @@ exports.title = entity.title;
 package main
 
 import (
-	"github.com/port-labs/pulumi-port/sdk/go/port"
-	"github.com/pulumi/pulumi/sdk/v3/go/pulumi"
+    "github.com/port-labs/pulumi-port/sdk/go/port"
+    "github.com/pulumi/pulumi/sdk/v3/go/pulumi"
 )
 
 func main() {
-	pulumi.Run(func(ctx *pulumi.Context) error {
-		blueprint, err := port.NewBlueprint(ctx, "myBlueprint", &port.BlueprintArgs{
-			Identifier: pulumi.String("myBlueprint"),
-			Title:      pulumi.String("My Blueprint"),
+    pulumi.Run(func(ctx *pulumi.Context) error {
+    	blueprint, err := port.NewBlueprint(ctx, "myBlueprint", &port.BlueprintArgs{
+    		Identifier: pulumi.String("myBlueprint"),
+    		Title:      pulumi.String("My Blueprint"),
       // highlight-start
-			Properties: port.BlueprintPropertiesArgs{
-				"myYAMLProp": port.BlueprintPropertiesStringPropsArgs{
-					Title:    pulumi.String("My yaml"),
-					Required: pulumi.Bool(false),
-					Format:   pulumi.String("yaml"),
-				},
-			},
+    		Properties: port.BlueprintPropertiesArgs{
+    			"myYAMLProp": port.BlueprintPropertiesStringPropsArgs{
+    				Title:    pulumi.String("My yaml"),
+    				Required: pulumi.Bool(false),
+    				Format:   pulumi.String("yaml"),
+    			},
+    		},
       // highlight-end
-		})
-		ctx.Export("blueprint", blueprint.Title)
-		if err != nil {
-			return err
-		}
-		return nil
-	})
+    	})
+    	ctx.Export("blueprint", blueprint.Title)
+    	if err != nil {
+    		return err
+    	}
+    	return nil
+    })
 }
 ```
 

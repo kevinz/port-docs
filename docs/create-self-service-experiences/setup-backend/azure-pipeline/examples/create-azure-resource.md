@@ -1,38 +1,38 @@
 ---
+
 sidebar_position: 3
+
 ---
 
 import PortTooltip from "/src/components/tooltip/tooltip.jsx";
 
-# Create Azure Resource with Terraform
+# 使用 Terraform 创建 Azure 资源
 
-In the following guide, you are going to build a self-service action in Port that executes an [Azure pipeline](/create-self-service-experiences/setup-backend/azure-pipeline/azure-pipeline.md) to deploy a [storage account](https://learn.microsoft.com/en-us/azure/storage/common/storage-account-overview) in Azure using Terraform templates.
+在以下指南中，您将在 Port 中构建一个自助操作，执行[Azure pipeline](/create-self-service-experiences/setup-backend/azure-pipeline/azure-pipeline.md) ，使用 Terraform 模板在 Azure 中部署[storage account](https://learn.microsoft.com/en-us/azure/storage/common/storage-account-overview) 。
 
+## 先决条件
 
-## Prerequisites
+* 您需要[Port credentials](/build-your-software-catalog/sync-data-to-catalog/api/api.md#find-your-port-credentials) 来创建操作。
+* 您需要您的 Azure DevOps 组织。
+* 您需要在 Azure Pipelines yaml 中配置的[webhook](/create-self-service-experiences/setup-backend/azure-pipeline/#define-incoming-webhook-in-azure) 的名称。
 
-- You will need your [Port credentials](/build-your-software-catalog/sync-data-to-catalog/api/api.md#find-your-port-credentials) to create the action.
-- You will need your Azure DevOps organization.
-- You will need the name of the [webhook](/create-self-service-experiences/setup-backend/azure-pipeline/#define-incoming-webhook-in-azure) that you configured in your Azure pipelines yaml.
+## 示例 - 创建存储账户
 
-## Example - creating a storage account
+请按照以下步骤开始操作: 
 
-Follow these steps to get started:
-
-1. Create the following as variables in your Azure Devops project:
-    1. Create the Port credentials with the group id `port-credentials`.
-        1. `PORT_CLIENT_ID` - Port Client ID [learn more](/build-your-software-catalog/sync-data-to-catalog/api/#get-api-token).
-        2. `PORT_CLIENT_SECRET` - Port Client Secret [learn more](/build-your-software-catalog/sync-data-to-catalog/api/#get-api-token).
-    2. Create the Azure Cloud credentials with id `azure-service-principal`.
-        :::tip
-        Follow this [guide](https://learn.microsoft.com/en-us/azure/developer/terraform/get-started-cloud-shell-bash?tabs=bash#create-a-service-principal) to create a service principal in order to get the Azure credentials.
-        :::
-        1. `ARM_CLIENT_ID` - Azure Client ID (APP ID) of the application.
-        2. `ARM_CLIENT_SECRET` - Azure Client Secret (Password) of the application.
-        3. `ARM_SUBSCRIPTION_ID` - Azure Subscription ID.
-        4. `ARM_TENANT_ID` - The Azure [Tenant ID](https://learn.microsoft.com/en-us/azure/azure-portal/get-subscription-tenant-id).
-
-2. Create a Port <PortTooltip id="blueprint">blueprint</PortTooltip> with the following JSON definition:
+1. 在 Azure Devops 项目中创建以下变量: 
+    1.使用组 id `port-credentials` 创建Port凭证。
+        1. `PORT_CLIENT_ID` - Port客户端 ID[learn more](/build-your-software-catalog/sync-data-to-catalog/api/#get-api-token) 。
+        2. `PORT_CLIENT_SECRET` - Port客户端secret[learn more](/build-your-software-catalog/sync-data-to-catalog/api/#get-api-token) 。
+    2.创建 Azure 云凭证，id 为 `azure-service-principal`。
+     提示
+     请按照此[guide](https://learn.microsoft.com/en-us/azure/developer/terraform/get-started-cloud-shell-bash?tabs=bash#create-a-service-principal) 创建服务 principal，以便获取 Azure 凭据。
+     :::
+        1. `ARM_CLIENT_ID` - 应用程序的 Azure 客户 ID(APP ID)。
+        2. `ARM_CLIENT_SECRET` - 应用程序的 Azure 客户端secret(密码)。
+        3. `ARM_SUBSCRIPTION_ID` - 应用程序的 Azure 订阅 ID。
+        4. `ARM_TENANT_ID` - Azure[Tenant ID](https://learn.microsoft.com/en-us/azure/azure-portal/get-subscription-tenant-id) 。
+2.使用以下 JSON 定义创建 Port<PortTooltip id="blueprint">蓝图</PortTooltip>: 
 
 <details>
    <summary>Port Azure Storage Account Blueprint</summary>
@@ -79,7 +79,7 @@ Follow these steps to get started:
 
   </details>
 
-3. Create a Port action in the [self-service page](https://app.getport.io/self-serve) or with the following JSON definition:
+3.在[self-service page](https://app.getport.io/self-serve) 或使用以下 JSON 定义创建 Port 操作: 
 
 <details>
 
@@ -87,8 +87,8 @@ Follow these steps to get started:
    :::tip
 - `<AZURE-DEVOPS-ORG>` - your Azure DevOps organization name, can be found in your Azure DevOps URL: `https://dev.azure.com/{AZURE-DEVOPS-ORG}`;
 - `<AZURE-DEVOPS-WEBHOOK-NAME>` - the name you gave to the webhook resource in the Azure yaml pipeline file.
-:::
 
+:::
 
 ```json showLineNumbers
 {
@@ -131,14 +131,13 @@ Follow these steps to get started:
 
 </details>
 
-4. Create the following Terraform templates in a `terraform` folder at the root of your GitHub repository:
-    :::tip
-    Fork our [example repository](https://github.com/port-labs/pipelines-terraform-azure) to get started.
-    :::
-
-    1. `main.tf` - This file will contain the resource blocks which define the Storage Account to be created in the Azure cloud and the entity to be created in Port.
-    2. `variables.tf` – This file will contain the variable declarations that will be used in the resource blocks e.g. the Port credentials and Port run id.
-    3. `output.tf` – This file will contain the URL of the Storage Account that needs to be generated on successful completion of an “apply” operation. This URL will be used in the `endpoint` property when creating the Port entity.
+4.在 GitHub 仓库根目录下的 `terraform` 文件夹中创建以下 Terraform 模板: 
+ :::提示
+ 分叉我们的[example repository](https://github.com/port-labs/pipelines-terraform-azure) 以开始使用。
+ :::
+    1. `main.tf` - 该文件将包含定义要在 Azure 云中创建的存储帐户和要在 Port 中创建的实体的资源块。
+    2. `variables.tf` - 此文件将包含在资源块中被引用的变量声明式，例如 Port 凭据和 Port 运行 ID。
+    3. `output.tf` - 该文件将包含 "应用 "操作成功完成后生成的存储帐户的 URL。该 URL 将在创建 Port 实体时被引用到 `endpoint` 属性中。
 
 <details>
   <summary><b>main.tf</b></summary>
@@ -200,7 +199,7 @@ resource "port_entity" "azure_storage_account" {
 </details>
 
 <details>
-  
+
   <summary><b>variables.tf</b></summary>
   :::note
   Replace the default `resource_group_name` with a resource group from your Azure account. Check this [guide](https://learn.microsoft.com/en-us/azure/azure-resource-manager/management/manage-resource-groups-portal) to find your resource groups. You may also wish to set the default values of other variables.
@@ -245,7 +244,7 @@ variable "port_client_secret" {
 
 <details>
 <summary><b>output.tf</b></summary>
-  
+
 ```hcl showLineNumbers title="output.tf"
 output "endpoint_url" {
     value = azurerm_storage_account.storage_account.primary_web_endpoint
@@ -254,7 +253,7 @@ output "endpoint_url" {
 
 </details>
 
-5. Create an Azure pipeline:
+5.创建 Azure Pipelines: 
 
 <details>
 
@@ -287,13 +286,13 @@ jobs:
   steps:
   - checkout: self
     displayName: 'Checkout repository'
-  
+
   - bash: |
       startedAt=$(date -u +%Y-%m-%dT%H:%M:%S.000Z)
       echo "##vso[task.setvariable variable=startedAt]$startedAt"
       echo "Started at $startedAt"
     displayName: 'Set Start Time'
-  
+
   - script: |
       sudo apt-get update
       sudo apt-get install -y jq
@@ -323,7 +322,7 @@ jobs:
       tf_plan_and_apply() {
           local plan_type=$1
           local target_option=""
-          
+
           if [ "$plan_type" == "azure" ]; then
             target_option="-target=azurerm_storage_account.storage_account"
           fi
@@ -367,4 +366,4 @@ jobs:
 
 </details>
 
-6. Trigger the action from the [self-service](https://app.getport.io/self-serve) page of your Port application.
+6.从 Port 应用程序的[self-service](https://app.getport.io/self-serve) 页面触发操作。

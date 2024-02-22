@@ -1,13 +1,15 @@
 ---
+
 sidebar_position: 1
+
 ---
 
 import Tabs from "@theme/Tabs"
 import TabItem from "@theme/TabItem"
 
-# Examples
+# 示例
 
-The following examples provide a foundation to begin using the search route. Remember that you can always change the content of the `rules` array to the search query that fits your search.
+以下示例为开始使用搜索路由奠定了基础。 请记住，您可以随时更改 `rules` 数组的内容，使其成为适合您的搜索查询。
 
 <Tabs groupId="code-examples" defaultValue="python" values={[
 {label: "Python", value: "python"},
@@ -145,9 +147,9 @@ access_token=$(curl --location --request POST 'https://api.getport.io/v1/auth/ac
 # The token will be available in the access_token variable
 
 curl --location --request POST 'https://api.getport.io/v1/entities/search?attach_title_to_relation=true&exclude_calculated_properties=false' \
-	--header "Authorization: Bearer $access_token" \
-	--header 'Content-Type: application/json' \
-	--data-raw '{
+    --header "Authorization: Bearer $access_token" \
+    --header 'Content-Type: application/json' \
+    --data-raw '{
     "combinator": "or",
     "rules": [
         {
@@ -162,13 +164,12 @@ curl --location --request POST 'https://api.getport.io/v1/entities/search?attach
         }
     ]
 }'
-
 ```
 
 </TabItem>
 
 </Tabs>
 
-## Using catalog search in your workflows
+##在工作流程中使用目录搜索
 
-The information stored in Port can be used as part of your workflows, automation and CI/CD processes. Take a look at our [service locking](./service-locking.md) guide for a practical example about integrating Port's search with your CI/CD.
+存储在 Port 中的信息可被用作工作流、自动化和 CI/CD 流程的一部分。请参阅我们的[service locking](./service-locking.md) 指南，了解有关将 Port 的搜索与 CI/CD 集成的实用示例。

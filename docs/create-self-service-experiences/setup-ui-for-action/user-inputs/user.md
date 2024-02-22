@@ -1,29 +1,31 @@
 ---
+
 sidebar_position: 8
-description: User is an input used to reference users that exist in Port
+description: 用户User 是一个输入，用于引用存在于 Port 中的用户。
+
 ---
 
-import ApiRef from "../../../api-reference/\_learn_more_reference.mdx"
+import ApiRef from "../../../api-reference/_learn_more_reference.mdx"
 
 import Tabs from "@theme/Tabs"
 import TabItem from "@theme/TabItem"
 
-# User
+# 用户
 
-User is an input used to reference users that exist in Port.
+User 是用于引用 Port 中存在的用户的输入。
 
-## 💡 Common user usage
+## 💡 用户常用 Usage
 
-The user input type can be used to reference any user that exists in Port, for example:
+例如，用户输入类型可被用来引用 Port 中存在的任何用户: 
 
-- The code owners;
-- The current on-call;
-- The lead maintainer;
-- etc.
+* Owners；
+* 当前值班人员
+* 主要维护者；
+* 等等。
 
-In the [live demo](https://demo.getport.io/self-serve) self-service hub page, we can see the **change on-call** action whose `On-Call` input is a user input. 🎬
+在[live demo](https://demo.getport.io/self-serve) 自助服务中枢页面，我们可以看到**更改待命**操作，其 "待命 "输入是用户输入。
 
-## API definition
+## 应用程序接口定义
 
 <Tabs groupId="api-definition" queryString defaultValue="basic" values={[
 {label: "Basic", value: "basic"},
@@ -72,7 +74,7 @@ In the [live demo](https://demo.getport.io/self-serve) self-service hub page, we
 
 <ApiRef />
 
-## Terraform definition
+## Terraform 定义
 
 <Tabs groupId="tf-definition" queryString defaultValue="basic" values={[
 {label: "Basic", value: "basic"},
@@ -104,7 +106,6 @@ resource "port_action" "myAction" {
 <TabItem value="array">
 
 ```hcl showLineNumbers
-
 resource "port_action" "myAction" {
   # ...action properties
   # highlight-start

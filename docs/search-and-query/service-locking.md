@@ -1,38 +1,40 @@
 ---
+
 sidebar_position: 2
+
 ---
 
-# Service locking
+# 服务锁定
 
-Using Port's search capabilities, it is very simple to implement convenient service locking for services in your different development and production environments.
+使用 Port 的搜索功能，可以非常简单地为不同开发和生产环境中的服务实现便捷的服务锁定。
 
-:::tip
-All relevant files and resources for this guide are available [**HERE**](https://github.com/port-labs/resource-catalog-microservice-repo/tree/docs-version)
+:::tip 本指南的所有相关文件和资源均可获取[**HERE**](https://github.com/port-labs/resource-catalog-microservice-repo/tree/docs-version)
+
 :::
 
-## Goal
+## 目标
 
-In this guide you will implement a service locking mechanism using Port's [GitHub Action](/build-your-software-catalog/sync-data-to-catalog/api/ci-cd/github-workflow/github-workflow.md).
+在本指南中，您将使用 Port's[GitHub Action](/build-your-software-catalog/sync-data-to-catalog/api/ci-cd/github-workflow/github-workflow.md) 实现服务锁定机制。
 
-The environment we're going to use includes 2 [Blueprints](/build-your-software-catalog/define-your-data-model/setup-blueprint/setup-blueprint.md) with a [Relation](/build-your-software-catalog/define-your-data-model/relate-blueprints/relate-blueprints.md) between them:
+我们要引用的环境包括 2 个[Blueprints](/build-your-software-catalog/define-your-data-model/setup-blueprint/setup-blueprint.md) ，它们之间有一个[Relation](/build-your-software-catalog/define-your-data-model/relate-blueprints/relate-blueprints.md) : 
 
 ![Service locking layout](/img/complete-use-cases/service-locking/service-locking-layout.png)
 
-Let's go over the different Blueprints shown above and how we'll create [Entities](/build-your-software-catalog/sync-data-to-catalog/sync-data-to-catalog.md#entity-json-structure) for each one of them:
+让我们来看看上面显示的不同蓝图，以及我们如何为每个蓝图创建[Entities](/build-your-software-catalog/sync-data-to-catalog/sync-data-to-catalog.md#entity-json-structure) : 
 
-- **Deployment Config** - a deployment config is a representation of the current “live” version of a service running in a specific environment. It will include references to the service, environment, and deployment, as well as real-time information such as status, uptime, and any other relevant metadata.
-  - In this example deployment configs will be reported manually.
-- **Deployment** - a deployment could be described as an object representing a CD job. It includes the version of the deployed service and a link to the job itself. Unlike other objects, the deployment is an immutable item in the software catalog. It is important to keep it immutable to ensure the catalog remains reliable.
-  - In this example deployments will be reported using Port's GitHub Action as part of the deployment process.
+* **部署配置** - 部署配置是在特定环境中运行的服务的当前 "实时 "版本的表示。它将包括对服务、环境和部署的引用，以及状态、正常运行时间等实时信息和任何其他相关元数据。
+    - 在本示例中，将手动报告部署配置。
+* **部署** - 部署可描述为代表 CD 作业的对象。它包括部署服务的版本和作业本身的链接。与其他对象不同，部署是软件目录中不可变的项目。保持其不可变性对确保目录的可靠性非常重要。
+    - 在本示例中，部署将被引用 Port 的 GitHub Action 作为部署流程的一部分。
 
-Now that you know the end result of this guide, let's start by creating the Blueprints and Relations.
+既然您已经知道了本指南的最终结果，那就让我们从创建蓝图和关系开始吧。
 
-## Blueprints and Relations
+## 蓝图与关系
 
-Below you can find the JSON for all of the Blueprints you require for the following guide:
+您可以在下面找到以下指南所需的所有蓝图的 JSON: 
 
-:::note
-The Blueprint JSON provided below already includes the Relations between the different Blueprints, so please create them in the order that they appear.
+:::note 下面提供的蓝图 JSON 已经包含了不同蓝图之间的关系，因此请按照它们出现的顺序创建。
+
 :::
 
 <details>
@@ -108,21 +110,21 @@ The Blueprint JSON provided below already includes the Relations between the dif
 
 </details>
 
-:::note
-Our deployment config Blueprint has a property called `locked` with a boolean value. We will use the value of that field to determine whether new deployments of the service are allowed.
+:::note 我们的部署配置 Blueprint 有一个名为 "locked "的属性，其值为布尔值。 我们将使用该字段的值来决定是否允许对服务进行新的部署。
+
 :::
 
-Now that you have your Blueprints created, connected and ready to go, time to create your Entities:
+现在你已经创建了蓝图，连接好蓝图并准备就绪，是时候创建实体了: 
 
-## Entities
+## 实体
 
-### Deployment Config - Port API
+### 部署配置 - Port API
 
-A deployment config is used to represent a service deployment in a specific environment in your infrastructure. A deployment config has multiple `deployments` tied to it, each representing a new version of the deployed code of the matching service, in its matching environment.
+部署配置用于表示在基础架构的特定环境中部署服务。 一个部署配置有多个与之绑定的 "部署"，每个 "部署 "代表匹配服务在其匹配环境中部署代码的新版本。
 
-A deployment config is also just what it sounds like - a `config`, which means it is a good place to store runtime variables and values, links to logging, tracing, or dashboard tools, and more static data that does not change between deployments.
+部署配置 "听起来就像 "配置"，这意味着它是存储运行时变量和 Values、日志、跟踪或仪表盘工具链接以及在不同部署之间不会更改的静态数据的好地方。
 
-Let's manually create a deployment config Entity for the `Notification Service` service in the Production environment:
+让我们为生产环境中的 "通知服务 "服务手动创建一个部署配置实体: 
 
 ```json showLineNumbers
 {
@@ -135,7 +137,7 @@ Let's manually create a deployment config Entity for the `Notification Service` 
 }
 ```
 
-Below is a `python` code snippet to create this deployment config:
+下面是创建此部署配置的 "python "代码片段: 
 
 <details>
 <summary>Click here to see the code</summary>
@@ -169,7 +171,6 @@ entity = {
     "relations": {}
 }
 
-
 response = requests.post(f'{API_URL}/blueprints/{target_blueprint}/entities', json=entity, headers=headers)
 
 print(response.json())
@@ -177,27 +178,27 @@ print(response.json())
 
 </details>
 
-Now let's use the deployment config Entity to lock the `Notification Service` for new deployments.
+现在，让我们使用部署配置实体为新部署锁定 "通知服务"。
 
-## Reading the `locked` field during deployment
+## 在部署过程中读取 `locked` 字段
 
-In order to use the `locked` field on your deployment config, you will use Port's [GitHub Action](/build-your-software-catalog/sync-data-to-catalog/api/ci-cd/github-workflow/github-workflow.md).
+为了在部署配置中使用 `locked` 字段，您需要使用 Port's[GitHub Action](/build-your-software-catalog/sync-data-to-catalog/api/ci-cd/github-workflow/github-workflow.md) 。
 
-Here is the deployment check flow:
+以下是部署检查流程: 
 
-1. New code is pushed to the `main` branch of the `Notification Service` Git repository;
-2. A [GitHub workflow](https://docs.github.com/en/actions/using-workflows) is triggered by the push event;
-3. The Github workflow calls a [callable workflow](https://docs.github.com/en/actions/using-workflows/reusing-workflows) with parameters matching the `locked` field check of the `Notification Service`;
-4. If the value of the `locked` field is `true`, the deployment check will fail, with an error message indicating that the service is locked, and no deployment will be attempted;
-5. If the value of the `locked` field is `false`, the deployment check will succeed and a new deployment Entity will be created in Port;
+1. 新代码会被推送到 "通知服务 "Git 代码库的 "主 "分支；
+2. 推送事件会触发[GitHub workflow](https://docs.github.com/en/actions/using-workflows) ；
+3. Github 工作流调用[callable workflow](https://docs.github.com/en/actions/using-workflows/reusing-workflows) ，其参数与 `Notification Service` 的 `locked` 字段检查相匹配；
+4. 如果 `locked` 字段的值为 `true`，则部署检查将失败，并显示错误信息，说明服务已锁定，且不会尝试部署；
+5. 如果 `locked` 字段的值为 `false`，部署检查将成功，并在 Port 中创建一个新的部署实体；
 
-Let's go ahead and create a [GitHub workflow](https://docs.github.com/en/actions/using-workflows) file in a GitHub repository meant for the `Notification Service` microservice:
+让我们在 GitHub 仓库中为 "通知服务 "微服务创建一个[GitHub workflow](https://docs.github.com/en/actions/using-workflows) 文件: 
 
-- Create a GitHub repository (or use an existing one);
-- Create a `.github` directory;
-  - Inside it create a `workflows` directory.
+* 创建 GitHub 仓库(或被引用现有仓库)；
+* 创建一个 `.github` 目录；
+    - 在其中创建一个 `workflows` 目录。
 
-Inside the `/.github/workflows` directory create a file called `check-service-lock.yml` with the following content:
+在 `/.github/workflows` 目录中创建一个名为 `check-service-lock.yml` 的文件，内容如下: 
 
 ```yml showLineNumbers
 name: Check Service Lock
@@ -247,9 +248,9 @@ jobs:
           exit 1
 ```
 
-The workflow in `check-service-lock.yml` is a [callable workflow](https://docs.github.com/en/actions/using-workflows/reusing-workflows), you can use it in any of your deployment workflows using parameters provided in the _calling_ workflow, thus saving you the need to duplicate the same workflow logic over and over.
+`check-service-lock.yml` 中的工作流是一个[callable workflow](https://docs.github.com/en/actions/using-workflows/reusing-workflows) ，您可以使用 _calling_ 工作流中提供的参数将其用于任何部署工作流中，从而省去重复相同工作流逻辑的麻烦。
 
-Inside the `/.github/workflows` directory create a file called `deploy-notification-service.yml` with the following content:
+在 `/.github/workflows` 目录中创建一个名为 `deploy-notification-service.yml` 的文件，内容如下: 
 
 ```yml showLineNumbers
 name: Report Deployment
@@ -297,33 +298,33 @@ jobs:
             }
 ```
 
-:::tip
-For security reasons it is recommended to save the `CLIENT_ID` and `CLIENT_SECRET` as [GitHub Secrets](https://docs.github.com/en/actions/security-guides/encrypted-secrets), and access them as shown in the example above.
+:::tip 出于安全考虑，建议将 `CLIENT_ID` 和 `CLIENT_SECRET` 保存为[GitHub Secrets](https://docs.github.com/en/actions/security-guides/encrypted-secrets) ，并按上例所示进行访问。
+
 :::
 
-The workflow in `deploy-notification-service.yml` is triggered every time a push is made to the `main` branch of the repository.
+每次向版本库的 `main` 分支推送时，都会触发 `deploy-notification-service.yml` 中的工作流程。
 
-The workflows has 2 configured jobs:
+工作流程中有 2 项配置工作: 
 
-- check-lock-status;
-- report-deployment.
+* 检查锁定状态；
+* 报告部署。
 
-the `report-deployment` job is configured with a `needs` key whose value is `[check-lock-status]`, meaning the `report-deployment` step will only start when `check-lock-status` has finished.
+report-deployment "工作配置了一个 "needs "键，其值为"[check-lock-status]"，这意味着只有当 "check-lock-status "完成后，"report-deployment "步骤才会启动。
 
-If you try to push code to your repository when the deployment config `locked` field is set to `true`, the deployment will stop:
+如果在部署配置的 "锁定 "字段设置为 "true "时尝试向版本库推送代码，部署就会停止: 
 
 ![Workflow fail graph](/img/complete-use-cases/service-locking/workflow-fail-graph.png)
 
-When you will look at the step that failed, you will see that the failure is due to the value of the `locked` field:
+当你查看失败的步骤时，你会发现失败是由于 `locked` 字段的值造成的: 
 
 ![Lock check step](/img/complete-use-cases/service-locking/workflow-lock-message.png)
 
-If you set the value of the `locked` field to `false`, the workflow will perform the deployment without any issue:
+如果将 "locked "字段的值设置为 "false"，工作流程将顺利执行部署: 
 
 ![Workflow success graph](/img/complete-use-cases/service-locking/workflow-success-graph.png)
 
-## Summary
+## 摘要
 
-This was just a single example of Port's GitHub Action value in your CI/CD pipelines. By querying and creating Entities during your CI process, you can make your CI jobs even more dynamic and responsive, without having to edit `yml` files and push new code to your repository.
+这只是 Pipelines 的 GitHub Action 在您的 CI/CD 管道中的价值的一个例子。 通过在 CI 过程中查询和创建 Entities，您可以使 CI 作业更加动态和灵敏，而无需编辑 `yml` 文件并向您的版本库推送新代码。
 
-If you're using a different CI/CD provider, be sure to checkout the rest of our [CI/CD integrations](/build-your-software-catalog/sync-data-to-catalog/api/ci-cd/ci-cd.md) to find the integration that fits your use-case.
+如果您正在使用不同的 CI/CD Provider，请务必查看我们的其他[CI/CD integrations](/build-your-software-catalog/sync-data-to-catalog/api/ci-cd/ci-cd.md) ，以找到适合您使用情况的集成。

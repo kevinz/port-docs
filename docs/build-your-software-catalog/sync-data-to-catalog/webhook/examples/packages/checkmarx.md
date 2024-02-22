@@ -1,21 +1,23 @@
 ---
+
 sidebar_position: 9
-description: Ingest Checkmarx KICS scan into your catalog
+description: 将 Checkmarx KICS 扫描结果摄入目录
+
 ---
 
-import PythonScript from './resources/checkmarx/\_example_python_script.mdx'
-import CheckmarxBlueprint from './resources/checkmarx/\_example_checkmarx_blueprint.mdx'
-import CheckmarxWebhookConfig from './resources/checkmarx/\_example_checkmarx_webhook_config.mdx'
+import PythonScript from './resources/checkmarx/_example_python_script.mdx'
+import CheckmarxBlueprint from './resources/checkmarx/_example_checkmarx_blueprint.mdx'
+import CheckmarxWebhookConfig from './resources/checkmarx/_example_checkmarx_webhook_config.mdx'
 
 # Checkmarx KICS
 
-In this example, you will create a `checkmarxScan` blueprint that ingests all scan results in your Checkmarx KICS file using a combination of Port's [API](../../../api/api.md) and [webhook functionality](../../webhook.md).
+在本例中，您将创建一个 `checkmarxScan` 蓝图，该蓝图将使用 Port's[API](../../../api/api.md) 和[webhook functionality](../../webhook.md) 的组合在 Checkmarx KICS 文件中引用所有扫描结果。
 
-To ingest the scan results to Port, use a script that sends information about the scans according to the webhook configuration.
+要将扫描结果引用到 Port，可使用脚本根据 webhook 配置发送扫描信息。
 
-## Prerequisites
+## 先决条件
 
-Create the following blueprint definition and webhook configuration:
+创建以下蓝图定义和 webhook 配置: 
 
 <details>
 <summary>Checkmarx KICS blueprint</summary>
@@ -28,9 +30,9 @@ Create the following blueprint definition and webhook configuration:
 
 </details>
 
-## Working with Port's API and Python script
+## 使用 Port 的 API 和 Python 脚本
 
-Here is an example snippet showing how to integrate Port's API and webhook with your existing pipelines using Python:
+下面的示例片段展示了如何使用 Python 将 Port 的 API 和 webhook 与现有的 Pipelines 集成: 
 
 <details>
 <summary>Python script example</summary>

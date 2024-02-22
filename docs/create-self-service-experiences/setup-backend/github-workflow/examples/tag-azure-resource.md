@@ -1,41 +1,45 @@
 ---
+
 sidebar_position: 3
+
 ---
+
 import Tabs from "@theme/Tabs"
 import TabItem from "@theme/TabItem"
 import PortTooltip from "/src/components/tooltip/tooltip.jsx";
 
-# Add Tags to Azure Resource
+# 为 Azure 资源添加标签
 
-In the following guide, you are going to create a self-service action in Port that executes a [GitHub workflow](/create-self-service-experiences/setup-backend/github-workflow/github-workflow.md) to add tags to a [storage account](https://learn.microsoft.com/en-us/azure/storage/common/storage-account-overview).
+在以下指南中，您将在 Port 中创建一个自助操作，执行[GitHub workflow](/create-self-service-experiences/setup-backend/github-workflow/github-workflow.md) ，为[storage account](https://learn.microsoft.com/en-us/azure/storage/common/storage-account-overview) 添加标记。
 
-## Prerequisites
-1. This guide assumes that you already have a blueprint for an Azure Storage account with some resources. If you haven't done so yet, create the blueprint by referring to this [guide](/create-self-service-experiences/setup-backend/github-workflow/examples/create-azure-resource.md) first.
-2. Prior knowledge of Port Actions is essential for following this guide. Learn more about them [here](/create-self-service-experiences/setup-ui-for-action/).
-3. A GitHub repository to contain your action resources i.e. the github workflow file.
+## 先决条件
 
+1. 本指南假定你已经拥有一个 Azure 存储账户的蓝图和一些资源。如果尚未创建蓝图，请首先参考本[guide](/create-self-service-experiences/setup-backend/github-workflow/examples/create-azure-resource.md) 。
+2. 事先了解 Port Actions 对于学习本指南至关重要。了解有关它们的更多信息[here](/create-self-service-experiences/setup-ui-for-action/) 。
+3. 一个 GitHub 仓库，其中包含您的操作资源，即 github 工作流文件。
 
-## Example - adding tags to a storage account
+## 示例--为存储账户添加标签
 
-Follow these steps to get started:
+请按照以下步骤开始操作: 
 
-1. Create the following GitHub Action secrets:
-    1. Create the following Port credentials:
-        1. `PORT_CLIENT_ID` - Port Client ID [learn more](/build-your-software-catalog/sync-data-to-catalog/api/#get-api-token).
-        2. `PORT_CLIENT_SECRET` - Port Client Secret [learn more](/build-your-software-catalog/sync-data-to-catalog/api/#get-api-token).
-    2. Create the following Azure Cloud credentials:
-        :::tip
-        Follow this [guide](https://learn.microsoft.com/en-us/azure/developer/terraform/get-started-cloud-shell-bash?tabs=bash#create-a-service-principal) to create a service principal in order to get the Azure credentials.
-        :::
-        1. `ARM_CLIENT_ID` - Azure Client ID (APP ID) of the application.
-        2. `ARM_CLIENT_SECRET` - Azure Client Secret (Password) of the application.
-        3. `ARM_SUBSCRIPTION_ID` - Azure Subscription ID.
-        4. `ARM_TENANT_ID` - The Azure [Tenant ID](https://learn.microsoft.com/en-us/azure/azure-portal/get-subscription-tenant-id).
+1. 创建以下 GitHub Action secrets: 
+    1.创建以下 Port 凭据: 
+        1. `PORT_CLIENT_ID` - Port客户端 ID[learn more](/build-your-software-catalog/sync-data-to-catalog/api/#get-api-token) 。
+        2. `PORT_CLIENT_SECRET` - Port客户端secret[learn more](/build-your-software-catalog/sync-data-to-catalog/api/#get-api-token).
+    2.创建以下 Azure 云凭证: 
+     提示
+     按照此[guide](https://learn.microsoft.com/en-us/azure/developer/terraform/get-started-cloud-shell-bash?tabs=bash#create-a-service-principal) 创建服务 principal，以便获取 Azure 凭据。
+     :::
+        1. `ARM_CLIENT_ID` - 应用程序的 Azure 客户 ID(APP ID)。
+        2. `ARM_CLIENT_SECRET` - 应用程序的 Azure 客户端secret(密码)。
+        3. `ARM_SUBSCRIPTION_ID` - 应用程序的 Azure 订阅 ID。
+        4. `ARM_TENANT_ID` - Azure[Tenant ID](https://learn.microsoft.com/en-us/azure/azure-portal/get-subscription-tenant-id) 。
+
 <br />
 2. Install Port's GitHub app by clicking [here](https://github.com/apps/getport-io/installations/new).
 <br />
 
-3. Create a Port action in the [self-service page](https://app.getport.io/self-serve) or with the following JSON definition:
+3.在[self-service page](https://app.getport.io/self-serve) 或使用以下 JSON 定义创建 Port 操作: 
 
 <details>
 
@@ -43,8 +47,8 @@ Follow these steps to get started:
    :::tip
 - `<GITHUB-ORG>` - your GitHub organization or user name.
 - `<GITHUB-REPO-NAME>` - your GitHub repository name.
-:::
 
+:::
 
 ```json showLineNumbers
 {
@@ -83,17 +87,16 @@ Follow these steps to get started:
 
 <Tabs groupId="cicd-method" queryString="cicd-method">
 
-
-
-
 <TabItem value="terraform" label="Terraform">
 4. Update the following Terraform templates in the `terraform` folder at the root of your GitHub repository:
     :::tip
     Fork our [example repository](https://github.com/port-labs/pipelines-terraform-azure) to get started.
     :::
 
-    1. `main.tf` - Include a tags field within the configuration of the storage account resource.
-    2. `variables.tf` – Introduce a new variable named `resource_tags`.
+```
+1. `main.tf` - Include a tags field within the configuration of the storage account resource.
+2. `variables.tf` – Introduce a new variable named `resource_tags`.
+```
 
 <details>
   <summary><b>main.tf</b></summary>
@@ -120,7 +123,7 @@ resource "azurerm_storage_account" "storage_account" {
 </details>
 
 <details>
-  
+
   <summary><b>variables.tf</b></summary>
 
 ```hcl showLineNumbers title="variables.tf"
@@ -181,7 +184,6 @@ jobs:
         working-directory: ./terraform
         # working-directory: ./
 
-
     steps:
       - name: Checkout the repository to the runner
         uses: actions/checkout@v2
@@ -190,7 +192,7 @@ jobs:
         uses: hashicorp/setup-terraform@v2
         with:
           terraform_version: 1.6.0
-      
+
       - name: Terraform init
         id: init
         # run: terraform init 
@@ -216,7 +218,7 @@ jobs:
       - name: Terraform format
         id: fmt
         run: terraform fmt -check
-      
+
       - name: Terraform validate
         id: validate
         run: terraform validate
@@ -253,8 +255,6 @@ jobs:
           operation: PATCH_RUN
           runId: ${{fromJson(inputs.port_payload).context.runId}}
           logMessage: Added tags to ${{fromJson(inputs.port_payload).context.entity}}
-
-
 ```
 
 </details>
@@ -262,7 +262,7 @@ jobs:
 
 <TabItem value="azurecli" label="Azure CLI">
 
-4. Create a GitHub Action secret `AZURE_CREDENTIALS` with the value like below: (Refer to [Using secrets in GitHub Actions](https://github.com/Azure/login?tab=readme-ov-file#login-with-a-service-principal-secret:~:text=below%3A%20(Refer%20to-,Using%20secrets%20in%20GitHub%20Actions,-.)).)
+4.创建一个 GitHub Action secret `AZURE_CREDENTIALS`，其值如下: (请参阅[Using secrets in GitHub Actions](https://github.com/Azure/login?tab=readme-ov-file#login-with-a-service-principal-secret:~:text=below%3A%20(Refer%20to-,Using%20secrets%20in%20GitHub%20Actions,-.)%3C/keepr%3E)%3C/keepr%3E.)
 
 ```json
 AZURE_CREDENTIALS = {
@@ -273,7 +273,7 @@ AZURE_CREDENTIALS = {
 }
 ```
 
-5. Create a workflow file under `.github/workflows/tag-azure-resource.yml` with the following content:
+5.在`.github/workflows/tag-azure-resource.yml`下创建一个工作流程文件，内容如下: 
 
 <details>
 
@@ -298,19 +298,18 @@ on:
             general context (blueprint, run id, etc...)
         type: string
 
-
 jobs:
     build-and-deploy:
       runs-on: ubuntu-latest
       steps:
-  
+
       - name: Install jq
         run: sudo apt-get install jq -y
-  
+
       - uses: azure/login@v1
         with:
           creds: ${{ secrets.AZURE_CREDENTIALS }}
-  
+
       - name: Azure CLI script
         uses: azure/CLI@v1
         env: 
@@ -326,8 +325,8 @@ jobs:
             resource=$(az resource show -g ${RESOURCE_GROUP} -n ${STORAGE_NAME} --resource-type Microsoft.Storage/storageAccounts --query "id" --output tsv)
             tags=$(echo ${TAGS} | jq -r 'to_entries|map("\(.key)=\(.value|tojson)")|join(" ")')
             az tag create --resource-id $resource --tags $tags
-
 ```
+
 </details>
 
 </TabItem>

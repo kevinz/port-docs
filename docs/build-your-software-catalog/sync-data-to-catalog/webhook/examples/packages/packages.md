@@ -1,7 +1,7 @@
-# Packages
+# 包裹
 
 import DocCardList from '@theme/DocCardList';
 
-Here are some examples of how to use Port's webhook integration to ingest software packages:
+下面是一些如何使用 Port 的 webhook 集成来引用软件包的示例: 
 
 <DocCardList/>

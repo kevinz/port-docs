@@ -1,22 +1,24 @@
 ---
+
 sidebar_position: 6
-description: Email is a data type used to save Email addresses
+description: 电子邮件电子邮件是一种数据类型，被引用来保存电子邮件地址
+
 ---
 
-import ApiRef from "../../../../api-reference/\_learn_more_reference.mdx"
+import ApiRef from "../../../../api-reference/_learn_more_reference.mdx"
 
 import Tabs from "@theme/Tabs"
 import TabItem from "@theme/TabItem"
 
-# Email
+# 电子邮件
 
-Email is a data type used to save Email addresses.
+电子邮件是一种用于保存电子邮件地址的数据类型。
 
-## 💡 Common email usage
+## 💡 常用电子邮件 Usage
 
-The Email property type can be used to store any legal email address.
+电子邮件属性类型可被引用来存储任何合法的电子邮件地址。
 
-## API definition
+## 应用程序接口定义
 
 <Tabs groupId="api-definition" queryString defaultValue="basic" values={[
 {label: "Basic", value: "basic"},
@@ -87,7 +89,7 @@ The Email property type can be used to store any legal email address.
 
 <ApiRef />
 
-## Terraform definition
+## Terraform 定义
 
 <Tabs groupId="tf-definition" queryString defaultValue="basic" values={[
 {label: "Basic", value: "basic"},
@@ -167,7 +169,7 @@ resource "port_blueprint" "myBlueprint" {
 
 </Tabs>
 
-## Pulumi definition
+## Pulumi 的定义
 
 <Tabs groupId="pulumi-definition" queryString defaultValue="basic" values={[
 {label: "Basic", value: "basic"},
@@ -271,33 +273,33 @@ exports.title = entity.title;
 package main
 
 import (
-	"github.com/port-labs/pulumi-port/sdk/go/port"
-	"github.com/pulumi/pulumi/sdk/v3/go/pulumi"
+    "github.com/port-labs/pulumi-port/sdk/go/port"
+    "github.com/pulumi/pulumi/sdk/v3/go/pulumi"
 )
 
 func main() {
-	pulumi.Run(func(ctx *pulumi.Context) error {
-		blueprint, err := port.NewBlueprint(ctx, "myBlueprint", &port.BlueprintArgs{
-			Identifier: pulumi.String("myBlueprint"),
-			Title:      pulumi.String("My Blueprint"),
+    pulumi.Run(func(ctx *pulumi.Context) error {
+    	blueprint, err := port.NewBlueprint(ctx, "myBlueprint", &port.BlueprintArgs{
+    		Identifier: pulumi.String("myBlueprint"),
+    		Title:      pulumi.String("My Blueprint"),
       // highlight-start
-			Properties: port.BlueprintPropertiesArgs{
-				StringProps: port.BlueprintPropertiesStringPropsMap{
-					"myEmailProp": &port.BlueprintPropertiesStringPropsArgs{
+    		Properties: port.BlueprintPropertiesArgs{
+    			StringProps: port.BlueprintPropertiesStringPropsMap{
+    				"myEmailProp": &port.BlueprintPropertiesStringPropsArgs{
                         Title:  pulumi.String("My email"),
                         Format: pulumi.String("email"),
                         Required: pulumi.Bool(true),
                     },
                 },
-			},
+    		},
       // highlight-end
-		})
-		ctx.Export("blueprint", blueprint.Title)
-		if err != nil {
-			return err
-		}
-		return nil
-	})
+    	})
+    	ctx.Export("blueprint", blueprint.Title)
+    	if err != nil {
+    		return err
+    	}
+    	return nil
+    })
 }
 ```
 
@@ -417,44 +419,43 @@ exports.title = entity.title;
 package main
 
 import (
-	"github.com/port-labs/pulumi-port/sdk/go/port"
-	"github.com/pulumi/pulumi/sdk/v3/go/pulumi"
+    "github.com/port-labs/pulumi-port/sdk/go/port"
+    "github.com/pulumi/pulumi/sdk/v3/go/pulumi"
 )
 
 func main() {
-	pulumi.Run(func(ctx *pulumi.Context) error {
-		blueprint, err := port.NewBlueprint(ctx, "myBlueprint", &port.BlueprintArgs{
-			Identifier: pulumi.String("myBlueprint"),
-			Title:      pulumi.String("My Blueprint"),
+    pulumi.Run(func(ctx *pulumi.Context) error {
+    	blueprint, err := port.NewBlueprint(ctx, "myBlueprint", &port.BlueprintArgs{
+    		Identifier: pulumi.String("myBlueprint"),
+    		Title:      pulumi.String("My Blueprint"),
       // highlight-start
-			Properties: port.BlueprintPropertiesArgs{
-				StringProps: port.BlueprintPropertiesStringPropsMap{
-					"myEmailProp": &port.BlueprintPropertiesStringPropsArgs{
-						Title:    pulumi.String("My email"),
-						Required: pulumi.Bool(false),
-						Format:   pulumi.String("email"),
-						Enums: pulumi.StringArray{
-							pulumi.String("me@example.com"),
-							pulumi.String("other@example.com"),
-						},
-						EnumColors: pulumi.StringMap{
-							"me@example.com":    pulumi.String("red"),
-							"other@example.com": pulumi.String("green"),
-						},
-						Format: pulumi.String("email"),
-					},
-				},
-			},
+    		Properties: port.BlueprintPropertiesArgs{
+    			StringProps: port.BlueprintPropertiesStringPropsMap{
+    				"myEmailProp": &port.BlueprintPropertiesStringPropsArgs{
+    					Title:    pulumi.String("My email"),
+    					Required: pulumi.Bool(false),
+    					Format:   pulumi.String("email"),
+    					Enums: pulumi.StringArray{
+    						pulumi.String("me@example.com"),
+    						pulumi.String("other@example.com"),
+    					},
+    					EnumColors: pulumi.StringMap{
+    						"me@example.com":    pulumi.String("red"),
+    						"other@example.com": pulumi.String("green"),
+    					},
+    					Format: pulumi.String("email"),
+    				},
+    			},
+    		},
       // highlight-end
-		})
-		ctx.Export("blueprint", blueprint.Title)
-		if err != nil {
-			return err
-		}
-		return nil
-	})
+    	})
+    	ctx.Export("blueprint", blueprint.Title)
+    	if err != nil {
+    		return err
+    	}
+    	return nil
+    })
 }
-
 ```
 
 </TabItem>

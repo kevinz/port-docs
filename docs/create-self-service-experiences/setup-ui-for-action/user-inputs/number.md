@@ -1,29 +1,31 @@
 ---
+
 sidebar_position: 2
-description: Number is a basic input for numeric data
+description: 数字Number 是数字数据的基本输入法
+
 ---
 
-import ApiRef from "../../../api-reference/\_learn_more_reference.mdx"
+import ApiRef from "../../../api-reference/_learn_more_reference.mdx"
 
 import Tabs from "@theme/Tabs"
 import TabItem from "@theme/TabItem"
 
-# Number
+# 编号
 
-Number is a basic input for numeric data.
+数字是数值数据的基本输入。
 
-## 💡 Common number usage
+## 💡 常用数字用法
 
-The number input type can be used to store any numeric data, for example:
+数字输入类型可用于存储任何数字数据，例如
 
-- Memory/storage allocations;
-- Replica counts;
-- Number of days to retain data;
-- etc.
+* 内存/存储分配；
+* 副本计数；
+* 保留数据的天数；
+* 等等。
 
-In the [live demo](https://demo.getport.io/self-serve) self-service hub page, we can see the **scaffold new service** action whose `K8s Replica Count` input is a number input. 🎬
+在[live demo](https://demo.getport.io/self-serve) 自助服务中枢页面，我们可以看到**scaffold new service** 操作，其 `K8s Replica Count` 输入是一个数字输入。
 
-## API definition
+## 应用程序接口定义
 
 <Tabs groupId="api-definition" queryString defaultValue="basic" values={[
 {label: "Basic", value: "basic"},
@@ -113,7 +115,7 @@ In the [live demo](https://demo.getport.io/self-serve) self-service hub page, we
 
 <ApiRef />
 
-## Terraform definition
+## Terraform 定义
 
 <Tabs groupId="tf-definition" queryString defaultValue="basic" values={[
 {label: "Basic", value: "basic"},
@@ -145,7 +147,6 @@ resource "port_action" "myAction" {
 <TabItem value="enum">
 
 ```hcl showLineNumbers
-
 resource "port_action" "myAction" {
   # ...action properties
   # highlight-start
@@ -160,7 +161,6 @@ resource "port_action" "myAction" {
   }
   # highlight-end
 }
-
 ```
 
 </TabItem>
@@ -168,7 +168,6 @@ resource "port_action" "myAction" {
 <TabItem value="array">
 
 ```hcl showLineNumbers
-
 resource "port_action" "myAction" {
   # ...action properties
   # highlight-start
@@ -183,27 +182,26 @@ resource "port_action" "myAction" {
   }
   # highlight-end
 }
-
 ```
 
 </TabItem>
 
 </Tabs>
 
-## Validate number
+## 验证号码
 
-Number validations support the following operators:
+数字验证支持以下操作符: 
 
-- `range`
+* 范围
 
-Ranges of numbers are specified using a combination of the `minimum` and `maximum` keywords, (or `exclusiveMinimum` and `exclusiveMaximum` for expressing exclusive range).
+使用 "最小值 "和 "最大值 "关键字(或 "独占最小值 "和 "独占最大值 "表达独占范围)的组合指定数字范围。
 
-If _x_ is the value being validated, the following must hold true:
+如果 _x_ 是要验证的值，则以下条件必须成立: 
 
-- _x_ ≥ `minimum`
-- _x_ > `exclusiveMinimum`
-- _x_ ≤ `maximum`
-- _x_ < `exclusiveMaximum`
+* _x_ ≥ `最小值
+* _x_ > `专属最小值
+* _x_ ≤ `最大值
+* _x_ < `独占最大值
 
 <Tabs groupId="validation-definition" queryString defaultValue="basic" values={[
 {label: "Basic", value: "basic"},
@@ -255,7 +253,6 @@ If _x_ is the value being validated, the following must hold true:
 <TabItem value="tf">
 
 ```hcl showLineNumbers
-
 resource "port_action" "myAction" {
   # ...action properties
   # highlight-start
@@ -271,7 +268,6 @@ resource "port_action" "myAction" {
   }
   # highlight-end
 }
-
 ```
 
 </TabItem>

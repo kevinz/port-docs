@@ -1,15 +1,17 @@
 ---
+
 sidebar_position: 18
-description: Ingest JFrog artifacts, Docker tags and builds into your catalog
+description: 将 JFrog 工件、Docker 标记和构建摄入到您的目录中
+
 ---
 
 # JFrog
 
-In this example you are going to create a webhook integration between your JFrog Server and Port. The integration will facilitate the ingestion of JFrog artifact, Docker tag and build entities into Port.
+在本示例中，您将在 JFrog 服务器和 Port 之间创建一个 webhook 集成，该集成将有助于将 JFrog 工件、Docker 标记和构建实体导入 Port。
 
-## Port configuration
+## Port 配置
 
-Create the following blueprint definitions:
+创建以下蓝图定义: 
 
 <details>
 <summary>Jfrog artifact blueprint</summary>
@@ -223,21 +225,22 @@ Create the following blueprint definitions:
 ```
 
 </details>
-:::tip Blueprint Properties
+:::tip  Blueprint Properties
 You may modify the properties in your blueprints depending on what you want to track in your JFrog repositories and builds.
+
 :::
 
-Create the following webhook configuration [using Port's UI](/build-your-software-catalog/sync-data-to-catalog/webhook/?operation=ui#configuring-webhook-endpoints)
+创建以下 webhook 配置[using Port's UI](/build-your-software-catalog/sync-data-to-catalog/webhook/?operation=ui#configuring-webhook-endpoints)
 
 <details>
 <summary>JFrog webhook configuration</summary>
 
-1. **Basic details** tab - fill the following details:
-   1. Title : `JFrog mapper`;
-   2. Identifier : `jfrogMapper`;
-   3. Description : `A webhook configuration to map JFrog repositories and builds to Port`;
-   4. Icon : `JfrogXray`;
-2. **Integration configuration** tab - fill the following JQ mapping:
+1. **基本信息** 选项卡 - 填写以下详细信息: 
+    1.title: `JFrog mapper`；
+    2.标识符 : `jfrogMapper`；
+    3.Description : `将 JFrog 仓库和构建映射到 Port` 的 webhook 配置；
+    4.图标 : `JfrogXray`；
+2. **集成配置**选项卡 - 填写以下 JQ 映射: 
 
 ```json
 [
@@ -294,49 +297,50 @@ Create the following webhook configuration [using Port's UI](/build-your-softwar
 ]
 ```
 
-:::note
-Take note of, and copy the Webhook URL that is provided in this tab
+:::note 记下并复制该选项卡中提供的 Webhook URL
+
 :::
 
-3. Click **Save** at the bottom of the page.
+3.点击页面底部的**保存**。
+
 </details>
 
-## Create a webhook in JFrog
+## 在 JFrog 中创建 webhook
 
-1. Log in to JFrog as a user with admin priviledges
-2. Click the gear icon at the top right corner at the left side of the user icon;
-3. Choose **Platform Management**;
-4. At the bottom of the sidebar on the left, just below **General**, choose **Webhooks**;
-5. Click on **Create a WebHook**
-6. Input the following details:
-   1. `Name` - use a meaningful name such as **Port-Artifact**;
-   2. `Description` - enter a description for the webhook;
-   3. `URL` - enter the value of the `url` key you received after creating the webhook configuration in Port;
-   4. `Events` - Under **Artifacts**, select **Artifact was deployed** and select all repositories that apply;
-7. Click **Create** at the bottom of the page.
-8. Create two more webhooks using the details:
-   1. For builds:
-      - Name: **Port-Build**;
-      - Events: Under **Builds**, select **Build was uploaded** and select all builds that apply;
-      - `Description` - enter a description for the webhook;
-      - `URL` - enter the value of the `url` key you received after creating the webhook configuration in Port;
-   2. For Docker tags:
-      - Name: **Port-Docker-Tag**;
-      - Events: Under **Docker**, select **Docker tag was pushed** and select all repositories that apply
+1. 以具有管理员权限的用户身份登录 JFrog
+2. 点击用户图标左侧右上角的齿轮图标；
+3. 选择**平台管理**；
+4. 在左侧边栏底部，即**常规**下方，选择**Webhooks**；
+5. 点击**创建 Webhook**
+6. 输入以下详细信息: 
+    1. 名称"- 被引用一个有意义的名称，如**Port-Artifact**；
+    2. `Description` - 输入 Webhook 的描述；
+    3. `URL` - 输入在 Port 中创建 webhook 配置后收到的 `url` 键的值；
+    4. `Events` - 在**Artifacts**下，选择**Artifact was deployed**，然后选择所有相应的存储库；
+7.单击页面底部的**创建**。
+8.使用详细信息再创建两个 webhook: 
+    1.用于构建: 
+        + 名称:  **Port-Build**；
+        + 事件: 在**构建**下，选择**构建已上传**，然后选择所有适用的构建；
+        + `Description` - 输入 webhook 的描述；
+        + `URL` - 输入您在 Port 中创建 webhook 配置后收到的 `url` 键的值；
+    2.对于 Docker 标记: 
+        + 名称:  **Port-Docker-Tag**；
+        + 事件: 在 **Docker**下，选择 **Docker标签已推送**，然后选择所有适用的软件源
 
-:::tip
-In order to view the different payloads and events available in JFrog webhooks, [look here](https://jfrog.com/help/r/jfrog-platform-administration-documentation/event-types)
+:::tip 为了查看 JFrog webhooks 中可用的不同有效载荷和事件、[look here](https://jfrog.com/help/r/jfrog-platform-administration-documentation/event-types)
+
 :::
 
-Done! Any artifact you publish, build you trigger, or artifact you upload will trigger a webhook event that JFrog will send to the webhook URL provided by Port. Port will parse the events according to the mapping and update the catalog entities accordingly.
+完成！您发布、触发或上传的任何工件都将触发 Webhook 事件，JFrog 将把该事件发送到 Provider 提供的 Webhook URL。 Port 将根据映射解析事件并相应地更新目录实体。
 
-## Let's Test It
+## 让我们来测试一下
 
-This section includes a sample webhook event sent from JFrog when a build is uploaded. In addition, it includes the entity created from the event based on the webhook configuration provided in the previous section.
+本节包括 JFrog 在上传构建时发送的 webhook 事件示例。 此外，本节还包括根据上一节提供的 webhook 配置从事件中创建的实体。
 
-### Payload
+### 有效载荷
 
-Here is an example of the payload structure sent to the webhook URL when a JFrob build is uploaded:
+下面是上传 JFrob 构建时发送到 webhook URL 的有效载荷结构示例: 
 
 <details>
 <summary>Webhook event payload</summary>
@@ -352,7 +356,7 @@ Here is an example of the payload structure sent to the webhook URL when a JFrob
 
 </details>
 
-### Mapping Result
+#### 映射结果
 
 ```json showLineNumbers
 {
@@ -369,26 +373,26 @@ Here is an example of the payload structure sent to the webhook URL when a JFrob
 }
 ```
 
-## Import JFrog Historical Builds And Repositories
+## 导入 JFrog 历史版本和存储库
 
-In this example you are going to use the provided Python script to fetch data from the JFrog Server API and ingest it to Port.
+在本示例中，您将使用 Provider 提供的 Python 脚本从 JFrog Server API 获取数据并将其引用到 Port。
 
-### Prerequisites
+### 先决条件
 
-This example utilizes the same [blueprint and webhook](#port-configuration) definition from the previous section.
+本示例使用的是上一节中的[blueprint and webhook](#port-configuration) 定义。
 
-In addition, you require the following environment variables:
+此外，您还需要以下环境变量: 
 
-- `PORT_CLIENT_ID` - Your Port client id
-- `PORT_CLIENT_SECRET` - Your Port client secret
-- `JFROG_ACCESS_TOKEN` - You can get that by following instructions in the [Jfrog documentation](https://jfrog.com/help/r/jfrog-platform-administration-documentation/access-tokens)
-- `JFROG_HOST_URL` - The host URL of your Jfrog instance
+* `PORT_CLIENT_ID` - 您的 Port 客户端 ID
+* `PORT_CLIENT_SECRET` - 您的 Port 客户端secret
+* `JFROG_ACCESS_TOKEN` - 您可以通过下面的说明获取[Jfrog documentation](https://jfrog.com/help/r/jfrog-platform-administration-documentation/access-tokens)
+* `JFROG_HOST_URL` - 您的 Jfrog 实例的主机 URL
 
-:::info
-Find your Port credentials using this [guide](https://docs.getport.io/build-your-software-catalog/sync-data-to-catalog/api/#find-your-port-credentials)
+:::info 使用以下命令查找您的 Port 凭据[guide](https://docs.getport.io/build-your-software-catalog/sync-data-to-catalog/api/#find-your-port-credentials)
+
 :::
 
-Use the following Python script to ingest historical JFrog builds and repositories into port:
+使用以下 Python 脚本将历史 JFrog 版本和软件源引用到 Port 中: 
 
 <details>
 <summary>JFrog Python script for historical builds and repositories</summary>
@@ -414,11 +418,9 @@ PORT_CLIENT_SECRET = os.getenv("PORT_CLIENT_SECRET")
 JFROG_ACCESS_TOKEN = os.getenv("JFROG_ACCESS_TOKEN")
 JFROG_HOST_URL = os.getenv("JFROG_HOST_URL")
 
-
 class Blueprint:
     REPOSITORY = "jfrogRepository"
     BUILD = "jfrogBuild"
-
 
 ## Get Port Access Token
 credentials = {"clientId": PORT_CLIENT_ID, "clientSecret": PORT_CLIENT_SECRET}
@@ -427,7 +429,6 @@ access_token = token_response.json()["accessToken"]
 
 # You can now use the value in access_token when making further requests
 headers = {"Authorization": f"Bearer {access_token}"}
-
 
 def add_entity_to_port(blueprint_id, entity_object, transform_function):
     """A function to create the passed entity in Port
@@ -460,7 +461,6 @@ def add_entity_to_port(blueprint_id, entity_object, transform_function):
     )
     logger.info(response.json())
 
-
 def get_all_builds():
     logger.info("Getting all builds")
     url = f"{JFROG_HOST_URL}/artifactory/api/build"
@@ -471,7 +471,6 @@ def get_all_builds():
     builds = response.json()["builds"]
     return builds
 
-
 def get_all_repositories():
     logger.info("Getting all repositories")
     url = f"{JFROG_HOST_URL}/artifactory/api/repositories"
@@ -481,7 +480,6 @@ def get_all_repositories():
     response.raise_for_status()
     repositories = response.json()
     return repositories
-
 
 if __name__ == "__main__":
     logger.info("Starting Port integration")
@@ -521,9 +519,8 @@ if __name__ == "__main__":
         }
         logger.info(f"Added build: {build_object['name']}")
         add_entity_to_port(Blueprint.BUILD, build_object, transform_build_function)
-
 ```
 
 </details>
 
-Done! you can now import historical builds and repositories from JFrog into Port. Port will parse the builds and repository according to the mapping and update the catalog entities accordingly.
+完成！现在您可以将历史构建和软件源从 JFrog 导入 Port。 Port 将根据映射解析构建和软件源，并相应地更新目录实体。

@@ -1,29 +1,29 @@
 ---
+
 sidebar_position: 2
+
 ---
 
-import FindCredentials from "/docs/build-your-software-catalog/sync-data-to-catalog/api/\_template_docs/\_find_credentials_collapsed.mdx";
+import FindCredentials from "/docs/build-your-software-catalog/sync-data-to-catalog/api/_template_docs/_find_credentials_collapsed.mdx";
 import Tabs from "@theme/Tabs"
 import TabItem from "@theme/TabItem"
 
-# Installation
+# 安装
 
-## Prerequisites
+## 先决条件
 
-- You will need your [Port credentials](/build-your-software-catalog/sync-data-to-catalog/api/api.md#find-your-port-credentials) to install the AWS exporter:
+* 您将需要[Port credentials](/build-your-software-catalog/sync-data-to-catalog/api/api.md#find-your-port-credentials) 来安装 AWS 输出程序: 
+   <FindCredentials />
+* [AWS CLI](https://docs.aws.amazon.com/cli/latest/userguide/getting-started-install.html) 是身份验证所必需的。确保已设置 AWS `Access key id` 和 `Secret access key`。如果没有，请在终端运行 `aws configure` 进行配置。
 
-  <FindCredentials />
+对于[step-by-step installation](#step-by-step-installation) (未被引用 Terraform) ，也要安装: 
 
-- The [AWS CLI](https://docs.aws.amazon.com/cli/latest/userguide/getting-started-install.html) is required for authentication. Make sure your AWS `Access key id` and `Secret access key` are set. If not, run `aws configure` in your terminal to configure them.
+* * [AWS SAM CLI](https://docs.aws.amazon.com/serverless-app:lication-model/latest/developerguide/install-sam-cli.html)
+* [JQ](https://stedolan.github.io/jq/download/)
 
-For the [step-by-step installation](#step-by-step-installation) (not using Terraform), also install:
+### Terraform 安装(推荐)
 
-- [AWS SAM CLI](https://docs.aws.amazon.com/serverless-app:lication-model/latest/developerguide/install-sam-cli.html)
-- [JQ](https://stedolan.github.io/jq/download/)
-
-## Terraform Installation (recommended)
-
-Run the following script in your terminal:
+在终端运行以下脚本
 
 ```bash showLineNumbers
 # Export your Port credentials
@@ -42,59 +42,53 @@ terraform init
 terraform apply -var 'resources=["ecs_service", "lambda", "sns", "sqs", "s3_bucket", "rds_db_instance", "dynamodb_table", "ec2_instance"]'
 ```
 
-:::info
-The above script performs the following actions:
+:::info 上述脚本执行以下操作: 
 
-1. Creates the resource blueprints in your Port environment.
-2. Deploys the AWS exporter in your AWS environment with the following resources - [S3 bucket](https://aws.amazon.com/s3/), [mapping configuration file](./aws.md#exporter-configjson-file), [AWS secret](./aws.md#port-credentials-secret), [AWS IAM policy](./aws.md#iam-policy);
-3. Setting up [Event Bridge Rules](https://docs.aws.amazon.com/eventbridge/latest/userguide/eb-rules.html) that trigger the exporter to update resources;
-4. Invokes the AWS exporter Lambda function for the first time to get the current resources state.
+1. 在 Port 环境中创建资源蓝图。
+2. 在 AWS 环境中使用以下资源部署 AWS 输出程序 -[S3 bucket](https://aws.amazon.com/s3/),[mapping configuration file](./aws.md#exporter-configjson-file),[AWS secret](./aws.md#port-credentials-secret),[AWS IAM policy](./aws.md#iam-policy) ；
+3. 设置[Event Bridge Rules](https://docs.aws.amazon.com/eventbridge/latest/userguide/eb-rules.html) ，触发出口程序更新资源；
+4. 首次调用 AWS 输出程序 Lambda 函数以获取当前资源状态。
 
 :::
 
-:::tip
-You can delete resources you don't want to export by removing them from the resources array in the script above.
+:::tip 您可以从上述脚本的资源数组中删除不想导出的资源。
+
 :::
 
-### AWS exporter Terraform module
+#### AWS 出口商 Terraform 模块
 
-After setting up the basic configuration, the template above deploys the AWS exporter Terraform module.
+设置基本配置后，上述模板将部署 AWS 出口商 Terraform 模块。
 
-For more information, visit the [AWS exporter module docs](/build-your-software-catalog/sync-data-to-catalog/iac/terraform/modules/aws-exporter-module.md)
+欲了解更多信息，请访问[AWS exporter module docs](/build-your-software-catalog/sync-data-to-catalog/iac/terraform/modules/aws-exporter-module.md)
 
-## Step-by-step installation
+## 分步安装
 
-The steps outlined here can be used to manually install the AWS exporter using CloudFormation.
+此处概述的步骤可用于使用 CloudFormation 手动安装 AWS 输出程序。
 
-In order to deploy the application, you will need to fill in the following parameters:
+要部署应用程序，您需要填写以下参数: 
 
-- **Cloud Formation related parameters:**
-  - `Application name` - The stack name of the application created via `AWS CloudFormation`.
-- **Bucket related parameters:**
-  - `CreateBucket` - `true` if you want the application to create and manage your bucket, or `false` if you want to create the bucket on your own.
-  - `BucketName` - The name of your bucket, or a globally unique name for a new bucket.
-  - `ConfigJsonFileKey` - The file key (path) to the [`config.json`](/build-your-software-catalog/sync-data-to-catalog/cloud-providers/aws/#exporter-configjson-file) in the bucket.
-- **IAM Policy related parameters:**
-  - `CustomIAMPolicyARN` - The ARN of the [IAM policy](/build-your-software-catalog/sync-data-to-catalog/cloud-providers/aws/#iam-policy).
-- **Secret related parameters:**
+* **云形成相关参数: **
+    - 应用程序名称"- 通过 "AWS CloudFormation "创建的应用程序的堆栈名称。
+* **桶相关参数: **
+    - `CreateBucket` - 如果希望应用程序创建和管理您的存储桶，则为 `true`；如果希望自行创建存储桶，则为 `false`。
+    - `BucketName` - 你的邮筒的名称，或一个新邮筒的全局唯一名称。
+    - `ConfigJsonFileKey` - 文件桶中[`config.json`](/build-your-software-catalog/sync-data-to-catalog/cloud-providers/aws/#exporter-configjson-file) 的文件密钥(路径)。
+* ** IAM 策略相关参数: **
+    - `CustomIAMPolicyARN` -[IAM policy](/build-your-software-catalog/sync-data-to-catalog/cloud-providers/aws/#iam-policy) 的 ARN。
+* **与 secret 相关的参数: **
+    - `CustomPortCredentialsSecretARN` - Port凭据secret的 ARN；
+        **或
+    - `SecretName` - 要创建的新Port凭据secret的名称。
+* **与 Lambda 相关的参数: **
+    - `FunctionName` - 输出程序 lambda 的函数名。
+    - `ScheduleExpression` -[schedule expression](https://docs.aws.amazon.com/lambda/latest/dg/services-cloudwatchevents-expressions.html) ，用于定义出口程序的事件日程。
+    - `ScheduleState` - 计划表的初始状态 - `ENABLED` 或 `DISABLED`。建议仅在成功运行一次后启用。
 
-  - `CustomPortCredentialsSecretARN` - The ARN of the Port credentials secret;
+1. 准备一个[`config.json`](#exporter-configjson-file) 文件，该文件将定义将哪些 AWS 资源摄取到 Port；
+2. 创建[`IAM policy`](#iam-policy) ，为`config.json`中的 AWS 资源提供`list`和`read`权限；
 
-    **OR**
+:::tip  创建策略 IAM 策略参考[here](https://docs.aws.amazon.com/IAM/latest/UserGuide/access_policies_create.html) 。
 
-  - `SecretName` - The name for the new Port credentials secret to create.
-
-- **Lambda related parameters:**
-  - `FunctionName` - The function name for the exporter's lambda.
-  - `ScheduleExpression` - The [schedule expression](https://docs.aws.amazon.com/lambda/latest/dg/services-cloudwatchevents-expressions.html) to define an event schedule for the exporter.
-  - `ScheduleState` - The schedule initial state - `ENABLED` or `DISABLED`. We recommend to enable it only after one successful run.
-
-1. Prepare a [`config.json`](#exporter-configjson-file) file that will define which AWS resources to ingest to Port;
-
-2. Create the [`IAM policy`](#iam-policy) that provides permissions to `list` and `read` the AWS resources in the `config.json`;
-
-:::tip Create a policy
-An IAM policy reference is available [here](https://docs.aws.amazon.com/IAM/latest/UserGuide/access_policies_create.html).
 :::
 
 3. Deploy our [`serverless application`](#exporter-aws-serverless-application).
@@ -165,102 +159,98 @@ An IAM policy reference is available [here](https://docs.aws.amazon.com/IAM/late
 
    </Tabs>
 
-:::info
+:::info 
 
-After the deployment is complete, use the following AWS SAM CLI command to get a useful list of the exporter's resources:
+部署完成后，请使用以下 AWS SAM CLI 命令来获取出口程序资源的有用列表: 
 
 ```bash showLineNumbers
 sam list stack-outputs --stack-name serverlessrepo-port-aws-exporter
 ```
 
-The list includes:
+名单包括
 
-- `Lambda Function ARN` - the ARN of the exporter's Lambda;
-- `Port Credentials Secret ARN` - the ARN of the Port credentials secret;
-- `ConfigBucketName` - the exporter's bucket name.
-
-:::
-
-:::tip Deploy a serverless application
-
-For more information regarding how to deploy a serverless application, click [here](https://docs.aws.amazon.com/serverlessrepo/latest/devguide/serverlessrepo-how-to-consume.html).
+* Lambda 函数 ARN` - 输出端 Lambda 的 ARN；
+* Port凭据secret ARN` - Port凭据secret的 ARN；
+* `ConfigBucketName` - 输出者的存储桶名称。
 
 :::
 
-4. Update the [`Port credentials secret`](#port-credentials-secret) with your credentials;
+:::tip  部署无服务器应用程序
 
-:::tip Modify a secret
-To learn how to modify a secret's value, look [here](https://docs.aws.amazon.com/secretsmanager/latest/userguide/manage_update-secret.html).
-:::
-
-5. Upload the `config.json` to the exporter's S3 bucket.
-
-:::tip Upload a file to an S3 bucket
-To learn how to upload a file to S3, look [here](https://docs.aws.amazon.com/AmazonS3/latest/userguide/upload-objects.html).
-:::
-
-### Test the application
-
-In order to test the deployed application, you should run the exporter's lambda with an empty test event (`{}`), and review the execution status and logs.
-
-:::tip Invoke a function with a test event
-A reference showing how to invoke a lambda function with a test event can be found [here](https://docs.aws.amazon.com/lambda/latest/dg/testing-functions.html#invoke-with-event).
-:::
-
-:::info
-The exporter's lambda can run for more than 15 minutes (the maximum amount of time that a Lambda function can run).
-If a function has been running for more than 10 minutes, and there are any resources left to sync, a new lambda instance will be launched to continue the syncing process.
+有关如何部署无服务器应用程序的详细信息，请单击[here](https://docs.aws.amazon.com/serverlessrepo/latest/devguide/serverlessrepo-how-to-consume.html) 。
 
 :::
 
-### Troubleshooting
+4. 使用您的证书更新[`Port credentials secret`](#port-credentials-secret) ；
 
-#### View the logs
+:::tip  修改secret 要了解如何修改secret的值，请查找[here](https://docs.aws.amazon.com/secretsmanager/latest/userguide/manage_update-secret.html) 。
 
-To view the logs of all the lambda instances in one place, you can use [Cloudwatch Logs](https://docs.aws.amazon.com/lambda/latest/dg/monitoring-cloudwatchlogs.html#monitoring-cloudwatchlogs-console) or [AWS SAM Logs](https://docs.aws.amazon.com/serverless-application-model/latest/developerguide/serverless-sam-cli-logging.html):
+:::
+
+5. 将 `config.json` 上传到出口程序的 S3 存储桶。
+
+:::tip  将文件上传到 S3 存储桶 要了解如何将文件上传到 S3，请查看[here](https://docs.aws.amazon.com/AmazonS3/latest/userguide/upload-objects.html) 。
+
+:::
+
+### 测试应用程序
+
+为了测试已部署的应用程序，应使用空测试事件 (`{}`) 运行出口程序的 lambda，并查看执行状态和日志。
+
+:::tip  使用测试事件调用函数 如何使用测试事件调用 lambda 函数的参考文献可在[here](https://docs.aws.amazon.com/lambda/latest/dg/testing-functions.html#invoke-with-event) 上找到。
+
+:::
+
+:::info 导出器的 lambda 可以运行超过 15 分钟(Lambda 函数的最长运行时间)。 如果函数运行超过 10 分钟，并且还有任何资源需要同步，则会启动一个新的 lambda 实例来继续同步过程。
+
+:::
+
+### 故障排除
+
+#### 查看日志
+
+要在一个地方查看所有 lambda 实例的日志，可以使用[Cloudwatch Logs](https://docs.aws.amazon.com/lambda/latest/dg/monitoring-cloudwatchlogs.html#monitoring-cloudwatchlogs-console) 或[AWS SAM Logs](https://docs.aws.amazon.com/serverless-application-model/latest/developerguide/serverless-sam-cli-logging.html) : 
 
 ```bash showLineNumbers
 sam logs --stack-name serverlessrepo-port-aws-exporter --tail
 ```
 
-### Update the schedule settings
+### 更新日程表设置
 
-After running the exporter successfully for the first time, you probably want to alter the scheduling related properties of the CloudFormation stack:
+首次成功运行导出程序后，您可能想要更改 CloudFormation 堆栈的调度相关属性: 
 
-- `ScheduleExpression` - Make sure to set an interval that is longer than the time it takes for the exporter to execute;
-- `ScheduleState` - Set the schedule state to `ENABLED`.
+* `ScheduleExpression` - 确保设置的时间间隔长于输出程序的执行时间；
+* `ScheduleState` - 将计划状态设置为 `ENABLED`。
 
-If you are using the Terrafom module, update the `schedule_state` and `schedule_expression` variables.
+如果被引用 Terrafom 模块，请更新 `schedule_state` 和 `schedule_expression` 变量。
 
-:::info
-In order to determine lambda execution time, you can [view the logs](#view-the-logs), and search for the first and last log lines.
-When the exporter finishes its syncing work, it writes the following log: `Done handling your resources`.
+:::info 为了确定 lambda 的执行时间，可以通过[view the logs](#view-the-logs) ，搜索第一行和最后一行日志。当输出程序完成同步工作时，它会写入以下日志: "Done handling your resources"("完成处理您的资源")。
+
 :::
 
-:::tip Update an application
-Updating an application's setting or version is done using the same procedure as deploying a new application, similar to step 3 of the [installation](#installation).
-By default, the latest available version of the exporter will be used when you run the update/deploy procedure.
+:::tip  更新应用程序 更新应用程序设置或版本的步骤与部署新应用程序的步骤相同，类似于[installation](#installation) 的第 3 步。默认情况下，运行更新/部署程序时将被引用最新可用的导出程序版本。
 
-For more details, click [here](https://docs.aws.amazon.com/serverlessrepo/latest/devguide/serverlessrepo-how-to-consume-new-version.html).
+更多详情，请点击[here](https://docs.aws.amazon.com/serverlessrepo/latest/devguide/serverlessrepo-how-to-consume-new-version.html) 。
+
 :::
 
-### Configure the AWS Exporter to run on events
+#### 配置 AWS 输出程序以在事件中运行
 
-In addition to running on schedule, the AWS exporter can be used to act on live events, such as create, update and delete of a resource in your AWS account.
-That way you can configure a resource to be synced as soon as it changed, in real time.
+除了按计划运行外，AWS 导出器还可用于对实时事件采取行动，如创建、更新和删除 AWS 账户中的资源。 这样，您就可以配置资源，以便在其发生变化时立即实时同步。
 
-To configure the AWS exporter to use events as triggers, follow these steps:
+要配置 AWS 输出程序将事件用作触发器，请按照以下步骤操作: 
 
-1. Prepare an [event rule](/build-your-software-catalog/sync-data-to-catalog/cloud-providers/aws/event-based-updates#definition), based on specific events matching resources you want the AWS exporter to update in real time and save it to a Cloudformation YAML template (`template.yml`).
+1. 根据与您希望 AWS 输出程序实时更新的资源相匹配的特定事件，准备一个[event rule](/build-your-software-catalog/sync-data-to-catalog/cloud-providers/aws/event-based-updates#definition) ，并将其保存到 Cloudformation YAML 模板 (`template.yml`) 。
+2. 使用此命令部署事件规则: 
 
-2. Deploy the event rule using this command:
 
    ```bash showLineNumbers
    aws cloudformation deploy --template-file template.yml --stack-name port-aws-exporter-event-rules
    ```
 
-## Further information
 
-- Refer to the [examples](./examples.md) page for practical configurations and their corresponding blueprint definitions;
-- Learn about more ways of [working with Cloudformation stacks](https://docs.aws.amazon.com/AWSCloudFormation/latest/UserGuide/stacks.html);
-- Deep-dive into the [Event-based Updates](./event-based-updates.md) machanism.
+## 更多信息
+
+* 有关实用配置及其相应的蓝图定义，请参阅[examples](./examples.md) 页面；
+* 了解[working with Cloudformation stacks](https://docs.aws.amazon.com/AWSCloudFormation/latest/UserGuide/stacks.html) 的更多方式；
+* 深入 dive[Event-based Updates](./event-based-updates.md) 机理。

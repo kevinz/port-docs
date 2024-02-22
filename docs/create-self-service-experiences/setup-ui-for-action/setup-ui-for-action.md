@@ -1,13 +1,15 @@
 ---
-title: Setup Actions
+
+title: 设置操作
+
 ---
 
-import ApiRef from "../../api-reference/\_learn_more_reference.mdx";
+import ApiRef from "../../api-reference/_learn_more_reference.mdx";
 
 import Tabs from "@theme/Tabs"
 import TabItem from "@theme/TabItem"
 
-# Setup Actions
+# 设置操作
 
 <center>
 
@@ -15,44 +17,46 @@ import TabItem from "@theme/TabItem"
 
 </center>
 
-Choose the name, description and icon of the action to make it recognizable.
+选择动作的名称、描述: 和图标，使其易于识别。
 
-Select the user inputs you would like the user to fill out to use the action.
+选择希望用户填写的用户输入信息，以使用该操作。
 
-Port supports various input types, including constructing wizards with conditions and steps to best fit the experience you want for your users.
+Port 支持各种输入类型，包括构建带有条件和步骤的向导，以最佳方式满足用户的体验需求。
 
-Setting up an action includes the following steps:
+设置行动包括以下步骤: 
 
-1. **Define [action information](#structure-table)** - the title, icon, description and associated [blueprint](../../build-your-software-catalog/define-your-data-model/setup-blueprint/setup-blueprint.md);
-2. **Select the [user inputs](#userinputs---form--wizard-ui)** - create a wizard-like experience by specifying the input types users need to fill in, while also including input validations;
-3. **Configure the [action type](#trigger--action-type)** - Create/Day-2/Delete;
-4. **Connect the action to a [backend](#invocationmethod---connect-to-a-backend)** - for every action you define in Port, you tell Port what component is responsible to handle the action's invocation. This is called the **invocation method**, Port supports various invocation methods for different use cases and environments;
+1. **Define[action information](#structure-table)** - title, icon, description 和相关的[blueprint](../../build-your-software-catalog/define-your-data-model/setup-blueprint/setup-blueprint.md) ；
+2. **选择[user inputs](#userinputs---form--wizard-ui)** - 通过指定用户需要填写的输入类型来创建类似向导的体验，同时还包括输入验证；
+3. **配置[action type](#trigger--action-type)** - 创建/第 2 天/删除；
+4. **将操作连接到[backend](#invocationmethod---connect-to-a-backend)** - 对于您在 Port 中定义的每个操作，您都要告诉 Port 由哪个组件负责处理该操作的调用。这就是所谓的**调用方法(**invocation method)，Port 支持针对不同用例和环境的各种调用方法；
+
 <!-- 5. **Reflect the action's progress** by making requests to Port's API from your action backend. You can provide additional information such as status, logs and links to job runners and pipelines that the action triggers; -->
-5. **Configure RBAC and guardrails** - this optional step lets you choose who can trigger an action, does the action require manual approval from an admin, and who has the permissions to approve or dismiss requests.
 
-## 💡 Common actions
+5. **配置 RBAC 和防护栏**--这一可选步骤可让你选择谁可以触发操作，操作是否需要管理员手动批准，以及谁有批准或驳回请求的权限。
 
-Actions can be used to execute any logic that you choose, for example:
+## 💡 共同行动
 
-- Scaffold a new microservice;
-- Deploy a new version;
-- Lock deployments;
-- Add a secret;
-- Spin up a temporary developer environment;
-- Extend an environment's TTL;
-- Provision a cloud resource;
-- Update the pod count of a service;
-- Update the auto-scaling group;
-- Change customer configuration;
-- Train a machine learning model;
-- Pre-process a dataset;
-- etc.
+例如，操作可被引用来执行您选择的任何逻辑: 
 
-In this [live demo](https://demo.getport.io/self-serve) example, we can see the Self-Service Hub page with example actions. 🎬
+* 为新的微服务搭建脚手架；
+* 部署新版本；
+* 锁定部署；
+* 添加secret；
+* 启动临时开发环境；
+* 扩展环境的 TTL；
+* 供应云资源；
+* 更新服务的 pod 数量；
+* 更新自动扩展组；
+* 更改客户配置；
+* 训练机器学习模型；
+* 预处理数据集；
+* 等等。
 
-## Action structure
+在[live demo](https://demo.getport.io/self-serve) 示例中，我们可以看到带有示例操作的自助服务枢纽页面。
 
-Each action is represented by a [Json schema](https://json-schema.org/), as shown in the following section:
+## 行动结构
+
+每个操作都由[Json schema](https://json-schema.org/) 表示，如下节所示: 
 
 ```json showLineNumbers
 {
@@ -81,8 +85,7 @@ Each action is represented by a [Json schema](https://json-schema.org/), as show
 }
 ```
 
-:::note actions array
-Actions configured for a blueprint are saved as an array, in the JSON example above you can see the schema of a single action, in order to save this action definition in your blueprint, remember to wrap it in square brackets (`[]`) to include it as part of the array:
+:::note  动作数组 为蓝图配置的动作以数组形式保存，在上面的 JSON 示例中可以看到单个动作的模式，要在蓝图中保存该动作定义，请记住用方括号(`[]`)将其包起来，使其成为数组的一部分: 
 
 ```json showLineNumbers
 [
@@ -101,9 +104,10 @@ Actions configured for a blueprint are saved as an array, in the JSON example ab
 
 :::
 
-### Structure table
+#### 结构表
 
-An action consist of several properties:
+一个动作由多个属性组成: 
+
 
 | Field              | Description                                                                                                                       | Notes                                                                                                                                                                                                                                  |
 | ------------------ | --------------------------------------------------------------------------------------------------------------------------------- | -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
@@ -117,53 +121,54 @@ An action consist of several properties:
 | `requiredApproval` | Whether the action requires approval or not                                                                                       |
 | `invocationMethod` | The invocation method for the action                                                                                              | Defines the destination where invocations of the action will be delivered, see [invocation method](#invocation-method) for details                                                                                                     |
 
-:::tip available user inputs
-All available user inputs are listed in the [user inputs](./user-inputs/user-inputs.md) page
+
+:::tip  可用的用户输入法[user inputs](./user-inputs/user-inputs.md) 页面列出了所有可用的用户输入法。
+
 :::
 
-### `userInputs` - Form & Wizard UI
+### `userInputs` - 表单和向导用户界面
 
-Port actions support a variety of user inputs which make it easy to create UI forms and wizards.
+Port 操作支持各种用户输入，可轻松创建用户界面表单和向导。
 
-By using user inputs, you can specify to your users exactly what information your backend requires to handle the action request. In addition, the user inputs provide validation support out-of-the-box, making it easy to put guardrails in place and make sure that input values are standardized.
+通过使用用户输入，您可以向用户明确说明您的后端需要哪些信息来处理操作请求。 此外，用户输入还提供开箱即用的验证支持，让您可以轻松设置防护栏，确保输入值标准化。
 
-To learn more about user inputs, refer to the [user inputs](./user-inputs/user-inputs.md) page.
+要了解有关用户输入的更多信息，请参阅[user inputs](./user-inputs/user-inputs.md) 页面。
 
-### `trigger` - Action type
+### `trigger` - 动作类型
 
-Port actions support 3 action types:
+Port 操作支持 3 种操作类型: 
 
-- `CREATE` - create actions are used to create new new assets and resources, and are not tied to an existing entity from the software catalog;
-- `DAY-2` - day-2 operation actions are used to modify, change, enhance or add to existing resources and entities in the software catalog;
-- `DELETE` - delete actions are used to trigger the organized deletion of existing resources and their respective entities in the software catalog.
+* `CREATE` - 创建操作用于创建新的新资产和资源，并且不与软件目录中的现有实体绑定；
+* `DAY-2` - 日-2 操作操作用于修改、更改、增强或添加到软件目录中的现有资源和实体；
+* `DELETE` - 删除操作用于触发有组织地删除软件目录中的现有资源及其相应实体。
 
-Different action types also include specific representation in the software catalog UI:
+不同的操作类型在软件目录用户界面中也有特定的表现形式: 
 
-- Each action type has a separate section in the [Self-Service Hub](https://app.getport.io/self-serve) page;
-- In the blueprints table, `CREATE` actions appear as a global button, not tied to any specific entity;
-- In the blueprints table and [entity page](../../customize-pages-dashboards-and-plugins/page/entity-page.md#entity-page), `DAY-2` and `DELETE` actions appear specifically on the entity you wish to trigger the action on.
+* 在[Self-Service Hub](https://app.getport.io/self-serve) 页面中，每种操作类型都有单独的部分；
+* 在蓝图表中，`创建`操作显示为全局按钮，不与任何特定实体绑定；
+* 在蓝图表和[entity page](../../customize-pages-dashboards-and-plugins/page/entity-page.md#entity-page) 中，"DAY-2 "和 "DELETE "操作专门显示在您希望触发操作的实体上。
 
-### `invocationMethod` - Connect to a backend
+### `invocationMethod` - 连接到后端
 
-Port actions support a variety of target backends that can be triggered when an action is invoked.
+Port操作支持各种目标后端，在调用操作时可以触发这些后端。
 
-The different backends are denoted and configured via the `invocationMethod` key, the available methods are:
+不同的后端通过 `invocationMethod` 键来表示和配置，可用的方法有
 
-- **Webhook** - setup a webhook URL to receive and handle forms and wizards submissions;
-- **Kafka** - subscribe to Kafka topic to listen to messages with forms and wizards submissions;
-- **CI Native (Github Workflow)** - setup Port's [GitHub app](../../build-your-software-catalog/sync-data-to-catalog/git/github/github.md) to handle forms & wizards submission via Github Workflows;
-- **CI Native (Azure Pipeline)**- setup a webhook type service connection to trigger Azure pipelines and handle forms & wizards submission via Github Workflows;
-- **Port agent** - setup Port's agent tp receive forms & wizards submissions and forward them to your backend on your internal network.
+* **Webhook** - 设置 webhook URL 以接收和处理表单和向导提交；
+* **Kafka** - 订阅 Kafka 主题，以监听表单和向导提交信息；
+* **CI Native (Github Workflow)** - 设置 Port 的[GitHub app](../../build-your-software-catalog/sync-data-to-catalog/git/github/github.md) ，以处理通过 Github 工作流提交的表单和向导；
+* **CI Native(Azure Pipelines)**- 设置 Webhook 类型的服务连接，以触发 Azure 管道并通过 Github 工作流处理表单和向导提交；
+* **Port 代理**-设置 Port 代理，接收表单和向导提交，并将其转发到内部网络上的后端。
 
-To learn more about the different available invocation methods and backends, refer to the [setup backend](../setup-backend/setup-backend.md) page.
+要进一步了解不同的可用调用方法和后端，请参阅[setup backend](../setup-backend/setup-backend.md) 页面。
 
-### `requireApproval` - Require manual approval (optional)
+### `requireApproval` - 要求人工批准(可选)
 
-Port actions support a manual approval process. Manual approvals let you control who can approve an action invocation request, and also handle notifying the relevant personas when an action request is awaiting their review.
+Port 操作支持手动审批流程。 手动审批可以控制谁可以审批操作调用请求，还可以在操作请求等待相关角色审核时通知他们。
 
-refer to the [self-service actions RBAC](../set-self-service-actions-rbac/set-self-service-actions-rbac.md) page to learn more.
+请参阅[self-service actions RBAC](../set-self-service-actions-rbac/set-self-service-actions-rbac.md) 页面了解更多信息。
 
-## Configuring actions in Port
+## 在 Port 中配置操作
 
 <Tabs groupId="configure" queryString>
 
@@ -187,8 +192,8 @@ refer to the [self-service actions RBAC](../set-self-service-actions-rbac/set-se
 }
 ```
 
-:::note
-The JSON shown above is for a single blueprint action, the actions of a blueprint are stored in an array (`[]`)
+:::note 上面显示的 JSON 是针对单个蓝图操作的，蓝图的操作存储在一个数组(`[]`)中
+
 :::
 
 <ApiRef />
@@ -212,10 +217,10 @@ resource "port_action" "myAction" {
 
 <TabItem value="ui" label="UI">
 
-1. Go to the [DevPortal Builder page](https://app.getport.io/dev-portal);
-2. Expand the blueprint you want to add an action to;
-3. Select the actions button from the 3 dots menu;
-4. Enter the JSON specification of your desired action.
+1. 请访问[DevPortal Builder page](https://app.getport.io/dev-portal) ；
+2. 展开要添加操作的蓝图；
+3. 从 3 点菜单中选择动作按钮；
+4. 输入所需操作的 JSON 规范。
 
 </TabItem>
 
