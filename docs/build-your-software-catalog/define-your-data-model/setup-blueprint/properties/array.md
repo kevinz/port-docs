@@ -9,7 +9,7 @@ import ApiRef from "../../../../api-reference/_learn_more_reference.mdx"
 import Tabs from "@theme/Tabs"
 import TabItem from "@theme/TabItem"
 
-# 阵列
+# 数组
 
 数组是一种用于保存数据列表的数据类型。
 
