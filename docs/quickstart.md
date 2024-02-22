@@ -76,7 +76,7 @@ In this walkthrough, we will go over the components in your portal and learn abo
 
 ---
 
-### 自助行动
+### 自助action
 
 Port 允许您创建灵活的、受权限控制的操作，供开发人员使用。 操作是通过门户网站的[self-service](https://app.getport.io/self-serve) 页面创建和执行的。
 

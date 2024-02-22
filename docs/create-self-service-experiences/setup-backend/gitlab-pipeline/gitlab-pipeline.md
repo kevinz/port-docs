@@ -1,4 +1,4 @@
-# GitLab Pipelines 行动
+# GitLab Pipelines action
 
 Port 的 GitLab Pipeline Action 可使用客户提供的输入和[`port_payload`](../../self-service-actions-deep-dive/self-service-actions-deep-dive.md#action-message-structure) 触发[GitLab Pipeline](https://docs.gitlab.com/ee/ci/pipelines/) 。
 

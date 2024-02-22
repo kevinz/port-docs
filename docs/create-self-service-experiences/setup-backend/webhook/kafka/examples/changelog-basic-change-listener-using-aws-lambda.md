@@ -545,7 +545,7 @@ aws lambda create-event-source-mapping --topics YOUR_ORG_ID.change.log --source-
 
 ## Reacting to changes
 
-现在，您已经为 Lambda 函数配置了 Kafka 触发器，服务目录中的每次更改都会在您在触发器中指定的专用 Kafka 主题中生成一条新消息。 该消息将被发送到您部署的 Lambda 函数，其中包含了解发生了什么更改所需的所有输入数据，以便您可以自此采取相应的行动。
+现在，您已经为 Lambda 函数配置了 Kafka 触发器，服务目录中的每次更改都会在您在触发器中指定的专用 Kafka 主题中生成一条新消息。 该消息将被发送到您部署的 Lambda 函数，其中包含了解发生了什么更改所需的所有输入数据，以便您可以自此采取相应的action。
 
 有关托管 Apache Kafka 触发器数据格式的更多信息，请参阅[AWS docs](https://docs.aws.amazon.com/lambda/latest/dg/with-kafka.html) 。你在 `lambda_handler` 函数中编写的代码已经对所有新消息进行过解析、解码并转换为 python 字典，以方便使用。
 

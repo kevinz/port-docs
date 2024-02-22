@@ -624,7 +624,7 @@ Self-Service Action 的每次调用都会发布一条新的 "run "消息(具有�
 
 * `entity` - 执行运行的实体(在 `DAY-2` 或 `DELETE` 的情况下，对于 `CREATE` 它将为空)。
 * `action` - 被触发的操作的定义，包括所有操作配置，包括预期的 `userInputs`, `description` 等。
-* `properties` - 此键包括开发人员在执行动作时提供的 Values。此对象中的键与动作定义中的 `userInputs` 键下定义的键相匹配。
+* `properties` - 此键包括开发人员在执action作时提供的 Values。此对象中的键与动作定义中的 `userInputs` 键下定义的键相匹配。
 
 下面是一个 `CREATE` 操作的 `payload` 对象示例: 
 

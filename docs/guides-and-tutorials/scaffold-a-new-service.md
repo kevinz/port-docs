@@ -10,7 +10,7 @@ import PortTooltip from "/src/components/tooltip/tooltip.jsx"
 
 # 新服务脚手架
 
-本指南只需 7 分钟即可完成，旨在展示 Port 中自助行动的力量。
+本指南只需 7 分钟即可完成，旨在展示 Port 中自助action的力量。
 
 :::tip  先决条件
 
@@ -211,11 +211,11 @@ import PortTooltip from "/src/components/tooltip/tooltip.jsx"
 
 最后一步是自定义动作的权限。 为简单起见，我们将使用默认设置。 欲了解更多信息，请参阅[permissions](/create-self-service-experiences/set-self-service-actions-rbac/) 页面。 点击 "创建"。
 
-行动的前端已准备就绪 🥳
+action的前端已准备就绪 🥳
 
 <br/>
 
-#### 设置行动的后端
+#### 设置action的后端
 
 现在，我们要编写我们的操作将触发的逻辑。
 

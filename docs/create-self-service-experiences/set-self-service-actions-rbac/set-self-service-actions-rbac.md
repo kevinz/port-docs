@@ -26,7 +26,7 @@ Provider 提供细粒度控制，确保每个用户只能执行和调用与其�
 * 指定新的集群供应请求需要 DevOps 团队手动批准；
 * 等等。
 
-## 配置行动权限
+## 配置action权限
 
 创建/编辑自助操作时，可以使用以下方法之一设置权限: 
 
@@ -55,7 +55,7 @@ Port 的 Terraform Provider 允许您通过 Terraform 控制权限。单击[here
 
 您可以为您的操作设置手动审批步骤。
 
-在某项行动可能具有危险性、破坏性、代价高昂的情况下，或者在组织政策规定在继续执行前必须进行额外审查的情况下，该功能尤为有用。
+在某项action可能具有危险性、破坏性、代价高昂的情况下，或者在组织政策规定在继续执行前必须进行额外审查的情况下，该功能尤为有用。
 
 当用户点击需要审批的操作的 "执行 "按钮时，将在 Port 中创建一个新的 "运行 "对象，该 "运行 "对象的状态为 "WAITING_FOR_APPROVAL"，并在操作的 "运行 "选项卡中可见。
 
@@ -108,6 +108,6 @@ Port 的 Terraform Provider 允许您通过 Terraform 控制权限。单击[here
 
 单击[here](/docs/create-self-service-experiences/set-self-service-actions-rbac/examples.md#setting-up-a-slack-notification) 了解如何向 Slack 发送手动审批请求。
 
-### 自助行动 RBAC 示例
+### 自助action RBAC 示例
 
 有关 Port RBAC 的实际示例，请参阅[examples](./examples.md) 页面。

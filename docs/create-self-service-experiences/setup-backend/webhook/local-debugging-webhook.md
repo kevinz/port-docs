@@ -350,7 +350,7 @@ app.listen(port, () => {
 node index.js
 ```
 
-## 触发行动
+## 触发action
 
 登录 Port 并转到虚拟机页面，通过**创建虚拟机**操作按钮触发操作: 
 

@@ -105,5 +105,5 @@ REQUESTS_CA_BUNDLE=/path/to/cacert.pem
 请按照以下指南之一进行操作: 
 
 * [Self-Service Actions Deep Dive](/create-self-service-experiences/self-service-actions-deep-dive/self-service-actions-deep-dive.md) - 设置蓝图和自助操作。
-* [Changelog Listener](/create-self-service-experiences/setup-backend/webhook/examples/changelog-listener.md) - 创建一个带有 `changelogDestination` 的蓝图，以监听软件目录中的变更并采取相应行动。
+* [Changelog Listener](/create-self-service-experiences/setup-backend/webhook/examples/changelog-listener.md) - 创建一个带有 `changelogDestination` 的蓝图，以监听软件目录中的变更并采取相应action。
 * [GitLab Pipeline Trigger](/create-self-service-experiences/setup-backend/gitlab-pipeline/gitlab-pipeline.md) - 创建一个可触发 GitLab Pipelines 执行的操作。

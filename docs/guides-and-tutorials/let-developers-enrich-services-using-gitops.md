@@ -144,7 +144,7 @@ import FindCredentials from "/docs/build-your-software-catalog/sync-data-to-cata
 
 <br/>
 
-#### 创建一个行动来丰富服务
+#### 创建一个action来丰富服务
 
 作为平台工程师，我们希望让开发人员能够自行执行某些操作。 让我们创建一个操作，开发人员可以用它将数据添加到服务中，并将其分配到域中。
 

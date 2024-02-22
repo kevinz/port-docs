@@ -1,4 +1,4 @@
-# 圈 CI 行动
+# Circle CI Action 
 
 Port's Circle CI Action 可以使用客户提供的输入和[`port_payload`](../../self-service-actions-deep-dive/self-service-actions-deep-dive.md#action-message-structure) ，触发[new pipeline](https://circleci.com/docs/api/v2/index.html?utm_source=google&amp;utm_medium=sem&amp;utm_campaign=sem-google-dg--emea-en-dsa-tCPA-auth-nb&amp;utm_term=g_-_c__dsa_&amp;utm_content=&amp;gclid=Cj0KCQiAmNeqBhD4ARIsADsYfTeWb6EyzetX9OD0cFdfR--Tt8oOEf8CXnhyoRT46HMCGgbbVytPWG0aAloJEALw_wcB#operation/triggerPipeline)。
 

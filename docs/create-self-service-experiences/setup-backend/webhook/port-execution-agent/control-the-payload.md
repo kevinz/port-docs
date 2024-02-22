@@ -175,7 +175,7 @@ controlThePayloadConfig: |
 }
 ```
 
-## 向 Port 报告行动状态
+## 向 Port 报告action状态
 
 代理可使用映射中的 "report "字段向 Port 报告操作状态。
 

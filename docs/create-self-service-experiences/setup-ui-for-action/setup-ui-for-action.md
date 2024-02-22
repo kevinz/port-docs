@@ -22,7 +22,7 @@ import TabItem from "@theme/TabItem"
 
 Port 支持各种输入类型，包括构建带有条件和步骤的向导，以最佳方式满足用户的体验需求。
 
-设置行动包括以下步骤: 
+设置action包括以下步骤: 
 
 1. **Define[action information](#structure-table)** - title, icon, description 和相关的[blueprint](../../build-your-software-catalog/define-your-data-model/setup-blueprint/setup-blueprint.md) ；
 2. **选择[user inputs](#userinputs---form--wizard-ui)** - 通过指定用户需要填写的输入类型来创建类似向导的体验，同时还包括输入验证；
@@ -33,7 +33,7 @@ Port 支持各种输入类型，包括构建带有条件和步骤的向导，以
 
 5. **配置 RBAC 和防护栏**--这一可选步骤可让你选择谁可以触发操作，操作是否需要管理员手动批准，以及谁有批准或驳回请求的权限。
 
-## 💡 共同行动
+## 💡 共同action
 
 例如，操作可被引用来执行您选择的任何逻辑: 
 
@@ -53,7 +53,7 @@ Port 支持各种输入类型，包括构建带有条件和步骤的向导，以
 
 在[live demo](https://demo.getport.io/self-serve) 示例中，我们可以看到带有示例操作的自助服务枢纽页面。
 
-## 行动结构
+## action结构
 
 每个操作都由[Json schema](https://json-schema.org/) 表示，如下节所示: 
 

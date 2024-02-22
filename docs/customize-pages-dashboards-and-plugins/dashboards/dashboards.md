@@ -114,7 +114,7 @@ Port 支持小部件形式的各种可视化功能，让您可以使用图形元
 * * [Initial filters](/customize-pages-dashboards-and-plugins/page/catalog-page/#initial-filters)
 * [Excluded properties](/customize-pages-dashboards-and-plugins/page/catalog-page/#excluded-properties)
 
-#### 行动运行
+#### action运行
 
 通过该小工具，您可以在门户网站上创建一个表格，显示[self-service action](/create-self-service-experiences) 过去的所有运行情况。该表格将自动显示每次运行的相关数据，包括状态、输入参数、执行用户等。
 

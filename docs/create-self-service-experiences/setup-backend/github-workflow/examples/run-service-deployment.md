@@ -291,7 +291,7 @@ print(response.json())
 
 自助服务操作配置完成后，就可以开始调用了。
 
-## 触发行动
+## 触发action
 
 让我们使用 Port API 引用自助服务操作。
 

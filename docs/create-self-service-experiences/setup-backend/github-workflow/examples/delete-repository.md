@@ -12,7 +12,7 @@ import PortTooltip from "/src/components/tooltip/tooltip.jsx";
 
 1. 点击[here](https://github.com/apps/getport-io/installations/new) 安装 Port 的 GitHub 应用程序。
 2. 本指南假定存在代表您的版本库的蓝图。如果您还没有这样做，请先参考[guide](/build-your-software-catalog/sync-data-to-catalog/git/github/examples#mapping-repositories-file-contents-and-pull-requests) 开始 GitHub 数据模型的设置。
-3. 包含行动资源(即 Github 工作流文件)的资源库。
+3. 包含action资源(即 Github 工作流文件)的资源库。
 
 ## Guide
 

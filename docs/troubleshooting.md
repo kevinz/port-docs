@@ -99,7 +99,7 @@ https://app.getport.io/?error=access_denied&error_description=access_denied%20(U
 
 ---
 
-## 行动
+## action
 
 #### 在 Port 中触发一个操作后，为什么会停留在 "进行中"，而 Git Providers 中什么也没发生？
 

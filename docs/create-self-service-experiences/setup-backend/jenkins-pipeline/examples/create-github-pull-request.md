@@ -58,9 +58,9 @@ import FindCredentials from "/docs/build-your-software-catalog/sync-data-to-cata
 
 7.最后一步是自定义操作权限。为简单起见，我们将被引用默认设置。更多信息，请参阅[permissions](/create-self-service-experiences/set-self-service-actions-rbac/) 页面。单击 "创建"。
 
-行动的前端已准备就绪 🥳
+action的前端已准备就绪 🥳
 
-#### 设置行动的后端
+#### 设置action的后端
 
 现在，我们要编写我们的操作将触发的 Jenkins Pipelines。
 

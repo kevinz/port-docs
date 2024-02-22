@@ -682,7 +682,7 @@ aws lambda create-event-source-mapping --topics YOUR_ORG_ID.runs --source-access
           --self-managed-event-source '{"Endpoints":{"KAFKA_BOOTSTRAP_SERVERS":["b-1-public.publicclusterprod.t9rw6w.c1.kafka.eu-west-1.amazonaws.com:9196", "b-2-public.publicclusterprod.t9rw6w.c1.kafka.eu-west-1.amazonaws.com:9196", "b-3-public.publicclusterprod.t9rw6w.c1.kafka.eu-west-1.amazonaws.com:9196"]}}'
 ```
 
-## 触发行动
+## 触发action
 
 现在，Lambda 已配置了 Kafka 触发器，每次操作调用都会在触发器中指定的专用 Kafka 主题中生成一条新消息。 该消息将与操作调用所需的所有输入数据一起发送到您部署的 Lambda 函数。
 

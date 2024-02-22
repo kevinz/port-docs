@@ -1,4 +1,4 @@
-# Kafka 自助行动
+# Kafka 自助action
 
 Port 为每个客户管理一个发布执行运行请求的 Kafka Topic。
 
@@ -11,7 +11,7 @@ Port 为每个客户管理一个发布执行运行请求的 Kafka Topic。
 1. Port 向 Kafka 发布调用的 "Action "或 "Change "消息；
 2. 一个安全的 Kafka 主题会保存所有的操作调用和更改；
 
-:::note  关于主题 行动和更改主题是分开的，它们的格式是
+:::note  关于主题 action和更改主题是分开的，它们的格式是
 
 * 操作主题 - `ORG_ID.runs`
 * 更改主题 - `ORG_ID.change.logging

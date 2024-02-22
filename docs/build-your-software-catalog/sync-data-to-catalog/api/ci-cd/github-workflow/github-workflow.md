@@ -14,7 +14,7 @@ import TabItem from "@theme/TabItem"
 
 ![Github Illustration](/img/build-your-software-catalog/sync-data-to-catalog/github/github-action-illustration.jpg)
 
-:::tip  公共仓库 我们的 GitHub 行动是开源的，请参见[**here**](https://github.com/port-labs/port-github-action)
+:::tip  公共仓库 我们的 GitHub action是开源的，请参见[**here**](https://github.com/port-labs/port-github-action)
 
 :::
 
