@@ -1,4 +1,4 @@
-# 反映行动进展
+# 反映action进展
 
 import Tabs from "@theme/Tabs"
 import TabItem from "@theme/TabItem"
@@ -115,7 +115,7 @@ import TabItem from "@theme/TabItem"
 
 </details>
 
-## 行动运行结构
+## action运行结构
 
 ### `CREATE` 动作触发器
 
@@ -246,7 +246,7 @@ import TabItem from "@theme/TabItem"
 
 </Tabs>
 
-### `DAY-2` 行动触发器
+### `DAY-2` action触发器
 
 DAY-2 "自助服务操作的操作运行与 "创建 "自助服务操作的操作运行非常相似，主要区别在于操作运行对象中也提供了调用操作的实体。
 
@@ -394,7 +394,7 @@ DAY-2 "自助服务操作的操作运行与 "创建 "自助服务操作的操作
 
 </Tabs>
 
-## 更新行动运行
+## 更新action运行
 
 :::info  Github 后端 使用 "Github 工作流 "作为动作后端时，将提供 "报告工作流状态 "选项，默认设置为 "是"。 使用该选项时，Port 将根据 Github 工作流的结果自动将动作运行状态更新为 "SUCCESS "或 "FAILURE"，因此无需手动更新。
 
@@ -473,7 +473,7 @@ API 返回以下响应:
 }
 ```
 
-:::info 请注意我们的行动运行是如何更新的: 
+:::info 请注意我们的action运行是如何更新的: 
 
 * `status` - 已更新为 `SUCCESS`；
 * `endedAt` - 现在能正确显示操作运行的更新时间；
@@ -548,11 +548,11 @@ API 返回以下响应:
 
 </Tabs>
 
-## 将实体绑定到行动运行中
+## 将实体绑定到action运行中
 
 您还可以通过在每个创建或更改实体的 API 路由(即对 `https://api.getport.io/v1/blueprints/{blueprint_id}/entities/{entity_id}` 路由的 `POST`、`PUT`、`PATCH` 和 `DELETE` 请求)中附加 `run_id` 查询参数，为动作运行添加额外的上下文和元数据。通过添加 `run_id` 参数，您可以将对实体所做的更改反映为动作运行在其运行期间所执行的步骤集的一部分。
 
-:::tip 只有当行动运行处于 "IN_PROGRESS "状态时，才能将实体与行动运行绑定。
+:::tip 只有当action运行处于 "IN_PROGRESS "状态时，才能将实体与action运行绑定。
 
 :::
 
