@@ -32,7 +32,7 @@ Port 可为您提供自定义 webhook 端点，您可以将其用作您所引用
 
 自定义映射利用[JQ JSON processor](https://stedolan.github.io/jq/manual/) 对来自 webhook 有效负载的现有字段和值进行选择、修改、连接、转换和其他操作。
 
-:::tip 通过被引用 webhook 映射，你可以创建/更新一个完整的实体，也可以选择只更新实体上的一个属性。
+:::tip 通过被用于 webhook 映射，你可以创建/更新一个完整的实体，也可以选择只更新实体上的一个属性。
 
 :::
 
@@ -282,7 +282,7 @@ resource "port_webhook" "myWebhook" {
 
 :::note 
 
-* 任何 JQ 表达式都可以在此被引用，只要它的 evaluated 指向一个项目数组。
+* 任何 JQ 表达式都可以在此被用于，只要它的 evaluated 指向一个项目数组。
 * 项目 "将作为一个键添加到 JQ 上下文中，该键包含对 "itemsToParse "中指定的数组中的项目的引用。可以使用 `.item.KEY_NAME`语法访问数组中对象的键，更多信息请参阅示例 JSON。
 
 :::
@@ -504,7 +504,7 @@ resource "port_webhook" "myWebhook" {
 
 API 响应将包括 webhook 的完整配置，包括以下重要字段: 
 
-* `webhookKey` - 这是您创建的新通用 webhook 路由被引用的唯一标识符；
+* `webhookKey` - 这是您创建的新通用 webhook 路由被用于的唯一标识符；
 * `url` - 这是您需要传递给第三方网络钩子配置的完整 URL。与您创建的 webhook 配置相匹配的事件有效载荷应发送到此 URL；
     - url "的格式为https://ingest.getport.io/{webhookKey}`；
     - **注意: ** `https://ingest.getport.io`是不变的，只有`webhookKey`会在不同的网络钩子配置之间发生变化。

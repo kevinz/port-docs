@@ -20,7 +20,7 @@ import JiraServerConfigurationPython from "../webhook/examples/resources/jira-se
 
 :::
 
-## 常见被引用情况
+## 常见被用于情况
 
 * 映射 Jira 组织环境中的问题和项目。
 * 实时关注对象变更(创建/更新/删除)，并自动将变更应用到 Port 中的实体。
@@ -367,7 +367,7 @@ resources:
 
 集成配置决定了将从 Jira 查询哪些资源，以及将在 Port 中创建哪些实体和属性。
 
-:::tip  支持的资源 (`Kind`) 以下资源可被引用来映射来自 Jira 的数据，可以引用下面链接的 API 响应中出现的任何字段来进行映射配置。
+:::tip  支持的资源 (`Kind`) 以下资源可被用于来映射来自 Jira 的数据，可以引用下面链接的 API 响应中出现的任何字段来进行映射配置。
 
 * * [`Project`](https://developer.atlassian.com/cloud/jira/platform/rest/v3/api-group-projects/#api-rest-api-3-project-search-get)
 * [`Issue`](https://developer.atlassian.com/cloud/jira/platform/rest/v3/api-group-issue-search/#api-rest-api-3-search-get)
@@ -989,7 +989,7 @@ resources:
 4. 在左侧边栏底部的**高级**下，选择**Webhooks**；
 5. 点击**创建 Webhook**
 6. 输入以下详细信息: 
-    1. 名称"- 被引用一个有意义的名称，如 Port Webhook；
+    1. 名称"- 被用于一个有意义的名称，如 Port Webhook；
     2. 状态"--请确保网络钩子已**启用**；
     3. Webhook URL` - 输入创建 Webhook 配置后收到的 `url` 键的值；
     4. `Description` - 输入 webhook 的描述；

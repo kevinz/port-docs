@@ -109,7 +109,7 @@ options:
 
 :::tip  IAM 权限 确保运行 webhook 的服务账户或 API 密钥具有运行 Cloud Build 管道的权限。 按照 Google 的指南了解如何获取 API 密钥[here](https://cloud.google.com/build/docs/automate-builds-webhook-events#optional_obtaining_an_api_key)
 
-此外，如果您将 webhook 触发器配置为被引用服务帐户，Google 会要求在 `cloudbuild.yaml` 文件中任选一个: 
+此外，如果您将 webhook 触发器配置为被用于服务帐户，Google 会要求在 `cloudbuild.yaml` 文件中任选一个: 
 
 1. 指定 "build.logs_bucket"。此选项允许将构建日志存储在 Google 云存储桶中。请使用以下配置引用此设置: 
 

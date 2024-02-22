@@ -329,7 +329,7 @@ import BitbucketServerPythonScript from "./resources/bitbucket-server/_example_b
 * `PORT_CLIENT_ID` - 您的 Port 客户端 ID
 * `PORT_CLIENT_SECRET` - 您的 Port 客户端secret
 * `BITBUCKET_HOST` - Bitbucket 服务器主机，例如 `http://localhost:7990`.
-* `BITBUCKET_USERNAME` - 访问 Bitbucket 资源时被引用的 Bitbucket 用户名
+* `BITBUCKET_USERNAME` - 访问 Bitbucket 资源时被用于的 Bitbucket 用户名
 * `BITBUCKET_PASSWORD` - Bitbucket 账号密码
 
 :::info 使用以下命令查找您的 Port 凭据[guide](https://docs.getport.io/build-your-software-catalog/sync-data-to-catalog/api/#find-your-port-credentials)

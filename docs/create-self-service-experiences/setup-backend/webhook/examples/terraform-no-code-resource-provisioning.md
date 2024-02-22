@@ -14,7 +14,7 @@ Port 的 Terraform Provider 与 Port 的[self-service actions](../../../create-s
 
 下面的示例将演示如何设置自助操作，以创建 S3 存储桶、更改其 ACL(Day-2 操作)和删除它们。
 
-该示例被引用了一个用 Go 编写的后端，它利用 Terraform 模板来执行上述操作。
+该示例被用于了一个用 Go 编写的后端，它利用 Terraform 模板来执行上述操作。
 
 :::info 完整示例见[**HERE**](https://github.com/port-labs/terraform-connector) 。
 

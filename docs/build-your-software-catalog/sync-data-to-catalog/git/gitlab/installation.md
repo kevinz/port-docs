@@ -29,7 +29,7 @@ import AdvancedConfig from '../../../../generalTemplates/_ocean_advanced_configu
 
 ## 创建 GitLab 组访问令牌
 
-组访问令牌可被引用到其生成的组，以及其下的所有子组。
+组访问令牌可被用于到其生成的组，以及其下的所有子组。
 
 GitLab 集成能够查询多个 GitLab 根组，为此需要多个组访问令牌，每个令牌都位于正确的根组。
 
@@ -139,7 +139,7 @@ GitLab 集成支持监听 GitLab webhooks 并相应更新 Port 中的相关实�
 
 :::
 
-1. 使用 `tokenMapping` 参数在 GitLab 中被引用一个具有管理权限的令牌。
+1. 使用 `tokenMapping` 参数在 GitLab 中被用于一个具有管理权限的令牌。
     - 选择该选项时，集成将自动在 GitLab 账户中创建系统钩子。
 2.手动创建系统钩子
     - 请按照在 GitLab[here](https://docs.gitlab.com/ee/administration/system_hooks.html#create-a-system-hook) 中创建系统钩子的说明操作。

@@ -60,7 +60,7 @@ export CUSTOM_BP_PATH="https://raw.githubusercontent.com/port-labs/template-asse
 
 使用 `CONFIG_YAML_URL` 参数，可以定义自定义资源映射，以便在安装导出程序时使用。
 
-在本例中，您将被引用 ** [this configuration file](https://github.com/port-labs/template-assets/blob/main/kubernetes/kubernetes_v1_config.yaml)**。为此，请运行
+在本例中，您将被用于 ** [this configuration file](https://github.com/port-labs/template-assets/blob/main/kubernetes/kubernetes_v1_config.yaml)**。为此，请运行
 
 ```bash showLineNumbers
 export CONFIG_YAML_URL="https://raw.githubusercontent.com/port-labs/template-assets/main/kubernetes/kubernetes_v1_config.yaml"
@@ -79,7 +79,7 @@ curl -s https://raw.githubusercontent.com/port-labs/template-assets/main/kuberne
 
 ## 摘要
 
-在这种被引用的情况下，您可以使用安装脚本: 
+在这种被用于的情况下，您可以使用安装脚本: 
 
 * 通过创建定义不同 k8s 资源的蓝图来设置 Port 环境；
 * 通过配置安装 Port 的 k8s 导出器，以便从集群导出重要数据；

@@ -109,7 +109,7 @@ stages:
 
 要了解如何生成与 Port 交互的 API 令牌，请访问[here](../../../../build-your-software-catalog/sync-data-to-catalog/api/#generate-an-api-token) 。
 
-要更新 Port 中的操作状态，请在 Azure 管道中被引用以下 API 调用: 
+要更新 Port 中的操作状态，请在 Azure 管道中被用于以下 API 调用: 
 
 ```bash
 curl -X PATCH \

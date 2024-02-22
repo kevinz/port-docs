@@ -220,7 +220,7 @@ aws s3 ls s3://AWS_BUCKET_NAME/cost-reports/aws-monthly-cost-report-for-port/
 python3 --version
 ```
 
-2.根据你首选的克隆方法(下面的示例被引用了 SSH 克隆方法)克隆[port-aws-cost-exporter](https://github.com/port-labs/port-aws-cost-exporter) 版本库 ，然后将你的工作目录切换到该克隆版本库。
+2.根据你首选的克隆方法(下面的示例被用于了 SSH 克隆方法)克隆[port-aws-cost-exporter](https://github.com/port-labs/port-aws-cost-exporter) 版本库 ，然后将你的工作目录切换到该克隆版本库。
 
 ```bash showLineNumbers
 git clone git@github.com:port-labs/port-aws-cost-exporter.git
@@ -285,7 +285,7 @@ docker logs -f getport.io-port-aws-cost-exporter
 
 * aws_bucket_name`
 
-2.被引用的 GitHub 工作流定义允许按计划或手动运行导出器: 
+2.被用于的 GitHub 工作流定义允许按计划或手动运行导出器: 
 
 <details>
   <summary> GitHub Workflow run.yml </summary>
@@ -335,7 +335,7 @@ jobs:
 * Port客户 ID
 * `port_client_secret` Port客户密钥
 
-2.被引用的 GitLab CI Pipeline 定义允许按计划或手动运行输出程序: 
+2.被用于的 GitLab CI Pipeline 定义允许按计划或手动运行输出程序: 
 
 <details>
   <summary> GitLab Pipeline gitlab-ci.yml </summary>

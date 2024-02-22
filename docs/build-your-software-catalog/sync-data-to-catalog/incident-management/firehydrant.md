@@ -13,7 +13,7 @@ import AdvancedConfig from '../../../generalTemplates/_ocean_advanced_configurat
 
 我们的 FireHydrant 集成可让您根据映射和定义，从 FireHydrant 账户将 "环境"、"服务"、"事件 "和 "回顾 "导入 Port。
 
-## 常见被引用情况
+## 常见被用于情况
 
 * 在您的 FireHydrant 账户中映射 "环境"、"服务"、"事件 "和 "回顾"。
 * 实时观察对象更改(创建/更新/删除)，并自动将更改应用到 Port 中的实体。
@@ -326,7 +326,7 @@ FireHydrant 集成使用 YAML 配置来描述将数据加载到开发者门户�
 
 集成配置决定了从 FireHydrant 中查询哪些资源，以及在 Port 中创建哪些实体和属性。
 
-:::tip  支持的资源 以下资源可被引用来映射 FireHydrant 的数据，可以引用下面链接的 API 响应中出现的任何字段来进行映射配置。
+:::tip  支持的资源 以下资源可被用于来映射 FireHydrant 的数据，可以引用下面链接的 API 响应中出现的任何字段来进行映射配置。
 
 * * [`Environment`](https://developers.firehydrant.com/#/operations/getV1Environments)
 * [`Service`](https://developers.firehydrant.com/#/operations/getV1Services)
@@ -404,7 +404,7 @@ FireHydrant 集成使用 YAML 配置来描述将数据加载到开发者门户�
 
 #### 将数据输入Port
 
-要使用[integration configuration](#configuration-structure) 被引用 FireHydrant 对象，可以按照以下步骤操作: 
+要使用[integration configuration](#configuration-structure) 被用于 FireHydrant 对象，可以按照以下步骤操作: 
 
 1. 转到 DevPortal Builder 页面。
 2. 选择要被 FireHydrant 引用的蓝图。

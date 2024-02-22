@@ -15,7 +15,7 @@ import OpsGenieAlertConfiguration from "../webhook/examples/resources/opsgenie/_
 
 我们的 Opsgenie 集成允许您根据映射和定义，将 Opsgenie 账户中的 "警报"、"服务 "和 "事件 "导入 Port。
 
-## 常见被引用情况
+## 常见被用于情况
 
 * 在您的 Opsgenie 账户中映射 "警报"、"服务 "和 "事件"。
 * 实时观察对象更改(创建/更新/删除)，并自动将更改应用到您的 Port 实体中。
@@ -328,7 +328,7 @@ Opsgenie 集成使用 YAML 配置来描述将数据加载到开发人员门户�
 
 集成配置决定了从 Opsgenie 查询哪些资源，以及在 Port 中创建哪些实体和属性。
 
-:::tip  支持的资源 以下资源可被引用来映射来自 Opsgenie 的数据，可以引用下面链接的 API 响应中出现的任何字段来进行映射配置。
+:::tip  支持的资源 以下资源可被用于来映射来自 Opsgenie 的数据，可以引用下面链接的 API 响应中出现的任何字段来进行映射配置。
 
 * * [`Alert`](https://docs.opsgenie.com/docs/alert-api#list-alerts)
 * [`Service`](https://docs.opsgenie.com/docs/service-api#list-services)
@@ -420,7 +420,7 @@ Opsgenie 集成使用 YAML 配置来描述将数据加载到开发人员门户�
 4. 点击**添加集成**；
 5. 在搜索框中输入 _Webhook_ 并选择 webhook 选项；
 6. 输入以下详细信息: 
-    1. 名称"--请被引用一个有意义的名称，如 Port Ocean Webhook；
+    1. 名称"--请被用于一个有意义的名称，如 Port Ocean Webhook；
     2.确保选中 "已启用 "复选框；
     3.选中 "向有效负载添加警报描述 "复选框；
     4.选中 "在有效载荷中添加警报详细信息 "复选框；
@@ -1216,7 +1216,7 @@ resources:
 4. 点击**添加集成**；
 5. 在搜索框中输入 _Webhook_ 并选择 webhook 选项；
 6. 输入以下详细信息: 
-    1. 名称"- 请被引用一个有意义的名称，如 Port Webhook；
+    1. 名称"- 请被用于一个有意义的名称，如 Port Webhook；
     2.确保选中 "已启用 "复选框；
     3.选中 "向有效负载添加警报描述 "复选框；
     4.选中 "在有效载荷中添加警报详细信息 "复选框；

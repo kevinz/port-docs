@@ -189,7 +189,7 @@ Port"、"实体 "和 "映射 "键打开了用于将 Bitbucket API 对象字段�
 * **全局配置: ** 在您的 Workspace 中创建一个 `.bitbucket-private` 仓库，并将 `port-app-config.yml` 文件添加到该仓库；
     - 使用该方法会将配置引用到 Bitbucket Workspace 中的所有版本库(除非该配置被版本库中的细粒度 `port-app-config.yml` 覆盖)；
 * **粒度配置: ** 将 `port-app-config.yml` 文件添加到所需版本库的根目录；
-    - 使用这种方法，配置只被引用到存在 `port-app-config.yml` 文件的版本库。
+    - 使用这种方法，配置只被用于到存在 `port-app-config.yml` 文件的版本库。
 
 当**使用 Bitbucket**进行全局配置时，只有当`port-app-config.yml`文件位于版本库的**默认分支**(通常为`main`)中时，才会引用该文件中指定的配置。
 

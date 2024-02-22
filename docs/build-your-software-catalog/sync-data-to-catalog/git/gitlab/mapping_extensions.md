@@ -12,12 +12,12 @@ import RepositoryBlueprint from './_gitlab_exporter_example_repository_blueprint
 
 不过，在某些情况下，您可能希望将数据映射到 Port，而默认的 JQ 映射是不够的。
 
-可能的被引用案例: 
+可能的被用于案例: 
 
 * 将版本库 README.md 文件内容映射到 Port；
 * 检查版本库中是否存在特定文件；
 * 检查版本库中是否存在特定字符串；
-* 检查版本库中是否被引用了特定版本的 packages；
+* 检查版本库中是否被用于了特定版本的 packages；
 * 检查版本库中是否配置了 CI/CD Pipelines；
 
 ## 将文件内容映射到Port中
@@ -52,7 +52,7 @@ import RepositoryBlueprint from './_gitlab_exporter_example_repository_blueprint
 
 ## 搜索检查
 
-我们可以被引用 GitLab 输出程序对我们的资源库进行搜索检查，以确保它们符合我们组织的政策和标准。
+我们可以被用于 GitLab 输出程序对我们的资源库进行搜索检查，以确保它们符合我们组织的政策和标准。
 
 利用 Port 记分卡和搜索检查功能，组织可以定义对每个存储库执行的一系列检查，检查结果将反映在 Port 中存储库的记分卡中，这将有助于组织识别不符合组织政策和标准的存储库。
 

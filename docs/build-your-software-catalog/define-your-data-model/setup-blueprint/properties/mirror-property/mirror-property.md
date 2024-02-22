@@ -11,7 +11,7 @@ import TabItem from "@theme/TabItem"
 
 # 🪞 镜子属性
 
-镜像属性允许您将相关实体的数据映射到您的实体中。 镜像属性可被引用到具有[relations defined](../../../relate-blueprints/relate-blueprints.md) 的蓝图中。
+镜像属性允许您将相关实体的数据映射到您的实体中。 镜像属性可被用于到具有[relations defined](../../../relate-blueprints/relate-blueprints.md) 的蓝图中。
 
 当两个蓝图通过关系连接时，"源 "蓝图中的实体就可以使用一组新的属性。
 

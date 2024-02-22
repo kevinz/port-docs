@@ -27,9 +27,9 @@ import TabItem from "@theme/TabItem"
 
 ## 💡 共同关系
 
-例如，关系可被引用来表示软件目录中资产之间的逻辑联系: 
+例如，关系可被用于来表示软件目录中资产之间的逻辑联系: 
 
-* 一个**微服务**被引用的**packages**；
+* 一个**微服务**被用于的**packages**；
 * 一个**CI作业**的**运行**历史记录；
 * 一个**云账户中存在的**Kubernetes集群**；
 * 等等。
@@ -135,12 +135,12 @@ resource "port_blueprint" "myBlueprint" {
 #### 💡 常见的多种关系
 
 * 映射服务之间的依赖关系；
-* 映射**服务被引用的**packages**；
-* 映射**服务被引用的**云资源；
+* 映射**服务被用于的**packages**；
+* 映射**服务被用于的**云资源；
 * 映射在**开发环境中部署的**服务；
 * 等等。
 
-在这个[live demo](https://demo.getport.io/developerEnvEntity?identifier=test-shizuko) 示例中，我们可以看到一个特定的开发人员环境及其被引用的运行服务。 🎬
+在这个[live demo](https://demo.getport.io/developerEnvEntity?identifier=test-shizuko) 示例中，我们可以看到一个特定的开发人员环境及其被用于的运行服务。 🎬
 
 #### 多关系结构
 

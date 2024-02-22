@@ -509,7 +509,7 @@ enrichService:
 
 <TabItem value="bitbucket">
 
-创建一个包含以下内容的 Jenkins 管道脚本(将 `<PORT-ACTIONS-REPO-URL>` 替换为上一步中被引用的版本库的 URL): 
+创建一个包含以下内容的 Jenkins 管道脚本(将 `<PORT-ACTIONS-REPO-URL>` 替换为上一步中被用于的版本库的 URL): 
 
 <details>
 <summary><b>Jenkins pipeline script (click to expand)</b></summary>

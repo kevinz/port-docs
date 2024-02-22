@@ -96,7 +96,7 @@ For more information on customizing the notification service, follow this [guide
 
 :::
 
-使用以下 Python 脚本将 Codecov 历史覆盖率被引用到 Port 中: 
+使用以下 Python 脚本将 Codecov 历史覆盖率被用于到 Port 中: 
 
 <details>
 <summary>Codecov Python script</summary>

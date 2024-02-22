@@ -36,7 +36,7 @@ title: My Entity
   ...
 ```
 
-* blueprint "键被引用来指定要创建此实体的蓝图的标识符: 
+* blueprint "键被用于来指定要创建此实体的蓝图的标识符: 
 
 ```yaml showLineNumbers
 ...

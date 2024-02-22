@@ -321,7 +321,7 @@ isNotEmpty` 操作符会检查指定属性的值是否为 `null`:
 
 :::tip 
 
-* `propertySchema` 可被引用到任何 Port[property](../build-your-software-catalog/define-your-data-model/setup-blueprint/properties/properties.md#supported-properties) ；
+* `propertySchema` 可被用于到任何 Port[property](../build-your-software-catalog/define-your-data-model/setup-blueprint/properties/properties.md#supported-properties) ；
 * 在执行属性模式搜索时，`propertySchema` 可取代`property` 过滤器。
 
 :::

@@ -2,7 +2,7 @@
 sidebar_position: 1
 title: GCP 资产清单
 
-description: 使用 Terraform 被引用的通用资产信息
+description: 使用 Terraform 被用于的通用资产信息
 
 ---
 

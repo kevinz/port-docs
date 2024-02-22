@@ -21,7 +21,7 @@ Port's[API](../../../api-reference/api-reference.mdx) 是一个通用接口，�
 
 由于 Port API 是一个通用接口，因此任何可以通过 Port 实现的功能都可以通过 API 实现，例如
 
-* 被引用脚本更新软件目录；
+* 被用于脚本更新软件目录；
 * 从 CSV 文件导入现有资产目录；
 * 将 Port 与您自定义的 CI/CD 集成；
 * 报告正在运行的 **CI 作业的状态；
@@ -131,7 +131,7 @@ access_token=$(curl --location --request POST 'https://api.getport.io/v1/auth/ac
 
 #### 设置
 
-要被引用 Port 的 REST API，您需要执行以下步骤: 
+要被用于 Port 的 REST API，您需要执行以下步骤: 
 
 1. 查找您的[Port credentials](../api/api.md#find-your-port-credentials) ；
 2. 将它们保存为 secrets 或以其他相同方式保存，以便在代码或 CI/CD 流程中引用；
@@ -142,7 +142,7 @@ access_token=$(curl --location --request POST 'https://api.getport.io/v1/auth/ac
 
 由于您直接引用的是 Provider 的 REST API，因此 API 提供的任何方法都可以使用。
 
-我们将重点关注三个具体的被引用案例: 
+我们将重点关注三个具体的被用于案例: 
 
 * **获取**目录实体--可通过 HTTP GET 向`https://api.getport.io/v1/blueprints/{blueprint_identifier}/entities/{entity_identifier}`提出请求，接收现有实体的标识符并将其引用到 CI 中；
 * **创建/更新**目录实体--可通过 HTTP POST 向 `https://api.getport.io/v1/blueprints/{blueprint_identifier}/entities/` 提出请求，接收新实体或需要更新的实体的标识符和其他属性；

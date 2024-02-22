@@ -18,7 +18,7 @@ import AdvancedConfig from '../../../generalTemplates/_ocean_advanced_configurat
 * 一个 `sc_catalog` 对应 ServiceNow 中的服务目录。
 * 事件 "代表 ServiceNow 中的事件和票单。
 
-## 常见被引用情况
+## 常见被用于情况
 
 * 映射 ServiceNow 帐户中的 `sys_user_group`、`sc_catalog` 和 `incident` 。
 

@@ -56,4 +56,4 @@ PORT_CLIENT_SECRET=<YOUR PORT CLIENT SECRET>
 
 这将把所有规范文件下载到本地计算机，然后将它们推送到 GitOps 仓库并开始管理。
 
-要了解更多关于被引用 GitOps 管理 Port 实体的信息，请参阅[GitHub](/build-your-software-catalog/sync-data-to-catalog/git/github/gitops/gitops.md) 和[Bitbucket](/build-your-software-catalog/sync-data-to-catalog/git/bitbucket/gitops/gitops.md) GitOps 页面。
+要了解更多关于被用于 GitOps 管理 Port 实体的信息，请参阅[GitHub](/build-your-software-catalog/sync-data-to-catalog/git/github/gitops/gitops.md) 和[Bitbucket](/build-your-software-catalog/sync-data-to-catalog/git/bitbucket/gitops/gitops.md) GitOps 页面。

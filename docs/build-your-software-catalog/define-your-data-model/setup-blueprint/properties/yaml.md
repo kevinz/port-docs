@@ -1,6 +1,6 @@
 ---
 sidebar_position: 20
-description: Yaml 是一种数据类型，被引用来保存 YAML 中的对象定义
+description: Yaml 是一种数据类型，被用于来保存 YAML 中的对象定义
 
 ---
 
@@ -11,7 +11,7 @@ import TabItem from "@theme/TabItem"
 
 # Yaml
 
-Yaml 是一种数据类型，被引用来保存 YAML 中的对象定义。
+Yaml 是一种数据类型，被用于来保存 YAML 中的对象定义。
 
 ## 💡 常见的 yaml Usage
 

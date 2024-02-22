@@ -9,7 +9,7 @@ import AdvancedConfig from '../../../generalTemplates/_ocean_advanced_configurat
 
 通过 OpenCost 集成，您可以根据您的映射和定义从 OpenCost 实例将 "成本 "导入 Port。
 
-## 常见被引用情况
+## 常见被用于情况
 
 * 在 OpenCost 中映射受监控的 Kubernetes 资源和成本分配。
 
@@ -25,7 +25,7 @@ import AdvancedConfig from '../../../generalTemplates/_ocean_advanced_configurat
 
 <TabItem value="real-time-always-on" label="Real Time & Always On" default>
 
-被引用此安装选项意味着集成将能实时更新 Port。
+被用于此安装选项意味着集成将能实时更新 Port。
 
 本表总结了安装时可用的参数，请在下面的脚本中按自己的需要进行设置，然后复制并在终端运行: 
 
@@ -355,7 +355,7 @@ resources:
 
 集成配置决定了从 OpenCost 中查询哪些资源，以及在 Port 中创建哪些实体和属性。
 
-:::tip  支持的资源 以下资源可被引用用于映射 OpenCost 中的数据，可以引用下面链接的 API 响应中出现的任何字段进行映射配置。
+:::tip  支持的资源 以下资源可被用于用于映射 OpenCost 中的数据，可以引用下面链接的 API 响应中出现的任何字段进行映射配置。
 
 * * [`Cost`](https://www.opencost.io/docs/integrations/api-examples)
 
@@ -406,7 +406,7 @@ resources:
 * **window** - 要查询的时间长度。接受: "today"、"week"、"month"、"yesterday"、"lastweek"、"lastmonth "等单词；"30m"、"12h"、"7d "等持续时间；"2021-01-02T15:04:05Z,2021-02-02T15:04:05Z "等 RFC3339 日期对；"1578002645,1580681045 "等 Unix 时间戳。
 * **aggregate** - 用于汇总结果的字段。接受: 集群"、"节点"、"名称空间"、"控制器类型"、"控制器"、"服务"、"pod"、"容器"、"标签:名称 "和 "Annotations:名称"。也接受以逗号分隔的列表进行多分类，如 `namespace,label:app`。
 * **step** - 单个分配集的持续时间。如果未指定，则默认为窗口，这样整个窗口都会收到一个分配集。如果指定，如 `30m`、`2h`、`1d` 等，则会按时间倒序工作，以步长为单位查询，直到覆盖整个窗口。默认为 `window`。
-* **resolution** - 在 Prometheus 查询中被引用为分辨率的持续时间。数值越小(即分辨率越高)，精确度越高，但性能越差(即查询时间越慢、内存占用越高)。数值越大(即分辨率越低)，性能越好，但对于短时间运行的工作负载来说，准确性会降低。默认值为 `1m`。
+* **resolution** - 在 Prometheus 查询中被用于为分辨率的持续时间。数值越小(即分辨率越高)，精确度越高，但性能越差(即查询时间越慢、内存占用越高)。数值越大(即分辨率越低)，性能越好，但对于短时间运行的工作负载来说，准确性会降低。默认值为 `1m`。
 * Port"、"实体 "和 "映射 "键被用来将 OpenCost 对象字段映射到Port实体。要创建多个同类映射，可在 `resources` 数组中添加另一项；
 
 

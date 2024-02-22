@@ -155,7 +155,7 @@ use_pkce = true
 **故障排除**
 
 * "_未识别路由或不允许的方法_"
-    - 检查您是否被引用了正确的 authorizationUrl。
+    - 检查您是否被用于了正确的 authorizationUrl。
 * "客户端无效_"
     - 检查是否使用了正确的 clientId。
 * "_redirect_uri 与任何客户端注册的 redirect_uris 不匹配_"。

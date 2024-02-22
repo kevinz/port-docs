@@ -11,7 +11,7 @@ import AdvancedConfig from '../../../generalTemplates/_ocean_advanced_configurat
 
 实体 "可以是主机、应用程序、服务、数据库或任何其他向 New Relic 发送数据的组件。 问题 "是一组描述症状的相应问题的事件。
 
-## 常见被引用情况
+## 常见被用于情况
 
 * 将 New Relic 中受监控的应用程序和服务与其当前打开的警报进行映射。
 * 关注受监控应用程序上发出的新警报和更新，并自动将它们同步到 Port 中。
@@ -28,7 +28,7 @@ import AdvancedConfig from '../../../generalTemplates/_ocean_advanced_configurat
 
 <TabItem value="real-time-always-on" label="Real Time & Always On" default>
 
-被引用此安装选项意味着集成将能实时更新 Port。
+被用于此安装选项意味着集成将能实时更新 Port。
 
 本表总结了安装时可用的参数，请在下面的脚本中按自己的需要进行设置，然后复制并在终端运行: 
 
@@ -395,7 +395,7 @@ resources:
 
 集成配置决定了从 Newrelic 查询哪些资源，以及在 Port 中创建哪些实体和属性。
 
-:::tip  支持的资源 以下资源可被引用来映射来自 Newrelic 的数据，可以引用下面链接的 API 响应中出现的任何字段来进行映射配置。
+:::tip  支持的资源 以下资源可被用于来映射来自 Newrelic 的数据，可以引用下面链接的 API 响应中出现的任何字段来进行映射配置。
 
 * * [`Entity`](https://docs.newrelic.com/docs/new-relic-solutions/new-relic-one/core-concepts/what-entity-new-relic/)
 * [`Issue`](https://docs.newrelic.com/docs/alerts-applied-intelligence/new-relic-alerts/get-started/alerts-ai-overview-page/#issues)

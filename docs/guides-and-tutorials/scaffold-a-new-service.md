@@ -67,7 +67,7 @@ import PortTooltip from "/src/components/tooltip/tooltip.jsx"
 
 <img src='/img/guides/actionScaffoldBasicDetails.png' width='60%' />
 
-4.下一步是定义动作的输入。当有人被引用此操作时，我们只希望他们输入新版本库的名称。点击 "新输入"，像这样填写表格，然后点击 "创建": 
+4.下一步是定义动作的输入。当有人被用于此操作时，我们只希望他们输入新版本库的名称。点击 "新输入"，像这样填写表格，然后点击 "创建": 
 
 <img src='/img/guides/actionScaffoldInputName.png' width='50%' />
 
@@ -84,7 +84,7 @@ import PortTooltip from "/src/components/tooltip/tooltip.jsx"
 
 <img src='/img/guides/actionScaffoldBasicDetails.png' width='60%' />
 
-4.下一步是定义动作的输入。当有人被引用此操作时，我们只希望他们输入新版本库的名称。点击 "新输入"，像这样填写表格，然后点击 "创建": 
+4.下一步是定义动作的输入。当有人被用于此操作时，我们只希望他们输入新版本库的名称。点击 "新输入"，像这样填写表格，然后点击 "创建": 
 
 <img src='/img/guides/actionScaffoldInputName.png' width='50%' />
 
@@ -101,7 +101,7 @@ import PortTooltip from "/src/components/tooltip/tooltip.jsx"
 
 <img src='/img/guides/actionScaffoldBasicDetails.png' width='60%' />
 
-4.下一步是定义动作的输入。当有人被引用此操作时，我们只希望他们输入新版本库的名称。点击 "新输入"，像这样填写表格，然后点击 "创建": 
+4.下一步是定义动作的输入。当有人被用于此操作时，我们只希望他们输入新版本库的名称。点击 "新输入"，像这样填写表格，然后点击 "创建": 
 
 <img src='/img/guides/actionScaffoldInputName.png' width='50%' />
 
@@ -119,7 +119,7 @@ import PortTooltip from "/src/components/tooltip/tooltip.jsx"
 
 * 我们将 "Required "字段设置为 "true"，以确保在使用此操作时始终提供一个名称。
 * 由于这是一个名称，因此我们将类型设置为 `Text`，但请注意 Port 允许的所有不同类型的输入。
-* 在被引用`Text`输入时，您可以设置约束和限制以强制执行某些模式。
+* 在被用于`Text`输入时，您可以设置约束和限制以强制执行某些模式。
 
 :::
 
@@ -236,7 +236,7 @@ action的前端已准备就绪 🥳
 * 访问[Github tokens page](https://github.com/settings/tokens) ，创建一个包含 `repo`、`admin:repo_hook` 和 `admin:org` 范围的个人访问令牌(经典) ，然后复制它(从我们的工作流中创建 repo 需要此令牌) 。
    <img src='/img/guides/personalAccessToken.png' width='80%' />
 
-:::info  SAML SSO 如果贵组织被引用 SAML SSO，则需要授权令牌。请遵循[these instructions](https://docs.github.com/en/enterprise-cloud@latest/authentication/authenticating-with-saml-single-sign-on/authorizing-a-personal-access-token-for-use-with-saml-single-sign-on) ，然后继续本指南。
+:::info  SAML SSO 如果贵组织被用于 SAML SSO，则需要授权令牌。请遵循[these instructions](https://docs.github.com/en/enterprise-cloud@latest/authentication/authenticating-with-saml-single-sign-on/authorizing-a-personal-access-token-for-use-with-saml-single-sign-on) ，然后继续本指南。
 
 :::
 
@@ -531,7 +531,7 @@ update-run-status:
 
 1. 用以下配置创建一个 Jenkins 管道: 
     -[Enable the webhook trigger for the pipeline](/create-self-service-experiences/setup-backend/jenkins-pipeline/jenkins-pipeline.md#enabling-webhook-trigger-for-a-pipeline)
-    - 定义[`token`](/create-self-service-experiences/setup-backend/jenkins-pipeline/jenkins-pipeline.md#token-setup) 字段的值，您指定的令牌将被用于专门触发脚手架管道。例如，你可以被引用 `scaffolder-token`。
+    - 定义[`token`](/create-self-service-experiences/setup-backend/jenkins-pipeline/jenkins-pipeline.md#token-setup) 字段的值，您指定的令牌将被用于专门触发脚手架管道。例如，你可以被用于 `scaffolder-token`。
     -[Define variables for the pipeline](/create-self-service-experiences/setup-backend/jenkins-pipeline/jenkins-pipeline.md#defining-variables) 定义 `SERVICE_NAME`、`BITBUCKET_WORKSPACE_NAME`、`BITBUCKET_PROJECT_KEY` 和 `RUN_ID` 变量。向下滚动到 "发布内容参数"，并**为每个变量**添加配置，如图所示(完整的变量列表请参见下表) : 
    <img src='/img/guides/jenkinsGenericVariable.png' width='100%' />创建以下变量及其相关 JSONPath 表达式: | 变量名 | JSONPath 表达式 |  |  | JSONPath 表达式 |  |  | JSONPath 表达式。
      | ------------------------ | ----------------------------------------------- |

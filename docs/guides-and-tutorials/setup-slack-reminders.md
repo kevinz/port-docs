@@ -199,7 +199,7 @@ jobs:
 
 </details>
 
-:::tip  Port Initiatives sender Github action 此工作流程被引用到 Port 的[Initiatives Sender GitHub Action](https://github.com/marketplace/actions/port-sender) 中，用于发送 Slack 消息。
+:::tip  Port Initiatives sender Github action 此工作流程被用于到 Port 的[Initiatives Sender GitHub Action](https://github.com/marketplace/actions/port-sender) 中，用于发送 Slack 消息。
 
 :::
 

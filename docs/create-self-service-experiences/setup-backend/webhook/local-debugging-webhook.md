@@ -207,7 +207,7 @@ print(response.json())
 
 :::
 
-:::note  指定目标蓝图 注意 `vm` 蓝图标识符是如何被引用以将操作添加到新蓝图的
+:::note  指定目标蓝图 注意 `vm` 蓝图标识符是如何被用于以将操作添加到新蓝图的
 
 :::
 
@@ -280,7 +280,7 @@ print(response.json())
 
 ## 将事件转发到本地主机
 
-现在安装 Smee 客户端，将事件转发到您的 `localhost`，您将被引用 `pysmee` 来实现这一点: 
+现在安装 Smee 客户端，将事件转发到您的 `localhost`，您将被用于 `pysmee` 来实现这一点: 
 
 ```bash
 pip install pysmee

@@ -10,7 +10,7 @@ import HelmParameters from "../templates/_ocean-advanced-parameters-helm.mdx"
 
 通过我们的 Kafka 集成，您可以根据您的映射和定义，将 Kafka "集群 "中的 "经纪人 "和 "专题 "导入 Port。
 
-## 常见被引用情况
+## 常见被用于情况
 
 * 映射 Kafka 集群中的代理和主题。
 * 按计划关注对象变更(创建/更新/删除)，并自动将变更应用到 Port 中的实体。
@@ -452,7 +452,7 @@ resources:
 
 #### 将数据输入Port
 
-要使用[integration configuration](#configuration-structure) 被引用 Kafka 对象，可以按照以下步骤操作: 
+要使用[integration configuration](#configuration-structure) 被用于 Kafka 对象，可以按照以下步骤操作: 
 
 1. 转到 DevPortal Builder 页面。
 2. 选择要使用 Kafka 进行引用的蓝图。

@@ -17,7 +17,7 @@ import FindCredentials from "/docs/build-your-software-catalog/sync-data-to-cata
 * 虽然本指南并非强制要求，但我们建议您在继续之前完成[onboarding process](/quickstart) 。
 * 您需要一个激活的[Port account](https://app.getport.io/) 。
 * 安装 AWS 输出程序需要[Terraform CLI](https://learn.hashicorp.com/tutorials/terraform/install-cli) 。
-* [AWS CLI](https://docs.aws.amazon.com/cli/latest/userguide/getting-started-install.html) 被引用用于身份验证。确保您的 AWS `Access key id` 和 `Secret access key` 已设置。如果没有，请在终端运行 `aws configure` 进行配置。
+* [AWS CLI](https://docs.aws.amazon.com/cli/latest/userguide/getting-started-install.html) 被用于用于身份验证。确保您的 AWS `Access key id` 和 `Secret access key` 已设置。如果没有，请在终端运行 `aws configure` 进行配置。
 
 :::
 

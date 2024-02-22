@@ -13,7 +13,7 @@ import FindCredentials from "/docs/build-your-software-catalog/sync-data-to-cata
 
 :::info  先决条件
 
-* 本指南假定您已拥有 Port 帐户并具备使用 Port 的基本知识。如果您还没有这样做，请继续完成[quickstart](/quickstart) 。 **设置本指南中将被引用的 "服务 "蓝图。
+* 本指南假定您已拥有 Port 帐户并具备使用 Port 的基本知识。如果您还没有这样做，请继续完成[quickstart](/quickstart) 。 **设置本指南中将被用于的 "服务 "蓝图。
 * 你将需要一个 GitHub 仓库，用来放置本指南中要用到的文件。如果你没有，我们推荐你使用名为 "Port-actions "的[creating a new repository](https://docs.github.com/en/get-started/quickstart/create-a-repo) 。
 * [Generic Webhook Trigger](https://plugins.jenkins.io/generic-webhook-trigger/) - 该插件使 Jenkins 能够根据传入的 HTTP 请求接收和触发作业，从 JSON 或 XML 有效负载中提取数据，并将其作为变量提供。
 
@@ -56,7 +56,7 @@ import FindCredentials from "/docs/build-your-software-catalog/sync-data-to-cata
 
 <br/><br/>:::tip 了解更多有关 Jenkins 调用类型的信息[here](/create-self-service-experiences/setup-backend/jenkins-pipeline/) : 
 
-7.最后一步是自定义操作权限。为简单起见，我们将被引用默认设置。更多信息，请参阅[permissions](/create-self-service-experiences/set-self-service-actions-rbac/) 页面。单击 "创建"。
+7.最后一步是自定义操作权限。为简单起见，我们将被用于默认设置。更多信息，请参阅[permissions](/create-self-service-experiences/set-self-service-actions-rbac/) 页面。单击 "创建"。
 
 action的前端已准备就绪 🥳
 
@@ -132,7 +132,7 @@ provider "azurerm" {
 * 在资源库中创建拉取请求以添加新资源。
 * 向 Port 报告并记录操作结果。
 
-在 Jenkins 管道中，请将以下片段作为其内容被引用: 
+在 Jenkins 管道中，请将以下片段作为其内容被用于: 
 
 <details>
 <summary><b>Jenkins pipeline</b></summary>

@@ -38,7 +38,7 @@ import FindCredentials from "@site/docs/build-your-software-catalog/sync-data-to
 mkdir argocd
 ```
 
-2.在 `argocd` 目录中为当前安装创建另一个目录。在我们的例子中，我们被引用`my-port-agent`。
+2.在 `argocd` 目录中为当前安装创建另一个目录。在我们的例子中，我们被用于`my-port-agent`。
 
 ```bash
 mkdir -p argocd/my-port-agent

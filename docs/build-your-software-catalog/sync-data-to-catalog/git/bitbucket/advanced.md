@@ -21,7 +21,7 @@ Bitbucket 集成支持额外的 flag 以提供更多配置，从而更容易根�
 `specPath` 参数指定了一个字符串，Port 的 Bitbucket 应用程序在构建通向 `yml` 文件的搜索路径时将使用该字符串，版本库中以 `specPath` 值结尾的每个路径都将被扫描。
 
 * 默认值:  `port.yml
-* 被引用: 
+* 被用于: 
     - 如果希望应用程序扫描与 `port.yml` 不同的文件(例如，使用模式 `my-port-config.yml` 更改配置应用程序扫描名为 `my-port-config.yml` 的文件)；
     - 如果希望应用程序忽略某些路径下的 `port.yml` 文件。
 
@@ -32,7 +32,7 @@ Bitbucket 集成支持额外的 flag 以提供更多配置，从而更容易根�
 <DeleteDependents/>
 
 * 默认:  `false`(禁用)
-* 被引用: 删除从属 Port 实体。如果要删除必填关系中的目标实体(及其源实体)，则必须启用。
+* 被用于: 删除从属 Port 实体。如果要删除必填关系中的目标实体(及其源实体)，则必须启用。
 
 </TabItem>
 

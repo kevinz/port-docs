@@ -44,7 +44,7 @@ import GrafanaAlertWebhookConfig from './resources/grafana/_example_alert_webhoo
 1. 转到 Grafana 账户中的**警报**；
 2. 在**联系点**下点击**添加联系点**；
 3. 输入以下详细信息: 
-    1. 名称"- 被引用一个有意义的名称，如 Port Webhook；
+    1. 名称"- 被用于一个有意义的名称，如 Port Webhook；
     2. 集成"- 从列表中选择 "Webhook"；
     3. `URL` - 输入创建 Webhook 配置后收到的 `url` 键的值；
 4.单击 **保存联系人点**保存联系人；

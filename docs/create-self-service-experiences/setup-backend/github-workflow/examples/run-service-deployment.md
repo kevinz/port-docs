@@ -216,7 +216,7 @@ print(response.json())
 
 您可以在下面看到创建此操作的 `python` 代码(请记住插入您的 `CLIENT_ID` 和 `CLIENT_SECRET` 以获取访问令牌)。
 
-:::note 请注意 "部署 "蓝图标识符是如何被引用到新蓝图中的。
+:::note 请注意 "部署 "蓝图标识符是如何被用于到新蓝图中的。
 
 此外，不要忘记替换 `YOUR_GITHUB_ORG`、`YOUR_GITHUB_REPO` 的占位符。
 

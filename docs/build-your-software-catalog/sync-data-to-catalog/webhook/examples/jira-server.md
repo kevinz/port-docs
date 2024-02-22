@@ -62,7 +62,7 @@ import JiraServerConfigurationPython from "./resources/jira-server/_example_jira
 4. 在左侧边栏底部的**高级**下，选择**Webhooks**；
 5. 点击**创建 Webhook**
 6. 输入以下详细信息: 
-    1. 名称"- 被引用一个有意义的名称，如 Port Webhook；
+    1. 名称"- 被用于一个有意义的名称，如 Port Webhook；
     2. 状态"--请确保网络钩子已**启用**；
     3. Webhook URL` - 输入在 Port 中创建 Webhook 配置后收到的 `url` 键的值；
     4. `Description` - 输入 webhook 的描述；
@@ -323,7 +323,7 @@ import JiraServerConfigurationPython from "./resources/jira-server/_example_jira
 * `PORT_CLIENT_ID` - 您的 Port 客户端 ID
 * `PORT_CLIENT_SECRET` - 您的 Port 客户端secret
 * `JIRA_API_URL` - 您的 Jira 服务器主机，例如`https://jira.yourdomain.com`。
-* `JIRA_USERNAME` - 访问 Jira 软件(服务器)资源时被引用的 Jira 用户名
+* `JIRA_USERNAME` - 访问 Jira 软件(服务器)资源时被用于的 Jira 用户名
 * `JIRA_PASSWORD` - 访问 Jira 资源时要使用的 Jira 帐户密码或令牌
 
 :::info 使用以下命令查找您的 Port 凭据[guide](https://docs.getport.io/build-your-software-catalog/sync-data-to-catalog/api/#find-your-port-credentials)

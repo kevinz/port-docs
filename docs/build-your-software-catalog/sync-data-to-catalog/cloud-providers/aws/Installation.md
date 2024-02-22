@@ -14,7 +14,7 @@ import TabItem from "@theme/TabItem"
    <FindCredentials />
 * [AWS CLI](https://docs.aws.amazon.com/cli/latest/userguide/getting-started-install.html) 是身份验证所必需的。确保已设置 AWS `Access key id` 和 `Secret access key`。如果没有，请在终端运行 `aws configure` 进行配置。
 
-对于[step-by-step installation](#step-by-step-installation) (未被引用 Terraform) ，也要安装: 
+对于[step-by-step installation](#step-by-step-installation) (未被用于 Terraform) ，也要安装: 
 
 * * [AWS SAM CLI](https://docs.aws.amazon.com/serverless-app:lication-model/latest/developerguide/install-sam-cli.html)
 * [JQ](https://stedolan.github.io/jq/download/)
@@ -220,13 +220,13 @@ sam logs --stack-name serverlessrepo-port-aws-exporter --tail
 * `ScheduleExpression` - 确保设置的时间间隔长于输出程序的执行时间；
 * `ScheduleState` - 将计划状态设置为 `ENABLED`。
 
-如果被引用 Terrafom 模块，请更新 `schedule_state` 和 `schedule_expression` 变量。
+如果被用于 Terrafom 模块，请更新 `schedule_state` 和 `schedule_expression` 变量。
 
 :::info 为了确定 lambda 的执行时间，可以通过[view the logs](#view-the-logs) ，搜索第一行和最后一行日志。当输出程序完成同步工作时，它会写入以下日志: "Done handling your resources"("完成处理您的资源")。
 
 :::
 
-:::tip  更新应用程序 更新应用程序设置或版本的步骤与部署新应用程序的步骤相同，类似于[installation](#installation) 的第 3 步。默认情况下，运行更新/部署程序时将被引用最新可用的导出程序版本。
+:::tip  更新应用程序 更新应用程序设置或版本的步骤与部署新应用程序的步骤相同，类似于[installation](#installation) 的第 3 步。默认情况下，运行更新/部署程序时将被用于最新可用的导出程序版本。
 
 更多详情，请点击[here](https://docs.aws.amazon.com/serverlessrepo/latest/devguide/serverlessrepo-how-to-consume-new-version.html) 。
 

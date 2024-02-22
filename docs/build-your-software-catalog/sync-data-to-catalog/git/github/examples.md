@@ -66,7 +66,7 @@ import RepositoryAdminAppConfig from './example-repository-admins/_github_export
 
 ## 映射存储库、工作流和工作流运行
 
-在下面的示例中，您将把 GitHub 资源库、其工作流和工作流运行被引用到 Port，您可以使用以下 Port 蓝图定义和 `port-app-config.yml`: 
+在下面的示例中，您将把 GitHub 资源库、其工作流和工作流运行被用于到 Port，您可以使用以下 Port 蓝图定义和 `port-app-config.yml`: 
 
 <RepositoryBlueprint/>
 
@@ -192,7 +192,7 @@ import RepositoryAdminAppConfig from './example-repository-admins/_github_export
 
 ## 映射软件源、Dependabot 警报和代码扫描警报
 
-在下面的示例中，您将把 GitHub 仓库及其警报(Dependabot 和代码扫描警报)被引用到 Port，您可以使用以下 Port 蓝图定义和 `port-app-config.yml`: 
+在下面的示例中，您将把 GitHub 仓库及其警报(Dependabot 和代码扫描警报)被用于到 Port，您可以使用以下 Port 蓝图定义和 `port-app-config.yml`: 
 
 <RepositoryBlueprint/>
 
@@ -208,7 +208,7 @@ import RepositoryAdminAppConfig from './example-repository-admins/_github_export
 
 ## 映射版本库和分支保护规则
 
-在下面的示例中，您将把 GitHub 仓库及其主要分支保护规则被引用到 Port，您可以使用以下 Port 蓝图定义和 `port-app-config.yml`: 
+在下面的示例中，您将把 GitHub 仓库及其主要分支保护规则被用于到 Port，您可以使用以下 Port 蓝图定义和 `port-app-config.yml`: 
 
 <RepositoryBlueprint/>
 

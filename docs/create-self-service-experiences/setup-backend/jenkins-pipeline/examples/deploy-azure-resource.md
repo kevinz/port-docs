@@ -133,8 +133,8 @@ import PortTooltip from "/src/components/tooltip/tooltip.jsx"
 
 4.在 GitHub 仓库根目录下的 `terraform` 文件夹中创建以下 Terraform 模板: 
     1. `main.tf` - 该文件将包含资源块，用于定义要在 Azure 云中创建的存储帐户和要在 Port 中创建的实体。
-    2. `variables.tf` - 此文件将包含在资源块中被引用的变量声明式，例如 Port 凭据和 Port 运行 ID。
-    3. `output.tf` - 该文件将包含 "应用 "操作成功完成后生成的存储帐户的 URL。该 URL 将在创建 Port 实体时被引用到 `endpoint` 属性中。
+    2. `variables.tf` - 此文件将包含在资源块中被用于的变量声明式，例如 Port 凭据和 Port 运行 ID。
+    3. `output.tf` - 该文件将包含 "应用 "操作成功完成后生成的存储帐户的 URL。该 URL 将在创建 Port 实体时被用于到 `endpoint` 属性中。
 
 <details>
   <summary>Terraform `main.tf` template</summary>

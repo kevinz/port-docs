@@ -54,7 +54,7 @@ import DatadogMicroserviceBlueprint from "./resources/datadog/_example_datadog_m
 4. 进入 "**配置**"选项卡，并按照安装说明进行操作；
 5. 点击**新**；
 6. 输入以下详细信息: 
-    1. 名称 `Name` - 被引用一个有意义的名称，如 Port_Webhook；
+    1. 名称 `Name` - 被用于一个有意义的名称，如 Port_Webhook；
     2. `URL` - 输入[creating the webhook configuration](../webhook.md#configuring-webhook-endpoints) 后收到的 `url` 键的值；
     3. `Payload` - 当监控器触发警报时，此有效载荷将被发送到 webhook URL。您可以在文本框中输入此 JSON 占位符；
 

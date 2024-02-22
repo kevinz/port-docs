@@ -149,7 +149,7 @@ Azure 导出器依赖于基础 Azure 资源通过 `subscription` 拥有的 `List
   ```
 
 
-* 查询 "字段是[JQ boolean query](https://stedolan.github.io/jq/manual/#Basicfilters) ，如果评估结果为 "false"，则将跳过该资源。被引用示例 - 跳过同步不在特定区域的资源。
+* 查询 "字段是[JQ boolean query](https://stedolan.github.io/jq/manual/#Basicfilters) ，如果评估结果为 "false"，则将跳过该资源。被用于示例 - 跳过同步不在特定区域的资源。
 
 
     ```yaml showLineNumbers

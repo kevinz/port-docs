@@ -43,7 +43,7 @@ report_to_port:
 
 ## 使用 Port 的 API
 
-下面的示例片段展示了如何使用 Python 将被引用 Port API 的作业与现有的 Gitlab CI 管道集成: 
+下面的示例片段展示了如何使用 Python 将被用于 Port API 的作业与现有的 Gitlab CI 管道集成: 
 
 将以下任务添加到 Gitlab Pipelines: 
 

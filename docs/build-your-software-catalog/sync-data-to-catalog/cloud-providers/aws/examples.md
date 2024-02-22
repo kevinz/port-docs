@@ -15,7 +15,7 @@ import Image from "@theme/IdealImage";
 1. 创建以下 Port 蓝图: 
     - **ECS 集群** - 将代表 AWS 账户中的 ECS 集群。
     - **ECS 服务** - 将代表 AWS 账户中的 ECS 服务。
-    您可以被引用以下定义: 
+    您可以被用于以下定义: 
 <details>
     <summary> ECS Cluster blueprint </summary>
 
@@ -343,7 +343,7 @@ import Image from "@theme/IdealImage";
 
 1. 创建以下 Port 蓝图: 
     - **App Runner** - 将代表 AWS 账户中的 App Runner 服务。
-    您可以被引用以下定义: 
+    您可以被用于以下定义: 
 <details>
    <summary> App Runner blueprint </summary>
 
@@ -512,7 +512,7 @@ import Image from "@theme/IdealImage";
    </details>
 
 4.可选: 创建一个事件规则，以触发 App Runner 服务中更改的自动同步。
-    您可以被引用以下 CloudFormation 模板: 
+    您可以被用于以下 CloudFormation 模板: 
 <details>
    <summary> Event Rule CloudFormation Template </summary>
 
@@ -728,7 +728,7 @@ import Image from "@theme/IdealImage";
    </details>
 
 4.可选: 创建一个事件规则，以触发 Lambda 函数中更改的自动同步。
-    您可以被引用以下 CloudFormation 模板: 
+    您可以被用于以下 CloudFormation 模板: 
 <details>
    <summary> Event Rule CloudFormation Template </summary>
 
@@ -798,7 +798,7 @@ import Image from "@theme/IdealImage";
 1. 创建以下 Port 蓝图: 
     - **SNS** - 将代表 AWS 账户中的 SNS 主题；
     - **SQS** - 将代表 AWS 账户中的 SQS 队列。
-    您可以被引用以下定义: 
+    您可以被用于以下定义: 
 <details>
    <summary> SQS blueprint </summary>
 
@@ -1007,7 +1007,7 @@ import Image from "@theme/IdealImage";
    </details>
 
 4.可选: 创建一个事件规则，以触发 SNS 主题和 SNS 队列中更改的自动同步。
-    您可以被引用以下 CloudFormation 模板: 
+    您可以被用于以下 CloudFormation 模板: 
 <details>
    <summary> Event Rule CloudFormation Template </summary>
 
@@ -1116,7 +1116,7 @@ import Image from "@theme/IdealImage";
 
 1. 创建以下 Port 蓝图: 
     - **S3** - 将代表 AWS 账户中的 S3 存储桶。
-    您可以被引用以下定义: 
+    您可以被用于以下定义: 
 <details>
    <summary> S3 blueprint </summary>
 
@@ -1257,7 +1257,7 @@ import Image from "@theme/IdealImage";
 </details>
 
 4.可选: 创建一个事件规则来触发自动同步 S3 存储桶中的更改。
-    您可以被引用以下 CloudFormation 模板: 
+    您可以被用于以下 CloudFormation 模板: 
 <details>
    <summary> Event Rule CloudFormation Template </summary>
 
@@ -1322,7 +1322,7 @@ import Image from "@theme/IdealImage";
 
 1. 创建以下 Port 蓝图: 
     - **API Gateway** - 将代表 AWS 账户的 API Gateway API。
-    您可以被引用以下定义: 
+    您可以被用于以下定义: 
 <details>
    <summary> API Gateway blueprint </summary>
 
@@ -1478,7 +1478,7 @@ import Image from "@theme/IdealImage";
 </details>
 
 4.可选: 创建一个事件规则，以触发自动同步 API Gateway API 中的更改。
-    您可以被引用以下 CloudFormation 模板: 
+    您可以被用于以下 CloudFormation 模板: 
 <details>
    <summary> Event Rule CloudFormation Template </summary>
 
@@ -1595,7 +1595,7 @@ Cloudfront 是 AWS 中的全局(非区域)服务，其事件由 `us-east-1` 区�
 
 1. 创建以下 Port 蓝图: 
     - **Cloudfront** - 将代表 AWS 账户的 Cloudfront 分发。
-    您可以被引用以下定义: 
+    您可以被用于以下定义: 
 <details>
    <summary> Cloudfront blueprint </summary>
 
@@ -1740,7 +1740,7 @@ Cloudfront 是 AWS 中的全局(非区域)服务，其事件由 `us-east-1` 区�
 </details>
 
 4.可选: 创建一个事件规则来触发 Cloudfront 分发中的自动同步更改。
-    您可以被引用以下 CloudFormation 模板: 
+    您可以被用于以下 CloudFormation 模板: 
 <details>
    <summary> Event Rule CloudFormation Template </summary>
 
@@ -1807,7 +1807,7 @@ Cloudfront 是 AWS 中的全局(非区域)服务，其事件由 `us-east-1` 区�
 
 1. 创建以下 Port 蓝图: 
     - **DynamoDB** - 将代表 AWS 账户中的 DynamoDB 表。
-    您可以被引用以下定义: 
+    您可以被用于以下定义: 
 <details>
    <summary> DynamoDB blueprint </summary>
 
@@ -1955,7 +1955,7 @@ Cloudfront 是 AWS 中的全局(非区域)服务，其事件由 `us-east-1` 区�
    </details>
 
 4.可选: 创建一个事件规则来触发 DynamoDB 表中更改的自动同步。
-    您可以被引用以下 CloudFormation 模板: 
+    您可以被用于以下 CloudFormation 模板: 
 <details>
    <summary> Event Rule CloudFormation Template </summary>
 
@@ -2025,7 +2025,7 @@ Cloudfront 是 AWS 中的全局(非区域)服务，其事件由 `us-east-1` 区�
 
 1. 创建以下 Port 蓝图: 
     - **RDS** - 将代表 AWS 账户中的 RDS 实例。
-    您可以被引用以下定义: 
+    您可以被用于以下定义: 
 <details>
    <summary> RDS blueprint </summary>
 
@@ -2252,7 +2252,7 @@ Cloudfront 是 AWS 中的全局(非区域)服务，其事件由 `us-east-1` 区�
    </details>
 
 4.可选: 创建一个事件规则，以触发 RDS 实例中更改的自动同步。
-    您可以被引用以下 CloudFormation 模板: 
+    您可以被用于以下 CloudFormation 模板: 
 <details>
    <summary> Event Rule CloudFormation Template </summary>
 
@@ -2325,7 +2325,7 @@ Cloudfront 是 AWS 中的全局(非区域)服务，其事件由 `us-east-1` 区�
 
 1. 创建以下 Port 蓝图: 
     - **步骤功能** - 将表示 AWS 账户中的步骤功能状态机。
-    您可以被引用以下定义: 
+    您可以被用于以下定义: 
 <details>
    <summary> Step Functions blueprint </summary>
 
@@ -2522,7 +2522,7 @@ Cloudfront 是 AWS 中的全局(非区域)服务，其事件由 `us-east-1` 区�
 1. 创建以下 Port 蓝图: 
     - **Beanstalk Application** - 将代表 AWS 账户中的 Elastic Beanstalk 应用程序。
     - **Beanstalk Environment** - 将代表 AWS 账户中的 Elastic Beanstalk 环境。
-    您可以被引用以下定义: 
+    您可以被用于以下定义: 
 <details>
     <summary> Beanstalk Application blueprint </summary>
 
@@ -2713,7 +2713,7 @@ Cloudfront 是 AWS 中的全局(非区域)服务，其事件由 `us-east-1` 区�
    </details>
 
 4.可选: 创建一个事件规则来触发 Elastic Beanstalk 应用程序和环境中的自动同步更改。
-    您可以被引用以下 CloudFormation 模板: 
+    您可以被用于以下 CloudFormation 模板: 
 <details>
    <summary> Event Rule CloudFormation Template </summary>
 
@@ -2960,7 +2960,7 @@ Cloudfront 是 AWS 中的全局(非区域)服务，其事件由 `us-east-1` 区�
 </details>
 
 4.可选: 创建 2 个事件规则，以触发 CloudFormation 堆栈中更改的自动同步。
-    您可以被引用以下 CloudFormation 模板: 
+    您可以被用于以下 CloudFormation 模板: 
 <details>
     <summary> Event Rule CloudFormation Template </summary>
 
@@ -3091,7 +3091,7 @@ Cloudfront 是 AWS 中的全局(非区域)服务，其事件由 `us-east-1` 区�
 
 1. 创建以下 Port 蓝图: 
     - **EC2 实例** - 将代表 AWS 账户中的 EC2 实例。
-    您可以被引用以下定义: 
+    您可以被用于以下定义: 
 <details>
     <summary> EC2 instance blueprint </summary>
 
@@ -3231,7 +3231,7 @@ Cloudfront 是 AWS 中的全局(非区域)服务，其事件由 `us-east-1` 区�
    </details>
 
 4.可选: 创建一个事件规则来触发 EC2 实例中的更改自动同步。
-    您可以被引用以下 CloudFormation 模板: 
+    您可以被用于以下 CloudFormation 模板: 
 <details>
    <summary> Event rule CloudFormation template </summary>
 
@@ -3323,7 +3323,7 @@ Cloudfront 是 AWS 中的全局(非区域)服务，其事件由 `us-east-1` 区�
 
 1. 创建以下 Port 蓝图: 
     - **负载平衡器** - 将代表 AWS 账户中的负载平衡器。
-    您可以被引用以下定义: 
+    您可以被用于以下定义: 
 <details>
     <summary> LoadBalancer blueprint </summary>
 
@@ -3489,7 +3489,7 @@ Cloudfront 是 AWS 中的全局(非区域)服务，其事件由 `us-east-1` 区�
    </details>
 
 4.可选: 创建一个事件规则，以触发负载平衡器中更改的自动同步。
-    您可以被引用以下 CloudFormation 模板: 
+    您可以被用于以下 CloudFormation 模板: 
 <details>
    <summary> Event rule CloudFormation template </summary>
 
@@ -3797,7 +3797,7 @@ Cloudfront 是 AWS 中的全局(非区域)服务，其事件由 `us-east-1` 区�
    </details>
 
 4.可选: 创建一个事件规则来触发 EKS 集群中的更改自动同步。
-    您可以被引用以下 CloudFormation 模板: 
+    您可以被用于以下 CloudFormation 模板: 
 <details>
     <summary> Event rule CloudFormation template </summary>
 
@@ -3861,7 +3861,7 @@ Cloudfront 是 AWS 中的全局(非区域)服务，其事件由 `us-east-1` 区�
 在这个分步示例中，您将把 "ECR 资源库 "导出到 Port。
 
 1. 创建以下 Port 蓝图: 
-    **ECR Repository** - 将代表 AWS 账户中的 ECR 资源库。您可以被引用以下定义:  
+    **ECR Repository** - 将代表 AWS 账户中的 ECR 资源库。您可以被用于以下定义:  
 <details>
      <summary> ECR Repository blueprint </summary>
 
@@ -3996,7 +3996,7 @@ Cloudfront 是 AWS 中的全局(非区域)服务，其事件由 `us-east-1` 区�
    </details>
 
 4.可选: 创建一个事件规则来触发 ECR 资源库中的更改自动同步。
-    您可以被引用以下 CloudFormation 模板: 
+    您可以被用于以下 CloudFormation 模板: 
 <details>
     <summary> Event rule CloudFormation template </summary>
 
@@ -4253,7 +4253,7 @@ Cloudfront 是 AWS 中的全局(非区域)服务，其事件由 `us-east-1` 区�
    </details>
 
 4.可选: 创建一个事件规则，以触发 Elasticache 无服务器缓存中更改的自动同步。
-    您可以被引用以下 CloudFormation 模板: 
+    您可以被用于以下 CloudFormation 模板: 
 <details>
     <summary> Event rule CloudFormation template </summary>
 
@@ -4516,7 +4516,7 @@ Cloudfront 是 AWS 中的全局(非区域)服务，其事件由 `us-east-1` 区�
    </details>
 
 4.可选: 创建一个事件规则来触发 Elasticache 集群中的自动同步更改。
-    您可以被引用以下 CloudFormation 模板: 
+    您可以被用于以下 CloudFormation 模板: 
 <details>
     <summary> Event rule CloudFormation template </summary>
 
@@ -4743,7 +4743,7 @@ Cloudfront 是 AWS 中的全局(非区域)服务，其事件由 `us-east-1` 区�
    </details>
 
 4.可选: 创建一个事件规则来触发自动缩放组中更改的自动同步。
-    您可以被引用以下 CloudFormation 模板: 
+    您可以被用于以下 CloudFormation 模板: 
 <details>
     <summary> Event rule CloudFormation template </summary>
 

@@ -17,7 +17,7 @@ import SentryIssuesConfiguration from "../webhook/examples/resources/sentry/_exa
 
 问题 "是一组描述您症状相应问题的事件。
 
-## 常见被引用情况
+## 常见被用于情况
 
 * 将您监控的项目和问题映射到 Port 中。
 
@@ -364,7 +364,7 @@ resources:
 
 集成配置决定了将从 Sentry 查询哪些资源，以及将在 Port 中创建哪些实体和属性。
 
-:::tip  支持的资源 下列资源可被引用来映射来自 Sentry 的数据，可以引用下面链接的 API 响应中出现的任何字段来进行映射配置。
+:::tip  支持的资源 下列资源可被用于来映射来自 Sentry 的数据，可以引用下面链接的 API 响应中出现的任何字段来进行映射配置。
 
 * * [`Project`](https://docs.sentry.io/api/projects/list-your-projects/)
 * [`Issue`](https://docs.sentry.io/api/events/list-a-projects-issues/)
@@ -832,7 +832,7 @@ resources:
 4. 在页面上角，点击**创建新集成**；
 5. Sentry 提供两种类型的集成: 内部集成和公共集成。在本指南中，请选择**内部集成**，然后点击**下一步**按钮；
 6. 输入以下详细信息: 
-    1. `Name` - 被引用一个有意义的名称，如 Port Webhook；
+    1. `Name` - 被用于一个有意义的名称，如 Port Webhook；
     2. Webhook URL` - 输入创建 Webhook 配置后收到的 `url` 键的值；
     3. `Overview` - 输入 webhook 的描述；
     4. 权限"- 授予 webhook 在**问题和事件**类别的**读取**权限；

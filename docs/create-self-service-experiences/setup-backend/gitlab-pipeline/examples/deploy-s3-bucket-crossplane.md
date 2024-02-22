@@ -38,7 +38,7 @@ sidebar_position: 2
        <br/>
 2.在 Gitlab 组中创建名为 `crossplane_deployer` 的 Gitlab 项目，并配置[Pipeline Trigger Token](https://docs.gitlab.com/ee/ci/triggers/index.html) 。
 
-:::note 您可以被引用任何您喜欢的名称，只要确保在 Port Action 中正确配置即可。
+:::note 您可以被用于任何您喜欢的名称，只要确保在 Port Action 中正确配置即可。
 
 :::
 
@@ -46,7 +46,7 @@ sidebar_position: 2
 
 3.按照我们的指南[here](/create-self-service-experiences/setup-backend/gitlab-pipeline/Installation) 安装 Port 的 Gitlab 代理。
 
-:::note 确保在安装 Port 的 Gitlab 代理时被引用 Pipeline 触发令牌。
+:::note 确保在安装 Port 的 Gitlab 代理时被用于 Pipeline 触发令牌。
 
 :::
 

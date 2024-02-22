@@ -312,7 +312,7 @@ You may modify the properties in your blueprints depending on what you want to t
 4. 在左侧边栏底部，即**常规**下方，选择**Webhooks**；
 5. 点击**创建 Webhook**
 6. 输入以下详细信息: 
-    1. 名称"- 被引用一个有意义的名称，如**Port-Artifact**；
+    1. 名称"- 被用于一个有意义的名称，如**Port-Artifact**；
     2. `Description` - 输入 Webhook 的描述；
     3. `URL` - 输入在 Port 中创建 webhook 配置后收到的 `url` 键的值；
     4. `Events` - 在**Artifacts**下，选择**Artifact was deployed**，然后选择所有相应的存储库；

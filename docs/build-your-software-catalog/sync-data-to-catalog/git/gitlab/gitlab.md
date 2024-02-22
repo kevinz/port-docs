@@ -21,7 +21,7 @@ import GitlabResources from './_gitlab_exporter_supported_resources.mdx'
 
 ## 接收 Git 对象
 
-通过被引用 Port 的 GitLab 集成，您可以根据实时事件自动将 GitLab 资源摄入 Port。
+通过被用于 Port 的 GitLab 集成，您可以根据实时事件自动将 GitLab 资源摄入 Port。
 
 通过 Port 的 GitLab 集成，您可以摄取 GitLab API 提供的各种对象资源，包括组、项目、合并请求、管道等。 通过 GitLab 集成，您可以对来自 GitLab API 的数据执行提取、转换、加载(ETL)，将其转换为所需的软件目录数据模型。
 

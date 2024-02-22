@@ -118,7 +118,7 @@ resources: # List of K8s resources to list, watch, and export to Port.
   ```
 
 
-一些被引用的示例: 
+一些被用于的示例: 
 
 * 要同步指定 "类型 "的所有对象: 请勿指定 "选择器 "和 "查询 "键；
 * 要同步指定`种类`中与 Kubernetes 内部系统无关的所有对象，请使用: 

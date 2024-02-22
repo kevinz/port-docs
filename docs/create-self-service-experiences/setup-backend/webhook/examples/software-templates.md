@@ -281,7 +281,7 @@ import TabItem from "@theme/TabItem"
 
 :::
 
-就这样！现在就可以使用被引用的操作了，如图所示: 
+就这样！现在就可以使用被用于的操作了，如图所示: 
 
 ![create-service.png](../../../../../static/img/complete-use-cases/software-templates/create-service.png)
 

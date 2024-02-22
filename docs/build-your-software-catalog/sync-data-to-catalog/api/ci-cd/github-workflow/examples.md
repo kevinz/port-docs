@@ -64,7 +64,7 @@ use-entity:
     - run: echo '${{needs.get-entity.outputs.entity}}' | jq .properties.triggeredBy
 ```
 
-第一个任务 "get-entity "使用 GitHub 操作获取 "new-cijob-run "实体。 第二个任务 "use-entity "被引用，并打印实体的 "triggeredBy "属性。
+第一个任务 "get-entity "使用 GitHub 操作获取 "new-cijob-run "实体。 第二个任务 "use-entity "被用于，并打印实体的 "triggeredBy "属性。
 
 ## 关系示例
 

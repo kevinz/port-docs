@@ -48,7 +48,7 @@ import PortGroupsAppConfig from './example-groups-subgroups/_gitlab_exporter_exa
 
 ## 映射组、分组和项目
 
-在以下示例中，您将把 GitLab 组、子组和项目被引用到 Port，您可以使用以下 Port 蓝图定义和集成配置: 
+在以下示例中，您将把 GitLab 组、子组和项目被用于到 Port，您可以使用以下 Port 蓝图定义和集成配置: 
 
 <GroupBlueprint/>
 

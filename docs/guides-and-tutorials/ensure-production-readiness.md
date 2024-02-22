@@ -59,7 +59,7 @@ import PortTooltip from "/src/components/tooltip/tooltip.jsx"
 
 * 将服务命名为 `DemoPdService`。
 * 选择现有的 `Default` 升级策略。
-* 在 "减少噪音 "下使用被引用的设置。
+* 在 "减少噪音 "下使用被用于的设置。
 * 在 "集成 "下向下滚动并单击 "创建无集成服务"。
 
 #### 将 Pagerduty 整合到 Port 中

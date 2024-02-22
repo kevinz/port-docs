@@ -13,7 +13,7 @@ import AdvancedConfig from '../../../generalTemplates/_ocean_advanced_configurat
 
 我们的 Jenkins 集成允许您根据映射和定义将 Jenkins 环境中的 "任务"、"构建 "和 "用户 "导入 Port。
 
-## 常见被引用情况
+## 常见被用于情况
 
 * 映射 Jenkins 环境中的 "工作"、"构建 "和 "用户"。
 * 实时观察对象更改(创建/更新/删除)，并自动将更改应用到 Port 中的实体。

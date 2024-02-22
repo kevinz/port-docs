@@ -13,7 +13,7 @@ import SonarcloudAnalysisConfiguration from "/docs/build-your-software-catalog/s
 
 通过我们的 SonarQube 集成(由[Ocean](https://ocean.getport.io) 提供) ，您可以根据您的映射和定义，从 SonarQube 账户将 "项目"、"问题 "和 "分析 "导入 Port。
 
-## 常见被引用情况
+## 常见被用于情况
 
 * 映射 SonarQube 组织环境中的 "项目"、"问题 "和 "分析"。
 * 实时观察对象更改(创建/更新/删除)，并自动将更改应用到 Port 中的实体。
@@ -1002,7 +1002,7 @@ resources:
 2. 点击页面左下角的**管理**，然后选择**Webhooks**；
 3. 点击**创建**
 4. 输入以下详细信息: 
-    1. `Name` - 被引用一个有意义的名称，如 Port Webhook；
+    1. `Name` - 被用于一个有意义的名称，如 Port Webhook；
     2. `URL` - 输入您在创建 webhook 配置后收到的 `url` 密钥的值；
     3. `Secret` - 输入您在创建 webhook 时指定的 secret 值；
 5.单击页面底部的**创建**。

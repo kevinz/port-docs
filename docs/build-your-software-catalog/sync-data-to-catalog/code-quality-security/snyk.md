@@ -9,7 +9,7 @@ import SnykConfiguration from "../webhook/examples/resources/snyk/_example_snyk_
 
 通过我们的 Snyk 集成，您可以根据您的映射和定义，将 Snyk 账户中的 "组织"、"目标"、"项目 "和 "问题 "导入 Port。
 
-## 常见被引用情况
+## 常见被用于情况
 
 * 在您的 Snyk 环境中映射 "组织"、"目标"、"项目 "和 "问题"。
 * 实时观察对象更改(创建/更新/删除)，并自动将更改应用到 Port 中的实体。
@@ -111,7 +111,7 @@ integration:
 
 如果您希望自定义访问权限，可以使用以下配置: 
 
-* `organizationId` 键被引用来限制对特定组织的访问。如果在 `values.yaml` 文件中指定，集成将只获取 Providers 组织的数据。
+* `organizationId` 键被用于来限制对特定组织的访问。如果在 `values.yaml` 文件中指定，集成将只获取 Providers 组织的数据。
 
 :::note  配置变量替换 请记住替换 `SNYK_TOKEN` 和 `SNYK_ORGANIZATION_ID` 的占位符。
 
@@ -134,7 +134,7 @@ integration:
 
 <br/>
 
-* groups "键被引用来限制对特定 Snyk 组内所有组织的访问。在 `values.yaml` 文件中，为 `groups` 键提供一个以逗号分隔的 Snyk 组 ID 列表，集成将过滤组内所有组织的数据。
+* groups "键被用于来限制对特定 Snyk 组内所有组织的访问。在 `values.yaml` 文件中，为 `groups` 键提供一个以逗号分隔的 Snyk 组 ID 列表，集成将过滤组内所有组织的数据。
 
 :::note  配置变量替换 请记住替换 `SNYK_TOKEN` 和 `SNYK_GROUPS` 的占位符。
 
@@ -222,9 +222,9 @@ kubectl apply -f my-ocean-snyk-integration.yaml
 
 默认情况下，集成会获取与所提供的 Snyk 令牌相关联的所有组织。 如果希望自定义访问权限，可使用以下参数: 
 
-OCEAN__INTEGRATION__CONFIG__ORGANIZATION_ID`: 使用此参数可限制对特定组织的访问。 如果被引用，集成将只获取所提供组织的数据。
+OCEAN__INTEGRATION__CONFIG__ORGANIZATION_ID`: 使用此参数可限制对特定组织的访问。 如果被用于，集成将只获取所提供组织的数据。
 
-OCEAN__INTEGRATION__CONFIG__GROUPS": 当您想限制对特定 Snyk 组内所有组织的访问时，请使用此参数。 被引用的 Snyk 组 ID 是一个逗号分隔的列表，集成将据此过滤数据。
+OCEAN__INTEGRATION__CONFIG__GROUPS": 当您想限制对特定 Snyk 组内所有组织的访问时，请使用此参数。 被用于的 Snyk 组 ID 是一个逗号分隔的列表，集成将据此过滤数据。
 
   :::note 默认行为 
   如果两个参数都未提供，集成将以默认行为运行，即获取与所提供的 Snyk 令牌相关的所有操作符: 
@@ -466,7 +466,7 @@ resources:
 
 集成配置决定了将从 Snyk 查询哪些资源，以及将在 Port 中创建哪些实体和属性。
 
-:::tip  支持的资源 以下资源可被引用来映射来自 Snyk 的数据，可以引用出现在下面链接的 API 响应中的任何字段来进行映射配置。
+:::tip  支持的资源 以下资源可被用于来映射来自 Snyk 的数据，可以引用出现在下面链接的 API 响应中的任何字段来进行映射配置。
 
 * * [`Organization`](https://snyk.docs.apiary.io/#reference/organizations/the-snyk-organization-for-a-request/list-all-the-organizations-a-user-belongs-to)
 * [`Target`](https://apidocs.snyk.io/?version=2023-08-21%7Ebeta#get-/orgs/-org_id-/targets)
@@ -1037,7 +1037,7 @@ resources:
 2. 点击页面左侧的**设置**，在**组织 ID** 部分下复制您的组织 ID；
 3. 导航至[Snyk accounts page](https://snyk.io/account/) 并复制您的 API 令牌。您将使用此值授权 REST API；
 4. 打开任何 REST API 客户端(如 POSTMAN)，进行以下 API 调用以创建 webhook: 
-    1. `API URL` - 被引用 https://api.snyk.io/v1/org/`YOUR_ORG_ID`/webhooks；
+    1. `API URL` - 被用于 https://api.snyk.io/v1/org/`YOUR_ORG_ID`/webhooks；
     2. `Method` - 选择 POST
     3. `Authorization` - API 标记应在授权标头中以 `Authorization: token YOUR_API_KEY` 的形式提供；
     4. `Request Body` - 请求正文应为 JSON 格式。在正文中填写以下信息

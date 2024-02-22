@@ -21,7 +21,7 @@ import Image from "@theme/IdealImage";
 例如，我们的 AWS 导出器可让您利用 AWS 账户中的数据轻松丰富软件目录: 
 
 * 映射账户中的资源，包括 **S3数据桶**、**lambda函数**、**SQS队列**、**RDS DB实例**、**ECS服务**和许多其他资源类型。
-* 被引用关系可在 Port 内创建完整、易懂的 AWS 账户地图。
+* 被用于关系可在 Port 内创建完整、易懂的 AWS 账户地图。
 
 ## 工作原理
 
@@ -136,7 +136,7 @@ Port 的 AWS 输出程序可以检索[AWS Cloud Control API](https://docs.aws.am
 
 :::tip 您可以选择在每个地区部署导出器，也可以选择在一个地区部署导出器。 如果您想在一个地区安装导出器，但要导出多个地区的数据，"地区 "配置键可能会有用: 
 
-一些被引用的示例: 
+一些被用于的示例: 
 
 * 要同步默认区域中指定 "类型 "的所有对象，请勿指定 "选择器"；
 * 同步不属于 AWS Amplify 服务的所有 lambdas: 
@@ -179,7 +179,7 @@ Port 的 AWS 输出程序可以检索[AWS Cloud Control API](https://docs.aws.am
 * Port"、"实体 "和 "映射 "键打开了用于将 AWS 资源字段映射到Port实体的部分，"映射 "键是一个数组，其中每个对象都与[entity](/build-your-software-catalog/sync-data-to-catalog/sync-data-to-catalog.md#entity-json-structure) 的结构相匹配。
 * 除了 `blueprint` 必须是静态字符串外，每个映射值都是 JQ 查询。
 * 映射中的 "itemsToParse "键使从单个 AWS 资源创建多个实体成为可能。
-    - 任何 JQ 表达式都可以在这里被引用，只要它的 evaluated 值是一个项目数组。
+    - 任何 JQ 表达式都可以在这里被用于，只要它的 evaluated 值是一个项目数组。
     - 项目 "将作为一个键添加到 JQ 上下文中，该键包含对 "itemsToParse "中指定的数组中的项目的引用。对于对象数组，可以使用 `.item.KEY_NAME`语法访问对象中的键。
    <br></br>
 

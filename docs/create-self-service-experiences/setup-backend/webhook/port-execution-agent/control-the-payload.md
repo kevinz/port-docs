@@ -30,7 +30,7 @@ import TabItem from "@theme/TabItem"
 
 为了向 Provider 提供映射，请将映射添加到安装[here](https://docs.getport.io/create-self-service-experiences/setup-backend/webhook/port-execution-agent/installation-methods/argocd#installation) 中创建的 `values.yaml` 文件中。需要将其添加为顶层字段。
 
-下面是被引用的默认映射: 
+下面是被用于的默认映射: 
 
 ```yaml showLineNumbers
 controlThePayloadConfig: |
@@ -181,16 +181,16 @@ controlThePayloadConfig: |
 
 向第三方应用程序发出请求后，报告请求将立即发送到 Port API，并更新 Port 中的运行状态。
 
-代理被引用 "报告 "字段中的 JQ 来构建报告请求正文。
+代理被用于 "报告 "字段中的 JQ 来构建报告请求正文。
 
 可用字段有
 
 * `status` - 运行状态。可以是以下 Values 之一: 成功/失败
 * `link` - 指向第三方应用程序中运行的链接。可以是字符串或字符串列表。
 * `summary` - 运行的字符串摘要。
-* `externalRunId` - 第三方应用程序中的外部运行 ID。外部运行 ID 用于被引用，以便通过外部运行 ID 搜索 Port 中的运行。
+* `externalRunId` - 第三方应用程序中的外部运行 ID。外部运行 ID 用于被用于，以便通过外部运行 ID 搜索 Port 中的运行。
 
-报告映射可被引用以下字段: 
+报告映射可被用于以下字段: 
 
 `.body` - 如[above](#the-incoming-message-to-base-your-mapping-on)所述的传入信息 `.request` - 使用控制有效载荷映射计算并发送给第三方应用程序的请求 `.response` - 从第三方应用程序收到的响应
 

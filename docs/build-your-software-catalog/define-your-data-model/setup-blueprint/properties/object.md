@@ -1,6 +1,6 @@
 ---
 sidebar_position: 12
-description: Object 是一种数据类型，被引用来保存 JSON 格式的对象定义
+description: Object 是一种数据类型，被用于来保存 JSON 格式的对象定义
 
 ---
 

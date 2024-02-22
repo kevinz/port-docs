@@ -7,7 +7,7 @@ import TabItem from "@theme/TabItem"
 
 # CircleCI 工作流程
 
-被引用 CircleCI 工作流后，您可以在 Port 中轻松创建/更新和查询实体。
+被用于 CircleCI 工作流后，您可以在 Port 中轻松创建/更新和查询实体。
 
 <br></br>
 <br></br>
@@ -42,7 +42,7 @@ workflows:
 
 ## 使用 Port 的 API
 
-下面的示例片段展示了如何使用 Python 将被引用 Port API 的作业与现有的 CircleCI 管道集成: 
+下面的示例片段展示了如何使用 Python 将被用于 Port API 的作业与现有的 CircleCI 管道集成: 
 
 将以下任务和工作流程添加到 CircleCI Pipelines 中: 
 

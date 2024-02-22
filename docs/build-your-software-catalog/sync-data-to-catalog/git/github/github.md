@@ -21,7 +21,7 @@ import GitHubResources from './_github_exporter_supported_resources.mdx'
 
 ## 接收 Git 对象
 
-通过被引用 Port 的 GitHub 应用程序，您可以根据实时事件自动将 GitHub 资源摄入 Port。
+通过被用于 Port 的 GitHub 应用程序，您可以根据实时事件自动将 GitHub 资源摄入 Port。
 
 Provider 的 GitHub 应用程序允许您摄取 GitHub API 提供的各种对象资源，包括资源库、拉取请求、工作流等。 GitHub 应用程序允许您对来自 GitHub API 的数据执行提取、转换、加载(ETL)，将其转换为所需的软件目录数据模型。
 

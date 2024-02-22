@@ -12,7 +12,7 @@
 
 首先，我们需要为 CI/CD 流程设置一个 GitLab 管道。
 
-您可以使用 GitLab CI/CD 中的[Port's API](../../../../build-your-software-catalog/sync-data-to-catalog/api/api.md) 这个被引用的示例: 
+您可以使用 GitLab CI/CD 中的[Port's API](../../../../build-your-software-catalog/sync-data-to-catalog/api/api.md) 这个被用于的示例: 
 
 <details>
 <summary>Click here to see the code</summary>

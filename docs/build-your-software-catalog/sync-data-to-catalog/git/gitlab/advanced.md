@@ -37,7 +37,7 @@ resources:
  [] 列表，Port 的 GitLab 应用程序将在其中搜索 `port.yml` 文件。
 
 * 默认值:  `**/port.yml
-* 被引用: 
+* 被用于: 
     - 如果希望应用程序扫描与 `port.yml` 不同的文件(例如，使用模式 `**/my-port-config.yml` 更改配置，使应用程序扫描名为 `my-port-config.yml` 的文件)；
     - 如果希望应用程序忽略某些路径下的 `port.yml` 文件。
 
@@ -48,7 +48,7 @@ resources:
 <DeleteDependents/>
 
 * 默认:  `false`(禁用)
-* 被引用: 删除从属 Port 实体。如果要删除必填关系中的目标实体(及其源实体)，则必须启用。
+* 被用于: 删除从属 Port 实体。如果要删除必填关系中的目标实体(及其源实体)，则必须启用。
 
 </TabItem>
 

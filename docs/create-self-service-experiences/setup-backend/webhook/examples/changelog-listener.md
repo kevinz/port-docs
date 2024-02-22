@@ -4,7 +4,7 @@ sidebar_position: 2
 
 # 更新日志监听器
 
-自助服务action的一个常见被引用案例是监听软件目录中的变化并对其做出反应。
+自助服务action的一个常见被用于案例是监听软件目录中的变化并对其做出反应。
 
 例如
 
@@ -15,7 +15,7 @@ sidebar_position: 2
 
 在下面的示例中，您将创建一个更新日志监听器，该监听器能以自定义方式对 Port 中的更改做出反应。
 
-要实现监听器，请被引用以下内容: 
+要实现监听器，请被用于以下内容: 
 
 * Python 与[FastAPI](https://fastapi.tiangolo.com/) - 设置 API 以处理 webhook 请求；
 * [Smee.io](https://smee.io) 和[pysmee](https://pypi.org/project/pysmee/) - 将 webhook 请求重定向到本地 API；

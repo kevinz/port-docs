@@ -28,7 +28,7 @@ import TemplatePrerequisites from "./_template_prerequisites.mdx";
 * 某个集群的值班人员是谁？
 * 一个云区域中所有不同的 Openshift 集群提供的所有端点是什么？
 
-将您的 Openshift 资源被引用到 Port 后，就可以轻松地为不同的用例创建多个定制视图。 例如，您可以创建一个视图，向您展示 Openshift 集群如何与基础架构的其他部分进行交互，也可以创建一个高级视图，让管理层了解 Openshift 安装所提供的业务价值。
+将您的 Openshift 资源被用于到 Port 后，就可以轻松地为不同的用例创建多个定制视图。 例如，您可以创建一个视图，向您展示 Openshift 集群如何与基础架构的其他部分进行交互，也可以创建一个高级视图，让管理层了解 Openshift 安装所提供的业务价值。
 
 在这个示例中，您将映射您的 Openshift 集群、它们的工作负载以及不同集群所暴露的 Openshift 路由。
 
@@ -78,7 +78,7 @@ export CUSTOM_BP_PATH="https://github.com/port-labs/template-assets/blob/main/ku
 
 使用 `CONFIG_YAML_URL` 参数，可以定义自定义资源配置，以便在安装导出程序时使用。
 
-在本例中，您将被引用 ** [this configuration file](https://github.com/port-labs/template-assets/blob/main/kubernetes/full-configs/openshift_usecase.yaml)**。为此，请运行
+在本例中，您将被用于 ** [this configuration file](https://github.com/port-labs/template-assets/blob/main/kubernetes/full-configs/openshift_usecase.yaml)**。为此，请运行
 
 ```bash showLineNumbers
 export CONFIG_YAML_URL="https://raw.githubusercontent.com/port-labs/template-assets/main/kubernetes/full-configs/openshift_usecase.yaml"

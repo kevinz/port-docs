@@ -1,6 +1,6 @@
 ---
 sidebar_position: 13
-description: Proto 是一种数据类型，被引用来保存 Port 中的 proto 定义。
+description: Proto 是一种数据类型，被用于来保存 Port 中的 proto 定义。
 
 ---
 
@@ -11,7 +11,7 @@ import TabItem from "@theme/TabItem"
 
 # 原型
 
-Proto 是一种数据类型，被引用用于在 Port 中保存 .proto 定义。
+Proto 是一种数据类型，被用于用于在 Port 中保存 .proto 定义。
 
 ## 💡 常见原语 Usage
 

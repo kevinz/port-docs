@@ -285,7 +285,7 @@ func main() {
 
 </Tabs>
 
-## 在计算属性中被引用`元属性
+## 在计算属性中被用于`元属性
 
 可以将[meta properties](../meta-properties.md) 作为计算属性的模板值。
 
@@ -320,7 +320,7 @@ func main() {
 
 属性 `monitorUrl` 的值将是 `https://datadog.com/notification-service`
 
-## 在计算属性中被引用`镜像属性
+## 在计算属性中被用于`镜像属性
 
 可以将[mirror properties](../mirror-property/mirror-property.md) 作为计算属性的模板值。
 

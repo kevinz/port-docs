@@ -5,7 +5,7 @@ import TabItem from "@theme/TabItem"
 
 我们的 Dyantrace 集成允许您根据映射和定义，将 Dynatrace 实例中的 "问题"、"slo "和 "实体 "资源导入 Port。
 
-## 常见被引用情况
+## 常见被用于情况
 
 * 在 Dynatrace 中映射受监控的实体、问题和 SLO。
 * 实时关注对象变更(创建/更新)，并自动将变更应用到 Port 中的实体。

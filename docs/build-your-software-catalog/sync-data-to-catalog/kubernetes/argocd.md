@@ -12,7 +12,7 @@ import ArgoCDEventManifest from '../webhook/examples/resources/argocd/_example_e
 
 通过 ArgoCD 集成，您可以根据映射和定义将 ArgoCD 实例中的 "集群"、"项目"、"应用程序 "和 "部署历史 "资源导入 Port。
 
-## 常见被引用情况
+## 常见被用于情况
 
 * 在 ArgoCD 中映射受监控的 Kubernetes 资源。
 * 实时关注对象变更(创建/更新)，并自动将变更应用到 Port 中的实体。
@@ -237,7 +237,7 @@ resources:
 
 集成配置决定了从 ArgoCD 中查询哪些资源，以及在 Port 中创建哪些实体和属性。
 
-:::tip  支持的资源 以下资源可被引用来映射 ArgoCD 中的数据，可以引用下面链接的 API 响应中出现的任何字段来进行映射配置。
+:::tip  支持的资源 以下资源可被用于来映射 ArgoCD 中的数据，可以引用下面链接的 API 响应中出现的任何字段来进行映射配置。
 
 * * [`cluster`](https://cd.apps.argoproj.io/swagger-ui#operation/ClusterService_List)
 * [`project`](https://cd.apps.argoproj.io/swagger-ui#operation/ProjectService_List)

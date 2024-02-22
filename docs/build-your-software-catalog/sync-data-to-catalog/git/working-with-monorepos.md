@@ -21,7 +21,7 @@ import PortTooltip from "/src/components/tooltip/tooltip.jsx"
 
 3.将打开一个窗口，其中包含集成的 YAML 映射。
 
-根据被引用的情况使用以下代码段(在 `resources` 数组中添加 `folder` 条目，或者用它替换整个 YAML): 
+根据被用于的情况使用以下代码段(在 `resources` 数组中添加 `folder` 条目，或者用它替换整个 YAML): 
 
 :::info  选择要包含的 repos 和文件夹 在下面的代码段中，复制前将 `path` 和 `repos` 字段更改为所需数值。
 

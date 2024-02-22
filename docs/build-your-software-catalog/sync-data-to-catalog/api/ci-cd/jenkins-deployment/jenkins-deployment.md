@@ -11,7 +11,7 @@ import TabItem from "@theme/TabItem"
 
 :::
 
-被引用 Jenkins 构建后，您可以在 Port 中轻松创建/更新和查询实体。
+被用于 Jenkins 构建后，您可以在 Port 中轻松创建/更新和查询实体。
 
 <br></br>
 <br></br>
@@ -28,24 +28,24 @@ import TabItem from "@theme/TabItem"
 
 ## 先决条件
 
-1. 本例被引用了以下 Jenkins 插件: 
+1. 本例被用于了以下 Jenkins 插件: 
 
 * [Plain Credentials](https://plugins.jenkins.io/credentials-binding/) (>=143.v1b_df8b_d3b_e48)
 * [HTTP Request](https://plugins.jenkins.io/http_request/) (>=1.16)
 
-2.示例中被引用的方法如下，这些签名需要经过批准: 
+2.示例中被用于的方法如下，这些签名需要经过批准: 
 
 ```
 new groovy.json.JsonSlurperClassic
 method groovy.json.JsonSlurperClassic parseText java.lang.String
 ```
 
-3.将您的 `PORT_CLIENT_ID` 和 `PORT_CLIENT_SECRET` 添加为[Jenkins Credentials](https://www.jenkins.io/doc/book/using/using-credentials/) ，以便在您的 Pipelines 中被引用。
+3.将您的 `PORT_CLIENT_ID` 和 `PORT_CLIENT_SECRET` 添加为[Jenkins Credentials](https://www.jenkins.io/doc/book/using/using-credentials/) ，以便在您的 Pipelines 中被用于。
 4.确保您的 Port 安装中已有[Blueprint](/build-your-software-catalog/define-your-data-model/setup-blueprint/setup-blueprint.md) ，以便创建/更新实体。
 
 ## 设置
 
-:::tip 本指南中被引用的所有 Port API 路由都可以在 Port 的[API documentation](/api-reference/api-reference.mdx) 中找到。
+:::tip 本指南中被用于的所有 Port API 路由都可以在 Port 的[API documentation](/api-reference/api-reference.mdx) 中找到。
 
 :::
 

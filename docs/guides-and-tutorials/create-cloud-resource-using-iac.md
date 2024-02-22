@@ -6,7 +6,7 @@ import Tabs from "@theme/Tabs"
 import TabItem from "@theme/TabItem"
 import PortTooltip from "/src/components/tooltip/tooltip.jsx"
 
-# 被引用 IaC 创建云资源
+# 用 IaC 创建云资源
 
 本指南只需 8 分钟即可完成，旨在展示以下内容: 
 
@@ -88,7 +88,7 @@ import PortTooltip from "/src/components/tooltip/tooltip.jsx"
 
 :::tip  重要
 
-在我们的工作流程中，有效载荷被引用为输入。 为了避免向工作流程发送额外的输入，我们省略了用户输入。
+在我们的工作流程中，有效载荷被用于为输入。 为了避免向工作流程发送额外的输入，我们省略了用户输入。
 
 :::
 
@@ -155,7 +155,7 @@ Bitbucket 要求在操作中定义另一个输入。 创建以下输入:
 
 <br/>
 
-7.最后一步是自定义操作权限。为简单起见，我们将被引用默认设置。更多信息，请参阅[permissions](/create-self-service-experiences/set-self-service-actions-rbac/) 页面。单击 "创建"。
+7.最后一步是自定义操作权限。为简单起见，我们将被用于默认设置。更多信息，请参阅[permissions](/create-self-service-experiences/set-self-service-actions-rbac/) 页面。单击 "创建"。
 
 action的前端已准备就绪 🥳
 
@@ -453,7 +453,7 @@ update-run-status:
 
 3.用以下配置创建一个 Jenkins 管道: 
     -[Enable the webhook trigger for the pipeline](/create-self-service-experiences/setup-backend/jenkins-pipeline/jenkins-pipeline.md#enabling-webhook-trigger-for-a-pipeline)
-    - 定义[`token`](/create-self-service-experiences/setup-backend/jenkins-pipeline/jenkins-pipeline.md#token-setup) 字段的值，您指定的令牌将被用于专门触发脚手架管道。例如，你可以被引用 `bucket-creator-token`。返回[frontend setup](#setup-the-actions-frontend) 至步骤 #6，并为触发 URL 设置`{JOB_TOKEN}`。
+    - 定义[`token`](/create-self-service-experiences/setup-backend/jenkins-pipeline/jenkins-pipeline.md#token-setup) 字段的值，您指定的令牌将被用于专门触发脚手架管道。例如，你可以被用于 `bucket-creator-token`。返回[frontend setup](#setup-the-actions-frontend) 至步骤 #6，并为触发 URL 设置`{JOB_TOKEN}`。
     -[Define variables for the pipeline](/create-self-service-experiences/setup-backend/jenkins-pipeline/jenkins-pipeline.md#defining-variables) : 定义 `SERVICE_NAME`、`BITBUCKET_WORKSPACE_NAME`、`BITBUCKET_PROJECT_KEY`、`BUCKET_NAME`、`VISIBILITY` 和 `RUN_ID` 变量。向下滚动到 "发布内容参数"，并**为每个变量**添加配置，如下所示(完整的变量列表请参见下表) : 
    <img src='/img/guides/jenkinsGenericVariable.png' width='100%' />创建以下变量及其相关 JSONPath 表达式: | 变量名 | JSONPath 表达式 |  |  | JSONPath 表达式 |  |  | JSONPath 表达式。
      | ------------------------ | ----------------------------------------------- |

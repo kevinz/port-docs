@@ -1825,7 +1825,7 @@ func main() {
 
 :::
 
-## 使用 Providers 被引用数据
+## 使用 Providers 被用于数据
 
 要使用 Provider 将数据引用到软件目录，您需要用首选语言创建一个 `port.Entity` 资源实例: 
 

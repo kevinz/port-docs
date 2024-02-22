@@ -1,6 +1,6 @@
 ---
 sidebar_position: 12
-description: Yaml 是一种输入法，被引用用于以 YAML 保存对象定义
+description: Yaml 是一种输入法，被用于用于以 YAML 保存对象定义
 
 ---
 

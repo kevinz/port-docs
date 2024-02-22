@@ -12,10 +12,10 @@ sidebar_position: 1
 
 ##被 Azure 输出程序引用的 Azure 基础设施
 
-Azure 输出程序被引用以下 Azure 基础设施: 
+Azure 输出程序被用于以下 Azure 基础设施: 
 
 * Azure 容器应用程序；
-* Azure 事件网格(被引用到 Port 的实时数据同步): 
+* Azure 事件网格(被用于到 Port 的实时数据同步): 
     - Azure Event Grid System Topic of type `Microsoft.Resources.Subscriptions`；
     - Azure 事件网格订阅；
 
@@ -128,7 +128,7 @@ In order to successfully deploy the Azure exporter, it's crucial to ensure that 
 
 ## 映射配置
 
-您可以在集成页面中更新导出器的配置，您可以使用配置来添加或删除将从订阅中被引用的 Azure 资源。
+您可以在集成页面中更新导出器的配置，您可以使用配置来添加或删除将从订阅中被用于的 Azure 资源。
 
 ![Dev Portal Ingest Azure Mapping Configuration](/img/integrations/azure-exporter/DevPortalIngestAzureMappingConfiguration.png)
 

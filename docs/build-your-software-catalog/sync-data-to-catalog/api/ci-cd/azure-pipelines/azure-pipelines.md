@@ -40,7 +40,7 @@ import TabItem from "@theme/TabItem"
 
 ## 使用 Port 的 API
 
-下面是一个示例片段，展示了如何使用 Python 将被引用 Port API 的作业与现有的 Azure 管道集成: 
+下面是一个示例片段，展示了如何使用 Python 将被用于 Port API 的作业与现有的 Azure 管道集成: 
 
 在 Azure Pipelines 中添加以下任务: 
 

@@ -11,7 +11,7 @@ import WizConfiguration from "../webhook/examples/resources/wiz/_example_wiz_iss
 
 通过 Wiz 集成，您可以根据您的映射和定义，将 Wiz 账户中的 "项目"、"问题"、"控件 "和 "服务单 "导入 Port。
 
-## 常见被引用情况
+## 常见被用于情况
 
 * 映射 Wiz 组织环境中的 "项目"、"问题"、"控件 "和 "服务单"。
 * 实时观察对象更改(创建/更新/删除)，并自动将更改应用到您的 Port 实体中。
@@ -269,7 +269,7 @@ resources:
 
 集成配置决定了从 Wiz 中查询哪些资源，以及在 Port 中创建哪些实体和属性。
 
-:::tip  支持的资源 以下资源可被引用来映射 Wiz 中的数据，可以引用下面链接的 API 响应中出现的任何字段来进行映射配置。
+:::tip  支持的资源 以下资源可被用于来映射 Wiz 中的数据，可以引用下面链接的 API 响应中出现的任何字段来进行映射配置。
 
 * * [`Project`](https://integrate.wiz.io/reference/pull-projects)
 * [`Issue`](https://integrate.wiz.io/reference/issues-tutorial)

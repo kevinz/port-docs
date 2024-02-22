@@ -4,7 +4,7 @@ sidebar_position: 1
 
 # 安装
 
-GitLab 管道可通过[Port's execution agent](/create-self-service-experiences/setup-backend/webhook/port-execution-agent/port-execution-agent.md) 被引用。
+GitLab 管道可通过[Port's execution agent](/create-self-service-experiences/setup-backend/webhook/port-execution-agent/port-execution-agent.md) 被用于。
 
 让我们安装代理并配置它以触发 GitLab Pipelines。
 
@@ -66,7 +66,7 @@ helm install my-port-agent port-labs/port-agent \
 
 通过自定义 Pipeline 的有效载荷，您可以控制发送到 gitlab 的数据以及触发 Pipeline 的方式。
 
-默认情况下，Port 代理会被引用此默认映射来触发 gitlab 管道: 
+默认情况下，Port 代理会被用于此默认映射来触发 gitlab 管道: 
 
 <details>
 <summary>Default Gitlab port agent mapping</summary>

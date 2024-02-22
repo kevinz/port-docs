@@ -1,6 +1,6 @@
 ---
 sidebar_position: 18
-description: URLURL 是一种数据类型，被引用来保存网站链接
+description: URLURL 是一种数据类型，被用于来保存网站链接
 
 ---
 
@@ -11,7 +11,7 @@ import TabItem from "@theme/TabItem"
 
 # URL
 
-URL 是一种数据类型，被引用来保存网站链接。
+URL 是一种数据类型，被用于来保存网站链接。
 
 ## 💡 常用网址 Usage
 

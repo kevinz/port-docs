@@ -206,7 +206,7 @@ Properties:
         ...
 ```
 
-* 输入转换器 "中的 "InputPathsMap "键定义了要从事件中提取的字段。它被引用[`JSONPath`](https://goessner.net/articles/JsonPath/index.html) 语法来配置提取: 
+* 输入转换器 "中的 "InputPathsMap "键定义了要从事件中提取的字段。它被用于[`JSONPath`](https://goessner.net/articles/JsonPath/index.html) 语法来配置提取: 
 
 ```yaml showLineNumbers
 Properties:
@@ -251,7 +251,7 @@ Properties:
 
 下面示例中的 `InputPathsMap` 将只从 API 请求和响应中提取 `awsRegion`, `eventName` 和 `functionName`。
 
-* InputTransformer` 中的 `InputTemplate` 键定义了将发送到目标队列的最终输入的模板，格式为输出器的 lambda[expects](#input-structure-for-a-single-event) 。该模板会被引用 `InputPathsMap` 中的 Values 来渲染: 
+* InputTransformer` 中的 `InputTemplate` 键定义了将发送到目标队列的最终输入的模板，格式为输出器的 lambda[expects](#input-structure-for-a-single-event) 。该模板会被用于 `InputPathsMap` 中的 Values 来渲染: 
 
 ```yaml showLineNumbers
 Properties:

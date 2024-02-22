@@ -4,7 +4,7 @@ sidebar_position: 1
 
 # AWS 输出模块
 
-AWS 输出程序模块被引用用于在 AWS 账户中部署 Port AWS 输出程序。
+AWS 输出程序模块被用于用于在 AWS 账户中部署 Port AWS 输出程序。
 
 :::note  注意 有关完整安装，包括资源蓝图和根据 AWS 事件更新 AWS 蓝图、
 
@@ -88,7 +88,7 @@ custom_port_credentials_secret_arn` - (可选)Port凭据(客户 ID 和客户secr
 
 secret值的格式应为: `{"id":"<PORT_CLIENT_ID>"，"clientSecret":"<PORT_CLIENT_SECRET>"}`
 
-`lambda_policy` -(可选)要授予 Lambda 函数的 AWS 策略 json 的路径或 JSON 格式字符串。 如果未被引用，则使用默认的导出器策略。
+`lambda_policy` -(可选)要授予 Lambda 函数的 AWS 策略 json 的路径或 JSON 格式字符串。 如果未被用于，则使用默认的导出器策略。
 
 `events_queue_name` - 发送到 Port 输出程序的事件队列名称。
 

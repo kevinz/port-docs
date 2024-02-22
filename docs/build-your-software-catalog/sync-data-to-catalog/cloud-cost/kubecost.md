@@ -9,7 +9,7 @@ import AdvancedConfig from '../../../generalTemplates/_ocean_advanced_configurat
 
 通过我们的 Kubecost 集成，您可以根据您的映射和定义，将 Kubecost 实例中的 "kubesystem "和 "cloud "成本分配导入 Port。
 
-## 常见被引用情况
+## 常见被用于情况
 
 * 在 Kubecost 中映射受监控的 Kubernetes 资源和云成本分配。
 
@@ -25,7 +25,7 @@ import AdvancedConfig from '../../../generalTemplates/_ocean_advanced_configurat
 
 <TabItem value="real-time-always-on" label="Real Time & Always On" default>
 
-被引用此安装选项意味着集成将能实时更新 Port。
+被用于此安装选项意味着集成将能实时更新 Port。
 
 本表总结了安装时可用的参数，请在下面的脚本中按自己的需要进行设置，然后复制并在终端运行: 
 
@@ -354,7 +354,7 @@ resources:
 
 集成配置决定了将从 Kubecost 查询哪些资源，以及将在 Port 中创建哪些实体和属性。
 
-:::tip  支持的资源 以下资源可被引用来映射来自 Kubecost 的数据，可以引用下面链接的 API 响应中出现的任何字段来进行映射配置。
+:::tip  支持的资源 以下资源可被用于来映射来自 Kubecost 的数据，可以引用下面链接的 API 响应中出现的任何字段来进行映射配置。
 
 * * [`kubesystem`](https://docs.kubecost.com/apis/apis-overview/api-allocation#allocation-schema)
 * [`cloud`](https://docs.kubecost.com/apis/apis-overview/cloud-cost-api#cloud-cost-aggregate-api)
@@ -426,7 +426,7 @@ resources:
 * **splitIdle** - 如果为 "true"，且 shareIdle == false，则闲置分配将按集群或节点创建，而不是汇总为一个闲置分配。默认为 false。
 * **idleByNode** - 如果为 "true"，空闲分配将按每个节点创建。这将导致共享时产生不同的 Values，拆分时产生更多空闲分配。默认为 false。
 * 以及任何可在[Kubecost allocation API](https://docs.kubecost.com/apis/apis-overview/api-allocation#allocation-api) 和[Kubecost Cloud API](https://docs.kubecost.com/apis/apis-overview/cloud-cost-api#cloud-cost-aggregate-api)
-* Port"、"实体 "和 "映射 "键被引用，用于将 Kubecost 对象字段映射到Port实体。要创建多个同类映射，可在 `resources` 数组中添加另一项；
+* Port"、"实体 "和 "映射 "键被用于，用于将 Kubecost 对象字段映射到Port实体。要创建多个同类映射，可在 `resources` 数组中添加另一项；
 
 
   ```yaml showLineNumbers
@@ -475,7 +475,7 @@ resources:
 
 #### 将数据输入Port
 
-要使用[integration configuration](#configuration-structure) 被引用 Kubecost 对象，可以按照以下步骤操作: 
+要使用[integration configuration](#configuration-structure) 被用于 Kubecost 对象，可以按照以下步骤操作: 
 
 1. 转到 DevPortal Builder 页面。
 2. 选择要使用 Kubecost 进行引用的蓝图。

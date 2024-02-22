@@ -10,7 +10,7 @@ sidebar_position: 2
 * 或者，它可以是一个可从公共互联网访问的公共服务(**注** 在这种情况下，执行代理需要相应的出站网络规则，使其能够联系公共服务)。
 
 :::note 
-**重要**:  要被引用**Port 执行代理**，需要进行配置: 
+**重要**:  要被用于**Port 执行代理**，需要进行配置: 
 
 <!-- TODO: add back the URLs here for changelog destination -->
 
@@ -39,7 +39,7 @@ Port 的代理程序使用 Python 的[requests](https://requests.readthedocs.io/
 
 要使用代理的 helm chart 引用环境变量，可以选择
 
-1. 被引用 Helm 的 `--set` flag: 
+1. 被用于 Helm 的 `--set` flag: 
 
 ```sh showLineNumbers
 helm upgrade --install <MY_INSTALLATION_NAME> port-labs/port-ocean \

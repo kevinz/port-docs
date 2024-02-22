@@ -10,7 +10,7 @@ import DocCardList from '@theme/DocCardList';
 
 :::note 
 
-* 在预置配置中被引用的文件可以找到[here](https://github.com/port-labs/template-assets/tree/main/kubernetes)
+* 在预置配置中被用于的文件可以找到[here](https://github.com/port-labs/template-assets/tree/main/kubernetes)
 * 这些用例是通用的，不一定适合您的特定用例。要实现自定义用例，可能需要对 k8s 输出程序进行一些额外配置
 
 :::

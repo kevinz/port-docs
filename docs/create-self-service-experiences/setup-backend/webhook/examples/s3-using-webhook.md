@@ -8,7 +8,7 @@ sidebar_position: 1
 
 :::note 在整个教程中，我们将使用[webhook-actions](../webhook.md) 和一个简单的后端来监听 webhook 事件。
 
-您也可以选择被引用[kafka-actions](/create-self-service-experiences/setup-backend/webhook/kafka/kafka.md) 。
+您也可以选择被用于[kafka-actions](/create-self-service-experiences/setup-backend/webhook/kafka/kafka.md) 。
 
 本例中显示的每个操作都会在 Port 中创建一个新实体，并更新操作运行信息，以便跟踪操作状态及其结果。
 

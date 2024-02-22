@@ -24,12 +24,12 @@ import TabItem from "@theme/TabItem"
 
 ## 安装
 
-要被引用 Port 的 Codefresh 工作流程模板，您需要执行以下步骤: 
+要被用于 Port 的 Codefresh 工作流程模板，您需要执行以下步骤: 
 
 1. 访问 GitHub 中的[workflow template repository](https://github.com/port-labs/port-codefresh-workflow-template) ；
 2. 将文件[`portWorkflowTemplate.yml`](https://github.com/port-labs/port-codefresh-workflow-template/blob/main/portWorkflowTemplate.yml) 复制到您的一个 codefresh `git 源码`，然后提交到您的 git 源码；
 3. 使用命令 apply[`rbac.yml`](https://github.com/port-labs/port-codefresh-workflow-template/blob/main/rbac.yml) 文件的内容，将所需的服务账户、集群角色和角色绑定添加到您的 codefresh 运行时名称空间: `kubectl apply -f rbac.yml -n YOUR_NAMESPACE`；
-4. 使用 base64 编码后，添加包含`PORT_CLIENT_ID`和`PORT_CLIENT_SECRET`的所需 secret。可被引用[`portCredentials.yml`](https://github.com/port-labs/port-codefresh-workflow-template/blob/main/portCredentials.yml) 作为示例。
+4. 使用 base64 编码后，添加包含`PORT_CLIENT_ID`和`PORT_CLIENT_SECRET`的所需 secret。可被用于[`portCredentials.yml`](https://github.com/port-labs/port-codefresh-workflow-template/blob/main/portCredentials.yml) 作为示例。
 
 :::tip 如果使用 `portCredentials.yml` 中显示的准确格式保存 CLIENT_ID 和 SECRET，那么从工作流模板调用模板时就不需要提供参数 `PORT_CREDENTIALS_SECRET`、`PORT_CLIENT_ID_KEY` 和 `PORT_CLIENT_SECRET_KEY`。
 

@@ -323,7 +323,7 @@ relations {
 
 </Tabs>
 
-## 使用 Terraform Provider 被引用数据
+## 使用 Terraform Provider 被用于数据
 
 要使用 Terraform Provider 将数据引用到软件目录，需要在 Terraform 定义文件中定义[`port_entity`](https://registry.terraform.io/providers/port-labs/port-labs/latest/docs/resources/port_entity) 资源: 
 
@@ -399,7 +399,7 @@ resource "port_entity" "myExistingEntity" {
 :::info 关于向 Terraform Provider 添加现有实体的重要说明: 
 
 * 指定实体的 "标识符 "非常重要，否则 terraform 将创建一个带有自动生成的标识符的新实体。
-* Port 的 Terraform Providers 使用[create/override](../../api/api.md?update-strategy=create-override#usage) 策略，这意味着对于现有实体，资源定义中未定义的任何属性都将被引用空值。
+* Port 的 Terraform Providers 使用[create/override](../../api/api.md?update-strategy=create-override#usage) 策略，这意味着对于现有实体，资源定义中未定义的任何属性都将被用于空值。
 
 :::
 

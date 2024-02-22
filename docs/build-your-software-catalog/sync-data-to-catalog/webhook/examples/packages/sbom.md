@@ -14,7 +14,7 @@ import SbomWebhookConfig from './resources/sbom/_example_sbom_webhook_config.mdx
 
 在本示例中，您将创建一个 `sbomComponent` 蓝图，该蓝图将使用 Port's[API](../../../api/api.md) 和[webhook functionality](../../webhook.md) 的组合来引用 `sbom.json` 或 `sbom.xml` 文件中的所有第三方组件。然后，您将把该蓝图与 `sbomVulnerability` 蓝图关联起来，从而可以映射受安全漏洞影响的所有组件。
 
-要将组件和漏洞被引用到 Port，需要使用一个脚本，根据 webhook 配置发送有关 SBOM 文件的信息。
+要将组件和漏洞被用于到 Port，需要使用一个脚本，根据 webhook 配置发送有关 SBOM 文件的信息。
 
 ## 先决条件
 
