@@ -22,7 +22,7 @@ import TabItem from "@theme/TabItem"
 * 主要维护者；
 * 等等。
 
-在[live demo](https://demo.getport.io/self-serve) 自助中心页面，我们可以看到**脚手架新服务**操作，其 "Owning Team "输入是用户输入。
+在[live demo](https://demo.getport.io/self-serve) 自助中心页面，我们可以看到**新服务脚手架**操作，其 "Owning Team "输入是用户输入。
 
 ## 应用程序接口定义
 

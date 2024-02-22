@@ -1,6 +1,6 @@
 ---
 sidebar_position: 1
-title: 脚手架新服务
+title: 新服务脚手架
 
 ---
 
@@ -37,7 +37,7 @@ import PortTooltip from "/src/components/tooltip/tooltip.jsx"
 
 :::tip  Onboarding
 
-作为Onboarding流程的一部分，您的[self-service tab](https://app.getport.io/self-serve) 中应该已经有一个名为 "脚手架新服务 "的操作。在这种情况下，您可以将鼠标悬停在该操作上，单击右上角的"... "按钮，然后选择 "编辑": 
+作为Onboarding流程的一部分，您的[self-service tab](https://app.getport.io/self-serve) 中应该已经有一个名为 "新服务脚手架 "的操作。在这种情况下，您可以将鼠标悬停在该操作上，单击右上角的"... "按钮，然后选择 "编辑": 
 
 <img src='/img/guides/editActionBackend.png' width='45%' />
 
