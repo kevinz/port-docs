@@ -1,10 +1,10 @@
 ---
 sidebar_position: 1
-sidebar_label: 自助行动深度挖掘
+sidebar_label: 自助服务深度挖掘
 
 ---
 
-# 自助行动深度挖掘
+# 自助服务深度挖掘
 
 *Port 中的 *Self-Service Actions** 通过在蓝图和源于蓝图的实体上配置 3 种 Self-Service Action 类型中的一种，实现开发人员的自助服务: 
 
@@ -128,7 +128,7 @@ sidebar_label: 自助行动深度挖掘
 
 </details>
 
-### 创建蓝图自助行动
+### 创建蓝图自助服务
 
 要创建自助服务操作，请转到 DevPortal 生成器页面，展开微服务蓝图并单击 "创建操作 "按钮，如下图所示: 
 
@@ -180,7 +180,7 @@ sidebar_label: 自助行动深度挖掘
 
 ![Action create form](../../../static/img/self-service-actions/setting-self-service-actions-in-port/actionCreateForm.png)
 
-### 更多自助服务行动
+### 更多自助服务操作
 
 让我们回到 "Microservice "蓝图的动作数组，粘贴以下 JSON，其中有 2 个额外的配置动作: 
 
@@ -377,11 +377,11 @@ sidebar_label: 自助行动深度挖掘
 
 要配置哪些用户可以批准操作，请参阅[Managing permissions](../../build-your-software-catalog/set-catalog-rbac/examples.md#setting-action-permissions) 。
 
-### 自助服务行动定义结构
+### 自助服务操作定义结构
 
 ### 自助服务操作 JSON 结构
 
-自助服务行动的基本结构: 
+自助服务操作的基本结构: 
 
 ```json showLineNumbers
 {
@@ -530,7 +530,7 @@ invocationMethod "支持 3 种配置:
 | `groupName`            | `string`  | Can be added only if `type` is set to `GITLAB` <br></br> Defines the GitLab group name                                                                                                                                                                                                                          | `port-labs`                                     |
 
 
-## 触发行动
+## 触发操作
 
 现在，我们将查看每种操作类型的触发器示例，并解释执行每种操作类型时的幕后情况。
 
@@ -556,7 +556,7 @@ invocationMethod "支持 3 种配置:
 
 ![Action create form](../../../static/img/self-service-actions/setting-self-service-actions-in-port/actionCreateForm.png)
 
-### DAY-2 行动
+### DAY-2 操作
 
 从现有实体的子菜单中选择该操作即可触发: 
 
@@ -572,7 +572,7 @@ invocationMethod "支持 3 种配置:
 
 ![Delete button marked](../../../static/img/self-service-actions/setting-self-service-actions-in-port/delete-action-marked.png)
 
-## 行动信息结构
+## action信息结构
 
 Self-Service Action 的每次调用都会发布一条新的 "run "消息(具有自己唯一的 "runId "值)。 让我们来探讨一下 Self-Service Action 运行消息的结构: 
 
@@ -618,9 +618,9 @@ Self-Service Action 的每次调用都会发布一条新的 "run "消息(具有�
 }
 ```
 
-#### 自助服务行动运行有效载荷
+#### 自助服务操作运行有效载荷
 
-支付负载 "对象包含调用自助服务操作的数据，它包括以下键值: 
+负载对象包含调用自助服务操作的数据，它包括以下键值: 
 
 * `entity` - 执行运行的实体(在 `DAY-2` 或 `DELETE` 的情况下，对于 `CREATE` 它将为空)。
 * `action` - 被触发的操作的定义，包括所有操作配置，包括预期的 `userInputs`, `description` 等。
